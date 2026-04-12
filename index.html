@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pour toi, chaque matin.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ivory: #FAF6F1;
+  --cream: #F5EDE4;
+  --bordeaux: #7A2332;
+  --bordeaux-light: #9B3A4A;
+  --rose: #D4A0A0;
+  --rose-light: #E8C4C4;
+  --rose-pale: #F0D6D6;
+  --ink: #1A1A1A;
+  --ink-light: #4A4A4A;
+  --ink-faded: #8A8A8A;
+  --gold: #C9A96E;
+  --gold-light: #D4BC8E;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  background-color: var(--ivory);
+  color: var(--ink);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* Subtle botanical corner decorations */
+.botanical-corner {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.06;
+}
+.botanical-corner--top-right {
+  top: -20px; right: -20px;
+  width: 300px; height: 300px;
+}
+.botanical-corner--bottom-left {
+  bottom: -20px; left: -20px;
+  width: 280px; height: 280px;
+  transform: rotate(180deg);
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 3rem 1.5rem 1rem;
+  position: relative;
+}
+.header__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-size: 1rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
+  margin-bottom: 0.5rem;
+}
+.header__subtitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--ink-light);
+  letter-spacing: 0.02em;
+}
+.header__line {
+  width: 60px;
+  height: 1px;
+  background: var(--rose);
+  margin: 1.2rem auto 0;
+}
+
+/* Countdown */
+.countdown {
+  text-align: center;
+  padding: 0.8rem 1.5rem 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--ink-faded);
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+.countdown__number {
+  color: var(--bordeaux);
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Today's citation - hero */
+.hero {
+  padding: 3rem 1.5rem 2.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.hero__date {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+.hero__quote {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--ink);
+  position: relative;
+  padding: 0 1rem;
+}
+.hero__quote::before {
+  content: '\201C';
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 5rem;
+  color: var(--rose-light);
+  position: absolute;
+  top: -2.5rem;
+  left: -0.5rem;
+  line-height: 1;
+  opacity: 0.5;
+}
+.hero__ornament {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  justify-content: center;
+}
+.hero__ornament-line {
+  width: 40px;
+  height: 1px;
+  background: var(--rose);
+}
+.hero__ornament-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bordeaux);
+  opacity: 0.4;
+}
+
+/* Fade-in animation */
+.fade-in {
+  animation: fadeInUp 1.2s ease-out forwards;
+  opacity: 0;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-delay-1 { animation-delay: 0.2s; }
+.fade-in-delay-2 { animation-delay: 0.5s; }
+.fade-in-delay-3 { animation-delay: 0.8s; }
+
+/* Section title */
+.section-title {
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  padding: 0 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.section-title::before,
+.section-title::after {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 1px;
+  background: var(--rose-light);
+  vertical-align: middle;
+  margin: 0 0.8rem;
+}
+
+/* Past citations */
+.past-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2rem;
+}
+.past-card {
+  border-top: 1px solid var(--rose-pale);
+  padding: 1.5rem 0;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+.past-card:last-child {
+  border-bottom: 1px solid var(--rose-pale);
+}
+@keyframes fadeIn {
+  to { opacity: 0.72; }
+}
+.past-card__date {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+}
+.past-card__quote {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+/* Future / locked citations */
+.future-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+.future-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.8rem;
+}
+.future-card {
+  background: var(--cream);
+  border: 1px solid var(--rose-pale);
+  border-radius: 4px;
+  padding: 1.2rem 0.8rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.future-card:hover {
+  transform: translateY(-2px);
+}
+.future-card__date {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-bottom: 0.5rem;
+}
+.future-card__icon {
+  font-size: 1.3rem;
+  opacity: 0.35;
+  color: var(--bordeaux);
+}
+.future-card__label {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.7rem;
+  color: var(--rose);
+  font-style: italic;
+  margin-top: 0.4rem;
+}
+/* Sealed envelope effect */
+.future-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
+}
+
+/* Pre-start state */
+.pre-start {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  max-width: 580px;
+  margin: 0 auto;
+}
+.pre-start__message {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 1.5rem 3rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.75rem;
+  color: var(--rose);
+  letter-spacing: 0.1em;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .header { padding: 2rem 1rem 0.8rem; }
+  .hero { padding: 2rem 1rem 2rem; min-height: 40vh; }
+  .hero__quote { font-size: 1.4rem; padding: 0 0.5rem; }
+  .hero__quote::before { font-size: 3.5rem; top: -1.8rem; left: -0.3rem; }
+  .future-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.6rem; }
+  .section-title::before, .section-title::after { width: 20px; }
+}
+
+@media (min-width: 768px) {
+  .header { padding: 4rem 2rem 1.5rem; }
+  .hero { padding: 4rem 2rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Botanical SVG corner decorations -->
+<svg class="botanical-corner botanical-corner--top-right" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M300 0C300 0 250 50 240 100C230 150 260 180 220 220C180 260 150 230 100 240C50 250 0 300 0 300" stroke="#7A2332" stroke-width="1" fill="none"/>
+  <path d="M280 0C280 0 240 30 230 70C220 110 240 140 210 170C180 200 160 180 120 185C80 190 40 230 40 230" stroke="#7A2332" stroke-width="0.5" fill="none"/>
+  <path d="M260 10C255 30 250 60 260 80C270 100 255 120 240 135" stroke="#7A2332" stroke-width="0.5" fill="none"/>
+  <ellipse cx="240" cy="95" rx="8" ry="14" transform="rotate(-30 240 95)" stroke="#7A2332" stroke-width="0.5" fill="none"/>
+  <ellipse cx="225" cy="145" rx="6" ry="11" transform="rotate(15 225 145)" stroke="#7A2332" stroke-width="0.5" fill="none"/>
+  <path d="M200 50C195 65 190 85 195 100" stroke="#7A2332" stroke-width="0.3" fill="none"/>
+  <path d="M160 90C165 110 160 130 145 145" stroke="#7A2332" stroke-width="0.3" fill="none"/>
+  <circle cx="260" cy="80" r="2" fill="#7A2332" opacity="0.3"/>
+  <circle cx="220" cy="150" r="1.5" fill="#7A2332" opacity="0.3"/>
+  <circle cx="195" cy="100" r="1.5" fill="#7A2332" opacity="0.2"/>
+</svg>
+
+<svg class="botanical-corner botanical-corner--bottom-left" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M280 0C280 0 230 50 220 95C210 140 240 165 205 200C170 235 140 210 95 220C50 230 0 280 0 280" stroke="#7A2332" stroke-width="1" fill="none"/>
+  <path d="M260 0C260 0 225 25 215 60C205 95 225 120 200 150C175 180 155 165 120 170C85 175 50 210 50 210" stroke="#7A2332" stroke-width="0.5" fill="none"/>
+  <ellipse cx="220" cy="85" rx="7" ry="12" transform="rotate(-25 220 85)" stroke="#7A2332" stroke-width="0.5" fill="none"/>
+  <circle cx="200" cy="140" r="1.5" fill="#7A2332" opacity="0.2"/>
+</svg>
+
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+<script>
+const e = React.createElement;
+
+const CITATIONS = {
+  "2026-04-13": "Demain, ça commence vraiment. Ce soir, repose-toi comme quelqu'un qui sait exactement ce qu'elle vaut — et demain, montre-le.",
+  "2026-04-14": "Tu portes déjà en toi tout ce qu'il faut. Aujourd'hui, rappelle-toi juste pourquoi tu as commencé.",
+  "2026-04-15": "Chaque page tournée ce soir, c'est un patient que tu sauveras demain. Continue, même quand les mots se brouillent.",
+  "2026-04-16": "T'as pas sacrifié tes soirées, tes week-ends et ta santé mentale pour t'arrêter maintenant. Pas toi. Pas aujourd'hui.",
+  "2026-04-17": "Il y a quelque chose de magnifique chez quelqu'un qui refuse d'abandonner. Tu es exactement cette personne.",
+  "2026-04-18": "Le doute, c'est juste ton cerveau qui te dit qu'il travaille. Laisse-le bosser, et toi, continue d'avancer.",
+  "2026-04-19": "Un jour, une petite fille dans un couloir d'hôpital te regardera avec des yeux immenses et dira « merci, docteure ». Tout part de cette table de travail.",
+  "2026-04-20": "Aujourd'hui, tu as le droit d'être fatiguée. Tu n'as pas le droit de lâcher. Ce n'est pas la même chose.",
+  "2026-04-21": "Tes fiches ne te jugeront pas. Tes profs ne te jugeront pas. Et moi non plus. Mais toi tu te jugeras si tu n'y vas pas à fond.",
+  "2026-04-22": "La médecine, c'est une histoire d'amour difficile. Tu en es au chapitre le plus dur. Mais les plus beaux chapitres arrivent.",
+  "2026-04-23": "Ferme les réseaux. Ouvre tes cours. Dans trois heures, tu seras fière de toi. Dans trois semaines, tu seras libre.",
+  "2026-04-24": "Tu n'es pas en train de « réviser pour un examen ». Tu es en train de devenir quelqu'un qui sauve des vies. Agis en conséquence.",
+  "2026-04-25": "Même les plus grands médecins ont eu cette nuit-là où tout semblait impossible. Ils ont juste tourné une page de plus.",
+  "2026-04-26": "Je ne vais pas te dire que c'est facile. Je vais te dire que tu es plus forte que tout ce qui te fait peur en ce moment.",
+  "2026-04-27": "Quelque part entre la fatigue et la détermination, il y a toi. Et tu es exactement là où tu dois être.",
+  "2026-04-28": "Personne ne viendra faire le travail à ta place. Mais personne ne pourra non plus t'enlever ce que tu construis, nuit après nuit.",
+  "2026-04-29": "Respire. Relis. Recommence. Les trois R de ceux qui réussissent quand les autres s'écroulent.",
+  "2026-04-30": "T'es pas juste « en train de réviser ». T'es en train de prouver à tout le monde — et surtout à toi — que t'es faite pour ça.",
+  "2026-05-01": "Aujourd'hui le monde se repose. Toi, tu prends de l'avance. Et c'est exactement cette différence qui fera tout.",
+  "2026-05-02": "Cinq jours. Cent vingt heures. Chaque minute compte, mais toi aussi tu comptes. Mange. Bois. Puis replonge.",
+  "2026-05-03": "La peur que tu ressens, c'est le signe que ça compte vraiment pour toi. Utilise-la comme carburant, pas comme frein.",
+  "2026-05-04": "Tu es si proche que tu pourrais presque toucher la ligne d'arrivée. Ne marche pas. Cours.",
+  "2026-05-05": "Dernière ligne droite. Tu n'as plus besoin de motivation — tu as besoin de discipline. Et ça, tu l'as déjà prouvé mille fois.",
+  "2026-05-06": "Demain, tu entres dans cette salle et tu déposes sur la table tout ce que tu es. Et ce que tu es, c'est suffisant. C'est immense.",
+  "2026-05-07": "C'est aujourd'hui. Tu sais tout ce qu'il faut savoir. Fais-toi confiance autant que moi je te fais confiance. Va tout donner."
+};
+
+const EXAM_DATE = new Date(2026, 4, 6); // May 6 - index 4
+
+const MONTHS_FR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.getDate() + ' ' + MONTHS_FR[d.getMonth()];
+}
+
+function formatDateLong(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const jours = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  return jours[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS_FR[d.getMonth()];
+}
+
+function getToday() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + d;
+}
+
+function getDaysUntilExam() {
+  const now = new Date();
+  now.setHours(0,0,0,0);
+  const exam = new Date(EXAM_DATE);
+  exam.setHours(0,0,0,0);
+  const diff = Math.ceil((exam - now) / (1000 * 60 * 60 * 24));
+  return diff;
+}
+
+function App() {
+  const today = getToday();
+  const allDates = Object.keys(CITATIONS).sort();
+  const daysUntil = getDaysUntilExam();
+
+  const todayCitation = CITATIONS[today];
+  const pastDates = allDates.filter(function(d) { return d < today && CITATIONS[d]; }).reverse();
+  const futureDates = allDates.filter(function(d) { return d > today; });
+
+  // Countdown text
+  var countdownText = null;
+  if (daysUntil > 0) {
+    countdownText = e('div', { className: 'countdown fade-in' },
+      'J-', e('span', { className: 'countdown__number' }, daysUntil), ' avant le grand jour'
+    );
+  } else if (daysUntil === 0) {
+    countdownText = e('div', { className: 'countdown fade-in' },
+      e('span', { className: 'countdown__number' }, "C'est aujourd'hui.")
+    );
+  }
+
+  // Header
+  var header = e('header', { className: 'header' },
+    e('h1', { className: 'header__title fade-in' }, 'Calendrier'),
+    e('p', { className: 'header__subtitle fade-in fade-in-delay-1' }, 'Pour toi, chaque matin.'),
+    e('div', { className: 'header__line fade-in fade-in-delay-2' })
+  );
+
+  // Hero - today's citation
+  var hero = null;
+  if (todayCitation) {
+    hero = e('section', { className: 'hero' },
+      e('div', { className: 'hero__date fade-in fade-in-delay-1' }, formatDateLong(today)),
+      e('blockquote', { className: 'hero__quote fade-in fade-in-delay-2' }, todayCitation),
+      e('div', { className: 'hero__ornament fade-in fade-in-delay-3' },
+        e('span', { className: 'hero__ornament-line' }),
+        e('span', { className: 'hero__ornament-dot' }),
+        e('span', { className: 'hero__ornament-line' })
+      )
+    );
+  } else if (today < allDates[0]) {
+    hero = e('section', { className: 'pre-start' },
+      e('p', { className: 'pre-start__message fade-in fade-in-delay-2' },
+        'Les mots arrivent bientôt. Le 14 avril, ouvre cette page au réveil.'
+      )
+    );
+  } else if (today > allDates[allDates.length - 1]) {
+    hero = e('section', { className: 'pre-start' },
+      e('p', { className: 'pre-start__message fade-in fade-in-delay-2' },
+        'Tu l\u2019as fait. Chaque mot était pour toi, et tu les as tous mérités.'
+      )
+    );
+  }
+
+  // Past citations
+  var pastSection = null;
+  if (pastDates.length > 0) {
+    pastSection = e('section', { className: 'past-section' },
+      e('h2', { className: 'section-title' }, 'Jours passés'),
+      pastDates.map(function(d, i) {
+        return e('div', {
+          className: 'past-card',
+          key: d,
+          style: { animationDelay: (i * 0.1) + 's' }
+        },
+          e('div', { className: 'past-card__date' }, formatDate(d)),
+          e('p', { className: 'past-card__quote' }, '\u201C' + CITATIONS[d] + '\u201D')
+        );
+      })
+    );
+  }
+
+  // Future locked cards
+  var futureSection = null;
+  if (futureDates.length > 0) {
+    futureSection = e('section', { className: 'future-section' },
+      e('h2', { className: 'section-title' }, '\u00C0 venir'),
+      e('div', { className: 'future-grid' },
+        futureDates.map(function(d) {
+          return e('div', { className: 'future-card', key: d },
+            e('div', { className: 'future-card__date' }, formatDate(d)),
+            e('div', { className: 'future-card__icon' }, '\u2709'),
+            e('div', { className: 'future-card__label' }, 'patience\u2026')
+          );
+        })
+      )
+    );
+  }
+
+  // Footer
+  var footer = e('footer', { className: 'footer' }, '\u2014 avec tout ce que j\u2019ai \u2014');
+
+  return e(React.Fragment, null,
+    header,
+    countdownText,
+    hero,
+    pastSection,
+    futureSection,
+    footer
+  );
+}
+
+var root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(e(App));
+</script>
+</body>
+</html>
