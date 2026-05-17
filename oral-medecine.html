@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Oral PASS Sorbonne - Banque de Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0f0f13;
+  --bg-card: #1a1a22;
+  --bg-card-hover: #22222e;
+  --bg-elevated: #252532;
+  --border: #2a2a3a;
+  --border-light: #3a3a4a;
+  --text: #e8e8f0;
+  --text-secondary: #a0a0b8;
+  --text-muted: #6a6a80;
+  --accent: #7c6df0;
+  --accent-light: #9d8ff7;
+  --accent-dim: #4a3fb0;
+  --accent-bg: rgba(124, 109, 240, 0.08);
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --info: #60a5fa;
+  --gradient-1: linear-gradient(135deg, #7c6df0, #60a5fa);
+  --gradient-2: linear-gradient(135deg, #f87171, #fbbf24);
+  --gradient-3: linear-gradient(135deg, #4ade80, #60a5fa);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
+
+/* Layout */
+.app { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Header */
+.header {
+  padding: 2.5rem 0 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+.header__badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-dim);
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  margin-bottom: 1rem;
+}
+.header__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 600;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+.header__subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 300;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0 0 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav__btn {
+  flex-shrink: 0;
+  padding: 0.6rem 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav__btn:hover { background: var(--bg-card-hover); color: var(--text); }
+.nav__btn--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* Stats bar */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+.stat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  text-align: center;
+}
+.stat__value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-light);
+}
+.stat__label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.2rem;
+}
+
+/* Section */
+.section { margin-bottom: 2.5rem; }
+.section__header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.section__icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.section__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.section__count {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+}
+
+/* Question cards */
+.questions { display: flex; flex-direction: column; gap: 0.6rem; }
+.question {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.question:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-light);
+  transform: translateX(4px);
+}
+.question--done { opacity: 0.5; }
+.question--done::after {
+  content: '\2713';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--success);
+  font-weight: 700;
+}
+.question__text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding-right: 2rem;
+}
+.question__meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+.question__tag {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  background: var(--accent-bg);
+  color: var(--accent-light);
+  font-weight: 500;
+}
+.question__tag--difficulty {
+  background: rgba(251, 191, 36, 0.1);
+  color: var(--warning);
+}
+.question__tag--type {
+  background: rgba(96, 165, 250, 0.1);
+  color: var(--info);
+}
+
+/* Method cards */
+.method-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.method-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: var(--accent-light);
+}
+.method-card__steps {
+  list-style: none;
+  counter-reset: step;
+}
+.method-card__steps li {
+  counter-increment: step;
+  padding: 0.5rem 0 0.5rem 2.5rem;
+  position: relative;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+.method-card__steps li:last-child { border-bottom: none; }
+.method-card__steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 22px; height: 22px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-dim);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent-light);
+}
+
+/* Practice mode */
+.practice {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+}
+.practice__timer {
+  font-size: 3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-light);
+  margin: 1rem 0;
+}
+.practice__question {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+}
+.practice__type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.btn {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0.3rem;
+}
+.btn--primary { background: var(--accent); color: white; }
+.btn--primary:hover { background: var(--accent-light); }
+.btn--secondary { background: var(--bg-elevated); color: var(--text-secondary); border: 1px solid var(--border); }
+.btn--secondary:hover { background: var(--bg-card-hover); color: var(--text); }
+.btn--success { background: var(--success); color: #0f0f13; }
+.btn--danger { background: var(--danger); color: white; }
+
+/* Info panel */
+.info-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.info-panel__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.info-panel__content {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.info-panel__content ul {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+}
+.info-panel__content li { margin-bottom: 0.3rem; }
+.info-panel__content strong { color: var(--text); }
+
+/* Actu cards */
+.actu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.actu-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.2rem;
+  transition: all 0.2s;
+}
+.actu-card:hover { border-color: var(--border-light); }
+.actu-card__theme {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-light);
+  margin-bottom: 0.5rem;
+}
+.actu-card__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.actu-card__desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Search */
+.search {
+  margin-bottom: 1.5rem;
+}
+.search__input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search__input:focus { border-color: var(--accent); }
+.search__input::placeholder { color: var(--text-muted); }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app { padding: 0 1rem; }
+  .header { padding: 1.5rem 0 1.5rem; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .actu-grid { grid-template-columns: 1fr; }
+  .practice__question { font-size: 1.1rem; padding: 1rem; }
+}
+
+/* Filter pills */
+.filters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.filter-pill {
+  padding: 0.35rem 0.8rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-pill:hover { border-color: var(--accent-dim); color: var(--text); }
+.filter-pill--active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent-light); }
+
+/* Progress bar */
+.progress {
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+.progress__bar {
+  height: 100%;
+  background: var(--gradient-1);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+</style>
+</head>
+<body>
+<div class="app" id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script>
+// ===== DATA =====
+const DATA = {
+  format: {
+    university: "Sorbonne Universite",
+    epreuves: 2,
+    poids_oral: "33% (1/3 de la note finale)",
+    poids_ecrit: "67% (2/3 - bloc sante)",
+    jury: "Au moins 2 examinateurs dont 1 exterieur a l'universite",
+    jurys_distincts: "Oui - 5 membres par jury pour PASS",
+    duree_epreuve: "10 minutes hors temps de preparation",
+    ponderation_epreuves: "Identique entre les 2 epreuves",
+    epreuve1: {
+      nom: "Reflexion devant un Probleme Complexe (RPC)",
+      description: "Analyse d'une situation complexe SANS lien avec le domaine medical",
+      objectifs: [
+        "Presenter en quelques mots la situation",
+        "Formuler et discuter les problemes souleves par la situation",
+        "Proposer des pistes pour faire evoluer cette situation"
+      ]
+    },
+    epreuve2: {
+      nom: "Analyse et Raisonnement devant un Ensemble de Donnees (ARED)",
+      description: "Analyse d'une photographie de presse",
+      objectifs: [
+        "Observer et restituer les informations contenues dans le document",
+        "Identifier les problematiques soulevees par le document",
+        "Avoir un esprit critique",
+        "Avoir un esprit d'ouverture",
+        "Synthetiser"
+      ]
+    }
+  },
+  competences: [
+    { nom: "Communication", details: "Transmettre des infos clairement, organiser ses idees, langage verbal/non verbal, adapter son style" },
+    { nom: "Empathie", details: "Reconnaitre les emotions des autres, prendre en compte les differences culturelles, connexions emotionnelles positives" },
+    { nom: "Ecoute", details: "Ecouter sans interruption, montrer de l'interet, saisir les points de vue et besoins" },
+    { nom: "Esprit critique", details: "Analyser objectivement, identifier les biais, formuler des jugements fondes" },
+    { nom: "Reflexivite", details: "Se remettre en question, evaluer ses propres pratiques, tirer des lecons" },
+    { nom: "Adaptabilite", details: "Ajuster son comportement, gerer l'incertitude, reagir aux imprevus" },
+    { nom: "Collaboration", details: "Travailler en equipe, partager les responsabilites, gerer les conflits" },
+    { nom: "Synthese", details: "Extraire l'essentiel, hierarchiser l'information, presenter de facon concise" }
+  ],
+  questions: {
+    rpc: [
+      // Situations de la vie quotidienne
+      { q: "Votre voisin a un chien. Depuis quelque temps, vous remarquez qu'il le laisse enferme dans la voiture par forte chaleur. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["empathie", "action"] },
+      { q: "Vous etes en colocation avec 3 personnes. L'une d'elles manifeste des comportements suicidaires. Comment reagissez-vous ?", theme: "vie-quotidienne", difficulte: 3, tags: ["empathie", "urgence"] },
+      { q: "Votre voisin menace de mettre fin a ses jours. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 3, tags: ["empathie", "urgence"] },
+      { q: "Un de vos amis proches vous confie qu'il triche regulierement aux examens. Quelle est votre reaction ?", theme: "vie-quotidienne", difficulte: 2, tags: ["ethique", "amitie"] },
+      { q: "Vous etes temoin d'un accident de la route. Une personne est blessee. Decrivez vos actions.", theme: "vie-quotidienne", difficulte: 2, tags: ["action", "urgence"] },
+      { q: "Un camarade de promotion vous demande de signer la feuille de presence a sa place. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["ethique", "integrite"] },
+      { q: "Votre colocataire traverse une periode de depression et refuse toute aide. Comment gerez-vous la situation ?", theme: "vie-quotidienne", difficulte: 3, tags: ["empathie", "communication"] },
+      { q: "Vous trouvez un portefeuille contenant 500 euros et une carte d'identite dans la rue. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 1, tags: ["ethique", "honnetete"] },
+      { q: "Un ami vous avoue qu'il conduit regulierement en etat d'ivresse. Comment reagissez-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["responsabilite", "amitie"] },
+      { q: "Vous decouvrez que votre proprietaire ne respecte pas les normes de securite de l'immeuble. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["responsabilite", "action"] },
+
+      // Dilemmes ethiques
+      { q: "Un patient refuse une transfusion sanguine pour des raisons religieuses alors que sa vie est en danger. Que pensez-vous de cette situation ?", theme: "ethique", difficulte: 3, tags: ["autonomie", "croyances"] },
+      { q: "Faut-il dire toute la verite a un patient atteint d'une maladie incurable ? Discutez.", theme: "ethique", difficulte: 3, tags: ["verite", "bienveillance"] },
+      { q: "Un medecin decouvre qu'un de ses patients, chauffeur de bus, a une pathologie qui le rend dangereux au volant. Le patient refuse d'arreter de conduire. Que faire ?", theme: "ethique", difficulte: 3, tags: ["secret-medical", "securite"] },
+      { q: "Les parents d'un enfant de 5 ans refusent de le faire vacciner. Quelle est votre position ?", theme: "ethique", difficulte: 3, tags: ["vaccination", "liberte"] },
+      { q: "Un adolescent de 15 ans vous demande de ne pas informer ses parents de sa consultation. Que faites-vous ?", theme: "ethique", difficulte: 3, tags: ["secret-medical", "mineur"] },
+      { q: "Doit-on accepter l'euthanasie en France ? Presentez les arguments pour et contre.", theme: "ethique", difficulte: 3, tags: ["fin-de-vie", "legislation"] },
+      { q: "Un patient en fin de vie demande l'arret de son traitement. Comment abordez-vous cette situation ?", theme: "ethique", difficulte: 3, tags: ["fin-de-vie", "autonomie"] },
+      { q: "La GPA (Gestation Pour Autrui) devrait-elle etre autorisee en France ? Discutez les differents points de vue.", theme: "ethique", difficulte: 3, tags: ["bioethique", "societe"] },
+      { q: "Un medecin peut-il refuser de pratiquer une IVG pour des raisons de conscience ? Debattez.", theme: "ethique", difficulte: 3, tags: ["clause-conscience", "droits"] },
+      { q: "Faut-il rendre le don d'organes obligatoire ? Argumentez.", theme: "ethique", difficulte: 2, tags: ["bioethique", "solidarite"] },
+      { q: "Un chercheur decouvre une erreur dans ses resultats deja publies. Que doit-il faire ?", theme: "ethique", difficulte: 2, tags: ["integrite", "recherche"] },
+      { q: "L'acces aux soins est-il un droit ou un privilege ? Discutez.", theme: "ethique", difficulte: 2, tags: ["justice-sociale", "sante-publique"] },
+
+      // Problemes de societe
+      { q: "Les reseaux sociaux ont-ils un impact sur la sante mentale des jeunes ? Analysez.", theme: "societe", difficulte: 2, tags: ["numerique", "sante-mentale"] },
+      { q: "Comment lutter contre les deserts medicaux en France ?", theme: "societe", difficulte: 2, tags: ["acces-soins", "territoires"] },
+      { q: "L'intelligence artificielle va-t-elle remplacer les medecins ? Discutez.", theme: "societe", difficulte: 2, tags: ["IA", "avenir-medecine"] },
+      { q: "Quel est le role du medecin face aux inegalites sociales de sante ?", theme: "societe", difficulte: 2, tags: ["inegalites", "role-medecin"] },
+      { q: "Les mesures de confinement etaient-elles justifiees pendant la pandemie de COVID-19 ?", theme: "societe", difficulte: 2, tags: ["liberte", "sante-publique"] },
+      { q: "La medecine preventive devrait-elle primer sur la medecine curative ?", theme: "societe", difficulte: 2, tags: ["prevention", "systeme-sante"] },
+      { q: "Faut-il limiter l'acces aux informations medicales sur Internet pour les patients ?", theme: "societe", difficulte: 2, tags: ["information", "autonomie"] },
+      { q: "Les addictions (tabac, alcool, drogues) sont-elles une maladie ou un choix ? Debattez.", theme: "societe", difficulte: 2, tags: ["addictions", "responsabilite"] },
+      { q: "La telemedicine peut-elle remplacer la consultation en presentiel ?", theme: "societe", difficulte: 2, tags: ["telemedicine", "innovation"] },
+      { q: "Quelle place pour la medecine traditionnelle/alternative dans le systeme de sante ?", theme: "societe", difficulte: 2, tags: ["medecine-alternative", "evidence"] },
+      { q: "Le systeme de sante francais est-il en crise ? Analysez les causes et proposez des solutions.", theme: "societe", difficulte: 3, tags: ["systeme-sante", "politique"] },
+      { q: "Comment concilier le secret medical et la protection de la societe (maladies contagieuses, dangerosites) ?", theme: "societe", difficulte: 3, tags: ["secret-medical", "sante-publique"] },
+
+      // Ecologie et sante
+      { q: "Quel est l'impact du changement climatique sur la sante humaine ?", theme: "ecologie", difficulte: 2, tags: ["climat", "sante-environnementale"] },
+      { q: "Faites le lien entre la pollution et le domaine de la sante. Quels sont les enjeux et les actions possibles ?", theme: "ecologie", difficulte: 2, tags: ["pollution", "sante-publique"] },
+      { q: "Les perturbateurs endocriniens representent-ils un danger pour la sante publique ?", theme: "ecologie", difficulte: 2, tags: ["environnement", "toxicologie"] },
+      { q: "Comment rendre le systeme de sante plus eco-responsable ?", theme: "ecologie", difficulte: 2, tags: ["developpement-durable", "hopital"] },
+      { q: "Quelles sont les consequences des problemes climatiques et ecologiques dans le domaine de la sante ?", theme: "ecologie", difficulte: 2, tags: ["climat", "maladies-emergentes"] },
+
+      // Education et communication
+      { q: "Comment expliquer un diagnostic grave a un patient de maniere comprehensible et humaine ?", theme: "communication", difficulte: 2, tags: ["annonce", "empathie"] },
+      { q: "Un patient ne parle pas francais. Comment assurez-vous une consultation de qualite ?", theme: "communication", difficulte: 2, tags: ["barriere-langue", "inclusion"] },
+      { q: "Comment gerer un patient agressif aux urgences ?", theme: "communication", difficulte: 3, tags: ["conflit", "stress"] },
+      { q: "Un parent conteste votre diagnostic pour son enfant en s'appuyant sur des informations trouvees sur Internet. Comment reagissez-vous ?", theme: "communication", difficulte: 2, tags: ["autorite", "pedagogie"] },
+      { q: "Comment promouvoir l'education a la sante aupres des populations defavorisees ?", theme: "communication", difficulte: 2, tags: ["prevention", "inegalites"] },
+
+      // Technologie et innovation
+      { q: "Les donnees de sante des patients doivent-elles etre partagees pour faire avancer la recherche ?", theme: "technologie", difficulte: 3, tags: ["donnees", "vie-privee"] },
+      { q: "L'IA peut-elle poser un diagnostic aussi fiable qu'un medecin ? Quels en sont les enjeux ethiques ?", theme: "technologie", difficulte: 3, tags: ["IA", "diagnostic"] },
+      { q: "Les tests genetiques predictifs doivent-ils etre accessibles a tous ? Discutez.", theme: "technologie", difficulte: 3, tags: ["genetique", "discrimination"] },
+      { q: "Les robots chirurgicaux sont-ils l'avenir de la chirurgie ?", theme: "technologie", difficulte: 2, tags: ["innovation", "chirurgie"] },
+      { q: "Faut-il encadrer davantage la recherche sur les embryons humains ?", theme: "technologie", difficulte: 3, tags: ["bioethique", "recherche"] },
+      { q: "Le transhumanisme est-il compatible avec l'ethique medicale ?", theme: "technologie", difficulte: 3, tags: ["transhumanisme", "limites"] },
+
+      // Sante mentale
+      { q: "Comment destigmatiser les maladies mentales dans notre societe ?", theme: "sante-mentale", difficulte: 2, tags: ["stigmatisation", "psychiatrie"] },
+      { q: "Le burn-out des soignants est-il une fatalite ? Comment y remedier ?", theme: "sante-mentale", difficulte: 2, tags: ["burn-out", "conditions-travail"] },
+      { q: "L'hospitalisation sous contrainte est-elle justifiable ? Dans quelles conditions ?", theme: "sante-mentale", difficulte: 3, tags: ["liberte", "psychiatrie"] },
+      { q: "Quel est l'impact de la solitude sur la sante, notamment chez les personnes agees ?", theme: "sante-mentale", difficulte: 2, tags: ["isolement", "vieillissement"] },
+
+      // Droit et legislation
+      { q: "Le numerus clausus (desormais numerus apertus) est-il un bon systeme de selection ?", theme: "droit", difficulte: 2, tags: ["formation", "selection"] },
+      { q: "Un medecin peut-il etre tenu responsable d'une erreur medicale ? Discutez les limites.", theme: "droit", difficulte: 2, tags: ["responsabilite", "erreur"] },
+      { q: "La loi Claeys-Leonetti sur la fin de vie est-elle suffisante ?", theme: "droit", difficulte: 3, tags: ["fin-de-vie", "legislation"] },
+      { q: "Le consentement eclaire du patient : quelles sont ses limites ?", theme: "droit", difficulte: 2, tags: ["consentement", "information"] },
+    ],
+    ared: [
+      // Photos de presse possibles - themes
+      { q: "Photo d'une manifestation de soignants a l'hopital. Analysez cette image et les problematiques qu'elle souleve.", theme: "sante-publique", difficulte: 2, tags: ["hopital", "conditions-travail"] },
+      { q: "Photo d'un desert medical : un cabinet medical ferme dans un village rural. Que vous inspire cette image ?", theme: "sante-publique", difficulte: 2, tags: ["deserts-medicaux", "territoires"] },
+      { q: "Photo d'une personne agee seule dans un EHPAD. Analysez les enjeux souleves.", theme: "societe", difficulte: 2, tags: ["vieillissement", "solitude"] },
+      { q: "Photo d'un enfant travaillant dans une usine dans un pays en developpement. Que vous evoque cette image ?", theme: "international", difficulte: 2, tags: ["droits-humains", "travail-enfants"] },
+      { q: "Photo de files d'attente aux urgences. Identifiez les problematiques et proposez des pistes.", theme: "sante-publique", difficulte: 2, tags: ["urgences", "systeme-sante"] },
+      { q: "Photo de pollution atmospherique en milieu urbain. Analysez les consequences sanitaires visibles et invisibles.", theme: "environnement", difficulte: 2, tags: ["pollution", "sante-environnementale"] },
+      { q: "Photo d'un medecin de Medecins Sans Frontieres en zone de conflit. Que vous inspire cette image ?", theme: "international", difficulte: 2, tags: ["humanitaire", "engagement"] },
+      { q: "Photo d'une campagne de vaccination dans un pays africain. Analysez les enjeux.", theme: "international", difficulte: 2, tags: ["vaccination", "sante-mondiale"] },
+      { q: "Photo d'un SDF dormant devant un hopital. Quelles problematiques cette image souleve-t-elle ?", theme: "societe", difficulte: 2, tags: ["precarite", "acces-soins"] },
+      { q: "Photo de jeunes regardant leurs telephones dans un parc. Que vous evoque cette scene ?", theme: "societe", difficulte: 1, tags: ["numerique", "lien-social"] },
+      { q: "Photo d'un robot chirurgical en salle d'operation. Analysez les implications.", theme: "technologie", difficulte: 2, tags: ["innovation", "avenir-medecine"] },
+      { q: "Photo d'une maternite en Afrique subsaharienne avec des moyens limites. Comparez avec la France.", theme: "international", difficulte: 2, tags: ["inegalites", "mortalite-maternelle"] },
+      { q: "Photo d'agriculteurs manifestant contre l'interdiction de pesticides. Discutez les enjeux.", theme: "environnement", difficulte: 2, tags: ["agriculture", "sante-publique"] },
+      { q: "Photo d'un marche de produits ultra-transformes. Analysez les enjeux de sante publique.", theme: "nutrition", difficulte: 2, tags: ["alimentation", "prevention"] },
+      { q: "Photo d'une salle de sport bondee en janvier vs vide en mars. Que vous inspire cette image ?", theme: "societe", difficulte: 1, tags: ["motivation", "sante-publique"] },
+      { q: "Photo de militants ecologistes bloquant une autoroute. Analysez la situation et ses enjeux.", theme: "societe", difficulte: 2, tags: ["desobeissance-civile", "urgence-climatique"] },
+      { q: "Photo d'une personne portant un masque dans les transports en commun (post-COVID). Que vous evoque cette image ?", theme: "sante-publique", difficulte: 1, tags: ["prevention", "normalite"] },
+      { q: "Photo d'un bidonville a proximite d'un hopital moderne. Analysez le contraste.", theme: "societe", difficulte: 2, tags: ["inegalites", "acces-soins"] },
+      { q: "Photo d'une pharmacie affichant 'rupture de stock' sur plusieurs medicaments. Discutez.", theme: "sante-publique", difficulte: 2, tags: ["penurie", "industrie-pharma"] },
+      { q: "Photo de migrants dans un camp insalubre. Quelles problematiques sanitaires identifiez-vous ?", theme: "international", difficulte: 2, tags: ["migrants", "conditions-sanitaires"] },
+      { q: "Photo d'un enfant obese devant un fast-food. Analysez les enjeux.", theme: "nutrition", difficulte: 2, tags: ["obesite", "marketing"] },
+      { q: "Photo d'un hopital psychiatrique desaffecte. Que vous inspire cette image ?", theme: "sante-mentale", difficulte: 2, tags: ["psychiatrie", "histoire"] },
+      { q: "Photo d'une manifestation pro/anti-IVG. Presentez les differents points de vue objectivement.", theme: "societe", difficulte: 3, tags: ["IVG", "droits"] },
+      { q: "Photo d'une personne handicapee face a un escalier sans rampe. Analysez.", theme: "societe", difficulte: 1, tags: ["handicap", "accessibilite"] },
+      { q: "Photo d'une foret en feu. Quels liens faites-vous avec la sante humaine ?", theme: "environnement", difficulte: 2, tags: ["climat", "sante-respiratoire"] },
+    ],
+    motivation: [
+      { q: "Pourquoi avez-vous choisi la medecine et pas une autre filiere de sante ?", theme: "projet", difficulte: 1, tags: ["motivation", "choix"] },
+      { q: "Quel type de medecin souhaitez-vous devenir et pourquoi ?", theme: "projet", difficulte: 1, tags: ["specialite", "projection"] },
+      { q: "Qu'est-ce qui vous a marque ou inspire dans le domaine de la sante ?", theme: "projet", difficulte: 1, tags: ["experience", "inspiration"] },
+      { q: "Avez-vous eu des experiences (stages, benevat, etc.) en lien avec la sante ?", theme: "projet", difficulte: 1, tags: ["experience", "terrain"] },
+      { q: "Comment gerez-vous le stress et la pression des etudes ?", theme: "personnel", difficulte: 1, tags: ["resilience", "methodes"] },
+      { q: "Quelles qualites pensez-vous essentielles pour un bon medecin ?", theme: "reflexion", difficulte: 1, tags: ["qualites", "ideal"] },
+      { q: "Comment envisagez-vous de concilier vie professionnelle et vie personnelle en tant que medecin ?", theme: "personnel", difficulte: 2, tags: ["equilibre", "projection"] },
+      { q: "Quel regard portez-vous sur la relation medecin-patient ?", theme: "reflexion", difficulte: 2, tags: ["relation", "humanisme"] },
+      { q: "Connaissez-vous les defis actuels du systeme de sante francais ?", theme: "connaissances", difficulte: 2, tags: ["systeme-sante", "actualite"] },
+      { q: "Comment votre parcours personnel vous a-t-il prepare aux etudes de medecine ?", theme: "projet", difficulte: 1, tags: ["parcours", "preparation"] },
+      { q: "Si vous ne reussissiez pas en medecine, quel serait votre plan B ?", theme: "personnel", difficulte: 2, tags: ["resilience", "adaptabilite"] },
+      { q: "Quelle decouverte medicale recente vous a particulierement interesse ?", theme: "connaissances", difficulte: 2, tags: ["actualite", "curiosite"] },
+    ]
+  },
+  actualites: [
+    { theme: "Fin de vie / Euthanasie", titre: "Debat sur l'aide active a mourir en France", desc: "La loi sur la fin de vie fait debat. La loi Claeys-Leonetti autorise la sedation profonde mais pas l'euthanasie. Les Etats generaux de la bioethique 2026 ont rouvert la discussion. La Belgique etend sa loi aux personnes incapables." },
+    { theme: "Intelligence Artificielle", titre: "L'IA en sante : promesses et limites ethiques", desc: "6 enjeux ethiques identifies : equite/biais algorithmiques, explicabilite, vie privee, responsabilite, autonomie des patients/professionnels, justice sociale/environnementale. L'IA ne remplace pas le medecin mais l'assiste." },
+    { theme: "Deserts medicaux", titre: "Reformes pour lutter contre les deserts medicaux", desc: "La loi Neuder (2025) : quotas d'admission fixes selon les besoins des territoires. Remuneration forfaitaire pour les medecins en zones sous-dotees. Developpement de la telemedicine." },
+    { theme: "Reforme PASS/LAS", titre: "Vers un parcours sante unique en 2027", desc: "Fusion PASS/LAS envisagee (voie unique). PASS et LAS restent en vigueur pour 2025-2026. Le numerus apertus remplace le numerus clausus depuis 2021." },
+    { theme: "Bioethique 2026", titre: "Etats generaux de la bioethique ouverts en janvier 2026", desc: "Axes : examens genetiques, neurosciences, cellules souches, procreation, euthanasie, suicide assiste, IA et neurotechnologies. Consultation publique en cours." },
+    { theme: "Sante mentale", titre: "Crise de la sante mentale post-COVID", desc: "Augmentation des troubles anxieux et depressifs chez les jeunes. Manque de psychiatres. Question de l'acces aux soins psychologiques (Mon Parcours Psy)." },
+    { theme: "Hopital public", titre: "Crise de l'hopital public francais", desc: "Manque de personnel, fermetures de lits, burn-out des soignants, departs massifs. Debat sur la remuneration et les conditions de travail." },
+    { theme: "Environnement et sante", titre: "One Health : sante humaine, animale et environnementale", desc: "Concept One Health adopte par l'OMS. Liens entre biodiversite, zoonoses, et sante humaine. Impact de la pollution sur les maladies chroniques." },
+    { theme: "Vaccination", titre: "Obligation vaccinale et hesitation vaccinale", desc: "11 vaccins obligatoires pour les nourrissons. Debat sur la confiance vaccinale. Role des reseaux sociaux dans la desinformation." },
+    { theme: "Acces aux soins", titre: "Inegalites sociales de sante en France", desc: "Esperance de vie varie de 13 ans entre les 5% les plus riches et les 5% les plus pauvres. Renoncement aux soins pour raisons financieres. CMU-C et ACS." },
+    { theme: "Numerique en sante", titre: "Mon Espace Sante et le DMP", desc: "Deploiement du dossier medical partage. Enjeux de confidentialite. Telemedicine en expansion depuis le COVID. Questions sur la fracture numerique." },
+    { theme: "Penuries de medicaments", titre: "Ruptures d'approvisionnement en France", desc: "3000+ signalements de ruptures en 2025. Causes : delocalisation de la production, tensions geopolitiques, stocks insuffisants. Plans gouvernementaux de relocalisation." },
+  ]
+};
+
+// ===== APP =====
+const { createElement: h, useState, useEffect, useCallback, useMemo } = React;
+
+function App() {
+  const [view, setView] = useState('accueil');
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [done, setDone] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('oral-done') || '{}'); } catch { return {}; }
+  });
+  const [practiceMode, setPracticeMode] = useState(false);
+  const [practiceQ, setPracticeQ] = useState(null);
+  const [timer, setTimer] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('oral-done', JSON.stringify(done));
+  }, [done]);
+
+  useEffect(() => {
+    let interval;
+    if (timerRunning) {
+      interval = setInterval(() => setTimer(t => t + 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timerRunning]);
+
+  const toggleDone = (key) => {
+    setDone(d => ({ ...d, [key]: !d[key] }));
+  };
+
+  const allQuestions = useMemo(() => {
+    const all = [];
+    DATA.questions.rpc.forEach((q, i) => all.push({ ...q, id: 'rpc-' + i, type: 'RPC' }));
+    DATA.questions.ared.forEach((q, i) => all.push({ ...q, id: 'ared-' + i, type: 'ARED' }));
+    DATA.questions.motivation.forEach((q, i) => all.push({ ...q, id: 'motiv-' + i, type: 'Motivation' }));
+    return all;
+  }, []);
+
+  const filteredQuestions = useMemo(() => {
+    let qs = allQuestions;
+    if (view === 'rpc') qs = qs.filter(q => q.type === 'RPC');
+    else if (view === 'ared') qs = qs.filter(q => q.type === 'ARED');
+    else if (view === 'motivation') qs = qs.filter(q => q.type === 'Motivation');
+
+    if (filter !== 'all') qs = qs.filter(q => q.theme === filter);
+    if (search) {
+      const s = search.toLowerCase();
+      qs = qs.filter(q => q.q.toLowerCase().includes(s) || q.tags.some(t => t.includes(s)));
+    }
+    return qs;
+  }, [view, filter, search, allQuestions]);
+
+  const themes = useMemo(() => {
+    const set = new Set();
+    let source = allQuestions;
+    if (view === 'rpc') source = allQuestions.filter(q => q.type === 'RPC');
+    else if (view === 'ared') source = allQuestions.filter(q => q.type === 'ARED');
+    source.forEach(q => set.add(q.theme));
+    return Array.from(set).sort();
+  }, [view, allQuestions]);
+
+  const totalDone = Object.values(done).filter(Boolean).length;
+  const totalQ = allQuestions.length;
+
+  const startPractice = (type) => {
+    const pool = type ? allQuestions.filter(q => q.type === type) : allQuestions;
+    const undone = pool.filter(q => !done[q.id]);
+    const source = undone.length > 0 ? undone : pool;
+    const q = source[Math.floor(Math.random() * source.length)];
+    setPracticeQ(q);
+    setPracticeMode(true);
+    setTimer(0);
+    setTimerRunning(true);
+  };
+
+  const nextPractice = () => {
+    if (practiceQ) toggleDone(practiceQ.id);
+    startPractice(practiceQ?.type === 'RPC' ? 'RPC' : practiceQ?.type === 'ARED' ? 'ARED' : null);
+  };
+
+  const formatTimer = (s) => {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  };
+
+  // === RENDER ===
+  const renderNav = () => h('nav', { className: 'nav' },
+    [
+      ['accueil', 'Accueil'],
+      ['rpc', 'Epreuve 1 - RPC'],
+      ['ared', 'Epreuve 2 - ARED'],
+      ['motivation', 'Projet Pro (ancien)'],
+      ['methodo', 'Methodologie'],
+      ['actualites', 'Actualites'],
+      ['pratique', 'Mode Entrainement']
+    ].map(([key, label]) =>
+      h('button', {
+        key,
+        className: 'nav__btn' + (view === key ? ' nav__btn--active' : ''),
+        onClick: () => { setView(key); setFilter('all'); setSearch(''); setPracticeMode(false); }
+      }, label)
+    )
+  );
+
+  const renderStats = () => h('div', { className: 'stats' },
+    h('div', { className: 'stat' },
+      h('div', { className: 'stat__value' }, totalQ),
+      h('div', { className: 'stat__label' }, 'Questions totales')
+    ),
+    h('div', { className: 'stat' },
+      h('div', { className: 'stat__value' }, totalDone),
+      h('div', { className: 'stat__label' }, 'Travaillees')
+    ),
+    h('div', { className: 'stat' },
+      h('div', { className: 'stat__value' }, Math.round(totalDone / totalQ * 100) + '%'),
+      h('div', { className: 'stat__label' }, 'Progression')
+    ),
+    h('div', { className: 'stat' },
+      h('div', { className: 'stat__value' }, DATA.questions.rpc.length),
+      h('div', { className: 'stat__label' }, 'Questions RPC')
+    ),
+    h('div', { className: 'stat' },
+      h('div', { className: 'stat__value' }, DATA.questions.ared.length),
+      h('div', { className: 'stat__label' }, 'Questions ARED')
+    )
+  );
+
+  const renderFormat = () => h('div', null,
+    h('div', { className: 'info-panel' },
+      h('div', { className: 'info-panel__title' }, '\u{1F3E5} Format de l\'oral PASS Sorbonne Universite 2026'),
+      h('div', { className: 'info-panel__content' },
+        h('ul', null,
+          h('li', null, h('strong', null, '2 epreuves orales'), ' sur 2 demi-journees differentes'),
+          h('li', null, h('strong', null, 'Duree :'), ' 10 minutes par epreuve (hors temps de preparation)'),
+          h('li', null, h('strong', null, 'Poids :'), ' 1/3 de la note finale (33%)'),
+          h('li', null, h('strong', null, 'Jury :'), ' 5 membres par epreuve, dont au moins 1 exterieur'),
+          h('li', null, h('strong', null, 'Ponderation :'), ' Les 2 epreuves sont ponderees de maniere identique'),
+          h('li', null, h('strong', null, 'En cas d\'egalite :'), ' priorite a la meilleure note au bloc sante')
+        )
+      )
+    ),
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginBottom: '1.5rem' } },
+      h('div', { className: 'info-panel' },
+        h('div', { className: 'info-panel__title' }, '\u{1F9E0} Epreuve 1 - RPC'),
+        h('div', { className: 'info-panel__content' },
+          h('p', null, h('strong', null, DATA.format.epreuve1.nom)),
+          h('p', { style: { margin: '0.5rem 0' } }, DATA.format.epreuve1.description),
+          h('ul', null, DATA.format.epreuve1.objectifs.map((o, i) => h('li', { key: i }, o)))
+        )
+      ),
+      h('div', { className: 'info-panel' },
+        h('div', { className: 'info-panel__title' }, '\u{1F4F7} Epreuve 2 - ARED'),
+        h('div', { className: 'info-panel__content' },
+          h('p', null, h('strong', null, DATA.format.epreuve2.nom)),
+          h('p', { style: { margin: '0.5rem 0' } }, DATA.format.epreuve2.description),
+          h('ul', null, DATA.format.epreuve2.objectifs.map((o, i) => h('li', { key: i }, o)))
+        )
+      )
+    ),
+    h('div', { className: 'info-panel' },
+      h('div', { className: 'info-panel__title' }, '\u{1F3AF} Competences evaluees'),
+      h('div', { className: 'info-panel__content' },
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '0.8rem' } },
+          DATA.competences.map((c, i) =>
+            h('div', { key: i, style: { padding: '0.8rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)' } },
+              h('strong', null, c.nom),
+              h('p', { style: { fontSize: '0.78rem', marginTop: '0.3rem', color: 'var(--text-muted)' } }, c.details)
+            )
+          )
+        )
+      )
+    )
+  );
+
+  const renderQuestionList = () => h('div', null,
+    h('div', { className: 'search' },
+      h('input', {
+        className: 'search__input',
+        placeholder: 'Rechercher une question, un theme, un tag...',
+        value: search,
+        onChange: (e) => setSearch(e.target.value)
+      })
+    ),
+    themes.length > 0 && h('div', { className: 'filters' },
+      h('span', {
+        className: 'filter-pill' + (filter === 'all' ? ' filter-pill--active' : ''),
+        onClick: () => setFilter('all')
+      }, 'Tous'),
+      themes.map(t => h('span', {
+        key: t,
+        className: 'filter-pill' + (filter === t ? ' filter-pill--active' : ''),
+        onClick: () => setFilter(t)
+      }, t.replace(/-/g, ' ')))
+    ),
+    h('div', { style: { fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.8rem' } },
+      filteredQuestions.length + ' question(s) - Clique pour marquer comme travaillee'
+    ),
+    h('div', { className: 'progress' },
+      h('div', { className: 'progress__bar', style: { width: (filteredQuestions.filter(q => done[q.id]).length / Math.max(filteredQuestions.length, 1) * 100) + '%' } })
+    ),
+    h('div', { className: 'questions', style: { marginTop: '1rem' } },
+      filteredQuestions.map(q =>
+        h('div', {
+          key: q.id,
+          className: 'question' + (done[q.id] ? ' question--done' : ''),
+          onClick: () => toggleDone(q.id)
+        },
+          h('div', { className: 'question__text' }, q.q),
+          h('div', { className: 'question__meta' },
+            h('span', { className: 'question__tag question__tag--type' }, q.type),
+            h('span', { className: 'question__tag' }, q.theme.replace(/-/g, ' ')),
+            h('span', { className: 'question__tag question__tag--difficulty' },
+              q.difficulte === 1 ? '★' : q.difficulte === 2 ? '★★' : '★★★'
+            ),
+            ...q.tags.slice(0, 3).map((t, i) => h('span', { key: i, className: 'question__tag' }, t))
+          )
+        )
+      )
+    )
+  );
+
+  const renderMethodo = () => h('div', null,
+    h('div', { className: 'method-card' },
+      h('div', { className: 'method-card__title' }, '\u{1F4CB} Methode pour l\'epreuve RPC (Situation complexe)'),
+      h('ol', { className: 'method-card__steps' },
+        h('li', null, 'LIRE attentivement le sujet - identifier les acteurs, le contexte, le probleme'),
+        h('li', null, 'PRESENTER la situation en quelques mots (qui, quoi, ou, quand)'),
+        h('li', null, 'IDENTIFIER les points de vue differents et leurs argumentaires'),
+        h('li', null, 'FORMULER la problematique centrale (sous forme de question)'),
+        h('li', null, 'DISCUTER les enjeux : ethiques, pratiques, emotionnels, juridiques'),
+        h('li', null, 'PROPOSER des pistes d\'evolution concretes et nuancees'),
+        h('li', null, 'CONCLURE avec votre position personnelle argumentee'),
+        h('li', null, 'OUVRIR vers une question plus large (pour les questions du jury)')
+      )
+    ),
+    h('div', { className: 'method-card' },
+      h('div', { className: 'method-card__title' }, '\u{1F4F7} Methode pour l\'epreuve ARED (Photo de presse)'),
+      h('ol', { className: 'method-card__steps' },
+        h('li', null, 'OBSERVER : decrire objectivement ce que l\'on voit (plan, cadrage, personnages, lieu, objets)'),
+        h('li', null, 'CONTEXTUALISER : epoque, evenement, source probable de la photo'),
+        h('li', null, 'ANALYSER : identifier les emotions, symboles, contrastes dans l\'image'),
+        h('li', null, 'PROBLEMATISER : quelle(s) question(s) de societe cette image souleve-t-elle ?'),
+        h('li', null, 'ARGUMENTER : developper 2-3 axes de reflexion lies aux problematiques identifiees'),
+        h('li', null, 'ESPRIT CRITIQUE : limites de l\'image, biais possibles, ce qu\'elle ne montre pas'),
+        h('li', null, 'SYNTHETISER : reponse concise et structuree'),
+        h('li', null, 'OUVERTURE : relier a un enjeu plus large ou a l\'actualite')
+      )
+    ),
+    h('div', { className: 'method-card' },
+      h('div', { className: 'method-card__title' }, '\u{1F4A1} Conseils generaux pour l\'oral'),
+      h('ol', { className: 'method-card__steps' },
+        h('li', null, 'STRUCTURE : Toujours organiser ses idees (intro/dev/conclusion). Ne jamais partir dans tous les sens.'),
+        h('li', null, 'NUANCE : Ne JAMAIS donner un avis tranches sans considerer les arguments opposes. Montrer qu\'on comprend les deux cotes.'),
+        h('li', null, 'POSTURE : Regard, voix posee, pas de tics de langage, sourire discret. Montrer de l\'assurance sans arrogance.'),
+        h('li', null, 'ECOUTE : Quand le jury pose une question, bien ecouter, reformuler si necessaire, puis repondre.'),
+        h('li', null, 'EMPATHIE : Montrer qu\'on se soucie des personnes impliquees dans la situation.'),
+        h('li', null, 'HUMILITE : Si on ne sait pas, le dire. Ne pas inventer.'),
+        h('li', null, 'TIMING : Utiliser les 10 minutes entierement mais sans deborder. S\'entrainer au chrono.'),
+        h('li', null, 'CONCLUSION : Toujours finir par une ouverture qui montre votre curiosite intellectuelle.')
+      )
+    ),
+    h('div', { className: 'method-card' },
+      h('div', { className: 'method-card__title' }, '⚠️ Erreurs a eviter absolument'),
+      h('ol', { className: 'method-card__steps' },
+        h('li', null, 'Reciter un discours appris par coeur (le jury le detecte immediatement)'),
+        h('li', null, 'Etre trop affirmatif sans nuance - eviter "il faut absolument..." sans alternatives'),
+        h('li', null, 'Ignorer une partie du sujet ou de l\'image presentee'),
+        h('li', null, 'Parler de soi au lieu d\'analyser la situation (sauf si on vous le demande)'),
+        h('li', null, 'Ne pas regarder les examinateurs ou parler trop bas'),
+        h('li', null, 'Depasser le temps imparti ou finir trop tot (viser 8-9 minutes sur 10)'),
+        h('li', null, 'Mentir ou exagerer ses experiences'),
+        h('li', null, 'Se braquer face a une question destabilisante du jury')
+      )
+    ),
+    h('div', { className: 'method-card' },
+      h('div', { className: 'method-card__title' }, '\u{1F3AD} Comment gerer les questions du jury'),
+      h('ol', { className: 'method-card__steps' },
+        h('li', null, 'Prendre 2-3 secondes pour reflechir avant de repondre (ne pas se precipiter)'),
+        h('li', null, 'Si la question est destabilisante : c\'est NORMAL, c\'est fait expres. Rester calme.'),
+        h('li', null, 'Reformuler la question pour verifier qu\'on a bien compris'),
+        h('li', null, 'Si le jury contredit votre position : ne pas se braquer, integrer son argument et nuancer'),
+        h('li', null, 'Si vous ne savez pas : "Je n\'ai pas la reponse precise, mais je pense que..." puis raisonnez a haute voix'),
+        h('li', null, 'Montrer qu\'on est capable de changer d\'avis face a un bon argument')
+      )
+    )
+  );
+
+  const renderActualites = () => h('div', null,
+    h('div', { className: 'info-panel', style: { marginBottom: '1.5rem' } },
+      h('div', { className: 'info-panel__title' }, '\u{1F4F0} Actualites a connaitre pour l\'oral 2026'),
+      h('div', { className: 'info-panel__content' },
+        'Ces themes sont les plus susceptibles de tomber car ils font debat dans l\'actualite recente. Connaitre les grandes lignes de chacun est essentiel pour nourrir tes analyses.'
+      )
+    ),
+    h('div', { className: 'actu-grid' },
+      DATA.actualites.map((a, i) =>
+        h('div', { key: i, className: 'actu-card' },
+          h('div', { className: 'actu-card__theme' }, a.theme),
+          h('div', { className: 'actu-card__title' }, a.titre),
+          h('div', { className: 'actu-card__desc' }, a.desc)
+        )
+      )
+    )
+  );
+
+  const renderPractice = () => {
+    if (!practiceMode) {
+      return h('div', { style: { textAlign: 'center' } },
+        h('h2', { style: { marginBottom: '1rem', fontFamily: 'Playfair Display' } }, 'Mode Entrainement'),
+        h('p', { style: { color: 'var(--text-secondary)', marginBottom: '2rem' } },
+          'Tire une question au hasard et entraine-toi en conditions reelles (10 minutes chrono).'
+        ),
+        h('div', { style: { display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' } },
+          h('button', { className: 'btn btn--primary', onClick: () => startPractice('RPC') }, '\u{1F9E0} Question RPC'),
+          h('button', { className: 'btn btn--primary', onClick: () => startPractice('ARED') }, '\u{1F4F7} Question ARED'),
+          h('button', { className: 'btn btn--secondary', onClick: () => startPractice(null) }, '\u{1F3B2} Aleatoire')
+        )
+      );
+    }
+    return h('div', { className: 'practice' },
+      h('div', { className: 'practice__type' }, practiceQ.type + ' - ' + practiceQ.theme.replace(/-/g, ' ')),
+      h('div', { className: 'practice__question' }, practiceQ.q),
+      h('div', { className: 'practice__timer', style: { color: timer > 600 ? 'var(--danger)' : timer > 480 ? 'var(--warning)' : 'var(--accent-light)' } },
+        formatTimer(timer)
+      ),
+      h('p', { style: { fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1rem' } },
+        timer < 600 ? 'Objectif : 10 minutes maximum' : 'Temps depasse ! En vrai, le jury t\'aurait coupe.'
+      ),
+      h('div', null,
+        h('button', { className: 'btn btn--success', onClick: nextPractice }, '✓ Suivante'),
+        h('button', { className: 'btn btn--secondary', onClick: () => { setTimerRunning(!timerRunning); } },
+          timerRunning ? '⏸ Pause' : '▶ Reprendre'
+        ),
+        h('button', { className: 'btn btn--danger', onClick: () => { setPracticeMode(false); setTimerRunning(false); } }, '✖ Arreter')
+      )
+    );
+  };
+
+  const renderContent = () => {
+    switch (view) {
+      case 'accueil': return h('div', null, renderFormat(), renderStats());
+      case 'rpc': return renderQuestionList();
+      case 'ared': return renderQuestionList();
+      case 'motivation': return renderQuestionList();
+      case 'methodo': return renderMethodo();
+      case 'actualites': return renderActualites();
+      case 'pratique': return renderPractice();
+      default: return null;
+    }
+  };
+
+  return h('div', null,
+    h('header', { className: 'header' },
+      h('div', { className: 'header__badge' }, 'PASS Sorbonne Universite 2026'),
+      h('div', { className: 'header__title' }, 'Oral de Medecine'),
+      h('div', { className: 'header__subtitle' }, totalQ + ' questions · Methodologie · Actualites · Entrainement chrono')
+    ),
+    renderNav(),
+    renderContent(),
+    h('div', { style: { height: '4rem' } })
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>
