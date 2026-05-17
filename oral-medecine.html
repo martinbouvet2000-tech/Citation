@@ -58,7 +58,6 @@ body {
 
 .app { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-/* Header */
 .header {
   padding: 3rem 0 2rem;
   text-align: center;
@@ -94,7 +93,6 @@ body {
   font-weight: 300;
 }
 
-/* Navigation */
 .nav {
   display: flex;
   gap: 0.4rem;
@@ -125,7 +123,6 @@ body {
   color: white;
 }
 
-/* Stats bar */
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -152,7 +149,6 @@ body {
   margin-top: 0.2rem;
 }
 
-/* Question cards */
 .questions { display: flex; flex-direction: column; gap: 0.5rem; }
 .question {
   background: var(--bg-card);
@@ -201,7 +197,6 @@ body {
 .question__tag--difficulty { background: var(--warning-bg); color: var(--warning); }
 .question__tag--type { background: var(--info-bg); color: var(--info); }
 
-/* Method cards */
 .method-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -245,7 +240,6 @@ body {
   color: var(--accent-light);
 }
 
-/* Practice mode */
 .practice {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -295,7 +289,6 @@ body {
 .btn--success { background: var(--success); color: #0a0a0f; }
 .btn--danger { background: var(--danger); color: white; }
 
-/* Info panel */
 .info-panel {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -320,7 +313,6 @@ body {
 .info-panel__content li { margin-bottom: 0.3rem; }
 .info-panel__content strong { color: var(--text); }
 
-/* Actu cards */
 .actu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -345,7 +337,6 @@ body {
 .actu-card__title { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.5rem; }
 .actu-card__desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
 
-/* Search & filters */
 .search { margin-bottom: 1rem; }
 .search__input {
   width: 100%;
@@ -374,11 +365,9 @@ body {
 .filter-pill:hover { border-color: var(--accent-dim); color: var(--text); }
 .filter-pill--active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent-light); }
 
-/* Progress bar */
 .progress { height: 4px; background: var(--bg-elevated); border-radius: 2px; overflow: hidden; }
 .progress__bar { height: 100%; background: var(--gradient-1); border-radius: 2px; transition: width 0.3s; }
 
-/* Example response */
 .example {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
@@ -399,21 +388,6 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Tabs */
-.tabs { display: flex; gap: 0; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
-.tab {
-  padding: 0.7rem 1.2rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-}
-.tab:hover { color: var(--text-secondary); }
-.tab--active { color: var(--accent-light); border-bottom-color: var(--accent); }
-
-/* Jour-J section */
 .timeline { position: relative; padding-left: 2rem; }
 .timeline::before {
   content: '';
@@ -438,7 +412,6 @@ body {
 .timeline__time { font-size: 0.72rem; color: var(--accent-light); font-weight: 600; margin-bottom: 0.3rem; }
 .timeline__text { font-size: 0.84rem; color: var(--text-secondary); }
 
-/* Reset progress button */
 .reset-btn {
   background: none;
   border: 1px solid var(--danger);
@@ -450,6 +423,60 @@ body {
   transition: all 0.2s;
 }
 .reset-btn:hover { background: var(--danger-bg); }
+
+.eval-grid {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+.eval-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+.eval-item:hover { background: var(--bg-card-hover); }
+.eval-item--checked { color: var(--success); }
+.eval-check {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border-light);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  transition: all 0.15s;
+}
+.eval-check--on { background: var(--success); border-color: var(--success); color: #0a0a0f; }
+
+.fiche-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  transition: all 0.2s;
+}
+.fiche-card:hover { border-color: var(--border-light); }
+.fiche-card__title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  margin-bottom: 0.6rem;
+}
+.fiche-card__args {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.fiche-card__args li { margin-bottom: 0.25rem; }
+.fiche-card__args strong { color: var(--text); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; }
 
 @media (max-width: 600px) {
   .app { padding: 0 1rem; }
@@ -473,17 +500,15 @@ const DATA = {
     university: "Sorbonne Universite",
     epreuves: 2,
     poids_oral: "33% (1/3 de la note finale)",
-    poids_ecrit: "67% (2/3 - bloc sante)",
-    jury: "5 membres par jury dont au moins 1 exterieur a l'universite",
+    jury: "5 membres par jury dont au moins 1 exterieur",
     duree_epreuve: "10 minutes hors temps de preparation",
-    ponderation_epreuves: "Identique entre les 2 epreuves",
     epreuve1: {
       nom: "Reflexion devant un Probleme Complexe (RPC)",
       description: "Analyse d'une situation complexe SANS lien avec le domaine medical. On te presente un scenario de la vie quotidienne ou un dilemme ethique/social. Tu dois analyser, problematiser et proposer des pistes.",
       objectifs: [
         "Presenter en quelques mots la situation",
-        "Formuler et discuter les problemes souleves par la situation",
-        "Proposer des pistes pour faire evoluer cette situation"
+        "Formuler et discuter les problemes souleves",
+        "Proposer des pistes pour faire evoluer la situation"
       ],
       conseil_cle: "Le jury evalue ta capacite de reflexion, PAS tes connaissances medicales."
     },
@@ -492,9 +517,8 @@ const DATA = {
       description: "Analyse d'une photographie de presse. On te montre une image d'actualite et tu dois l'analyser de maniere structuree, identifier les problematiques et faire preuve d'esprit critique.",
       objectifs: [
         "Observer et restituer les informations contenues dans le document",
-        "Identifier les problematiques soulevees par le document",
-        "Avoir un esprit critique",
-        "Avoir un esprit d'ouverture",
+        "Identifier les problematiques soulevees",
+        "Avoir un esprit critique et d'ouverture",
         "Synthetiser"
       ],
       conseil_cle: "Decris AVANT d'interpreter. Ne saute jamais l'etape d'observation."
@@ -527,6 +551,9 @@ const DATA = {
       { q: "Un de vos professeurs fait une remarque que vous jugez discriminatoire envers un etudiant. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 3, tags: ["discrimination", "autorite", "justice"] },
       { q: "Votre meilleur ami vous demande de mentir a ses parents pour le couvrir. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["amitie", "ethique", "confiance"] },
       { q: "Vous remarquez qu'un enfant est seul et en pleurs dans un centre commercial depuis 30 minutes. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["action", "responsabilite", "protection"] },
+      { q: "Vous surprenez un collegue en train de voler dans les vestiaires. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["ethique", "confrontation", "justice"] },
+      { q: "Un voisin age vit seul et vous n'avez pas de nouvelles depuis plusieurs jours. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["solidarite", "vigilance", "lien-social"] },
+      { q: "Votre groupe de travail decide d'exclure un etudiant car il 'ralentit le groupe'. Votre reaction ?", theme: "vie-quotidienne", difficulte: 2, tags: ["inclusion", "ethique", "groupe"] },
 
       { q: "Un patient refuse une transfusion sanguine pour des raisons religieuses alors que sa vie est en danger. Que pensez-vous de cette situation ?", theme: "ethique", difficulte: 3, tags: ["autonomie", "croyances", "vie"] },
       { q: "Faut-il dire toute la verite a un patient atteint d'une maladie incurable ? Discutez.", theme: "ethique", difficulte: 3, tags: ["verite", "bienveillance", "autonomie"] },
@@ -545,6 +572,8 @@ const DATA = {
       { q: "Faut-il autoriser la recherche sur les cellules souches embryonnaires ? Debattez.", theme: "ethique", difficulte: 3, tags: ["bioethique", "recherche", "embryon"] },
       { q: "L'experimentation animale est-elle justifiable pour la recherche medicale ?", theme: "ethique", difficulte: 2, tags: ["recherche", "souffrance-animale", "progres"] },
       { q: "Un patient vous demande de lui prescrire un arret de travail de complaisance. Que faites-vous ?", theme: "ethique", difficulte: 2, tags: ["deontologie", "integrite", "pression"] },
+      { q: "Un couple demande un diagnostic preimplantatoire pour choisir le sexe de leur enfant. Votre position ?", theme: "ethique", difficulte: 3, tags: ["bioethique", "selection", "limites"] },
+      { q: "Un patient vous confie qu'il a agresse quelqu'un. Etes-vous tenu au secret medical ?", theme: "ethique", difficulte: 3, tags: ["secret-medical", "loi", "dilemme"] },
 
       { q: "Les reseaux sociaux ont-ils un impact sur la sante mentale des jeunes ? Analysez.", theme: "societe", difficulte: 2, tags: ["numerique", "sante-mentale", "jeunes"] },
       { q: "Comment lutter contre les deserts medicaux en France ?", theme: "societe", difficulte: 2, tags: ["acces-soins", "territoires", "solutions"] },
@@ -562,6 +591,8 @@ const DATA = {
       { q: "Faut-il legaliser le cannabis en France ? Quels seraient les effets sur la sante publique ?", theme: "societe", difficulte: 2, tags: ["drogues", "legislation", "sante-publique"] },
       { q: "Le numerus apertus est-il un meilleur systeme que le numerus clausus ? Discutez.", theme: "societe", difficulte: 2, tags: ["formation", "selection", "acces"] },
       { q: "Comment expliquer la defiance croissante envers la medecine et les medecins ?", theme: "societe", difficulte: 2, tags: ["confiance", "relation", "information"] },
+      { q: "Faut-il interdire la publicite pour la malbouffe destinee aux enfants ?", theme: "societe", difficulte: 2, tags: ["prevention", "marketing", "liberte"] },
+      { q: "Le vieillissement de la population est-il une menace ou une chance pour la societe ?", theme: "societe", difficulte: 2, tags: ["demographie", "solidarite", "adaptation"] },
 
       { q: "Quel est l'impact du changement climatique sur la sante humaine ?", theme: "ecologie", difficulte: 2, tags: ["climat", "sante-environnementale", "maladies"] },
       { q: "Faites le lien entre la pollution et la sante. Quels sont les enjeux et actions possibles ?", theme: "ecologie", difficulte: 2, tags: ["pollution", "sante-publique", "prevention"] },
@@ -569,6 +600,7 @@ const DATA = {
       { q: "Comment rendre le systeme de sante plus eco-responsable ?", theme: "ecologie", difficulte: 2, tags: ["developpement-durable", "hopital", "innovation"] },
       { q: "Le concept One Health (une seule sante) : expliquez et discutez son importance.", theme: "ecologie", difficulte: 2, tags: ["one-health", "zoonoses", "biodiversite"] },
       { q: "Les pandemies sont-elles liees a la destruction de l'environnement ? Argumentez.", theme: "ecologie", difficulte: 2, tags: ["pandemie", "biodiversite", "prevention"] },
+      { q: "L'eau potable est-elle un bien commun ou une marchandise ? Discutez les enjeux sanitaires.", theme: "ecologie", difficulte: 2, tags: ["eau", "inegalites", "sante-publique"] },
 
       { q: "Comment expliquer un diagnostic grave a un patient de maniere comprehensible et humaine ?", theme: "communication", difficulte: 2, tags: ["annonce", "empathie", "pedagogie"] },
       { q: "Un patient ne parle pas francais. Comment assurez-vous une consultation de qualite ?", theme: "communication", difficulte: 2, tags: ["barriere-langue", "inclusion", "adaptation"] },
@@ -576,6 +608,7 @@ const DATA = {
       { q: "Un parent conteste votre diagnostic en s'appuyant sur Internet. Comment reagissez-vous ?", theme: "communication", difficulte: 2, tags: ["autorite", "pedagogie", "ecoute"] },
       { q: "Comment promouvoir l'education a la sante aupres des populations defavorisees ?", theme: "communication", difficulte: 2, tags: ["prevention", "inegalites", "acces"] },
       { q: "Comment annoncer a une famille le deces d'un proche ?", theme: "communication", difficulte: 3, tags: ["annonce", "empathie", "accompagnement"] },
+      { q: "Un patient demande un second avis medical. Comment reagissez-vous ?", theme: "communication", difficulte: 1, tags: ["humilite", "droit", "relation"] },
 
       { q: "Les donnees de sante des patients doivent-elles etre partagees pour faire avancer la recherche ?", theme: "technologie", difficulte: 3, tags: ["donnees", "vie-privee", "recherche"] },
       { q: "L'IA peut-elle poser un diagnostic aussi fiable qu'un medecin ? Enjeux ethiques ?", theme: "technologie", difficulte: 3, tags: ["IA", "diagnostic", "responsabilite"] },
@@ -584,18 +617,21 @@ const DATA = {
       { q: "Faut-il encadrer davantage la recherche sur les embryons humains ?", theme: "technologie", difficulte: 3, tags: ["bioethique", "recherche", "limites"] },
       { q: "Le transhumanisme est-il compatible avec l'ethique medicale ?", theme: "technologie", difficulte: 3, tags: ["transhumanisme", "limites", "humanite"] },
       { q: "Les applications de sante (Apple Watch, capteurs) changent-elles la relation au corps et a la maladie ?", theme: "technologie", difficulte: 2, tags: ["quantified-self", "anxiete", "prevention"] },
+      { q: "ChatGPT et les IA generatives en medecine : opportunite ou danger ? Discutez.", theme: "technologie", difficulte: 2, tags: ["IA", "desinformation", "outil"] },
 
       { q: "Comment destigmatiser les maladies mentales dans notre societe ?", theme: "sante-mentale", difficulte: 2, tags: ["stigmatisation", "psychiatrie", "inclusion"] },
       { q: "Le burn-out des soignants est-il une fatalite ? Comment y remedier ?", theme: "sante-mentale", difficulte: 2, tags: ["burn-out", "conditions-travail", "prevention"] },
       { q: "L'hospitalisation sous contrainte est-elle justifiable ? Dans quelles conditions ?", theme: "sante-mentale", difficulte: 3, tags: ["liberte", "psychiatrie", "protection"] },
       { q: "Quel est l'impact de la solitude sur la sante, notamment chez les personnes agees ?", theme: "sante-mentale", difficulte: 2, tags: ["isolement", "vieillissement", "lien-social"] },
       { q: "La sante mentale des etudiants est-elle suffisamment prise en charge en France ?", theme: "sante-mentale", difficulte: 2, tags: ["etudiants", "stress", "dispositifs"] },
+      { q: "L'addiction aux ecrans chez les enfants est-elle un probleme de sante publique ?", theme: "sante-mentale", difficulte: 2, tags: ["numerique", "enfants", "dependance"] },
 
       { q: "Le numerus clausus (numerus apertus) est-il un bon systeme de selection ?", theme: "droit", difficulte: 2, tags: ["formation", "selection", "egalite"] },
       { q: "Un medecin peut-il etre tenu responsable d'une erreur medicale ? Discutez les limites.", theme: "droit", difficulte: 2, tags: ["responsabilite", "erreur", "alea"] },
       { q: "La loi Claeys-Leonetti sur la fin de vie est-elle suffisante ?", theme: "droit", difficulte: 3, tags: ["fin-de-vie", "legislation", "evolution"] },
       { q: "Le consentement eclaire du patient : quelles sont ses limites ?", theme: "droit", difficulte: 2, tags: ["consentement", "information", "comprehension"] },
       { q: "La vaccination obligatoire est-elle une atteinte aux libertes individuelles ?", theme: "droit", difficulte: 2, tags: ["vaccination", "liberte", "collectif"] },
+      { q: "Le droit a l'oubli pour les anciens malades : pourquoi est-ce important ?", theme: "droit", difficulte: 2, tags: ["discrimination", "assurance", "reinsertion"] },
     ],
     ared: [
       { q: "Photo d'une manifestation de soignants devant un hopital avec des pancartes revendiquant de meilleures conditions. Analysez.", theme: "sante-publique", difficulte: 2, tags: ["hopital", "conditions-travail", "revendication"] },
@@ -628,6 +664,10 @@ const DATA = {
       { q: "Photo d'un marche aux puces vendant des medicaments contrefaits en Afrique. Problematiques ?", theme: "international", difficulte: 3, tags: ["medicaments", "contrefacon", "regulation"] },
       { q: "Photo de deux personnes agees se tenant la main dans un EHPAD. Que vous inspire cette image ?", theme: "societe", difficulte: 1, tags: ["humanite", "lien", "vieillesse"] },
       { q: "Photo d'une file de voitures devant un drive-through de fast-food, avec un parc vide a cote. Analysez.", theme: "nutrition", difficulte: 2, tags: ["alimentation", "sedentarite", "choix"] },
+      { q: "Photo d'un ecran de ChatGPT affichant un diagnostic medical. Analysez les enjeux.", theme: "technologie", difficulte: 3, tags: ["IA", "autodiagnostic", "danger"] },
+      { q: "Photo d'une sage-femme epuisee adossee a un mur apres un accouchement difficile. Analysez.", theme: "sante-publique", difficulte: 2, tags: ["soignants", "epuisement", "reconnaissance"] },
+      { q: "Photo d'un graphique montrant la courbe d'esperance de vie stagnant en France. Discutez.", theme: "sante-publique", difficulte: 2, tags: ["demographie", "systeme-sante", "inegalites"] },
+      { q: "Photo d'un enfant recevant un vaccin avec un parent inquiet a cote. Analysez les enjeux.", theme: "sante-publique", difficulte: 2, tags: ["vaccination", "confiance", "peur"] },
     ],
     motivation: [
       { q: "Pourquoi avez-vous choisi la medecine et pas une autre filiere de sante ?", theme: "projet", difficulte: 1, tags: ["motivation", "choix", "vocation"] },
@@ -645,47 +685,125 @@ const DATA = {
       { q: "Que pensez-vous du systeme de selection actuel (PASS/LAS) ?", theme: "connaissances", difficulte: 2, tags: ["formation", "reforme", "critique"] },
       { q: "Avez-vous deja ete confronte a la maladie (personnellement ou dans votre entourage) ?", theme: "personnel", difficulte: 2, tags: ["experience", "empathie", "maturite"] },
       { q: "Que signifie pour vous 'prendre soin' de quelqu'un ?", theme: "reflexion", difficulte: 1, tags: ["soin", "humanisme", "definition"] },
+      { q: "Citez un medecin celebre qui vous inspire et expliquez pourquoi.", theme: "connaissances", difficulte: 1, tags: ["culture", "inspiration", "modele"] },
+      { q: "La medecine est-elle un art ou une science ? Debattez.", theme: "reflexion", difficulte: 2, tags: ["philosophie", "humanisme", "technique"] },
+      { q: "Comment reagiriez-vous si un patient vous reprochait une erreur ?", theme: "reflexion", difficulte: 3, tags: ["humilite", "responsabilite", "communication"] },
     ]
   },
+  fichesThematiques: [
+    {
+      theme: "Fin de vie / Euthanasie",
+      color: "#f87171",
+      pour: ["Respect de l'autonomie du patient", "Droit a mourir dans la dignite", "Souffrance insupportable et irreversible", "Modeles existants : Belgique, Pays-Bas, Oregon"],
+      contre: ["Pente glissante : derive vers l'euthanasie de convenance", "Soins palliatifs encore insuffisamment developpes", "Role du medecin = guerir et soulager, pas donner la mort", "Pression potentielle sur les personnes vulnerables"],
+      lois: "Loi Claeys-Leonetti (2016) : sedation profonde et continue autorisee. Projet de loi aide active a mourir en debat (2025-2026).",
+      piege: "Ne jamais dire 'je suis pour/contre l'euthanasie' sans nuancer."
+    },
+    {
+      theme: "Intelligence artificielle en sante",
+      color: "#60a5fa",
+      pour: ["Performances superieures en imagerie (radiologie, dermato)", "Acces aux soins ameliore (zones rurales)", "Reduction des erreurs diagnostiques", "Gain de temps pour le medecin"],
+      contre: ["Boite noire : manque d'explicabilite", "Biais algorithmiques (donnees d'entrainement biaisees)", "Responsabilite en cas d'erreur non clarifiee", "Deshumanisation de la relation de soin"],
+      lois: "Reglement europeen sur l'IA (AI Act, 2024). La sante est classee 'haut risque'.",
+      piege: "L'IA assiste le medecin, elle ne le remplace pas. Toujours revenir a la relation humaine."
+    },
+    {
+      theme: "Vaccination et confiance",
+      color: "#4ade80",
+      pour: ["Eradication de maladies (variole, quasi-polio)", "Protection collective (immunite de groupe)", "Rapport benefice/risque scientifiquement prouve", "11 vaccins obligatoires depuis 2018 sans hausse d'effets graves"],
+      contre: ["Respect de la liberte individuelle", "Effets secondaires rares mais existants", "Defiance nourrie par des scandales sanitaires passes", "Paternalisme medical percu"],
+      lois: "11 vaccins obligatoires pour les nourrissons (2018). Obligation vaccinale COVID abrogee.",
+      piege: "Ne pas mepriser les anti-vax. Comprendre les racines de la defiance (peur, meconnaissance, scandales)."
+    },
+    {
+      theme: "Deserts medicaux",
+      color: "#fbbf24",
+      pour: ["Obligation d'installation pour equilibrer l'offre", "Telemedicine comme solution immediate", "Maisons de sante pluridisciplinaires", "Delegation de taches aux infirmiers/pharmaciens"],
+      contre: ["Liberte d'installation = principe fondamental", "L'obligation n'attire pas la vocation", "Manque global de medecins (formation insuffisante pendant des decennies)", "Solutions ne traitent pas la cause : conditions de travail, remuneration"],
+      lois: "Loi Neuder (2025) : quotas d'admission ajustes aux besoins territoriaux. CPTS (Communautes Professionnelles Territoriales de Sante).",
+      piege: "6 millions de Francais sans medecin traitant. Chiffre cle a retenir."
+    },
+    {
+      theme: "Secret medical vs securite publique",
+      color: "#a78bfa",
+      pour: ["Fondement de la confiance medecin-patient", "Droit fondamental du patient (art. L1110-4 CSP)", "Sans secret, les patients ne consulteraient plus", "Le medecin n'est pas un auxiliaire de police"],
+      contre: ["Maladies contagieuses a declaration obligatoire", "Patient dangereux pour lui-meme ou autrui", "Maltraitance d'enfant = obligation de signalement", "Protection de la societe peut primer"],
+      lois: "Art. 226-13 Code penal (violation du secret). Exceptions : signalement maltraitance, maladies a declaration obligatoire, dangerosity.",
+      piege: "Le secret n'est JAMAIS absolu. Connaitre les 3 exceptions legales."
+    },
+    {
+      theme: "Inegalites sociales de sante",
+      color: "#fb923c",
+      pour: ["13 ans d'ecart d'esperance de vie entre riches et pauvres (hommes)", "30% des precaires renoncent aux soins", "Determinants sociaux > determinants biologiques", "Les PASS hospitaliers sont debordees"],
+      contre: ["Responsabilite individuelle dans les comportements de sante", "Le systeme francais offre deja une couverture quasi-universelle (CMU, AME)", "Augmenter les depenses ne resout pas tout", "Education et prevention plus efficaces que le curatif"],
+      lois: "CMU-C, AME, PUMA (Protection Universelle Maladie). CSS 100% remboursement. PASS (Permanence d'Acces aux Soins de Sante).",
+      piege: "Ne jamais dire 'c'est la faute des pauvres'. Toujours penser en termes de determinants sociaux."
+    },
+    {
+      theme: "Environnement et sante (One Health)",
+      color: "#34d399",
+      pour: ["75% des maladies emergentes sont des zoonoses", "48 000 deces/an lies a la pollution en France", "Les PFAS contaminent l'eau potable", "Changement climatique = nouvelles pathologies (dengue en France metropolitaine)"],
+      contre: ["Transition ecologique peut augmenter les couts de sante", "Les pays en developpement ne peuvent pas se payer le luxe ecologique", "Risque de green-washing dans le systeme de sante"],
+      lois: "One Health adopte par l'OMS, la FAO et l'OIE. Plan national sante-environnement (PNSE4) en France.",
+      piege: "Toujours lier sante humaine, animale et environnementale. Le jury adore ce concept."
+    },
+    {
+      theme: "Sante mentale",
+      color: "#f472b6",
+      pour: ["+30% troubles anxieux chez les 15-25 ans post-COVID", "Manque criant de pedopsychiatres", "Stigmatisation encore forte = frein a la consultation", "Burn-out des soignants : 50% en souffrance psychologique"],
+      contre: ["Surmedicamentalisation des emotions normales", "Tendance a psychiatriser les difficultes de vie", "Mon Parcours Psy : 8 seances = insuffisant mais existant", "Necessite de distinguer mal-etre et pathologie"],
+      lois: "Mon Parcours Psy (2022) : 8 seances remboursees. Assises de la sante mentale (2021). Plan psychiatrie et sante mentale.",
+      piege: "Ne pas confondre tristesse et depression. Toujours nuancer entre souffrance et pathologie."
+    },
+  ],
+  autoEvaluation: [
+    { cat: "Structure", items: ["J'ai fait une intro claire (contexte + problematique)", "Mon developpement etait organise en 2-3 axes", "J'ai conclu avec ma position + ouverture", "Mon discours avait un fil conducteur logique"] },
+    { cat: "Contenu", items: ["J'ai identifie les differents points de vue", "J'ai nuance mes arguments (pas de position tranchee)", "J'ai utilise des exemples concrets ou des chiffres", "J'ai fait preuve d'esprit critique"] },
+    { cat: "Communication", items: ["J'ai parle a un rythme pose et audible", "J'ai regarde le jury (pas le sol/plafond)", "J'ai evite les tics de langage (euh, en fait, voila)", "Ma posture etait droite et ouverte"] },
+    { cat: "Timing", items: ["J'ai parle entre 8 et 10 minutes", "Je n'ai pas deborde du temps imparti", "Je n'ai pas fini trop tot (< 7 minutes)"] },
+    { cat: "Gestion du jury", items: ["J'ai ecoute les questions sans interrompre", "J'ai pris 2-3 secondes avant de repondre", "J'ai integre les remarques du jury dans ma reflexion", "Je ne me suis pas braque face a une contradiction"] },
+  ],
   actualites: [
     { theme: "Fin de vie / Aide active a mourir", titre: "Projet de loi sur l'aide active a mourir (2025-2026)", desc: "Debat majeur en France. Loi Claeys-Leonetti (2016) autorise la sedation profonde mais PAS l'euthanasie ni le suicide assiste. Un projet de loi sur l'aide active a mourir a ete depose. La Belgique, les Pays-Bas et la Suisse ont des legislations plus permissives. Arguments pour : dignite, autonomie, souffrance insupportable. Arguments contre : pente glissante, role du medecin, soins palliatifs insuffisants.", hot: true },
-    { theme: "Intelligence Artificielle en sante", titre: "IA diagnostique et enjeux ethiques", desc: "L'IA atteint des performances superieures aux medecins dans certains diagnostics (radiologie, dermatologie). 6 enjeux ethiques identifies : equite/biais algorithmiques, explicabilite ('boite noire'), vie privee des donnees, responsabilite en cas d'erreur, autonomie du medecin, justice sociale. L'IA ne remplace pas le medecin mais l'assiste. Question : qui est responsable si l'IA se trompe ?", hot: true },
+    { theme: "Intelligence Artificielle en sante", titre: "IA diagnostique et enjeux ethiques", desc: "L'IA atteint des performances superieures aux medecins dans certains diagnostics (radiologie, dermatologie). Enjeux : equite/biais algorithmiques, explicabilite ('boite noire'), vie privee des donnees, responsabilite en cas d'erreur, autonomie du medecin. L'IA ne remplace pas le medecin mais l'assiste. Question centrale : qui est responsable si l'IA se trompe ?", hot: true },
     { theme: "Deserts medicaux", titre: "Crise de l'acces aux soins en zones rurales", desc: "6 millions de Francais n'ont pas de medecin traitant. Loi Neuder (2025) : quotas d'admission fixes selon les besoins des territoires. Solutions debattues : obligation d'installation, telemedicine, maisons de sante, delegation de taches aux infirmiers. La moyenne d'age des medecins generalistes augmente.", hot: true },
-    { theme: "Bioethique 2026", titre: "Etats generaux de la bioethique", desc: "Axes majeurs : examens genetiques predictifs (droit de savoir vs droit de ne pas savoir), neurosciences et neuroethique, cellules souches, procreation (PMA, GPA), fin de vie, IA en sante. Consultation publique en cours. Revision de la loi de bioethique tous les 7 ans en France." },
-    { theme: "Sante mentale des jeunes", titre: "Explosion des troubles psychiques chez les 15-25 ans", desc: "Augmentation de 30% des troubles anxieux et depressifs chez les jeunes depuis le COVID. Tentatives de suicide en hausse. Manque criant de pedopsychiatres. Dispositif Mon Parcours Psy (8 seances remboursees) juge insuffisant. Role des reseaux sociaux dans la comparaison sociale et le cyberharcelement." },
+    { theme: "Bioethique 2026", titre: "Etats generaux de la bioethique", desc: "Axes majeurs : examens genetiques predictifs (droit de savoir vs droit de ne pas savoir), neurosciences et neuroethique, cellules souches, procreation (PMA, GPA), fin de vie, IA en sante. Revision de la loi de bioethique tous les 7 ans en France." },
+    { theme: "Sante mentale des jeunes", titre: "Explosion des troubles psychiques chez les 15-25 ans", desc: "+30% de troubles anxieux et depressifs chez les jeunes depuis le COVID. Tentatives de suicide en hausse. Manque criant de pedopsychiatres. Dispositif Mon Parcours Psy (8 seances remboursees) juge insuffisant. Role des reseaux sociaux dans la comparaison sociale et le cyberharcelement." },
     { theme: "Hopital public en crise", titre: "Departs massifs et fermetures de services", desc: "30% des postes non pourvus dans certains services. Fermetures de lits (100 000 lits en 20 ans). Burn-out massif des soignants. Debat sur la T2A (tarification a l'activite) vs financement au forfait. Attractivite salariale insuffisante. Les urgences saturees deviennent le symptome visible de la crise." },
     { theme: "Environnement et sante (One Health)", titre: "Le concept Une Seule Sante adopte par l'OMS", desc: "Sante humaine, animale et environnementale sont interdependantes. 75% des maladies infectieuses emergentes sont des zoonoses. Deforestation, elevage intensif et changement climatique favorisent les pandemies. Pollution de l'air : 48 000 morts prematurees/an en France. Les PFAS ('polluants eternels') contaminent l'eau potable.", hot: true },
-    { theme: "Vaccination et confiance", titre: "Hesitation vaccinale et desinformation", desc: "La France est l'un des pays les plus defiant envers les vaccins. 11 vaccins obligatoires pour les nourrissons depuis 2018. Debat : obligation vs incitation. Desinformation virale sur les reseaux sociaux. Le mouvement anti-vax s'est renforce pendant le COVID. Enjeu : retablir la confiance sans etre paternaliste." },
-    { theme: "Acces aux soins et inegalites", titre: "Gradient social de sante en France", desc: "Esperance de vie : 13 ans d'ecart entre les 5% les plus riches et les 5% les plus pauvres (hommes). 30% des personnes sous le seuil de pauvrete renoncent a des soins. Refus de soins envers les beneficiaires de la CMU documentes. Permanences d'acces aux soins (PASS) dans les hopitaux." },
-    { theme: "Penuries de medicaments", titre: "Ruptures d'approvisionnement chroniques", desc: "3000+ signalements de ruptures en 2025. Causes : 80% des principes actifs fabriques en Chine/Inde, just-in-time, tensions geopolitiques. Medicaments critiques touches : antibiotiques, anticancereux, anesthesiques. Plans de relocalisation de la production en Europe. Stock de securite de 4 mois impose." },
-    { theme: "Numerique et Mon Espace Sante", titre: "Transformation numerique du systeme de sante", desc: "Mon Espace Sante : DMP + messagerie securisee + catalogue d'apps certifiees. Telemedicine : 10% des consultations en 2024. Risques : fracture numerique (personnes agees, precarite), cybersecurite des donnees de sante, deshumanisation de la relation de soin. Opportunites : suivi des maladies chroniques, acces en zone rurale." },
-    { theme: "Antibio-resistance", titre: "La resistance aux antibiotiques, menace majeure selon l'OMS", desc: "1,2 million de morts/an dans le monde lies a l'antibio-resistance. La France est parmi les plus gros consommateurs d'antibiotiques en Europe. Causes : surconsommation humaine ET animale (elevage). Sans action, 10 millions de morts/an en 2050. Solutions : usage raisonne, recherche de nouvelles molecules, diagnostic rapide." },
+    { theme: "Vaccination et confiance", titre: "Hesitation vaccinale et desinformation", desc: "La France est l'un des pays les plus defiants envers les vaccins. 11 vaccins obligatoires pour les nourrissons depuis 2018. Debat : obligation vs incitation. Desinformation virale sur les reseaux sociaux. Le mouvement anti-vax s'est renforce pendant le COVID." },
+    { theme: "Acces aux soins et inegalites", titre: "Gradient social de sante en France", desc: "Esperance de vie : 13 ans d'ecart entre les 5% les plus riches et les 5% les plus pauvres (hommes). 30% des personnes sous le seuil de pauvrete renoncent a des soins. Refus de soins envers les beneficiaires de la CMU documentes." },
+    { theme: "Penuries de medicaments", titre: "Ruptures d'approvisionnement chroniques", desc: "3000+ signalements de ruptures en 2025. Causes : 80% des principes actifs fabriques en Chine/Inde, just-in-time, tensions geopolitiques. Medicaments critiques touches : antibiotiques, anticancereux, anesthesiques. Stock de securite de 4 mois impose." },
+    { theme: "Numerique et Mon Espace Sante", titre: "Transformation numerique du systeme de sante", desc: "Mon Espace Sante : DMP + messagerie securisee. Telemedicine : ~10% des consultations. Risques : fracture numerique (personnes agees, precarite), cybersecurite des donnees de sante. Opportunites : suivi maladies chroniques, acces en zone rurale." },
+    { theme: "Antibio-resistance", titre: "La resistance aux antibiotiques, menace majeure selon l'OMS", desc: "1,2 million de morts/an dans le monde lies a l'antibio-resistance. La France est parmi les plus gros consommateurs d'antibiotiques en Europe. Sans action, 10 millions de morts/an d'ici 2050. Solutions : usage raisonne, nouvelles molecules, diagnostic rapide." },
+    { theme: "Loi immigration et sante", titre: "Acces aux soins des etrangers en France", desc: "Debat sur l'AME (Aide Medicale d'Etat) pour les sans-papiers. Arguments pour : droit fondamental, enjeu de sante publique (maladies contagieuses). Arguments contre : cout pour les finances publiques, effet d'appel. Les medecins rappellent : soigner tout le monde est un impératif sanitaire ET ethique.", hot: true },
   ],
   jourJ: {
     avant: [
-      { time: "J-7", text: "Reviser les grandes thematiques. Ne pas tout apprendre par coeur mais avoir des arguments cles." },
-      { time: "J-3", text: "Faire des simulations chronometrees (10 min). S'enregistrer et se reecouter." },
-      { time: "J-1", text: "Relire les actualites et sa fiche methodologique. NE PAS reviser de nouvelles questions." },
-      { time: "J-1 soir", text: "Preparer ses affaires, dormir tot. Pas d'ecran apres 22h." },
+      { time: "J-7", text: "Reviser les grandes thematiques. Ne pas tout apprendre par coeur mais avoir des arguments cles par theme." },
+      { time: "J-3", text: "Faire des simulations chronometrees (10 min). S'enregistrer et se reecouter. Identifier 1 point a ameliorer par simulation." },
+      { time: "J-1", text: "Relire les actualites et sa fiche methodologique. NE PAS reviser de nouvelles questions. Relire les fiches thematiques." },
+      { time: "J-1 soir", text: "Preparer ses affaires (tenue, convocation, piece d'identite). Dormir tot. Pas d'ecran apres 22h." },
     ],
     matin: [
-      { time: "Au reveil", text: "Petit-dejeuner complet, pas de cafe en exces. S'habiller proprement mais confortablement." },
-      { time: "Trajet", text: "Arriver 30 min en avance minimum. Ecouter de la musique calme ou une meditation guidee." },
-      { time: "Attente", text: "Respirer profondement (coherence cardiaque : 5s inspire, 5s expire). Pas de revision de derniere minute." },
+      { time: "Au reveil", text: "Petit-dejeuner complet (glucides lents + proteines). Pas de cafe en exces. S'habiller proprement mais confortablement." },
+      { time: "Trajet", text: "Arriver 30 min en avance minimum. Ecouter de la musique calme ou rien du tout." },
+      { time: "Attente", text: "Coherence cardiaque : 5s inspire, 5s expire, 5 minutes. Pas de revision de derniere minute. Pas de discussion stressante avec les autres candidats." },
     ],
     pendant: [
-      { time: "Preparation (5 min)", text: "Lire le sujet 2 fois. Identifier les acteurs, le contexte, la problematique. Ecrire 3-4 mots-cles de structure." },
-      { time: "Debut (0-1 min)", text: "Se presenter avec un sourire. Presenter la situation en 2-3 phrases (contexte + problematique)." },
-      { time: "Developpement (1-8 min)", text: "Suivre ta structure : analyser les points de vue, discuter les enjeux (ethique, pratique, emotionnel), proposer des pistes." },
-      { time: "Conclusion (8-9 min)", text: "Resumer ta position nuancee + ouverture vers une question plus large." },
-      { time: "Questions jury (9-10 min)", text: "Ecouter, prendre 2s pour reflechir, reformuler si besoin, repondre avec calme et nuance." },
+      { time: "Preparation (5 min)", text: "Lire le sujet 2 fois. Identifier les acteurs, le contexte, la problematique. Ecrire 3-4 mots-cles MAX sur le brouillon — PAS de phrases." },
+      { time: "Debut (0-1 min)", text: "Sourire, regarder le jury. Presenter la situation en 2-3 phrases. Formuler la problematique clairement." },
+      { time: "Developpement (1-8 min)", text: "Suivre ta structure : analyser les points de vue, discuter les enjeux (ethique, pratique, emotionnel, juridique), proposer des pistes concretes." },
+      { time: "Conclusion (8-9 min)", text: "Resumer ta position personnelle argumentee + ouverture vers une question plus large." },
+      { time: "Questions jury (9-10 min)", text: "Ecouter. Prendre 2-3 secondes. Reformuler si besoin. Repondre avec calme, nuance et honneteté." },
     ],
     pieges: [
-      "Le jury te contredit : c'est un TEST de ta capacite a nuancer. Ne te braque pas.",
-      "Tu ne sais pas : 'Je n'ai pas la certitude, mais je pense que...' puis raisonne a voix haute.",
-      "Question personnelle inattendue : rester authentique, pas de reponse formatee.",
+      "Le jury te contredit : c'est un TEST. Il veut voir si tu nuances. Dis 'C'est un point de vue interessant, en effet on peut aussi considerer que...'",
+      "Tu ne sais pas : 'Je n'ai pas la certitude, mais en reflechissant...' puis raisonne a voix haute. C'est MIEUX que d'inventer.",
+      "Question personnelle inattendue : rester authentique. Pas de reponse formatee. Le jury detecte le faux.",
       "Tu as un blanc : respire, reformule la question a voix haute, ca relance la reflexion.",
       "Le jury a l'air ennuye : change de rythme, pose une question rethorique, fais une transition plus dynamique.",
+      "On te demande 'Vous n'avez rien d'autre a ajouter ?' : c'est une INVITATION a completer, pas un piege. Ajoute un point que tu n'as pas developpe.",
     ]
   },
   exemplesReponses: [
@@ -695,13 +813,13 @@ const DATA = {
       reponse: {
         intro: "Cette situation met en tension le respect de la vie privee de mon voisin et la protection d'un animal en danger. C'est un dilemme entre non-intervention et devoir d'agir.",
         developpement: [
-          "D'abord, j'evaluais la gravite immediate : l'animal est-il en detresse visible (halètement, apathie) ? Si oui, c'est une urgence.",
-          "En premier lieu, je tenterais le dialogue avec mon voisin — peut-etre n'a-t-il pas conscience du danger. L'approche non-confrontationnelle est prefereable.",
-          "Si le dialogue echoue ou est impossible, je peux contacter les autorites competentes (police municipale, SPA) car la loi protege les animaux contre la maltraitance.",
+          "D'abord, j'evalue la gravite immediate : l'animal est-il en detresse visible (haletement, apathie) ? Si oui, c'est une urgence.",
+          "En premier lieu, je tente le dialogue avec mon voisin — peut-etre n'a-t-il pas conscience du danger. L'approche non-confrontationnelle est preferable.",
+          "Si le dialogue echoue ou est impossible, je contacte les autorites competentes (police municipale, SPA) car la loi protege les animaux contre la maltraitance.",
           "En cas d'urgence vitale immediate, la loi autorise un citoyen a agir pour sauver un animal en danger de mort (casser la vitre en dernier recours, avec temoins)."
         ],
         conclusion: "Je privilegie toujours la desescalade et le dialogue, mais ma responsabilite de citoyen m'impose d'agir si une vie est en danger, qu'elle soit humaine ou animale.",
-        ouverture: "Cela pose la question plus large de notre rapport aux animaux et de leur statut juridique en France (les animaux sont des 'etres vivants doues de sensibilite' depuis 2015)."
+        ouverture: "Cela pose la question plus large de notre rapport aux animaux et de leur statut juridique — depuis 2015, ce sont des 'etres vivants doues de sensibilite'."
       }
     },
     {
@@ -710,26 +828,99 @@ const DATA = {
       reponse: {
         intro: "Cette photographie montre une personne sans domicile fixe allongee devant l'entree d'un service d'urgences hospitalier. Le contraste entre la precarite de cette personne et le batiment de soins cree une tension visuelle forte.",
         developpement: [
-          "Observation : on voit un individu couche sur des cartons, probablement en hiver (vetements epais). En arriere-plan, l'enseigne lumineuse 'Urgences' est visible. Le cadrage met en evidence la proximite paradoxale entre lieu de soins et precarite.",
-          "Premiere problematique : l'acces aux soins des personnes precaires. Bien que les urgences soient ouvertes a tous, les barrières sont multiples (administrative, peur du jugement, meconnaissance des droits).",
-          "Deuxieme problematique : l'hopital a-t-il un role social au-dela du soin ? Les PASS (Permanences d'Acces aux Soins de Sante) existent mais sont debordees.",
+          "Observation : on voit un individu couche sur des cartons, probablement en hiver (vetements epais). L'enseigne lumineuse 'Urgences' est visible. Le cadrage met en evidence la proximite paradoxale entre lieu de soins et precarite.",
+          "Premiere problematique : l'acces aux soins des personnes precaires. Les urgences sont ouvertes a tous, mais les barrieres sont multiples (administrative, peur du jugement, meconnaissance des droits).",
+          "Deuxieme problematique : l'hopital a-t-il un role social au-dela du soin ? Les PASS existent mais sont debordees.",
           "Esprit critique : cette photo a pu etre cadree pour accentuer le contraste. Elle ne montre pas les dispositifs existants (maraudes, SAMU social, lits halte soins sante)."
         ],
-        conclusion: "Cette image revele les inegalites sociales de sante au coeur meme du systeme de soins. Elle questionne notre modele : soigner ne suffit pas si les determinants sociaux ne sont pas pris en compte.",
-        ouverture: "Cela rejoint le concept de 'medecine sociale' et les travaux sur les determinants sociaux de la sante (logement, alimentation, lien social)."
+        conclusion: "Cette image revele les inegalites sociales de sante au coeur meme du systeme de soins. Soigner ne suffit pas si les determinants sociaux ne sont pas pris en compte.",
+        ouverture: "Cela rejoint le concept de 'medecine sociale' et les travaux sur les determinants sociaux de la sante."
       }
-    }
+    },
+    {
+      question: "Les parents d'un enfant de 5 ans refusent de le faire vacciner. Quelle est votre position ?",
+      type: "RPC",
+      reponse: {
+        intro: "Cette situation cree une tension entre la liberte parentale de faire des choix pour leur enfant et la protection de la sante de l'enfant et de la collectivite.",
+        developpement: [
+          "Du point de vue des parents : ils exercent leur autorite parentale et peuvent avoir des peurs legitimes (effets secondaires, informations contradictoires sur Internet). Ils agissent probablement par amour et par souci de protection.",
+          "Du point de vue medical : les 11 vaccins obligatoires ont un rapport benefice/risque scientifiquement prouve. Les effets secondaires graves sont extremement rares. Ne pas vacciner expose l'enfant ET les enfants immunodeprimes qui ne peuvent pas etre vaccines.",
+          "Du point de vue juridique : depuis 2018, ces 11 vaccins sont obligatoires. L'enfant ne peut etre admis en collectivite sans. C'est une obligation legale, pas un choix.",
+          "L'approche ideale : ecouter les peurs des parents sans les juger, expliquer avec pedagogie, leur laisser le temps de reflechir. Si refus persistant : rappeler les obligations legales et les consequences pour l'enfant."
+        ],
+        conclusion: "La liberte individuelle s'arrete la ou la sante publique commence. Mais la contrainte seule ne suffit pas — il faut retablir la confiance par le dialogue et la transparence.",
+        ouverture: "Cela renvoie a la question plus large de la confiance envers la medecine et la science, mise a mal par les scandales sanitaires et la desinformation en ligne."
+      }
+    },
+    {
+      question: "L'intelligence artificielle va-t-elle remplacer les medecins ? Discutez.",
+      type: "RPC",
+      reponse: {
+        intro: "Cette question oppose la promesse technologique de l'IA a la dimension humaine irreductible de la medecine. C'est un sujet qui melange fascination et inquietude.",
+        developpement: [
+          "Ce que l'IA fait deja mieux : en radiologie et dermatologie, les algorithmes atteignent des taux de detection superieurs aux medecins pour certaines pathologies. L'IA peut aussi analyser des milliers d'articles scientifiques en quelques secondes.",
+          "Ce que l'IA ne peut pas faire : toucher un patient, percevoir son angoisse, adapter son discours a sa personnalite, faire preuve d'empathie, prendre une decision ethique dans l'incertitude. Le soin est une relation, pas un algorithme.",
+          "Les risques : biais algorithmiques (donnees d'entrainement qui sous-representent certaines populations), 'boite noire' (decisions non explicables), deresponsabilisation du medecin. Qui est responsable si l'IA se trompe ?",
+          "La bonne question n'est pas 'l'IA va-t-elle remplacer ?' mais 'comment l'integrer intelligemment ?'. L'IA comme outil d'aide a la decision, pas comme decisionnaire."
+        ],
+        conclusion: "L'IA transformera profondement la pratique medicale, mais ne remplacera pas le medecin. Elle le liberera des taches repetitives pour qu'il se concentre sur ce qui fait le coeur du metier : la relation humaine.",
+        ouverture: "Cela pose aussi la question de la formation des futurs medecins : faudra-t-il integrer des cours de data science et d'ethique de l'IA dans le cursus ?"
+      }
+    },
+    {
+      question: "Photo d'un ecran de telemedicine montrant un medecin et un patient age. Discutez.",
+      type: "ARED",
+      reponse: {
+        intro: "Cette image montre un ecran d'ordinateur ou de tablette sur lequel un medecin en blouse blanche echange avec un patient age. C'est une illustration concrete de la telemedicine, qui s'est imposee depuis la pandemie.",
+        developpement: [
+          "Observation : l'ecran est divise en deux — le medecin a gauche, le patient a droite. Le patient semble age (cheveux blancs), possiblement a son domicile. Le medecin porte une blouse, signe de professionnalisme maintenu malgre la distance.",
+          "Avantages : acces aux soins pour les personnes a mobilite reduite, les zones rurales sans medecin, reduction du temps d'attente. 10% des consultations se font en telemedicine en 2024.",
+          "Limites : fracture numerique (25% des plus de 75 ans ne maitrisent pas les outils numeriques), impossibilite de l'examen clinique, perte du langage non-verbal subtil, risque de deshumanisation.",
+          "Esprit critique : cette image montre un cas 'ideal' — patient connecte, a l'aise avec la technologie. Elle ne montre pas les echecs : connexion qui coupe, patient isole sans materiel, medecin fatigue par l'enchainement de teleconsultations."
+        ],
+        conclusion: "La telemedicine est un outil complementaire precieux mais ne peut pas se substituer au contact humain, surtout pour les personnes agees ou les situations complexes.",
+        ouverture: "Cela questionne plus largement la place du numerique dans le soin : comment innover sans exclure ?"
+      }
+    },
+    {
+      question: "Comment annoncer a une famille le deces d'un proche ?",
+      type: "RPC",
+      reponse: {
+        intro: "L'annonce d'un deces est l'un des actes les plus difficiles de la pratique medicale. C'est un moment ou les mots ont un poids considerable et ou l'humanite du soignant est mise a l'epreuve.",
+        developpement: [
+          "La preparation : trouver un lieu calme et intime, s'assurer de connaitre les circonstances exactes du deces, verifier l'identite de la famille. Ne JAMAIS annoncer dans un couloir ou par telephone si evitable.",
+          "Les mots : aller a l'essentiel apres un court preambule. Utiliser des mots clairs — dire 'votre pere est decede' et non 'il nous a quittes' pour eviter toute ambiguite. Le silence qui suit est normal et necessaire.",
+          "L'attitude : etre present physiquement, maintenir le contact visuel, ne pas fuir apres l'annonce. Laisser la famille exprimer ses emotions (colere, pleurs, sideration) sans les interrompre. Ne pas dire 'je comprends votre douleur' — on ne comprend pas.",
+          "L'apres : proposer de voir le corps si c'est possible, donner des informations pratiques (demarches), proposer un soutien psychologique. Laisser un numero pour recontacter si besoin."
+        ],
+        conclusion: "Il n'y a pas de 'bonne' facon d'annoncer un deces — il y a des facons moins brutales. L'essentiel est d'etre authentique, present et respectueux du temps de la famille.",
+        ouverture: "Cela souleve la question de la formation des soignants a ces situations : l'empathie s'apprend-elle, et comment preparer les futurs medecins a ces moments ?"
+      }
+    },
+    {
+      question: "Photo de militants ecologistes bloquant une autoroute. Analysez la situation.",
+      type: "ARED",
+      reponse: {
+        intro: "Cette photographie montre un groupe de personnes assises au milieu d'une autoroute, bloquant la circulation. Des banderoles sont visibles, indiquant une action militante ecologiste.",
+        developpement: [
+          "Observation : des individus (probablement jeunes) sont assis sur le bitume. Derriere eux, des files de voitures a l'arret. Des forces de l'ordre sont presentes. Les banderoles evoquent l'urgence climatique.",
+          "Premiere problematique : la desobeissance civile est-elle legitime quand les institutions ne repondent pas a l'urgence ? L'histoire montre que des droits ont ete conquis par la desobeissance (droits civiques, suffragettes).",
+          "Deuxieme problematique : le blocage perturbe des personnes qui doivent aller au travail, a l'hopital, chercher leurs enfants. L'action fait aussi des 'victimes collerales' qui n'ont rien demande.",
+          "Esprit critique : la photo est cadree pour montrer le contraste militants/automobilistes. Elle ne montre pas le contexte — est-ce une action isolee ou la enieme apres des annees d'inaction politique ?"
+        ],
+        conclusion: "La question n'est pas 'ont-ils le droit ?' mais 'la gravite de la cause justifie-t-elle ce moyen ?'. La reponse depend du rapport entre urgence climatique et liberte de circulation.",
+        ouverture: "Cela renvoie au concept de 'dilemme du bien commun' : comment agir pour la planete sans pieger le quotidien de ceux qu'on veut proteger ?"
+      }
+    },
   ]
 };
 
-// ===== APP =====
 const { createElement: h, useState, useEffect, useCallback, useMemo, Fragment } = React;
 
 function App() {
   const [view, setView] = useState('accueil');
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
-  const [subView, setSubView] = useState(0);
   const [done, setDone] = useState(() => {
     try { return JSON.parse(localStorage.getItem('oral-pass-done') || '{}'); } catch { return {}; }
   });
@@ -740,7 +931,8 @@ function App() {
   const [practiceQ, setPracticeQ] = useState(null);
   const [timer, setTimer] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
-  const [showExample, setShowExample] = useState(null);
+  const [evalChecks, setEvalChecks] = useState({});
+  const [showEval, setShowEval] = useState(false);
 
   useEffect(() => { localStorage.setItem('oral-pass-done', JSON.stringify(done)); }, [done]);
   useEffect(() => { localStorage.setItem('oral-pass-notes', JSON.stringify(notes)); }, [notes]);
@@ -752,6 +944,7 @@ function App() {
   }, [timerRunning]);
 
   const toggleDone = (key) => setDone(d => ({ ...d, [key]: !d[key] }));
+  const toggleEval = (key) => setEvalChecks(e => ({ ...e, [key]: !e[key] }));
 
   const allQuestions = useMemo(() => {
     const all = [];
@@ -781,6 +974,7 @@ function App() {
     let source = allQuestions;
     if (view === 'rpc') source = allQuestions.filter(q => q.type === 'RPC');
     else if (view === 'ared') source = allQuestions.filter(q => q.type === 'ARED');
+    else if (view === 'motivation') source = allQuestions.filter(q => q.type === 'Motivation');
     source.forEach(q => set.add(q.theme));
     return Array.from(set).sort();
   }, [view, allQuestions]);
@@ -797,11 +991,18 @@ function App() {
     setPracticeMode(true);
     setTimer(0);
     setTimerRunning(true);
+    setShowEval(false);
+    setEvalChecks({});
   };
 
   const nextPractice = () => {
     if (practiceQ) toggleDone(practiceQ.id);
     startPractice(practiceQ?.type === 'RPC' ? 'RPC' : practiceQ?.type === 'ARED' ? 'ARED' : null);
+  };
+
+  const stopPractice = () => {
+    setTimerRunning(false);
+    setShowEval(true);
   };
 
   const formatTimer = (s) => {
@@ -817,13 +1018,14 @@ function App() {
     }
   };
 
-  // === RENDERS ===
   const renderNav = () => h('nav', { className: 'nav' },
     [
       ['accueil', 'Accueil'],
-      ['rpc', 'RPC (Epreuve 1)'],
-      ['ared', 'ARED (Epreuve 2)'],
+      ['rpc', 'Epreuve 1 — RPC'],
+      ['ared', 'Epreuve 2 — ARED'],
+      ['motivation', 'Motivation'],
       ['methodo', 'Methodologie'],
+      ['fiches', 'Fiches thematiques'],
       ['exemples', 'Exemples corriges'],
       ['actualites', 'Actualites 2026'],
       ['jourj', 'Jour J'],
@@ -832,7 +1034,7 @@ function App() {
       h('button', {
         key,
         className: 'nav__btn' + (view === key ? ' nav__btn--active' : ''),
-        onClick: () => { setView(key); setFilter('all'); setSearch(''); setPracticeMode(false); setSubView(0); }
+        onClick: () => { setView(key); setFilter('all'); setSearch(''); setPracticeMode(false); setShowEval(false); }
       }, label)
     )
   );
@@ -850,14 +1052,15 @@ function App() {
     h('div', { className: 'info-panel', style: { borderLeft: '3px solid var(--accent)' } },
       h('div', { className: 'info-panel__title' }, 'Preparation complete a l\'oral PASS Sorbonne 2026'),
       h('div', { className: 'info-panel__content' },
-        h('p', null, 'Cette application regroupe TOUT ce dont tu as besoin pour preparer l\'oral :'),
+        h('p', null, 'Cette application regroupe TOUT ce dont tu as besoin :'),
         h('ul', null,
           h('li', null, h('strong', null, totalQ + ' questions'), ' classees par epreuve et thematique'),
           h('li', null, h('strong', null, 'Methodologie detaillee'), ' pour chaque type d\'epreuve'),
-          h('li', null, h('strong', null, 'Exemples de reponses structurees'), ' pour comprendre ce qui est attendu'),
-          h('li', null, h('strong', null, 'Actualites 2025-2026'), ' a connaitre pour nourrir tes arguments'),
+          h('li', null, h('strong', null, '8 fiches thematiques'), ' avec arguments pour/contre prets a l\'emploi'),
+          h('li', null, h('strong', null, DATA.exemplesReponses.length + ' exemples de reponses'), ' structurees et commentees'),
+          h('li', null, h('strong', null, DATA.actualites.length + ' actualites 2025-2026'), ' a connaitre'),
           h('li', null, h('strong', null, 'Guide jour J'), ' : de la veille a la sortie de l\'epreuve'),
-          h('li', null, h('strong', null, 'Mode entrainement'), ' avec chronometre 10 minutes')
+          h('li', null, h('strong', null, 'Entrainement chrono'), ' + grille d\'auto-evaluation')
         ),
         h('p', { style: { marginTop: '0.8rem', fontStyle: 'italic', color: 'var(--text-muted)' } }, 'Clique sur une question pour la marquer comme travaillee. Ta progression est sauvegardee automatiquement.')
       )
@@ -976,7 +1179,7 @@ function App() {
     h('div', { className: 'method-card' },
       h('div', { className: 'method-card__title' }, 'Methode ARED — Analyse d\'une Photo de Presse'),
       h('ol', { className: 'method-card__steps' },
-        h('li', null, h('strong', null, 'OBSERVER'), ' — decrire OBJECTIVEMENT ce qu\'on voit (plan, personnages, lieu, objets, couleurs, cadrage)'),
+        h('li', null, h('strong', null, 'OBSERVER'), ' — decrire OBJECTIVEMENT ce qu\'on voit (plan, personnages, lieu, objets, cadrage)'),
         h('li', null, h('strong', null, 'CONTEXTUALISER'), ' — epoque probable, evenement, source, intention du photographe'),
         h('li', null, h('strong', null, 'ANALYSER'), ' — emotions transmises, symboles, contrastes, ce qui frappe'),
         h('li', null, h('strong', null, 'PROBLEMATISER'), ' — quelle(s) question(s) de societe cette image souleve-t-elle ?'),
@@ -987,12 +1190,12 @@ function App() {
       )
     ),
     h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Conseils generaux — Ce que le jury ATTEND'),
+      h('div', { className: 'method-card__title' }, 'Ce que le jury ATTEND'),
       h('ol', { className: 'method-card__steps' },
         h('li', null, h('strong', null, 'STRUCTURE'), ' — Toujours intro/dev/conclusion. Le jury voit en 10 secondes si tu es organise.'),
         h('li', null, h('strong', null, 'NUANCE'), ' — JAMAIS d\'avis tranche sans considerer l\'argument oppose. C\'est le critere n°1.'),
         h('li', null, h('strong', null, 'POSTURE'), ' — Regard franc, voix posee, pas de tics. Assurance sans arrogance.'),
-        h('li', null, h('strong', null, 'EMPATHIE'), ' — Montrer qu\'on se soucie des personnes impliquees dans la situation.'),
+        h('li', null, h('strong', null, 'EMPATHIE'), ' — Montrer qu\'on se soucie des personnes impliquees.'),
         h('li', null, h('strong', null, 'HUMILITE'), ' — Si tu ne sais pas, dis-le. Ne jamais inventer.'),
         h('li', null, h('strong', null, 'TIMING'), ' — Viser 8-9 minutes sur 10. Ni trop court, ni depasser.'),
         h('li', null, h('strong', null, 'AUTHENTICITE'), ' — Le jury detecte le par-coeur. Sois toi-meme avec un cadre.')
@@ -1031,21 +1234,56 @@ function App() {
         h('li', null, '"Si je me mets a la place de [acteur]..." (pour montrer l\'empathie)'),
         h('li', null, '"C\'est un argument interessant, et en effet..." (quand le jury contredit)'),
         h('li', null, '"Pour aller plus loin, on pourrait aussi se demander..." (pour l\'ouverture)'),
-        h('li', null, '"Je n\'ai pas de reponse definitive, mais je pense que..." (pour l\'humilite)')
+        h('li', null, '"Je n\'ai pas de reponse definitive, mais je pense que..." (pour l\'humilite)'),
+        h('li', null, '"On pourrait objecter que... et c\'est vrai, mais..." (pour anticiper les critiques)')
+      )
+    )
+  );
+
+  const renderFiches = () => h('div', null,
+    h('div', { className: 'info-panel', style: { marginBottom: '1.5rem', borderLeft: '3px solid var(--accent)' } },
+      h('div', { className: 'info-panel__title' }, 'Fiches thematiques — Arguments prets a l\'emploi'),
+      h('div', { className: 'info-panel__content' },
+        'Chaque fiche contient les arguments POUR et CONTRE, les lois cles, et le piege a eviter. Ce ne sont PAS des reponses toutes faites — ce sont des briques a assembler dans ta reflexion.'
+      )
+    ),
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '1rem' } },
+      DATA.fichesThematiques.map((f, i) =>
+        h('div', { key: i, className: 'fiche-card', style: { borderTop: '3px solid ' + f.color } },
+          h('div', { className: 'fiche-card__title' }, f.theme),
+          h('div', { className: 'fiche-card__args' },
+            h('strong', { style: { color: 'var(--success)' } }, 'ARGUMENTS POUR :'),
+            h('ul', { style: { paddingLeft: '1rem', margin: '0.3rem 0 0.8rem' } },
+              f.pour.map((a, j) => h('li', { key: j }, a))
+            ),
+            h('strong', { style: { color: 'var(--danger)' } }, 'ARGUMENTS CONTRE :'),
+            h('ul', { style: { paddingLeft: '1rem', margin: '0.3rem 0 0.8rem' } },
+              f.contre.map((a, j) => h('li', { key: j }, a))
+            ),
+            h('div', { style: { padding: '0.5rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', marginBottom: '0.5rem' } },
+              h('strong', { style: { color: 'var(--info)' } }, 'LOI CLE : '),
+              h('span', null, f.lois)
+            ),
+            h('div', { style: { padding: '0.5rem', background: 'var(--warning-bg)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid var(--warning)' } },
+              h('strong', { style: { color: 'var(--warning)' } }, 'PIEGE A EVITER : '),
+              h('span', null, f.piege)
+            )
+          )
+        )
       )
     )
   );
 
   const renderExemples = () => h('div', null,
     h('div', { className: 'info-panel', style: { marginBottom: '1.5rem' } },
-      h('div', { className: 'info-panel__title' }, 'Exemples de reponses structurees'),
+      h('div', { className: 'info-panel__title' }, DATA.exemplesReponses.length + ' exemples de reponses structurees'),
       h('div', { className: 'info-panel__content' }, 'Ces exemples montrent la STRUCTURE attendue. Ne les apprends pas par coeur — comprends le schema et adapte-le a chaque sujet.')
     ),
     DATA.exemplesReponses.map((ex, i) =>
       h('div', { key: i, className: 'method-card' },
         h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' } },
           h('span', { className: 'question__tag question__tag--type' }, ex.type),
-          h('span', { style: { fontSize: '0.7rem', color: 'var(--text-muted)' } }, 'Exemple ' + (i + 1))
+          h('span', { style: { fontSize: '0.7rem', color: 'var(--text-muted)' } }, 'Exemple ' + (i + 1) + '/' + DATA.exemplesReponses.length)
         ),
         h('div', { style: { fontSize: '0.9rem', fontWeight: 500, marginBottom: '1rem', padding: '0.8rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid var(--accent)' } }, ex.question),
         h('div', { className: 'example' },
@@ -1072,9 +1310,9 @@ function App() {
 
   const renderActualites = () => h('div', null,
     h('div', { className: 'info-panel', style: { marginBottom: '1.5rem', borderLeft: '3px solid var(--warning)' } },
-      h('div', { className: 'info-panel__title' }, 'Actualites a maitriser pour l\'oral 2026'),
+      h('div', { className: 'info-panel__title' }, DATA.actualites.length + ' actualites a maitriser pour l\'oral 2026'),
       h('div', { className: 'info-panel__content' },
-        'Ces sujets sont les plus susceptibles de tomber car ils font debat dans l\'actualite recente. Tu n\'as pas besoin de tout savoir — mais connaitre les grandes lignes et les arguments principaux est essentiel pour enrichir tes analyses.'
+        'Ces sujets sont les plus susceptibles de tomber. Tu n\'as pas besoin de tout savoir — mais connaitre les grandes lignes et les arguments principaux est essentiel. Les sujets marques "TRES PROBABLE" sont a connaitre en priorite.'
       )
     ),
     h('div', { className: 'actu-grid' },
@@ -1094,7 +1332,7 @@ function App() {
   const renderJourJ = () => h('div', null,
     h('div', { className: 'info-panel', style: { marginBottom: '1.5rem', borderLeft: '3px solid var(--success)' } },
       h('div', { className: 'info-panel__title' }, 'Guide complet du Jour J'),
-      h('div', { className: 'info-panel__content' }, 'De la preparation la veille jusqu\'a la sortie de la salle — tout ce qu\'il faut savoir pour etre au top le jour de l\'oral.')
+      h('div', { className: 'info-panel__content' }, 'De la preparation la veille jusqu\'a la sortie de la salle — tout pour etre au top le jour de l\'oral.')
     ),
     h('div', { className: 'method-card' },
       h('div', { className: 'method-card__title' }, 'Avant le jour J'),
@@ -1150,12 +1388,64 @@ function App() {
     )
   );
 
+  const renderAutoEval = () => h('div', { style: { marginTop: '1.5rem' } },
+    h('div', { className: 'method-card', style: { borderLeft: '3px solid var(--success)' } },
+      h('div', { className: 'method-card__title', style: { color: 'var(--success)' } }, 'Auto-evaluation — Coche ce que tu as reussi'),
+      DATA.autoEvaluation.map((cat, ci) =>
+        h('div', { key: ci, style: { marginBottom: '1rem' } },
+          h('div', { style: { fontSize: '0.76rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.4rem' } }, cat.cat),
+          h('div', { className: 'eval-grid' },
+            cat.items.map((item, ii) => {
+              const key = ci + '-' + ii;
+              return h('div', {
+                key: key,
+                className: 'eval-item' + (evalChecks[key] ? ' eval-item--checked' : ''),
+                onClick: () => toggleEval(key)
+              },
+                h('div', { className: 'eval-check' + (evalChecks[key] ? ' eval-check--on' : '') }, evalChecks[key] ? '✓' : ''),
+                h('span', null, item)
+              );
+            })
+          )
+        )
+      ),
+      h('div', { style: { marginTop: '1rem', padding: '0.8rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', textAlign: 'center' } },
+        h('span', { style: { fontSize: '1.2rem', fontWeight: 700, color: 'var(--accent-light)' } },
+          Object.values(evalChecks).filter(Boolean).length + '/' + DATA.autoEvaluation.reduce((acc, c) => acc + c.items.length, 0)
+        ),
+        h('span', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginLeft: '0.5rem' } }, 'criteres valides')
+      )
+    )
+  );
+
   const renderPractice = () => {
+    if (showEval && practiceQ) {
+      return h('div', null,
+        h('div', { className: 'practice' },
+          h('div', { className: 'practice__type' }, 'Resultat — ' + practiceQ.type),
+          h('div', { style: { fontSize: '0.9rem', margin: '1rem 0', color: 'var(--text-secondary)' } }, practiceQ.q),
+          h('div', { className: 'practice__timer', style: { color: timer > 600 ? 'var(--danger)' : timer >= 480 && timer <= 600 ? 'var(--success)' : 'var(--warning)' } },
+            formatTimer(timer)
+          ),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1rem' } },
+            timer >= 480 && timer <= 600 ? 'Excellent timing ! Entre 8 et 10 minutes.' :
+            timer > 600 ? 'Tu as depasse les 10 minutes. Travaille la concision.' :
+            timer < 420 ? 'Trop court ! Developpe davantage tes arguments.' :
+            'Correct, mais vise 8-9 minutes pour laisser du temps au jury.'
+          ),
+          h('div', { style: { display: 'flex', gap: '0.5rem', justifyContent: 'center' } },
+            h('button', { className: 'btn btn--success', onClick: nextPractice }, 'Question suivante'),
+            h('button', { className: 'btn btn--secondary', onClick: () => { setPracticeMode(false); setShowEval(false); } }, 'Retour')
+          )
+        ),
+        renderAutoEval()
+      );
+    }
     if (!practiceMode) {
       return h('div', { style: { textAlign: 'center' } },
         h('h2', { style: { marginBottom: '0.5rem', fontFamily: 'Playfair Display' } }, 'Mode Entrainement'),
         h('p', { style: { color: 'var(--text-secondary)', marginBottom: '0.5rem', fontSize: '0.88rem' } },
-          'Conditions reelles : une question au hasard, 10 minutes chrono.'
+          'Conditions reelles : une question au hasard, 10 minutes chrono, puis auto-evaluation.'
         ),
         h('p', { style: { color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '0.78rem' } },
           'Conseil : reponds a voix haute, debout si possible. Enregistre-toi avec ton telephone pour te reecouter.'
@@ -1163,15 +1453,17 @@ function App() {
         h('div', { style: { display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' } },
           h('button', { className: 'btn btn--primary', onClick: () => startPractice('RPC') }, 'Question RPC'),
           h('button', { className: 'btn btn--primary', onClick: () => startPractice('ARED') }, 'Question ARED'),
+          h('button', { className: 'btn btn--secondary', onClick: () => startPractice('Motivation') }, 'Motivation'),
           h('button', { className: 'btn btn--secondary', onClick: () => startPractice(null) }, 'Aleatoire')
         ),
-        h('div', { style: { marginTop: '2rem', padding: '1rem', background: 'var(--bg-card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' } },
+        h('div', { style: { marginTop: '2rem', padding: '1rem', background: 'var(--bg-card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'left' } },
           h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem', fontWeight: 600 } }, 'PROTOCOLE D\'ENTRAINEMENT RECOMMANDE'),
           h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '1. Lis la question et demarre le chrono'),
           h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '2. Prends 30s-1min pour structurer tes idees (note 3-4 mots-cles)'),
           h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '3. Reponds a voix haute pendant 8-9 minutes'),
-          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '4. Reecoute-toi et identifie 1 point a ameliorer'),
-          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '5. Marque comme "travaillee" et passe a la suivante')
+          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '4. Clique "Terminer" pour voir ta grille d\'auto-evaluation'),
+          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '5. Evalue-toi honnetement, identifie 1 point a ameliorer'),
+          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '6. Passe a la suivante')
         )
       );
     }
@@ -1184,17 +1476,17 @@ function App() {
         formatTimer(timer)
       ),
       h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1rem' } },
-        isOverTime ? 'TEMPS DEPASSE — Le jury t\'aurait coupe.' :
-        isWarning ? 'Attention — il te reste moins de 2 minutes. Pense a conclure.' :
+        isOverTime ? 'TEMPS DEPASSE — Le jury t\'aurait coupe !' :
+        isWarning ? 'Derniere ligne droite — pense a conclure maintenant.' :
         timer < 60 ? 'Prends 30s pour structurer tes idees avant de parler.' :
         'Objectif : terminer entre 8 et 10 minutes'
       ),
       h('div', { style: { display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' } },
-        h('button', { className: 'btn btn--success', onClick: nextPractice }, '✓ Suivante'),
+        h('button', { className: 'btn btn--success', onClick: stopPractice }, '✓ Terminer et s\'evaluer'),
         h('button', { className: 'btn btn--secondary', onClick: () => setTimerRunning(!timerRunning) },
           timerRunning ? '⏸ Pause' : '▶ Reprendre'
         ),
-        h('button', { className: 'btn btn--danger', onClick: () => { setPracticeMode(false); setTimerRunning(false); } }, '✖ Arreter')
+        h('button', { className: 'btn btn--danger', onClick: () => { setPracticeMode(false); setTimerRunning(false); setShowEval(false); } }, '✖ Abandonner')
       )
     );
   };
@@ -1206,6 +1498,7 @@ function App() {
       case 'ared': return renderQuestionList();
       case 'motivation': return renderQuestionList();
       case 'methodo': return renderMethodo();
+      case 'fiches': return renderFiches();
       case 'exemples': return renderExemples();
       case 'actualites': return renderActualites();
       case 'jourj': return renderJourJ();
@@ -1218,7 +1511,7 @@ function App() {
     h('header', { className: 'header' },
       h('div', { className: 'header__badge' }, 'PASS Sorbonne Universite 2026'),
       h('div', { className: 'header__title' }, 'Preparation Oral Medecine'),
-      h('div', { className: 'header__subtitle' }, totalQ + ' questions · Methodologie · Exemples corriges · Actualites · Guide jour J · Entrainement chrono')
+      h('div', { className: 'header__subtitle' }, totalQ + ' questions · Fiches thematiques · ' + DATA.exemplesReponses.length + ' exemples corriges · ' + DATA.actualites.length + ' actualites · Guide jour J · Entrainement + auto-eval')
     ),
     renderNav(),
     renderContent(),
