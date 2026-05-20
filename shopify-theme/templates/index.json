@@ -1,0 +1,115 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Nouveau · Édition limitée",
+        "heading": "<p>La lumière, ce nouveau <em>geste de beauté.</em></p>",
+        "lead": "Découvrez les masques LED de luminothérapie les plus avancés. Une routine de 10 minutes par jour pour révéler l'éclat naturel de votre peau, depuis le confort de votre maison.",
+        "cta_primary_label": "Découvrir le CryoGlow",
+        "cta_secondary_label": "Voir la gamme",
+        "show_rating": true,
+        "rating_value": "4,8/5",
+        "rating_text": "plus de 1 200 avis vérifiés"
+      }
+    },
+    "promise": {
+      "type": "promise-strip",
+      "blocks": {
+        "p1": { "type": "item", "settings": { "icon": "truck", "title": "Livraison offerte", "subtitle": "Dès 150€ · expédié en 24h" } },
+        "p2": { "type": "item", "settings": { "icon": "check-circle", "title": "Cliniquement testé", "subtitle": "Études dermatologiques" } },
+        "p3": { "type": "item", "settings": { "icon": "shield", "title": "Garantie 2 ans", "subtitle": "Satisfait ou remboursé" } },
+        "p4": { "type": "item", "settings": { "icon": "card", "title": "Paiement 3× sans frais", "subtitle": "Via Klarna ou Alma" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"]
+    },
+    "featured": {
+      "type": "featured-product-hero",
+      "settings": {
+        "tag": "Best-seller · Édition Paris",
+        "eyebrow": "Le best-seller",
+        "heading": "<p>Shark CryoGlow™ <em>Édition Paris</em></p>",
+        "description": "Le masque LED le plus complet de notre sélection. Trois longueurs d'onde scientifiquement étudiées, une cryothérapie sous les yeux pour décongestionner les poches, et une télécommande intelligente. Pensé pour un rituel quotidien en 10 minutes seulement.",
+        "secondary_label": "La science"
+      },
+      "blocks": {
+        "s1": { "type": "spec", "settings": { "value": "3", "label": "Longueurs d'onde LED" } },
+        "s2": { "type": "spec", "settings": { "value": "10 min", "label": "Séance quotidienne" } },
+        "s3": { "type": "spec", "settings": { "value": "−7°C", "label": "Cryothérapie sous les yeux" } },
+        "s4": { "type": "spec", "settings": { "value": "4 semaines", "label": "Résultats visibles" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "collection": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "La gamme",
+        "heading": "<p>Quatre masques, <em>un rituel.</em></p>",
+        "subheading": "Du visage au décolleté, en passant par le contour des yeux, notre sélection couvre tous les besoins d'une routine de luminothérapie complète.",
+        "products_to_show": 4,
+        "anchor": "gamme"
+      }
+    },
+    "rituel": {
+      "type": "ritual",
+      "settings": {
+        "eyebrow": "Le rituel",
+        "heading": "<p>Dix minutes par jour, <em>vingt-huit jours.</em></p>",
+        "subheading": "Un protocole simple, conçu pour s'intégrer naturellement à votre routine du matin ou du soir.",
+        "anchor": "rituel"
+      },
+      "blocks": {
+        "step1": { "type": "step", "settings": { "number": "I.", "title": "Préparer", "description": "Sur peau nettoyée et démaquillée, appliquez votre sérum habituel pour préparer la peau à recevoir la lumière." } },
+        "step2": { "type": "step", "settings": { "number": "II.", "title": "Illuminer", "description": "Positionnez le masque, choisissez votre programme et profitez d'une séance de 10 minutes les yeux fermés." } },
+        "step3": { "type": "step", "settings": { "number": "III.", "title": "Sceller", "description": "Terminez par votre crème de jour ou de nuit pour sceller les bénéfices et nourrir la peau en profondeur." } }
+      },
+      "block_order": ["step1", "step2", "step3"]
+    },
+    "science": {
+      "type": "science",
+      "settings": {
+        "eyebrow": "La science",
+        "heading": "<p>Trois lumières, <em>trois promesses.</em></p>",
+        "subheading": "La luminothérapie LED repose sur des longueurs d'onde précises, chacune ciblant une couche spécifique de la peau. Validée par plus de 30 ans de recherche dermatologique.",
+        "anchor": "science"
+      },
+      "blocks": {
+        "w1": { "type": "wavelength", "settings": { "color": "red", "wavelength": "633", "title": "Lumière rouge · Anti-âge", "description": "Stimule la production de collagène et d'élastine dans le derme. La référence pour atténuer les rides et raffermir la peau.", "bullet_1": "Réduit les rides et ridules", "bullet_2": "Stimule le collagène naturel", "bullet_3": "Améliore l'élasticité" } },
+        "w2": { "type": "wavelength", "settings": { "color": "blue", "wavelength": "415", "title": "Lumière bleue · Anti-imperfections", "description": "Cible la bactérie responsable de l'acné (P. acnes) et purifie les pores en profondeur, sans assécher la peau.", "bullet_1": "Réduit les imperfections", "bullet_2": "Purifie les pores", "bullet_3": "Apaise les inflammations" } },
+        "w3": { "type": "wavelength", "settings": { "color": "amber", "wavelength": "590", "title": "Lumière ambrée · Éclat", "description": "Unifie le teint, atténue les rougeurs et les taches pigmentaires, et redonne instantanément un effet bonne mine.", "bullet_1": "Unifie le teint", "bullet_2": "Atténue les rougeurs", "bullet_3": "Apporte de l'éclat" } }
+      },
+      "block_order": ["w1", "w2", "w3"]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "eyebrow": "Elles témoignent",
+        "heading": "<p>Plus de 12 000 routines <em>transformées.</em></p>"
+      },
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "rating": 5, "quote": "En trois semaines, mes ridules au coin des yeux se sont visiblement estompées. Je n'aurais jamais cru qu'un masque LED pouvait remplacer mes soins en institut.", "author": "Claire L.", "initials": "CL", "location": "Cliente vérifiée · Paris 16e" } },
+        "t2": { "type": "testimonial", "settings": { "rating": 5, "quote": "La cryothérapie sous les yeux le matin, c'est une révélation. Plus aucune trace de fatigue avant les visios, et la peau du contour est devenue beaucoup plus ferme.", "author": "Sophie M.", "initials": "SM", "location": "Cliente vérifiée · Lyon" } },
+        "t3": { "type": "testimonial", "settings": { "rating": 5, "quote": "J'ai testé deux marques avant LUMIÈRE. C'est de loin le plus confortable et le plus efficace. Mon teint est plus uniforme dès le premier mois.", "author": "Amélie B.", "initials": "AB", "location": "Cliente vérifiée · Bordeaux" } }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "eyebrow": "Questions",
+        "heading": "<p>Tout ce que vous vouliez <em>savoir.</em></p>",
+        "anchor": "faq"
+      },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "À partir de quand voit-on les premiers résultats ?", "answer": "Les premiers effets sur l'éclat et la fermeté de la peau sont visibles dès 2 à 3 semaines d'utilisation quotidienne. Les bénéfices anti-âge plus profonds (rides, élasticité) s'observent généralement à partir de 6 à 8 semaines." } },
+        "q2": { "type": "qa", "settings": { "question": "Combien de fois par semaine utiliser le masque ?", "answer": "Pour des résultats optimaux, nous recommandons 5 à 7 séances par semaine de 10 minutes, idéalement le matin ou le soir après le nettoyage." } },
+        "q3": { "type": "qa", "settings": { "question": "La luminothérapie LED est-elle sûre pour les yeux ?", "answer": "Oui. Nos masques sont conçus avec une protection oculaire intégrée et émettent une lumière non UV, sans danger pour les yeux." } },
+        "q4": { "type": "qa", "settings": { "question": "Convient-il à tous les types de peau ?", "answer": "Absolument. La luminothérapie LED est adaptée à tous les phototypes et tous les types de peau, y compris sensibles. Elle est non invasive et indolore." } },
+        "q5": { "type": "qa", "settings": { "question": "Quels sont les délais de livraison ?", "answer": "Vos commandes sont expédiées sous 24h ouvrées depuis notre entrepôt parisien. La livraison à domicile en France métropolitaine prend 2 à 3 jours ouvrés." } },
+        "q6": { "type": "qa", "settings": { "question": "Quelle est votre politique de retour ?", "answer": "Nous offrons 30 jours pour tester votre masque. Si vous n'êtes pas convaincue, retournez-le-nous gratuitement et nous vous remboursons intégralement." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"]
+    }
+  },
+  "order": ["hero", "promise", "featured", "collection", "rituel", "science", "testimonials", "faq"]
+}

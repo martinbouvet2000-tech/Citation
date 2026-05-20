@@ -1,0 +1,23 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "msg1": { "type": "message", "settings": { "text": "Livraison offerte dès 150€" } },
+        "msg2": { "type": "message", "settings": { "text": "Paiement en 3× sans frais" } },
+        "msg3": { "type": "message", "settings": { "text": "Retour gratuit sous 30 jours" } }
+      },
+      "block_order": ["msg1", "msg2", "msg3"]
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true
+      }
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

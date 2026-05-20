@@ -1,0 +1,80 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagué \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "placeholder": "Rechercher",
+      "submit": "Rechercher"
+    },
+    "404": {
+      "title": "Page introuvable",
+      "subtext": "La page que vous cherchez n'existe pas.",
+      "link": "Retour à l'accueil"
+    },
+    "newsletter_form": {
+      "newsletter_email": "Email",
+      "email_placeholder": "Votre adresse email",
+      "confirmation": "Merci, vous êtes inscrite ✦",
+      "submit": "S'inscrire"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Aller au contenu",
+    "close": "Fermer",
+    "open_cart": "Ouvrir le panier",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "loading": "Chargement"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Ajouter au panier",
+      "sold_out": "Épuisé",
+      "unavailable": "Indisponible",
+      "from_price": "À partir de {{ price }}",
+      "on_sale": "En promotion",
+      "quantity": "Quantité",
+      "decrease_quantity": "Diminuer",
+      "increase_quantity": "Augmenter",
+      "description": "Description",
+      "share": "Partager"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Votre panier",
+      "empty": "Votre panier est vide",
+      "continue_shopping": "Découvrir la gamme",
+      "subtotal": "Sous-total",
+      "checkout": "Procéder au paiement",
+      "remove": "Retirer",
+      "shipping_at_checkout": "Livraison et taxes calculées au paiement",
+      "added": "{{ product }} · ajouté au panier"
+    }
+  },
+  "collections": {
+    "general": {
+      "no_matches": "Aucun produit ne correspond aux filtres.",
+      "view_all": "Voir tout"
+    },
+    "sorting": {
+      "title": "Trier par",
+      "manual": "À la une",
+      "best_selling": "Meilleures ventes",
+      "title_ascending": "A → Z",
+      "title_descending": "Z → A",
+      "price_ascending": "Prix croissant",
+      "price_descending": "Prix décroissant",
+      "created_ascending": "Anciens",
+      "created_descending": "Nouveautés"
+    }
+  },
+  "customer": {
+    "account": "Compte",
+    "log_in": "Connexion",
+    "log_out": "Déconnexion",
+    "register": "Créer un compte"
+  }
+}

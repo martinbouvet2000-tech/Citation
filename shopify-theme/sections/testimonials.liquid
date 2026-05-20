@@ -1,0 +1,60 @@
+<section class="testimonials">
+  <div class="section-narrow">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="testimonial-grid">
+      {%- for block in section.blocks -%}
+        <div class="testimonial" {{ block.shopify_attributes }}>
+          <div class="stars">
+            {%- assign rating = block.settings.rating | default: 5 -%}
+            {%- for i in (1..rating) -%}{% render 'icon', name: 'star' %}{%- endfor -%}
+          </div>
+          <blockquote>{{ block.settings.quote }}</blockquote>
+          <div class="testimonial-author">
+            <div class="avatar">{{ block.settings.initials }}</div>
+            <div>
+              <strong>{{ block.settings.author }}</strong>
+              <span>{{ block.settings.location }}</span>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Témoignages",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "Elles témoignent" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>Plus de 12 000 routines <em>transformées.</em></p>" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Témoignage",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Note", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Citation", "default": "En trois semaines, mes ridules se sont visiblement estompées." },
+        { "type": "text", "id": "author", "label": "Auteur", "default": "Claire L." },
+        { "type": "text", "id": "initials", "label": "Initiales", "default": "CL" },
+        { "type": "text", "id": "location", "label": "Lieu / mention", "default": "Cliente vérifiée · Paris 16e" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Témoignages",
+      "blocks": [
+        { "type": "testimonial", "settings": { "quote": "En trois semaines, mes ridules au coin des yeux se sont visiblement estompées. Je n'aurais jamais cru qu'un masque LED pouvait remplacer mes soins en institut.", "author": "Claire L.", "initials": "CL", "location": "Cliente vérifiée · Paris 16e" } },
+        { "type": "testimonial", "settings": { "quote": "La cryothérapie sous les yeux le matin, c'est une révélation. Plus aucune trace de fatigue avant les visios.", "author": "Sophie M.", "initials": "SM", "location": "Cliente vérifiée · Lyon" } },
+        { "type": "testimonial", "settings": { "quote": "J'ai testé deux marques avant. C'est de loin le plus confortable et le plus efficace.", "author": "Amélie B.", "initials": "AB", "location": "Cliente vérifiée · Bordeaux" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,27 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Lettres d'éclat",
+        "heading": "<p>Recevez 10% sur votre <em>première commande.</em></p>",
+        "subheading": "Conseils de beauté, rituels exclusifs et accès anticipé aux nouveautés."
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": { "type": "menu", "settings": { "title": "Boutique" } },
+        "maison": { "type": "menu", "settings": { "title": "Maison" } },
+        "aide": { "type": "menu", "settings": { "title": "Aide" } }
+      },
+      "block_order": ["shop", "maison", "aide"],
+      "settings": {
+        "tagline": "La maison française de la luminothérapie haute exigence. Conçu à Paris, fabriqué en Europe."
+      }
+    }
+  },
+  "order": ["newsletter", "footer"]
+}

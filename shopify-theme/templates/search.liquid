@@ -1,0 +1,28 @@
+<div class="collection-header">
+  <h1>{{ 'general.search.placeholder' | t }}</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" style="max-width:480px;margin:1.5rem auto 0;display:flex;gap:0.4rem;border:1px solid var(--line);padding:0.4rem;background:var(--pearl);">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" style="flex:1;border:none;padding:0.9rem 1rem;background:transparent;outline:none;font-family:'Inter',sans-serif;">
+    <button type="submit" style="background:var(--ink);color:var(--pearl);padding:0.9rem 1.6rem;font-size:0.74rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;">{{ 'general.search.submit' | t }}</button>
+  </form>
+</div>
+
+{%- if search.performed -%}
+  <section class="gamme" style="padding-top:2rem;">
+    <div class="section-narrow">
+      <p style="text-align:center;color:var(--ink-3);margin-bottom:2rem;">
+        {{ search.results_count }} résultat(s) pour "{{ search.terms }}"
+      </p>
+      {%- if search.results.size > 0 -%}
+        <div class="product-grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="collection-empty"><p>Aucun résultat.</p></div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}

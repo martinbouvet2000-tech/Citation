@@ -1,0 +1,30 @@
+{
+  "current": {
+    "logo_text": "LUMIÈRE",
+    "logo_subtitle": "Paris · Skincare",
+    "color_ivory": "#FAF6F1",
+    "color_cream": "#F5EDE4",
+    "color_pearl": "#FFFFFF",
+    "color_rose_pale": "#F0D8D8",
+    "color_rose": "#E0B6B6",
+    "color_accent": "#6B2336",
+    "color_gold": "#C9A96E",
+    "color_ink": "#1A1410",
+    "show_compare_at_price": true,
+    "show_vendor": false
+  },
+  "presets": {
+    "Lumière": {
+      "logo_text": "LUMIÈRE",
+      "logo_subtitle": "Paris · Skincare",
+      "color_ivory": "#FAF6F1",
+      "color_cream": "#F5EDE4",
+      "color_pearl": "#FFFFFF",
+      "color_rose_pale": "#F0D8D8",
+      "color_rose": "#E0B6B6",
+      "color_accent": "#6B2336",
+      "color_gold": "#C9A96E",
+      "color_ink": "#1A1410"
+    }
+  }
+}

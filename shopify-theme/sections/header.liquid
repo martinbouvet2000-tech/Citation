@@ -1,0 +1,58 @@
+<header class="header">
+  <div class="header-inner">
+    <nav class="nav" aria-label="Navigation principale">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    <a href="{{ routes.root_url }}" class="logo">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}">
+      {%- else -%}
+        {{ settings.logo_text | default: shop.name }}
+        {%- if settings.logo_subtitle != blank -%}
+          <small>{{ settings.logo_subtitle }}</small>
+        {%- endif -%}
+      {%- endif -%}
+    </a>
+    <div class="header-actions">
+      <button class="menu-toggle" aria-label="Menu">
+        {% render 'icon', name: 'menu' %}
+      </button>
+      {%- if section.settings.show_search -%}
+        <a href="{{ routes.search_url }}" class="icon-btn" aria-label="Rechercher">
+          {% render 'icon', name: 'search' %}
+        </a>
+      {%- endif -%}
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="icon-btn" aria-label="{{ 'customer.account' | t }}">
+          {% render 'icon', name: 'account' %}
+        </a>
+      {%- endif -%}
+      <button class="icon-btn cart-toggle" aria-label="{{ 'accessibility.open_cart' | t }}">
+        {% render 'icon', name: 'cart' %}
+        <span class="cart-count {% if cart.item_count == 0 %}hidden{% endif %}">{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "En-tête",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Afficher l'icône de recherche",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,50 @@
+{%- assign collection = collections[section.settings.collection] -%}
+<section class="gamme" id="{{ section.settings.anchor | default: 'gamme' }}">
+  <div class="section-narrow">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+    <div class="product-grid">
+      {%- if collection.products.size > 0 -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_to_show) -%}
+          <article class="product-card">
+            <div class="product-img">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder placeholder--svg' }}
+            </div>
+            <div class="product-info">
+              <span class="eyebrow">Catégorie</span>
+              <h3>Nom du produit</h3>
+              <p class="product-desc">Ajoutez des produits à la collection sélectionnée pour les afficher ici.</p>
+              <div class="product-footer">
+                <div class="product-price">{{ 99 | times: 100 | money }}</div>
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection en vedette",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "La gamme" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>Quatre masques, <em>un rituel.</em></p>" },
+    { "type": "text", "id": "subheading", "label": "Sous-titre", "default": "Du visage au décolleté, en passant par le contour des yeux, notre sélection couvre tous les besoins d'une routine de luminothérapie complète." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "label": "Nombre de produits", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "text", "id": "anchor", "label": "Ancre HTML", "default": "gamme" }
+  ],
+  "presets": [
+    { "name": "Collection en vedette" }
+  ]
+}
+{% endschema %}

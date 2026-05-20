@@ -1,0 +1,56 @@
+<section class="faq" id="{{ section.settings.anchor | default: 'faq' }}">
+  <div class="section-narrow">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="faq-list">
+      {%- for block in section.blocks -%}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          <button class="faq-question" type="button" aria-expanded="false">
+            {{ block.settings.question }}
+            <span class="plus" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer">
+            <p>{{ block.settings.answer }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "Questions" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>Tout ce que vous vouliez <em>savoir.</em></p>" },
+    { "type": "text", "id": "anchor", "label": "Ancre HTML", "default": "faq" }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question/réponse",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Quels sont les délais de livraison ?" },
+        { "type": "textarea", "id": "answer", "label": "Réponse", "default": "Vos commandes sont expédiées sous 24h ouvrées." }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "qa", "settings": { "question": "À partir de quand voit-on les premiers résultats ?", "answer": "Les premiers effets sur l'éclat et la fermeté de la peau sont visibles dès 2 à 3 semaines d'utilisation quotidienne. Les bénéfices anti-âge plus profonds s'observent à partir de 6 à 8 semaines." } },
+        { "type": "qa", "settings": { "question": "Combien de fois par semaine utiliser le masque ?", "answer": "Pour des résultats optimaux, nous recommandons 5 à 7 séances par semaine de 10 minutes." } },
+        { "type": "qa", "settings": { "question": "La luminothérapie LED est-elle sûre pour les yeux ?", "answer": "Oui. Nos masques sont conçus avec une protection oculaire intégrée et émettent une lumière non UV, sans danger pour les yeux." } },
+        { "type": "qa", "settings": { "question": "Convient-il à tous les types de peau ?", "answer": "Absolument. La luminothérapie LED est adaptée à tous les phototypes et tous les types de peau, y compris sensibles." } },
+        { "type": "qa", "settings": { "question": "Quels sont les délais de livraison ?", "answer": "Vos commandes sont expédiées sous 24h ouvrées depuis notre entrepôt parisien. Livraison offerte à partir de 150€." } },
+        { "type": "qa", "settings": { "question": "Quelle est votre politique de retour ?", "answer": "Nous offrons 30 jours pour tester votre masque. Garantie constructeur de 2 ans." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,39 @@
+{%- if section.blocks.size > 0 -%}
+<div class="announce">
+  {%- for block in section.blocks -%}
+    <span>{{ block.settings.text }}</span>
+    {%- unless forloop.last -%}<span class="sep">·</span>{%- endunless -%}
+  {%- endfor -%}
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Barre d'annonce",
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texte",
+          "default": "Livraison offerte dès 150€"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barre d'annonce",
+      "blocks": [
+        { "type": "message", "settings": { "text": "Livraison offerte dès 150€" } },
+        { "type": "message", "settings": { "text": "Paiement en 3× sans frais" } },
+        { "type": "message", "settings": { "text": "Retour gratuit sous 30 jours" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

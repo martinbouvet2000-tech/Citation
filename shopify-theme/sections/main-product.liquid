@@ -1,0 +1,101 @@
+<section class="product-page">
+  <div class="product-page-inner">
+    <div class="product-media">
+      <div class="product-media-main">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="eager">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+        {%- endif -%}
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="product-media-thumbs">
+          {%- for image in product.images limit: 8 -%}
+            <img src="{{ image | image_url: width: 240 }}"
+                 data-full="{{ image | image_url: width: 1200 }}"
+                 alt="{{ image.alt | default: product.title | escape }}"
+                 class="{% if forloop.first %}active{% endif %}"
+                 loading="lazy">
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="product-details">
+      {%- if product.vendor != blank and settings.show_vendor -%}
+        <div class="vendor">{{ product.vendor }}</div>
+      {%- endif -%}
+      <h1>{{ product.title }}</h1>
+
+      <div class="price-row">
+        <span class="price-current" data-product-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+        {%- if product.compare_at_price > product.price -%}
+          <span class="price-old">{{ product.compare_at_price | money }}</span>
+          <span class="price-save">−{{ product.compare_at_price | minus: product.price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if product.description != blank -%}
+        <div class="product-description">{{ product.description }}</div>
+      {%- endif -%}
+
+      <form data-add-to-cart {% if product.has_only_default_variant == false %}data-variants='{{ product.variants | json | escape }}'{% endif %}>
+        {%- unless product.has_only_default_variant -%}
+          <div class="product-options">
+            {%- for option in product.options_with_values -%}
+              <div class="option-row">
+                <label>{{ option.name }}</label>
+                <select data-option-index="{{ forloop.index0 }}" data-variant-picker>
+                  {%- for value in option.values -%}
+                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        <div class="qty-row">
+          <span style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-3);font-weight:500;">{{ 'products.product.quantity' | t }}</span>
+          <div class="qty-stepper">
+            <button type="button" data-qty-change="-1" aria-label="{{ 'products.product.decrease_quantity' | t }}">−</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity' | t }}">
+            <button type="button" data-qty-change="1" aria-label="{{ 'products.product.increase_quantity' | t }}">+</button>
+          </div>
+        </div>
+
+        <button type="submit" class="product-cta" {% unless product.available %}disabled{% endunless %}>
+          {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+        </button>
+      </form>
+
+      <div class="product-meta">
+        <div class="product-meta-item">
+          {% render 'icon', name: 'truck' %}
+          <span>Livraison offerte dès 150€</span>
+        </div>
+        <div class="product-meta-item">
+          {% render 'icon', name: 'shield' %}
+          <span>Garantie 2 ans</span>
+        </div>
+        <div class="product-meta-item">
+          {% render 'icon', name: 'check-circle' %}
+          <span>Retour gratuit 30 jours</span>
+        </div>
+        <div class="product-meta-item">
+          {% render 'icon', name: 'card' %}
+          <span>Paiement 3× sans frais</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page produit",
+  "settings": []
+}
+{% endschema %}

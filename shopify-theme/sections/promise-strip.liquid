@@ -1,0 +1,54 @@
+<section class="promise">
+  <div class="promise-inner">
+    {%- for block in section.blocks -%}
+      <div class="promise-item" {{ block.shopify_attributes }}>
+        {% render 'icon', name: block.settings.icon %}
+        <div>
+          <strong>{{ block.settings.title }}</strong>
+          <small>{{ block.settings.subtitle }}</small>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bandeau promesses",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Promesse",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icône",
+          "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Camion" },
+            { "value": "check-circle", "label": "Coche" },
+            { "value": "shield", "label": "Bouclier" },
+            { "value": "card", "label": "Carte" },
+            { "value": "star", "label": "Étoile" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Livraison offerte" },
+        { "type": "text", "id": "subtitle", "label": "Sous-titre", "default": "Dès 150€ · expédié en 24h" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bandeau promesses",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "truck", "title": "Livraison offerte", "subtitle": "Dès 150€ · expédié en 24h" } },
+        { "type": "item", "settings": { "icon": "check-circle", "title": "Cliniquement testé", "subtitle": "Études dermatologiques" } },
+        { "type": "item", "settings": { "icon": "shield", "title": "Garantie 2 ans", "subtitle": "Satisfait ou remboursé" } },
+        { "type": "item", "settings": { "icon": "card", "title": "Paiement 3× sans frais", "subtitle": "Via Klarna ou Alma" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
