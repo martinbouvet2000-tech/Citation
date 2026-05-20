@@ -1,0 +1,437 @@
+{% comment %}
+  Page Programme fidélité — Le Cercle Aurélia
+  Handle Shopify attendu : programme-fidelite
+  Template autonome. CSS scopé par préfixe .cercle-*.
+  Réutilise les classes globales .faq-item / .faq-question / .faq-answer pour la mini FAQ.
+{% endcomment %}
+
+<style>
+  /* ─── Hero ─── */
+  .cercle-hero {
+    padding: 7rem 2rem 5rem;
+    background:
+      radial-gradient(ellipse at 50% 0%, var(--gold-pale) 0%, transparent 60%),
+      var(--ivory);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cercle-hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+  .cercle-hero .eyebrow { display: inline-block; margin-bottom: 1.4rem; color: var(--bordeaux); }
+  .cercle-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1.08;
+    margin-bottom: 1.6rem;
+    color: var(--ink);
+  }
+  .cercle-hero h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .cercle-hero .lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    color: var(--ink-2);
+    line-height: 1.6;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+  .cercle-hero .lead::before, .cercle-hero .lead::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.6rem auto;
+  }
+
+  /* ─── Manifesto ─── */
+  .cercle-manifesto {
+    padding: 5rem 2rem;
+    background: var(--ivory);
+    text-align: center;
+  }
+  .cercle-manifesto-inner { max-width: 720px; margin: 0 auto; }
+  .cercle-manifesto p {
+    color: var(--ink-2);
+    line-height: 1.85;
+    font-size: 1.04rem;
+    margin-bottom: 1.2rem;
+  }
+
+  /* ─── Paliers ─── */
+  .cercle-tiers { padding: 6rem 2rem; background: var(--cream); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .cercle-tiers-inner { max-width: 1180px; margin: 0 auto; }
+  .cercle-section-head { text-align: center; max-width: 640px; margin: 0 auto 4rem; }
+  .cercle-section-head .eyebrow { display: inline-block; margin-bottom: 1rem; }
+  .cercle-section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .cercle-section-head h2 em { font-style: italic; color: var(--bordeaux); }
+  .cercle-section-head p { color: var(--ink-3); line-height: 1.7; }
+
+  .cercle-tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+    align-items: stretch;
+  }
+  .cercle-tier {
+    background: var(--pearl);
+    border: 1px solid var(--line);
+    padding: 2.6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .cercle-tier:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+  }
+  .cercle-tier[data-tier="maison"] {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+  .cercle-tier[data-tier="maison"] h3,
+  .cercle-tier[data-tier="maison"] .cercle-tier-range,
+  .cercle-tier[data-tier="maison"] li { color: var(--cream); }
+  .cercle-tier[data-tier="maison"] .cercle-tier-num { color: var(--gold-light); }
+  .cercle-tier[data-tier="maison"] li::before { background: var(--gold); }
+  .cercle-tier[data-tier="maison"] li { border-color: rgba(232, 220, 197, 0.18); }
+
+  .cercle-tier-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2.6rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .cercle-tier h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+    line-height: 1.15;
+  }
+  .cercle-tier-range {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bordeaux);
+    font-weight: 500;
+    margin-bottom: 1.6rem;
+    display: block;
+  }
+  .cercle-tier ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+  }
+  .cercle-tier li {
+    padding: 0.7rem 0 0.7rem 1.4rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+    position: relative;
+  }
+  .cercle-tier li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .cercle-tier li:last-child { border-bottom: 1px solid var(--line); }
+  .cercle-tier[data-tier="maison"] li:last-child { border-bottom-color: rgba(232, 220, 197, 0.18); }
+
+  /* ─── Comment ça marche ─── */
+  .cercle-how { padding: 6rem 2rem; background: var(--ivory); }
+  .cercle-how-inner { max-width: 1080px; margin: 0 auto; }
+  .cercle-how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .cercle-how-step { text-align: center; padding: 1.4rem; }
+  .cercle-how-step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 3rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .cercle-how-step h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+  }
+  .cercle-how-step p {
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* ─── FAQ Cercle ─── */
+  .cercle-faq { padding: 6rem 2rem; background: var(--cream); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .cercle-faq-inner { max-width: 820px; margin: 0 auto; }
+
+  /* ─── CTA ─── */
+  .cercle-cta { padding: 6rem 2rem; background: var(--ivory); text-align: center; }
+  .cercle-cta-inner { max-width: 640px; margin: 0 auto; }
+  .cercle-cta h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .cercle-cta h2 em { font-style: italic; color: var(--bordeaux); }
+  .cercle-cta p {
+    color: var(--ink-3);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .cercle-cta .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2.2rem;
+    background: var(--ink);
+    color: var(--pearl);
+    border: 1px solid var(--ink);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .cercle-cta .btn:hover {
+    background: var(--bordeaux);
+    border-color: var(--bordeaux);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px -10px rgba(107, 35, 54, 0.4);
+  }
+  .cercle-cta .secondary-link {
+    display: block;
+    margin-top: 1.2rem;
+    font-size: 0.82rem;
+    color: var(--ink-3);
+    text-decoration: underline;
+  }
+  .cercle-cta .secondary-link:hover { color: var(--bordeaux); }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 880px) {
+    .cercle-tier-grid, .cercle-how-grid { grid-template-columns: 1fr; }
+    .cercle-hero, .cercle-manifesto, .cercle-tiers, .cercle-how, .cercle-faq, .cercle-cta {
+      padding: 4.5rem 1.4rem;
+    }
+  }
+</style>
+
+{%- comment -%} ─────────────────────────────  HERO ───────────────────────────── {%- endcomment -%}
+<section class="cercle-hero">
+  <div class="cercle-hero-inner">
+    <img src="{{ 'logo-stamp.svg' | asset_url }}" alt="" style="width:90px;height:90px;margin:0 auto 1.6rem;display:block;opacity:0.9;" aria-hidden="true">
+    <span class="eyebrow">Le Cercle Aurélia</span>
+    <h1>Plus qu'un programme, <em>une appartenance</em>.</h1>
+    <p class="lead">
+      Nous n'avons pas voulu d'un système de points. Le Cercle Aurélia est plus simple, et — nous l'espérons — plus juste&nbsp;: un cumul d'achats à vie, trois paliers, des attentions qui grandissent avec vous.
+    </p>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  MANIFESTO  ────────────────── {%- endcomment -%}
+<section class="cercle-manifesto">
+  <div class="cercle-manifesto-inner">
+    <p>
+      Il y a deux écoles dans les programmes de fidélité. Celle qui compte des points périssables, organise des "soldes privées" qui n'en sont pas vraiment, et qui finit par fatiguer ses meilleures clientes.
+    </p>
+    <p>
+      Et puis il y a la nôtre. Nous gardons en mémoire chaque commande, à vie. Plus vous nous accompagnez, plus nous prenons soin de vous — par des remises discrètes, des cadeaux pensés, et des accès qui n'ont rien à voir avec l'argent.
+    </p>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  LES TROIS PALIERS  ────────────────── {%- endcomment -%}
+<section class="cercle-tiers">
+  <div class="cercle-tiers-inner">
+    <div class="cercle-section-head">
+      <span class="eyebrow">Les trois paliers</span>
+      <h2>Du premier achat <em>à la maison</em></h2>
+      <p>Le palier se calcule sur le cumul total de vos achats — sans condition de durée. Une fois atteint, il vous est acquis à vie.</p>
+    </div>
+
+    <div class="cercle-tier-grid">
+      <article class="cercle-tier" data-tier="initiee">
+        <span class="cercle-tier-num">I.</span>
+        <h3>Initiée</h3>
+        <span class="cercle-tier-range">De 0 à 300 €</span>
+        <ul>
+          <li>Carte de bienvenue manuscrite avec votre première commande</li>
+          <li>Échantillons surprise à chaque envoi</li>
+          <li>Accès au Journal Aurélia&nbsp;: protocoles détaillés, entretiens dermato</li>
+          <li>Newsletter rédigée à la main, deux fois par mois</li>
+          <li>Service après-vente prioritaire 24h ouvrées</li>
+        </ul>
+      </article>
+
+      <article class="cercle-tier" data-tier="confidente">
+        <span class="cercle-tier-num">II.</span>
+        <h3>Confidente</h3>
+        <span class="cercle-tier-range">De 300 à 800 €</span>
+        <ul>
+          <li>10% de remise permanente sur les recharges et accessoires</li>
+          <li>Accès anticipé aux nouveautés (72h avant le lancement public)</li>
+          <li>Une séance diagnostic gratuite en visio (15 min) avec un dermatologue partenaire</li>
+          <li>Cadeau d'anniversaire&nbsp;: un objet de la maison, choisi par l'atelier</li>
+          <li>Livraison express offerte sur toutes vos commandes</li>
+          <li>Invitation aux soirées de lancement à Paris</li>
+        </ul>
+      </article>
+
+      <article class="cercle-tier" data-tier="maison">
+        <span class="cercle-tier-num">III.</span>
+        <h3>Maison</h3>
+        <span class="cercle-tier-range">800 € et au-delà</span>
+        <ul>
+          <li>15% de remise permanente sur l'ensemble du catalogue</li>
+          <li>Deux séances diagnostic gratuites par an, en visio ou en présentiel</li>
+          <li>Accès au showroom privé sur rendez-vous, rue de Seine</li>
+          <li>Cadeau d'anniversaire prestige&nbsp;: une création limitée de la maison</li>
+          <li>Service de remplacement express en 24h en cas de panne (sous garantie)</li>
+          <li>Invitations binômes aux événements privés Aurélia</li>
+          <li>Ligne directe avec notre conseillère senior</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  COMMENT ÇA MARCHE  ────────────────── {%- endcomment -%}
+<section class="cercle-how">
+  <div class="cercle-how-inner">
+    <div class="cercle-section-head">
+      <span class="eyebrow">Mode d'emploi</span>
+      <h2>Trois choses, <em>et c'est tout</em></h2>
+      <p>Pas de carte plastique, pas d'application, pas de points à surveiller. Le Cercle fonctionne automatiquement, depuis votre compte client.</p>
+    </div>
+
+    <div class="cercle-how-grid">
+      <div class="cercle-how-step">
+        <span class="cercle-how-step-num">01</span>
+        <h3>Créer un compte</h3>
+        <p>Inscrivez-vous une seule fois — c'est l'opération qui ouvre votre dossier dans le Cercle. Toutes les commandes futures, et même les précédentes si elles correspondent, y sont rattachées.</p>
+      </div>
+      <div class="cercle-how-step">
+        <span class="cercle-how-step-num">02</span>
+        <h3>Commander, simplement</h3>
+        <p>Le cumul se fait automatiquement. Vous n'avez rien à faire&nbsp;: dès qu'une commande est livrée, son montant net (hors livraison) s'ajoute à votre cumul à vie.</p>
+      </div>
+      <div class="cercle-how-step">
+        <span class="cercle-how-step-num">03</span>
+        <h3>Recevoir, à vie</h3>
+        <p>À chaque palier atteint, vous recevez un e-mail manuscrit d'Aurélia, et vos nouveaux avantages s'activent automatiquement. Pas de date d'expiration, jamais.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  FAQ DU CERCLE  ────────────────── {%- endcomment -%}
+<section class="cercle-faq">
+  <div class="cercle-faq-inner">
+    <div class="cercle-section-head">
+      <span class="eyebrow">Questions</span>
+      <h2>Les <em>cinq questions</em> qu'on nous pose</h2>
+      <p>Sur le fonctionnement du Cercle, les conditions, et ce qui se passe si&hellip;</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Mes commandes passées comptent-elles&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Si elles ont été passées avec l'adresse e-mail de votre compte, oui. Nous remontons jusqu'à 24 mois en arrière lors de la création du compte. Au-delà, contactez-nous&nbsp;: nous pouvons vérifier au cas par cas.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Les frais de livraison comptent-ils dans le cumul&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Non. Seul le montant net des produits compte. C'est plus juste — la livraison est un coût logistique, pas une valeur perçue.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Et si je renvoie un produit&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Le montant retourné est déduit de votre cumul à vie, ce qui peut, dans de rares cas, vous faire repasser sous un palier. C'est exceptionnel et nous gardons toujours les avantages les plus importants (livraison express, accès au showroom) à titre de geste commercial pendant six mois.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Le palier peut-il expirer&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Jamais. C'est notre position de principe. Un palier acquis l'est à vie, même si vous ne commandez plus pendant trois ans. Nous trouvons absurde de "punir" la fidélité par une perte d'avantages.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Puis-je transférer mon palier&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Pas de manière systématique, mais nous étudions les demandes spécifiques (cadeau à une fille, succession). Écrivez-nous à <strong>cercle@aurelia.paris</strong>&nbsp;: une vraie personne lit, et répond.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ─────────────────────────────  CTA  ───────────────────────────── {%- endcomment -%}
+<section class="cercle-cta">
+  <div class="cercle-cta-inner">
+    <h2>Le Cercle <em>commence ici</em>.</h2>
+    <p>Créer un compte prend moins d'une minute. Vous recevrez votre première carte manuscrite avec votre prochaine commande.</p>
+    <a class="btn" href="/account/register">
+      Créer mon compte client
+      <span aria-hidden="true">→</span>
+    </a>
+    <a class="secondary-link" href="/account/login">J'ai déjà un compte</a>
+  </div>
+</section>

@@ -228,5 +228,59 @@ document.querySelectorAll('[data-variant-picker]').forEach(picker => {
   });
 });
 
+/* ─── Product image zoom (desktop only, ≥ 980px, no touch) ─── */
+(function initImageZoom() {
+  const container = document.querySelector('.product-media-main');
+  if (!container) return;
+  const img = container.querySelector('img');
+  if (!img) return;
+
+  const mq = window.matchMedia('(min-width: 980px)');
+  const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  let enabled = false;
+
+  function enable() {
+    if (enabled) return;
+    if (!mq.matches || !hasFinePointer.matches) return;
+    enabled = true;
+    container.setAttribute('data-zoom-ready', 'true');
+    container.addEventListener('mousemove', onMove);
+    container.addEventListener('mouseenter', onEnter);
+    container.addEventListener('mouseleave', onLeave);
+  }
+  function disable() {
+    if (!enabled) return;
+    enabled = false;
+    container.removeAttribute('data-zoom-ready');
+    container.removeAttribute('data-zoom-active');
+    container.removeEventListener('mousemove', onMove);
+    container.removeEventListener('mouseenter', onEnter);
+    container.removeEventListener('mouseleave', onLeave);
+    img.style.transformOrigin = '';
+  }
+
+  function onEnter() {
+    container.setAttribute('data-zoom-active', 'true');
+  }
+  function onMove(e) {
+    const rect = container.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    img.style.transformOrigin = `${Math.max(0, Math.min(100, x))}% ${Math.max(0, Math.min(100, y))}%`;
+  }
+  function onLeave() {
+    container.removeAttribute('data-zoom-active');
+    img.style.transformOrigin = 'center center';
+  }
+
+  if (mq.matches && hasFinePointer.matches) enable();
+  if (mq.addEventListener) {
+    mq.addEventListener('change', (e) => { e.matches ? enable() : disable(); });
+  } else if (mq.addListener) {
+    mq.addListener((e) => { e.matches ? enable() : disable(); });
+  }
+})();
+
 /* ─── Init cart count on load ─── */
 fetchCart().then(cart => updateCartCount(cart.item_count)).catch(() => {});

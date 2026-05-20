@@ -67,7 +67,36 @@
           </div>
         </div>
 
-        <button type="submit" class="product-cta" {% unless product.available %}disabled{% endunless %}>
+        {%- liquid
+          assign variant = product.selected_or_first_available_variant
+          assign show_stock_badge = false
+          assign stock_badge_class = ''
+          assign stock_badge_text = ''
+          if variant.inventory_management != blank and variant.inventory_policy != 'continue'
+            if variant.inventory_quantity > 0 and variant.inventory_quantity <= 5
+              assign show_stock_badge = true
+              assign stock_badge_class = 'stock-badge-low'
+              assign stock_badge_text = 'Plus que ' | append: variant.inventory_quantity | append: ' en stock — commandez vite'
+            endif
+          endif
+          if variant.inventory_management != blank and variant.inventory_quantity <= 0 and product.available
+            assign show_stock_badge = true
+            assign stock_badge_class = 'stock-badge-out'
+            assign stock_badge_text = 'Rupture temporaire — précommande sous 14 j'
+          endif
+        -%}
+        {%- if show_stock_badge -%}
+          <div class="stock-badge {{ stock_badge_class }}" role="status" aria-live="polite">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 9v4"/>
+              <path d="M12 17h.01"/>
+              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/>
+            </svg>
+            <span>{{ stock_badge_text }}</span>
+          </div>
+        {%- endif -%}
+
+        <button type="submit" class="product-cta" data-main-atc {% unless product.available %}disabled{% endunless %}>
           {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
         </button>
       </form>
@@ -95,6 +124,69 @@
     </div>
   </div>
 </section>
+
+{%- comment -%} Sticky add-to-cart mobile bar — visible on mobile only when main CTA is off-screen {%- endcomment -%}
+<div class="sticky-atc" id="StickyATC" aria-hidden="true">
+  <div class="sticky-atc-inner">
+    <div class="sticky-atc-thumb">
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 140 }}" alt="{{ product.title | escape }}" loading="lazy">
+      {%- endif -%}
+    </div>
+    <div class="sticky-atc-price">
+      <span class="sticky-atc-title">{{ product.title | truncate: 28 }}</span>
+      <span class="sticky-atc-amount" data-sticky-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+    </div>
+    <button type="button" class="sticky-atc-btn" data-sticky-atc {% unless product.available %}disabled{% endunless %}>
+      {%- if product.available -%}Ajouter{%- else -%}Épuisé{%- endif -%}
+    </button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var stickyBar = document.getElementById('StickyATC');
+    var mainBtn = document.querySelector('[data-main-atc]');
+    if (!stickyBar || !mainBtn) return;
+
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            stickyBar.removeAttribute('data-visible');
+            stickyBar.setAttribute('aria-hidden', 'true');
+          } else {
+            stickyBar.setAttribute('data-visible', 'true');
+            stickyBar.setAttribute('aria-hidden', 'false');
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -10px 0px' });
+      observer.observe(mainBtn);
+    }
+
+    var stickyBtn = stickyBar.querySelector('[data-sticky-atc]');
+    if (stickyBtn) {
+      stickyBtn.addEventListener('click', function () {
+        var form = mainBtn.closest('form[data-add-to-cart]');
+        if (form) {
+          if (typeof form.requestSubmit === 'function') {
+            form.requestSubmit(mainBtn);
+          } else {
+            mainBtn.click();
+          }
+        }
+      });
+    }
+
+    // Sync price when variant changes
+    var mainPrice = document.querySelector('[data-product-price]');
+    var stickyPrice = stickyBar.querySelector('[data-sticky-price]');
+    if (mainPrice && stickyPrice) {
+      var mo = new MutationObserver(function () { stickyPrice.textContent = mainPrice.textContent; });
+      mo.observe(mainPrice, { childList: true, characterData: true, subtree: true });
+    }
+  })();
+</script>
 
 {% schema %}
 {
