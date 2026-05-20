@@ -424,6 +424,20 @@ img, svg { max-width: 100%; display: block; }
 .cart-checkout:hover { background: var(--bordeaux); }
 .cart-note { text-align: center; font-size: 0.74rem; color: var(--ink-3); margin-top: 0.8rem; }
 
+/* ─── Cart upsell ─── */
+.cart-upsell { margin-bottom: 1.4rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
+.cart-upsell-title { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.8rem; }
+.cart-upsell-items { display: flex; flex-direction: column; gap: 0.6rem; }
+.cart-upsell-item { display: grid; grid-template-columns: 56px 1fr auto; gap: 0.8rem; align-items: center; padding: 0.6rem; background: var(--pearl); border-radius: 4px; transition: background 0.2s; color: var(--ink); }
+.cart-upsell-item:hover { background: var(--gold-pale); }
+.cart-upsell-img { width: 56px; height: 56px; overflow: hidden; border-radius: 3px; background: var(--cream); }
+.cart-upsell-img img { width: 100%; height: 100%; object-fit: cover; }
+.cart-upsell-info { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.cart-upsell-name { font-size: 0.84rem; font-weight: 500; color: var(--ink); }
+.cart-upsell-price { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--bordeaux); }
+.cart-upsell-add { width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--pearl); font-size: 1.2rem; font-weight: 300; line-height: 1; display: grid; place-items: center; transition: background 0.2s, transform 0.2s; }
+.cart-upsell-add:hover { background: var(--bordeaux); transform: scale(1.1); }
+
 /* ─── Toast ─── */
 .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--cream); padding: 0.9rem 1.4rem; font-size: 0.84rem; letter-spacing: 0.06em; z-index: 300; opacity: 0; pointer-events: none; transition: all 0.3s; display: flex; align-items: center; gap: 0.6rem; box-shadow: 0 12px 40px -10px rgba(0,0,0,0.3); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }

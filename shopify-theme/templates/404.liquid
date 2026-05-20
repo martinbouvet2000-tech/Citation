@@ -1,5 +1,102 @@
 <section class="page-404">
-  <h1>404</h1>
-  <p>{{ 'general.404.subtext' | t }}</p>
-  <a href="{{ routes.root_url }}" class="btn btn-primary">{{ 'general.404.link' | t }}<span class="arrow">→</span></a>
+  <div class="page-404-inner">
+    <span class="page-404-eyebrow">Erreur 404</span>
+    <h1>Cette page<br><em>s'est égarée.</em></h1>
+    <p class="page-404-lead">La page que vous cherchez n'existe pas, ou n'existe plus. Pas d'inquiétude — toute la maison est à un clic.</p>
+    <div class="page-404-actions">
+      <a href="{{ routes.root_url }}" class="btn btn-primary">Retour à l'accueil <span class="arrow">→</span></a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-ghost">Voir la gamme</a>
+    </div>
+    <div class="page-404-suggestions">
+      <h2>Vous cherchiez peut-être&nbsp;:</h2>
+      <ul>
+        <li><a href="/collections/la-gamme">Tous les masques LED</a></li>
+        <li><a href="/pages/a-propos">Notre histoire</a></li>
+        <li><a href="/blogs/journal">Le journal Aurélia</a></li>
+        <li><a href="/pages/livraison-retours">Livraison &amp; retours</a></li>
+      </ul>
+    </div>
+  </div>
 </section>
+
+<style>
+  .page-404 {
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+    padding: 4rem 2rem;
+    background:
+      radial-gradient(ellipse at 20% 30%, var(--rose-pale) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, var(--gold-pale) 0%, transparent 55%),
+      var(--ivory);
+  }
+  .page-404-inner {
+    max-width: 620px;
+    text-align: center;
+  }
+  .page-404-eyebrow {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--bordeaux);
+    margin-bottom: 1.8rem;
+  }
+  .page-404 h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1.8rem;
+  }
+  .page-404 h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .page-404-lead {
+    font-size: 1.08rem;
+    color: var(--ink-2);
+    line-height: 1.6;
+    margin-bottom: 2.6rem;
+    font-weight: 300;
+  }
+  .page-404-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+  }
+  .page-404-suggestions {
+    border-top: 1px solid var(--line);
+    padding-top: 2.4rem;
+    text-align: center;
+  }
+  .page-404-suggestions h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 1.2rem;
+  }
+  .page-404-suggestions ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 2rem;
+    justify-content: center;
+  }
+  .page-404-suggestions a {
+    font-size: 0.92rem;
+    color: var(--ink-2);
+    border-bottom: 1px solid transparent;
+    padding: 0.4rem 0;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .page-404-suggestions a:hover {
+    color: var(--bordeaux);
+    border-bottom-color: var(--bordeaux);
+  }
+</style>

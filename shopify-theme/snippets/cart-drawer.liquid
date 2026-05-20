@@ -40,6 +40,37 @@
     {%- endif -%}
   </div>
   <footer class="cart-footer" id="CartFooter" {% if cart.item_count == 0 %}style="display:none"{% endif %}>
+    {%- comment -%} Cart upsell — surfaces 1-2 products not already in cart {%- endcomment -%}
+    {%- assign upsell_collection = collections['la-gamme'] | default: collections.all -%}
+    {%- if cart.item_count > 0 and upsell_collection.products.size > 0 -%}
+      {%- assign cart_product_ids = cart.items | map: 'product_id' | join: ',' -%}
+      {%- assign upsell_count = 0 -%}
+      <div class="cart-upsell">
+        <h5 class="cart-upsell-title">Souvent associé&nbsp;:</h5>
+        <div class="cart-upsell-items">
+          {%- for product in upsell_collection.products limit: 6 -%}
+            {%- unless cart_product_ids contains product.id -%}
+              {%- if upsell_count < 2 -%}
+                <a href="{{ product.url }}" class="cart-upsell-item">
+                  <div class="cart-upsell-img">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy">
+                    {%- endif -%}
+                  </div>
+                  <div class="cart-upsell-info">
+                    <span class="cart-upsell-name">{{ product.title | truncate: 30 }}</span>
+                    <span class="cart-upsell-price">{{ product.price | money }}</span>
+                  </div>
+                  <button type="button" class="cart-upsell-add" data-quick-add data-variant-id="{{ product.selected_or_first_available_variant.id }}" aria-label="Ajouter {{ product.title | escape }}" onclick="event.preventDefault();event.stopPropagation();">+</button>
+                </a>
+                {%- assign upsell_count = upsell_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
     <div class="cart-total">
       <span>{{ 'cart.general.subtotal' | t }}</span>
       <span id="CartTotal">{{ cart.total_price | money }}</span>

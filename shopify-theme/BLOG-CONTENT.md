@@ -289,6 +289,213 @@
 
 ---
 
+## Article 4
+
+**Titre (SEO)** : Masque LED pendant la grossesse : sécurité, précautions et alternatives
+**Handle** : `masque-led-grossesse`
+**Mot-clé cible** : "masque led grossesse" (~210 recherches/mois) + "luminothérapie enceinte" (~140 recherches/mois)
+**Méta description** : Peut-on utiliser un masque LED enceinte ? Le point clair sur ce que dit la littérature scientifique, les recommandations dermatologiques, et les alternatives sûres.
+**Tags** : guide, grossesse, sécurité, dermatologie
+**Extrait** : C'est la question qu'on nous pose le plus souvent en service client. Voici ce que la science dit vraiment — sans alarmisme, sans dédramatisation excessive.
+
+### Contenu (HTML)
+
+```html
+<p class="lead">« Je suis enceinte de quatre mois, est-ce que je peux continuer à utiliser mon masque LED ? » C'est la question qu'on nous pose le plus souvent en service client. Voici ce que la science dit vraiment — sans alarmisme, sans dédramatisation excessive.</p>
+
+<h2>La réponse courte (pour celles qui sont pressées)</h2>
+
+<p><strong>Par principe de précaution, la majorité des dermatologues recommandent de suspendre l'usage des masques LED pendant la grossesse</strong>, particulièrement sur le visage. Ce n'est pas parce qu'un risque a été démontré — il ne l'a pas été. C'est parce qu'aucune étude n'a spécifiquement validé l'innocuité de la photobiomodulation cutanée chez la femme enceinte, et qu'en l'absence de preuves, on s'abstient.</p>
+
+<p>Si vous voulez continuer à prendre soin de votre peau pendant ces neuf mois, des alternatives existent (voir plus bas). La bonne nouvelle : votre peau va probablement <em>moins</em> en avoir besoin que vous ne le pensez.</p>
+
+<h2>Ce que dit la science (et ce qu'elle ne dit pas)</h2>
+
+<p>La photobiomodulation LED est documentée sur des millions d'utilisations cliniques depuis les années 1960, sans effet secondaire grave répertorié. <strong>Mais ces études n'ont pas inclus de femmes enceintes</strong>, par éthique de la recherche : on n'expose pas volontairement une femme enceinte à un dispositif dont on ignore les effets sur le fœtus.</p>
+
+<p>En conséquence : nous ne savons pas si la LED visage présente un risque pendant la grossesse. Nous ne savons pas non plus si elle n'en présente pas. Ce vide scientifique pousse les autorités sanitaires et les fabricants sérieux à appliquer le principe de précaution.</p>
+
+<p>Quelques nuances importantes :</p>
+
+<ul>
+  <li><strong>La LED n'émet pas d'UV.</strong> Contrairement au soleil ou aux cabines de bronzage, il n'y a donc pas de risque de mutation cellulaire ou de photovieillissement direct.</li>
+  <li><strong>La pénétration de la lumière reste cutanée et superficielle.</strong> Même l'infrarouge proche pénètre à 5-10 mm dans la peau, soit loin en deçà de toute proximité avec le fœtus.</li>
+  <li><strong>Aucun effet secondaire grave n'a été rapporté</strong> chez les femmes enceintes ayant utilisé des masques LED par inadvertance.</li>
+</ul>
+
+<h2>Le vrai problème : les hormones, pas la lumière</h2>
+
+<p>Pendant la grossesse, votre peau change radicalement sous l'effet des hormones — notamment l'œstrogène et la mélanine stimulée par la MSH (<em>Melanocyte-Stimulating Hormone</em>). C'est le mécanisme à l'origine du <strong>melasma gravidique</strong> ou « masque de grossesse » — ces taches brunes qui apparaissent sur les pommettes, le front, la lèvre supérieure.</p>
+
+<p>Or, certaines longueurs d'onde de lumière visible (notamment la lumière bleue et la lumière verte) peuvent <em>aggraver</em> l'hyperpigmentation chez les peaux prédisposées. Une raison de plus pour suspendre la LED pendant cette période sensible, particulièrement si vous avez déjà des taches.</p>
+
+<h2>Et après l'accouchement ?</h2>
+
+<p>L'allaitement n'est <strong>pas</strong> une contre-indication formelle à la LED selon la majorité des dermatologues. Mais en l'absence d'études spécifiques chez la femme allaitante, le principe de précaution s'applique également souvent.</p>
+
+<p>La plupart des praticiens autorisent la reprise de la LED <strong>6 à 8 semaines après l'accouchement</strong>, après vérification que la peau n'a pas développé de sensibilité hormonale particulière (taches, rosacée nouvelle, eczéma post-partum). Demandez l'avis de votre dermatologue ou de votre sage-femme avant de reprendre, surtout si vous avez subi une césarienne ou un traitement médical particulier.</p>
+
+<h2>Alternatives sûres pendant la grossesse</h2>
+
+<p>Si l'envie de routine soin reste forte (et elle l'est souvent), voici ce que vous pouvez continuer en toute sécurité :</p>
+
+<ul>
+  <li><strong>Hydratation intensive</strong> — la peau enceinte est plus sèche, plus sensible. Misez sur des soins riches en acide hyaluronique, glycérine, céramides.</li>
+  <li><strong>Vitamine C</strong> (forme stable type ascorbyl glucoside) — éclat, anti-tache, antioxydant, sans contre-indication grossesse.</li>
+  <li><strong>Niacinamide (B3)</strong> — anti-rougeur, anti-imperfection, anti-tache, parfaitement compatible avec la grossesse.</li>
+  <li><strong>Protection solaire SPF 50</strong> — non négociable, particulièrement pour prévenir le masque de grossesse.</li>
+  <li><strong>Cryothérapie manuelle</strong> — passer un glaçon enveloppé dans un linge sur le contour des yeux le matin imite, en plus modeste, l'effet décongestionnant des cryo pads du masque Regard.</li>
+</ul>
+
+<h2>Ce qu'il faut éviter pendant la grossesse</h2>
+
+<ul>
+  <li>Rétinoïdes (vitamine A topique) — formellement contre-indiqués</li>
+  <li>Acides exfoliants forts (acide salicylique > 2 %, peelings)</li>
+  <li>Hydroquinone (anti-tache) — formellement contre-indiquée</li>
+  <li>Huiles essentielles (sauf rares exceptions validées par votre sage-femme)</li>
+  <li>Cabines UV, sauna, hammam (risque de surchauffe fœtale)</li>
+</ul>
+
+<h2>En résumé</h2>
+
+<p>Suspendez votre masque LED pendant la grossesse et l'allaitement. Ce n'est pas un risque démontré, c'est une précaution sage en l'absence d'études. Reprenez 6 à 8 semaines après l'accouchement, après accord médical. Votre peau retrouvera la photothérapie avec encore plus d'efficacité — d'expérience, les utilisatrices nous rapportent des résultats spectaculaires en post-partum, lorsque la peau a besoin de retrouver sa fermeté et son éclat.</p>
+
+<p>Pour toute question ou doute, contactez votre dermatologue, votre médecin traitant ou votre sage-femme. Les conseils généraux ne remplacent jamais un avis médical personnalisé.</p>
+
+<hr>
+
+<p><small>Cet article ne constitue pas un avis médical. Sources : Société Française de Dermatologie, recommandations 2023 sur la photobiomodulation. — College of Obstetricians and Gynaecologists, <em>Skincare during pregnancy</em>, 2022. — Lupo MP, <em>The cosmeceutical landscape during pregnancy</em>, Dermatologic Clinics, 2020.</small></p>
+```
+
+---
+
+## Article 5
+
+**Titre (SEO)** : Masque LED matin ou soir : à quel moment l'utiliser pour les meilleurs résultats ?
+**Handle** : `masque-led-matin-ou-soir`
+**Mot-clé cible** : "masque led matin ou soir" (~390 recherches/mois) + "quand utiliser masque led" (~280 recherches/mois)
+**Méta description** : Matin pour l'éclat, soir pour l'anti-âge ? Le guide complet pour intégrer ta séance LED dans ta routine — sans se tromper d'heure.
+**Tags** : guide, routine, photothérapie, conseils
+**Extrait** : Beaucoup d'utilisatrices se demandent s'il faut utiliser leur masque LED le matin ou le soir. Réponse honnête : ça dépend de votre objectif. Voici le calendrier optimal par type d'usage.
+
+### Contenu (HTML)
+
+```html
+<p class="lead">Beaucoup d'utilisatrices se demandent s'il faut utiliser leur masque LED le matin ou le soir. Réponse honnête : ça dépend de votre objectif, de votre rythme, et de ce que vous mettez sur votre peau juste avant et après. Voici le calendrier optimal.</p>
+
+<h2>La règle universelle (avant tout)</h2>
+
+<p>Quel que soit le moment, deux principes ne changent pas :</p>
+
+<ol>
+  <li><strong>Peau parfaitement propre.</strong> La LED amplifie tout ce qui se trouve sur votre peau — y compris la pollution, le maquillage, le sébum. Nettoyez avant la séance.</li>
+  <li><strong>Aucun actif photosensibilisant juste avant la séance.</strong> Pas de rétinoïdes, pas d'acides (AHA, BHA), pas de vitamine C pure. Ces actifs réagissent à la lumière et peuvent irriter la peau.</li>
+</ol>
+
+<h2>Le matin : pour l'éclat, le contour des yeux, le coup de boost</h2>
+
+<p><strong>Idéal pour :</strong></p>
+<ul>
+  <li>Décongestionner le contour des yeux (mode cryo ou ambré)</li>
+  <li>Booster l'éclat du teint avant le maquillage</li>
+  <li>Apaiser une peau réactive ou rougie</li>
+  <li>Stimuler la microcirculation après une nuit courte</li>
+</ul>
+
+<p><strong>Durée recommandée :</strong> 5 à 8 minutes, juste après le nettoyage et avant l'application du sérum et de la crème.</p>
+
+<p><strong>Astuce :</strong> les Parisiennes les plus stratégiques utilisent leur séance LED matinale en parallèle d'une autre tâche — café, lecture des emails, méditation. 8 minutes passent vite quand le temps est utile.</p>
+
+<h2>Le soir : pour l'anti-âge profond, la réparation, la régénération</h2>
+
+<p><strong>Idéal pour :</strong></p>
+<ul>
+  <li>Stimuler la production de collagène (mode rouge / infrarouge)</li>
+  <li>Lutter contre les imperfections (mode bleu, ciblant l'acné de la journée)</li>
+  <li>Traiter les rougeurs accumulées dans la journée</li>
+  <li>Préparer la peau à l'absorption des actifs anti-âge nocturnes</li>
+</ul>
+
+<p><strong>Durée recommandée :</strong> 10 minutes, idéalement 1 à 2 heures avant le coucher (la lumière LED peut légèrement stimuler la peau et retarder l'endormissement chez les personnes très sensibles).</p>
+
+<p><strong>Astuce :</strong> après votre séance LED, votre peau est plus réceptive aux actifs. C'est le moment idéal pour appliquer vos sérums premium (peptides, acide hyaluronique, niacinamide) — ils pénètreront plus efficacement.</p>
+
+<h2>Le moment idéal selon votre objectif principal</h2>
+
+<table style="width:100%;border-collapse:collapse;margin:1.4rem 0;">
+  <thead>
+    <tr style="background:var(--cream);">
+      <th style="padding:0.8rem;text-align:left;border-bottom:1px solid var(--line);">Votre objectif</th>
+      <th style="padding:0.8rem;text-align:left;border-bottom:1px solid var(--line);">Moment optimal</th>
+      <th style="padding:0.8rem;text-align:left;border-bottom:1px solid var(--line);">Mode</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Anti-âge global</td>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Soir</td>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Rouge + Infrarouge</td>
+    </tr>
+    <tr>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Acné active</td>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Soir</td>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Bleu (415 nm)</td>
+    </tr>
+    <tr>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Éclat / coup d'éclat</td>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Matin</td>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Ambré (590 nm)</td>
+    </tr>
+    <tr>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Poches / cernes</td>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Matin</td>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Cryo + Ambré</td>
+    </tr>
+    <tr>
+      <td style="padding:0.8rem;border-bottom:1px solid var(--line);">Récupération post-soin esthétique</td>
+      <td style="padding:0.8rem;">Matin ou soir, demander à votre dermato</td>
+      <td style="padding:0.8rem;">Rouge profond + Infrarouge</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Combien de fois par semaine ?</h2>
+
+<p>La constance compte plus que la fréquence brute :</p>
+
+<ul>
+  <li><strong>Phase d'attaque (semaines 1 à 8) :</strong> 5 à 7 séances par semaine, idéalement quotidiennes. C'est la phase où votre peau s'adapte et où les effets se construisent.</li>
+  <li><strong>Phase d'entretien (à partir de la semaine 9) :</strong> 3 à 4 séances par semaine suffisent pour maintenir les bénéfices.</li>
+  <li><strong>Phase de récupération ponctuelle :</strong> avant un événement important, on peut intensifier sur 3-5 jours consécutifs pour booster l'éclat — c'est sans risque et très efficace.</li>
+</ul>
+
+<h2>Matin ET soir : est-ce possible ?</h2>
+
+<p>Oui, mais avec deux modes différents et sur deux zones complémentaires :</p>
+
+<ul>
+  <li><strong>Matin</strong> : AURÉLIA Regard (5 min, contour des yeux) — pour le coup d'éclat avant la journée</li>
+  <li><strong>Soir</strong> : AURÉLIA Signature ou Lumière Pro (8-10 min, visage complet) — pour l'anti-âge</li>
+</ul>
+
+<p>Cette combinaison correspond exactement au <a href="/pages/le-rituel-complet">Rituel Complet Aurélia</a>, conçu pour optimiser les deux moments clés de la journée sans alourdir votre routine.</p>
+
+<h2>Le moment où il NE faut PAS utiliser le masque LED</h2>
+
+<ul>
+  <li>Juste après un peeling, un laser ou une injection (attendre 7 à 14 jours selon avis dermato)</li>
+  <li>Avec un coup de soleil actif sur le visage</li>
+  <li>En cas d'éruption inflammatoire (eczéma, psoriasis en poussée)</li>
+  <li>Sur peau humide non séchée (la LED est moins efficace)</li>
+  <li>Avec du maquillage encore présent</li>
+</ul>
+
+<p>Pour récapituler la routine idéale : votre masque LED s'intègre comme un soin de fond, après nettoyage, avant le reste. Matin pour la fraîcheur, soir pour la profondeur. Constance > intensité. Et toujours sur peau propre.</p>
+```
+
+---
+
 ## Tips de publication
 
 1. **Image en vedette** : pour chaque article, une photo carrée 1200×1200 du masque correspondant en lifestyle, avec un overlay typographique élégant (titre en serif Cormorant). Génère via Nano Banana 2 puis Canva pour l'overlay.
