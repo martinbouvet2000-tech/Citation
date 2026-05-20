@@ -109,7 +109,17 @@
         "q6": { "type": "qa", "settings": { "question": "Quelle est votre politique de retour ?", "answer": "Nous offrons 30 jours pour tester votre masque. Si vous n'êtes pas convaincue, retournez-le-nous gratuitement et nous vous remboursons intégralement." } }
       },
       "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"]
+    },
+    "comparator": {
+      "type": "product-comparison",
+      "blocks": {
+        "m1": { "type": "mask", "settings": { "fallback_name": "Shark CryoGlow Édition Paris", "fallback_price": "293,99€", "badge": "Best-seller", "zone": "Visage complet", "wavelengths": "Rouge 633nm · Bleue 415nm · Ambrée 590nm", "cryo": "Oui · sous les yeux −7°C", "duration": "8 minutes", "results": "Dès 4 semaines", "ideal_for": "Anti-âge global, éclat, imperfections" } },
+        "m2": { "type": "mask", "settings": { "fallback_name": "CryoGlow Pro Collagène", "fallback_price": "399€", "badge": "Nouveau", "zone": "Visage complet", "wavelengths": "7 longueurs d'onde", "cryo": "Oui · multi-zones", "duration": "10 minutes", "results": "Dès 3 semaines", "ideal_for": "Peaux 35+" } },
+        "m3": { "type": "mask", "settings": { "fallback_name": "Eye Recovery LED", "fallback_price": "149€", "zone": "Contour des yeux", "wavelengths": "Ambrée 590nm", "cryo": "Oui · −5°C", "duration": "5 minutes", "results": "Dès 2 semaines", "ideal_for": "Poches, cernes" } },
+        "m4": { "type": "mask", "settings": { "fallback_name": "Décolleté Glow LED", "fallback_price": "219€", "zone": "Cou & décolleté", "wavelengths": "Rouge 633nm · Ambrée 590nm", "cryo": "Non", "duration": "10 minutes", "results": "6 semaines", "ideal_for": "Fermeté décolleté" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4"]
     }
   },
-  "order": ["hero", "promise", "featured", "collection", "rituel", "science", "testimonials", "faq"]
+  "order": ["hero", "promise", "featured", "collection", "comparator", "rituel", "science", "testimonials", "faq"]
 }

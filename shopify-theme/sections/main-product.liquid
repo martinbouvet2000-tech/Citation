@@ -1,4 +1,5 @@
 <section class="product-page">
+  {% render 'breadcrumbs' %}
   <div class="product-page-inner">
     <div class="product-media">
       <div class="product-media-main">
@@ -70,6 +71,8 @@
           {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
         </button>
       </form>
+
+      {% render 'google-shopping', product: product %}
 
       <div class="product-meta">
         <div class="product-meta-item">

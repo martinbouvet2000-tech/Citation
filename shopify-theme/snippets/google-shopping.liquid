@@ -1,0 +1,59 @@
+{%- comment -%}
+  Google Shopping / Merchant Center optimization
+  Hidden data attributes + microdata for product feed enrichment.
+  Defaults: gender=female, age_group=adult, condition=new
+{%- endcomment -%}
+
+{%- if product -%}
+  {%- assign gs_variant = product.selected_or_first_available_variant -%}
+  {%- assign gs_gtin = gs_variant.barcode | default: product.metafields.google.gtin.value -%}
+  {%- assign gs_mpn = gs_variant.sku | default: product.metafields.google.mpn.value -%}
+  {%- assign gs_brand = product.vendor | default: 'Aurélia' -%}
+  {%- if gs_brand == blank -%}{%- assign gs_brand = 'Aurélia' -%}{%- endif -%}
+  {%- assign gs_condition = product.metafields.google.condition.value | default: 'new' -%}
+  {%- assign gs_gender = product.metafields.google.gender.value | default: 'female' -%}
+  {%- assign gs_age_group = product.metafields.google.age_group.value | default: 'adult' -%}
+  {%- assign gs_google_category = product.metafields.google.google_product_category.value | default: 'Health & Beauty > Personal Care > Cosmetics > Skin Care' -%}
+
+  <div class="google-shopping-data" hidden aria-hidden="true"
+       itemscope itemtype="https://schema.org/Product"
+       data-product-id="{{ product.id }}"
+       data-product-handle="{{ product.handle }}"
+       data-product-title="{{ product.title | escape }}"
+       data-product-brand="{{ gs_brand | escape }}"
+       data-product-vendor="{{ product.vendor | escape }}"
+       data-product-type="{{ product.type | escape }}"
+       data-product-sku="{{ gs_variant.sku | escape }}"
+       {%- if gs_gtin != blank %} data-product-gtin="{{ gs_gtin | escape }}"{% endif -%}
+       {%- if gs_mpn != blank %} data-product-mpn="{{ gs_mpn | escape }}"{% endif -%}
+       data-product-condition="{{ gs_condition | escape }}"
+       data-product-gender="{{ gs_gender | escape }}"
+       data-product-age-group="{{ gs_age_group | escape }}"
+       data-product-google-category="{{ gs_google_category | escape }}"
+       data-product-availability="{% if product.available %}in stock{% else %}out of stock{% endif %}"
+       data-product-price="{{ gs_variant.price | money_without_currency | replace: ',', '.' | strip }}"
+       data-product-currency="{{ cart.currency.iso_code }}"
+       data-product-url="{{ shop.url }}{{ product.url }}"
+       style="display:none !important;">
+    <meta itemprop="productID" content="shopify_{{ shop.id }}_{{ product.id }}_{{ gs_variant.id }}">
+    <meta itemprop="sku" content="{{ gs_variant.sku }}">
+    {%- if gs_gtin != blank -%}<meta itemprop="gtin" content="{{ gs_gtin }}">{%- endif -%}
+    {%- if gs_mpn != blank -%}<meta itemprop="mpn" content="{{ gs_mpn }}">{%- endif -%}
+    <meta itemprop="brand" content="{{ gs_brand | escape }}">
+    <meta itemprop="name" content="{{ product.title | escape }}">
+    <meta itemprop="category" content="{{ gs_google_category | escape }}">
+    <meta itemprop="itemCondition" content="https://schema.org/{% if gs_condition == 'new' %}NewCondition{% elsif gs_condition == 'refurbished' %}RefurbishedCondition{% else %}UsedCondition{% endif %}">
+    <meta itemprop="audience" content="{{ gs_gender }}">
+    <meta itemprop="audienceType" content="{{ gs_age_group }}">
+    {%- if product.featured_image -%}
+      <meta itemprop="image" content="https:{{ product.featured_image | image_url: width: 1200 }}">
+    {%- endif -%}
+    <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+      <meta itemprop="price" content="{{ gs_variant.price | money_without_currency | replace: ',', '.' | strip }}">
+      <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
+      <meta itemprop="availability" content="https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+      <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+      <meta itemprop="itemCondition" content="https://schema.org/{% if gs_condition == 'new' %}NewCondition{% elsif gs_condition == 'refurbished' %}RefurbishedCondition{% else %}UsedCondition{% endif %}">
+    </div>
+  </div>
+{%- endif -%}

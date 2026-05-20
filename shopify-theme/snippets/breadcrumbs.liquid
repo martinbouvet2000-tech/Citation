@@ -1,0 +1,189 @@
+{%- comment -%}
+  Breadcrumbs with HTML + JSON-LD BreadcrumbList.
+  Use on product, collection, page and article templates.
+{%- endcomment -%}
+
+<style>
+  .breadcrumbs {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3, #7A6A5C);
+    font-weight: 400;
+  }
+  .breadcrumbs ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .breadcrumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .breadcrumbs a {
+    color: var(--ink-3, #7A6A5C);
+    text-decoration: none;
+    transition: color .25s ease;
+  }
+  .breadcrumbs a:hover {
+    color: var(--ink, #1A1410);
+  }
+  .breadcrumbs [aria-current="page"] {
+    color: var(--ink, #1A1410);
+  }
+  .breadcrumbs .sep {
+    opacity: 0.5;
+    font-size: 0.7rem;
+  }
+  @media (max-width: 640px) {
+    .breadcrumbs { padding: 1rem 1.25rem 0; font-size: 0.7rem; }
+  }
+</style>
+
+{%- assign crumbs = '' | split: '' -%}
+{%- assign crumbs = crumbs | push: 'home' -%}
+
+{%- if template.name == 'product' -%}
+  {%- if collection -%}{%- assign crumbs = crumbs | push: 'collection' -%}{%- endif -%}
+  {%- assign crumbs = crumbs | push: 'product' -%}
+{%- elsif template.name == 'collection' -%}
+  {%- assign crumbs = crumbs | push: 'collection' -%}
+{%- elsif template.name == 'page' -%}
+  {%- assign crumbs = crumbs | push: 'page' -%}
+{%- elsif template.name == 'article' -%}
+  {%- assign crumbs = crumbs | push: 'blog' -%}
+  {%- assign crumbs = crumbs | push: 'article' -%}
+{%- elsif template.name == 'blog' -%}
+  {%- assign crumbs = crumbs | push: 'blog' -%}
+{%- endif -%}
+
+<nav class="breadcrumbs" aria-label="Fil d'Ariane">
+  <ol>
+    {%- for crumb in crumbs -%}
+      {%- assign is_last = forloop.last -%}
+      {%- case crumb -%}
+        {%- when 'home' -%}
+          <li>
+            {%- if is_last -%}
+              <span aria-current="page">Accueil</span>
+            {%- else -%}
+              <a href="{{ shop.url }}/">Accueil</a>
+            {%- endif -%}
+          </li>
+        {%- when 'collection' -%}
+          <li>
+            <span class="sep" aria-hidden="true">›</span>
+            {%- if is_last -%}
+              <span aria-current="page">{{ collection.title | escape }}</span>
+            {%- else -%}
+              <a href="{{ collection.url }}">{{ collection.title | escape }}</a>
+            {%- endif -%}
+          </li>
+        {%- when 'product' -%}
+          <li>
+            <span class="sep" aria-hidden="true">›</span>
+            <span aria-current="page">{{ product.title | escape }}</span>
+          </li>
+        {%- when 'page' -%}
+          <li>
+            <span class="sep" aria-hidden="true">›</span>
+            <span aria-current="page">{{ page.title | escape }}</span>
+          </li>
+        {%- when 'blog' -%}
+          <li>
+            <span class="sep" aria-hidden="true">›</span>
+            {%- if is_last -%}
+              <span aria-current="page">{{ blog.title | escape }}</span>
+            {%- else -%}
+              <a href="{{ blog.url }}">{{ blog.title | escape }}</a>
+            {%- endif -%}
+          </li>
+        {%- when 'article' -%}
+          <li>
+            <span class="sep" aria-hidden="true">›</span>
+            <span aria-current="page">{{ article.title | escape }}</span>
+          </li>
+      {%- endcase -%}
+    {%- endfor -%}
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": {{ shop.url | json }}
+    }
+    {%- if template.name == 'product' -%}
+      {%- if collection -%},
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ collection.title | json }},
+        "item": "{{ shop.url }}{{ collection.url }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": {{ product.title | json }},
+        "item": "{{ shop.url }}{{ product.url }}"
+      }
+      {%- else -%},
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ product.title | json }},
+        "item": "{{ shop.url }}{{ product.url }}"
+      }
+      {%- endif -%}
+    {%- elsif template.name == 'collection' -%},
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ collection.title | json }},
+      "item": "{{ shop.url }}{{ collection.url }}"
+    }
+    {%- elsif template.name == 'page' -%},
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ page.title | json }},
+      "item": "{{ shop.url }}{{ page.url }}"
+    }
+    {%- elsif template.name == 'article' -%},
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ blog.title | json }},
+      "item": "{{ shop.url }}{{ blog.url }}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ article.title | json }},
+      "item": "{{ shop.url }}{{ article.url }}"
+    }
+    {%- elsif template.name == 'blog' -%},
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ blog.title | json }},
+      "item": "{{ shop.url }}{{ blog.url }}"
+    }
+    {%- endif -%}
+  ]
+}
+</script>
