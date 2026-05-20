@@ -1,0 +1,590 @@
+<section class="comparator" id="{{ section.settings.anchor | default: 'comparator' }}">
+  <div class="section-narrow">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2>{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    {%- assign rows = 'zone|wavelengths|cryo|duration|results|ideal_for|price' | split: '|' -%}
+    {%- assign row_labels = 'Zone traitée|Longueurs d’onde|Cryothérapie|Durée séance|Résultats visibles|Idéal pour|Prix' | split: '|' -%}
+
+    {%- if section.blocks.size > 0 -%}
+      {%- comment -%} ─── Desktop table ─── {%- endcomment -%}
+      <div class="comparator-table" role="table" aria-label="Comparateur des masques AURÉLIA">
+        <div class="comparator-grid" style="--cols: {{ section.blocks.size }};">
+          {%- comment -%} Header row {%- endcomment -%}
+          <div class="cmp-cell cmp-cell-corner" role="columnheader"></div>
+          {%- for block in section.blocks -%}
+            {%- assign p = block.settings.product -%}
+            {%- assign is_best = false -%}
+            {%- if block.settings.badge contains 'best' or block.settings.badge contains 'Best' -%}
+              {%- assign is_best = true -%}
+            {%- endif -%}
+            <div class="cmp-cell cmp-head{% if is_best %} is-best{% endif %}" role="columnheader" {{ block.shopify_attributes }}>
+              {%- if block.settings.badge != blank -%}
+                <span class="cmp-badge{% if is_best %} cmp-badge-best{% endif %}">{{ block.settings.badge }}</span>
+              {%- endif -%}
+              <div class="cmp-img">
+                {%- if p != blank and p.featured_image != blank -%}
+                  <img src="{{ p.featured_image | image_url: width: 360 }}"
+                       alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                       width="180" height="180" loading="lazy">
+                {%- else -%}
+                  <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                    <defs>
+                      <radialGradient id="cmp-g-{{ block.id }}" cx="50%" cy="45%" r="55%">
+                        <stop offset="0%" stop-color="#F5EDE4"/>
+                        <stop offset="100%" stop-color="#E8DDD0"/>
+                      </radialGradient>
+                    </defs>
+                    <circle cx="60" cy="60" r="50" fill="url(#cmp-g-{{ block.id }})"/>
+                    <ellipse cx="44" cy="56" rx="7" ry="4" fill="#6B2336" opacity="0.35"/>
+                    <ellipse cx="76" cy="56" rx="7" ry="4" fill="#6B2336" opacity="0.35"/>
+                    <path d="M44 78 Q60 86 76 78" stroke="#6B2336" stroke-width="1.2" fill="none" opacity="0.4"/>
+                  </svg>
+                {%- endif -%}
+              </div>
+              <h4 class="cmp-name">
+                {%- if p != blank -%}{{ p.title }}{%- else -%}{{ block.settings.fallback_name | default: 'Masque AURÉLIA' }}{%- endif -%}
+              </h4>
+              <div class="cmp-price">
+                {%- if p != blank -%}
+                  {%- if p.compare_at_price > p.price -%}
+                    <span class="cmp-price-now">{{ p.price | money }}</span>
+                    <span class="cmp-price-was">{{ p.compare_at_price | money }}</span>
+                  {%- else -%}
+                    <span class="cmp-price-now">{{ p.price | money }}</span>
+                  {%- endif -%}
+                {%- else -%}
+                  <span class="cmp-price-now">{{ block.settings.fallback_price | default: '—' }}</span>
+                {%- endif -%}
+              </div>
+              <a class="cmp-cta" href="{{ p.url | default: '#' }}">Découvrir →</a>
+            </div>
+          {%- endfor -%}
+
+          {%- comment -%} Data rows {%- endcomment -%}
+          {%- for r in rows -%}
+            {%- assign row_index = forloop.index0 -%}
+            <div class="cmp-cell cmp-label" role="rowheader">{{ row_labels[row_index] }}</div>
+            {%- for block in section.blocks -%}
+              {%- assign is_best = false -%}
+              {%- if block.settings.badge contains 'best' or block.settings.badge contains 'Best' -%}
+                {%- assign is_best = true -%}
+              {%- endif -%}
+              <div class="cmp-cell cmp-value{% if is_best %} is-best{% endif %}" role="cell">
+                {%- case r -%}
+                  {%- when 'zone' -%}{{ block.settings.zone | default: '—' }}
+                  {%- when 'wavelengths' -%}{{ block.settings.wavelengths | default: '—' }}
+                  {%- when 'cryo' -%}{{ block.settings.cryo | default: '—' }}
+                  {%- when 'duration' -%}{{ block.settings.duration | default: '—' }}
+                  {%- when 'results' -%}{{ block.settings.results | default: '—' }}
+                  {%- when 'ideal_for' -%}{{ block.settings.ideal_for | default: '—' }}
+                  {%- when 'price' -%}
+                    <span class="cmp-value-price">
+                      {%- if block.settings.product != blank -%}
+                        {{ block.settings.product.price | money }}
+                      {%- else -%}
+                        {{ block.settings.fallback_price | default: '—' }}
+                      {%- endif -%}
+                    </span>
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} ─── Mobile cards ─── {%- endcomment -%}
+      <div class="comparator-cards">
+        {%- for block in section.blocks -%}
+          {%- assign p = block.settings.product -%}
+          {%- assign is_best = false -%}
+          {%- if block.settings.badge contains 'best' or block.settings.badge contains 'Best' -%}
+            {%- assign is_best = true -%}
+          {%- endif -%}
+          <article class="cmp-card{% if is_best %} is-best{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.badge != blank -%}
+              <span class="cmp-badge{% if is_best %} cmp-badge-best{% endif %}">{{ block.settings.badge }}</span>
+            {%- endif -%}
+            <div class="cmp-card-head">
+              <div class="cmp-img">
+                {%- if p != blank and p.featured_image != blank -%}
+                  <img src="{{ p.featured_image | image_url: width: 280 }}"
+                       alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                       width="140" height="140" loading="lazy">
+                {%- else -%}
+                  <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                    <defs>
+                      <radialGradient id="cmp-gm-{{ block.id }}" cx="50%" cy="45%" r="55%">
+                        <stop offset="0%" stop-color="#F5EDE4"/>
+                        <stop offset="100%" stop-color="#E8DDD0"/>
+                      </radialGradient>
+                    </defs>
+                    <circle cx="60" cy="60" r="50" fill="url(#cmp-gm-{{ block.id }})"/>
+                    <ellipse cx="44" cy="56" rx="7" ry="4" fill="#6B2336" opacity="0.35"/>
+                    <ellipse cx="76" cy="56" rx="7" ry="4" fill="#6B2336" opacity="0.35"/>
+                  </svg>
+                {%- endif -%}
+              </div>
+              <div class="cmp-card-meta">
+                <h4 class="cmp-name">
+                  {%- if p != blank -%}{{ p.title }}{%- else -%}{{ block.settings.fallback_name | default: 'Masque AURÉLIA' }}{%- endif -%}
+                </h4>
+                <div class="cmp-price">
+                  {%- if p != blank -%}
+                    {%- if p.compare_at_price > p.price -%}
+                      <span class="cmp-price-now">{{ p.price | money }}</span>
+                      <span class="cmp-price-was">{{ p.compare_at_price | money }}</span>
+                    {%- else -%}
+                      <span class="cmp-price-now">{{ p.price | money }}</span>
+                    {%- endif -%}
+                  {%- else -%}
+                    <span class="cmp-price-now">{{ block.settings.fallback_price | default: '—' }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+            <dl class="cmp-card-list">
+              {%- for r in rows -%}
+                {%- assign row_index = forloop.index0 -%}
+                {%- assign val = '' -%}
+                {%- case r -%}
+                  {%- when 'zone' -%}{%- assign val = block.settings.zone -%}
+                  {%- when 'wavelengths' -%}{%- assign val = block.settings.wavelengths -%}
+                  {%- when 'cryo' -%}{%- assign val = block.settings.cryo -%}
+                  {%- when 'duration' -%}{%- assign val = block.settings.duration -%}
+                  {%- when 'results' -%}{%- assign val = block.settings.results -%}
+                  {%- when 'ideal_for' -%}{%- assign val = block.settings.ideal_for -%}
+                  {%- when 'price' -%}
+                    {%- if block.settings.product != blank -%}
+                      {%- assign val = block.settings.product.price | money -%}
+                    {%- else -%}
+                      {%- assign val = block.settings.fallback_price -%}
+                    {%- endif -%}
+                {%- endcase -%}
+                {%- if r == 'price' -%}
+                  <dt>{{ row_labels[row_index] }}</dt>
+                  <dd class="cmp-value-price">{{ val | default: '—' }}</dd>
+                {%- else -%}
+                  <dt>{{ row_labels[row_index] }}</dt>
+                  <dd>{{ val | default: '—' }}</dd>
+                {%- endif -%}
+              {%- endfor -%}
+            </dl>
+            <a class="cmp-cta cmp-cta-block" href="{{ p.url | default: '#' }}">Découvrir →</a>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="comparator-footnote">{{ section.settings.footnote }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .comparator {
+    background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%);
+    padding: 7rem 2rem;
+  }
+  .comparator .section-head { margin-bottom: 3.5rem; }
+
+  /* ─── Desktop grid table ─── */
+  .comparator-table { display: none; }
+
+  @media (min-width: 980px) {
+    .comparator-table {
+      display: block;
+      background: var(--pearl);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+    .comparator-cards { display: none; }
+
+    .comparator-grid {
+      display: grid;
+      grid-template-columns: 1.1fr repeat(var(--cols), 1fr);
+    }
+
+    .cmp-cell {
+      padding: 1.4rem 1.5rem;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      font-size: 0.92rem;
+      color: var(--ink-2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cmp-cell:last-child,
+    .comparator-grid > .cmp-cell:nth-child(calc(var(--cols) + 1) * 1n) {
+      /* trailing right borders cleaned by overflow:hidden on wrapper */
+    }
+
+    .cmp-cell-corner {
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cmp-head {
+      background: var(--pearl);
+      text-align: center;
+      align-items: center;
+      padding: 2rem 1.2rem 1.8rem;
+      position: relative;
+      gap: 0.6rem;
+    }
+    .cmp-head.is-best {
+      background: linear-gradient(180deg, var(--rose-pale) 0%, var(--pearl) 65%);
+      box-shadow: inset 0 3px 0 0 var(--bordeaux);
+    }
+
+    .cmp-badge {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.7rem;
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      background: var(--cream);
+      border: 1px solid var(--line);
+      padding: 0.28rem 0.6rem;
+    }
+    .cmp-badge-best {
+      color: var(--pearl);
+      background: var(--bordeaux);
+      border-color: var(--bordeaux);
+    }
+
+    .cmp-img {
+      width: 110px;
+      height: 110px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--pearl) 100%);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .cmp-img img,
+    .cmp-img svg { width: 100%; height: 100%; object-fit: cover; }
+
+    .cmp-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.2;
+      margin: 0.4rem 0 0.2rem;
+    }
+
+    .cmp-price {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+    .cmp-price-now {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--bordeaux);
+    }
+    .cmp-price-was {
+      font-size: 0.82rem;
+      color: var(--ink-3);
+      text-decoration: line-through;
+    }
+
+    .cmp-cta {
+      display: inline-block;
+      font-size: 0.74rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 0.2rem;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .cmp-cta:hover { color: var(--bordeaux); border-color: var(--bordeaux); }
+
+    .cmp-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      background: var(--cream);
+    }
+
+    .cmp-value {
+      text-align: center;
+      align-items: center;
+      line-height: 1.5;
+    }
+    .cmp-value.is-best {
+      background: rgba(240, 216, 216, 0.18);
+    }
+
+    .cmp-value-price {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      color: var(--bordeaux);
+      font-weight: 500;
+    }
+
+    /* zebra stripes by row, applied to data rows only (rows after header = 7 rows of 5 cells) */
+    .comparator-grid > .cmp-cell:nth-child(n + calc(var(--cols) + 2)) {
+      /* placeholder: nth-child math kept simple via JS-free zebra below */
+    }
+  }
+
+  /* ─── Mobile cards ─── */
+  .comparator-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .cmp-card {
+    position: relative;
+    background: var(--pearl);
+    border: 1px solid var(--line);
+    padding: 1.8rem 1.4rem 1.6rem;
+    box-shadow: var(--shadow-card);
+  }
+  .cmp-card.is-best {
+    border-color: var(--bordeaux);
+    border-width: 1px;
+    box-shadow: 0 0 0 1px var(--bordeaux) inset, var(--shadow-card);
+  }
+
+  .cmp-card .cmp-badge {
+    position: absolute;
+    top: -0.7rem;
+    left: 1.4rem;
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    padding: 0.32rem 0.7rem;
+  }
+  .cmp-card .cmp-badge-best {
+    color: var(--pearl);
+    background: var(--bordeaux);
+    border-color: var(--bordeaux);
+  }
+
+  .cmp-card-head {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 1.2rem;
+  }
+
+  .cmp-card .cmp-img {
+    width: 84px;
+    height: 84px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--pearl) 100%);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .cmp-card .cmp-img img,
+  .cmp-card .cmp-img svg { width: 100%; height: 100%; object-fit: cover; }
+
+  .cmp-card-meta { flex: 1; min-width: 0; }
+  .cmp-card .cmp-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+  .cmp-card .cmp-price { display: flex; align-items: baseline; gap: 0.5rem; }
+  .cmp-card .cmp-price-now {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.35rem;
+    color: var(--bordeaux);
+    font-weight: 500;
+  }
+  .cmp-card .cmp-price-was {
+    font-size: 0.82rem;
+    color: var(--ink-3);
+    text-decoration: line-through;
+  }
+
+  .cmp-card-list {
+    display: grid;
+    grid-template-columns: minmax(8.5rem, 0.9fr) 1fr;
+    row-gap: 0.7rem;
+    column-gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .cmp-card-list dt {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bordeaux);
+    align-self: center;
+  }
+  .cmp-card-list dd {
+    font-size: 0.92rem;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .cmp-card-list dd.cmp-value-price {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--bordeaux);
+    font-weight: 500;
+  }
+
+  .cmp-cta-block {
+    display: inline-block;
+    font-size: 0.74rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 0.2rem;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .cmp-cta-block:hover { color: var(--bordeaux); border-color: var(--bordeaux); }
+
+  .comparator-footnote {
+    margin-top: 2.2rem;
+    text-align: center;
+    font-size: 0.84rem;
+    color: var(--ink-3);
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .comparator { padding: 5rem 1.4rem; }
+    .comparator .section-head { margin-bottom: 2.4rem; }
+    .cmp-card-list { grid-template-columns: 1fr; row-gap: 0.2rem; }
+    .cmp-card-list dt { margin-top: 0.6rem; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Comparateur de masques",
+  "tag": "section",
+  "class": "section-comparator",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "Aide au choix" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>Quel masque pour quel <em>besoin ?</em></p>" },
+    { "type": "textarea", "id": "footnote", "label": "Note sous le tableau", "default": "Tous nos masques AURÉLIA sont certifiés CE médical, garantis 2 ans, et expédiés depuis Paris. Livraison offerte dès 99€." },
+    { "type": "text", "id": "anchor", "label": "Ancre HTML", "default": "comparator" }
+  ],
+  "blocks": [
+    {
+      "type": "mask",
+      "name": "Masque",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produit Shopify" },
+        { "type": "text", "id": "fallback_name", "label": "Nom (si produit non connecté)" },
+        { "type": "text", "id": "fallback_price", "label": "Prix (si produit non connecté)" },
+        { "type": "text", "id": "badge", "label": "Badge (optionnel)", "info": "Ex : Best-seller, Nouveau, Édition limitée" },
+        { "type": "header", "content": "Caractéristiques" },
+        { "type": "text", "id": "zone", "label": "Zone traitée" },
+        { "type": "text", "id": "wavelengths", "label": "Longueurs d'onde" },
+        { "type": "text", "id": "cryo", "label": "Cryothérapie" },
+        { "type": "text", "id": "duration", "label": "Durée séance" },
+        { "type": "text", "id": "results", "label": "Résultats visibles" },
+        { "type": "text", "id": "ideal_for", "label": "Idéal pour" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Comparateur de masques",
+      "blocks": [
+        {
+          "type": "mask",
+          "settings": {
+            "fallback_name": "Shark CryoGlow Édition Paris",
+            "fallback_price": "293,99€",
+            "badge": "Best-seller",
+            "zone": "Visage complet",
+            "wavelengths": "Rouge 633nm · Bleue 415nm · Ambrée 590nm",
+            "cryo": "Oui · sous les yeux −7°C",
+            "duration": "8 minutes",
+            "results": "Dès 4 semaines",
+            "ideal_for": "Anti-âge global, éclat, imperfections"
+          }
+        },
+        {
+          "type": "mask",
+          "settings": {
+            "fallback_name": "CryoGlow Pro Collagène",
+            "fallback_price": "399€",
+            "badge": "Nouveau",
+            "zone": "Visage complet",
+            "wavelengths": "7 longueurs d'onde · mode collagène boost",
+            "cryo": "Oui · multi-zones",
+            "duration": "10 minutes",
+            "results": "Dès 3 semaines",
+            "ideal_for": "Anti-âge intensif, peaux 35+"
+          }
+        },
+        {
+          "type": "mask",
+          "settings": {
+            "fallback_name": "Eye Recovery LED",
+            "fallback_price": "149€",
+            "badge": "",
+            "zone": "Contour des yeux",
+            "wavelengths": "Ambrée 590nm",
+            "cryo": "Oui · −5°C",
+            "duration": "5 minutes",
+            "results": "Dès 2 semaines",
+            "ideal_for": "Poches, cernes, fatigue"
+          }
+        },
+        {
+          "type": "mask",
+          "settings": {
+            "fallback_name": "Décolleté Glow LED",
+            "fallback_price": "219€",
+            "badge": "",
+            "zone": "Cou & décolleté",
+            "wavelengths": "Rouge 633nm · Ambrée 590nm",
+            "cryo": "Non",
+            "duration": "10 minutes",
+            "results": "Raffermit en 6 semaines",
+            "ideal_for": "Fermeté cou & décolleté"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
