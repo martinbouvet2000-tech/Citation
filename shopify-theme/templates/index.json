@@ -6,7 +6,7 @@
         "eyebrow": "Nouveau · Édition limitée",
         "heading": "<p>La lumière, ce nouveau <em>geste de beauté.</em></p>",
         "lead": "Découvrez les masques LED de luminothérapie les plus avancés. Une routine de 10 minutes par jour pour révéler l'éclat naturel de votre peau, depuis le confort de votre maison.",
-        "cta_primary_label": "Découvrir le CryoGlow",
+        "cta_primary_label": "Découvrir la gamme",
         "cta_secondary_label": "Voir la gamme",
         "show_rating": true,
         "rating_value": "4,8/5",
@@ -28,7 +28,7 @@
       "settings": {
         "tag": "Best-seller · Édition Paris",
         "eyebrow": "Le best-seller",
-        "heading": "<p>Shark CryoGlow™ <em>Édition Paris</em></p>",
+        "heading": "<p>AURÉLIA <em>Signature</em></p>",
         "description": "Le masque LED le plus complet de notre sélection. Trois longueurs d'onde scientifiquement étudiées, une cryothérapie sous les yeux pour décongestionner les poches, et une télécommande intelligente. Pensé pour un rituel quotidien en 10 minutes seulement.",
         "secondary_label": "La science"
       },
@@ -113,10 +113,10 @@
     "comparator": {
       "type": "product-comparison",
       "blocks": {
-        "m1": { "type": "mask", "settings": { "fallback_name": "Shark CryoGlow Édition Paris", "fallback_price": "293,99€", "badge": "Best-seller", "zone": "Visage complet", "wavelengths": "Rouge 633nm · Bleue 415nm · Ambrée 590nm", "cryo": "Oui · sous les yeux −7°C", "duration": "8 minutes", "results": "Dès 4 semaines", "ideal_for": "Anti-âge global, éclat, imperfections" } },
-        "m2": { "type": "mask", "settings": { "fallback_name": "CryoGlow Pro Collagène", "fallback_price": "399€", "badge": "Nouveau", "zone": "Visage complet", "wavelengths": "7 longueurs d'onde", "cryo": "Oui · multi-zones", "duration": "10 minutes", "results": "Dès 3 semaines", "ideal_for": "Peaux 35+" } },
-        "m3": { "type": "mask", "settings": { "fallback_name": "Eye Recovery LED", "fallback_price": "149€", "zone": "Contour des yeux", "wavelengths": "Ambrée 590nm", "cryo": "Oui · −5°C", "duration": "5 minutes", "results": "Dès 2 semaines", "ideal_for": "Poches, cernes" } },
-        "m4": { "type": "mask", "settings": { "fallback_name": "Décolleté Glow LED", "fallback_price": "219€", "zone": "Cou & décolleté", "wavelengths": "Rouge 633nm · Ambrée 590nm", "cryo": "Non", "duration": "10 minutes", "results": "6 semaines", "ideal_for": "Fermeté décolleté" } }
+        "m1": { "type": "mask", "settings": { "fallback_name": "AURÉLIA Signature", "fallback_price": "279€", "badge": "Best-seller", "zone": "Visage complet", "wavelengths": "Rouge 633nm · Bleue 415nm · Ambrée 590nm", "cryo": "Oui · sous les yeux −7°C", "duration": "8 minutes", "results": "Dès 4 semaines", "ideal_for": "Anti-âge global, éclat, imperfections" } },
+        "m2": { "type": "mask", "settings": { "fallback_name": "AURÉLIA Lumière Pro", "fallback_price": "379€", "badge": "Nouveau", "zone": "Visage complet", "wavelengths": "7 longueurs d'onde", "cryo": "Oui · multi-zones", "duration": "10 minutes", "results": "Dès 3 semaines", "ideal_for": "Peaux 35+" } },
+        "m3": { "type": "mask", "settings": { "fallback_name": "AURÉLIA Regard", "fallback_price": "129€", "zone": "Contour des yeux", "wavelengths": "Ambrée 590nm", "cryo": "Oui · −5°C", "duration": "5 minutes", "results": "Dès 2 semaines", "ideal_for": "Poches, cernes" } },
+        "m4": { "type": "mask", "settings": { "fallback_name": "AURÉLIA Décolleté", "fallback_price": "199€", "zone": "Cou & décolleté", "wavelengths": "Rouge 633nm · Ambrée 590nm", "cryo": "Non", "duration": "10 minutes", "results": "6 semaines", "ideal_for": "Fermeté décolleté" } }
       },
       "block_order": ["m1", "m2", "m3", "m4"]
     }

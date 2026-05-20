@@ -1,6 +1,6 @@
 # Thème AURÉLIA — Installation Shopify
 
-Thème Shopify Online Store 2.0 prêt à l'emploi pour une boutique de masques LED de luminothérapie (Shark CryoGlow et gamme).
+Thème Shopify Online Store 2.0 prêt à l'emploi pour Aurélia Paris — boutique de masques LED de luminothérapie premium.
 
 ## 1. Créer le zip à uploader
 
@@ -26,10 +26,10 @@ zip -r ../aurelia-theme.zip assets config layout locales sections snippets templ
 Dans l'admin Shopify, créez :
 
 ### Produits
-- **Shark CryoGlow Édition Paris** — prix 293,99 €, comparé 359,99 €, tag `best-seller`
-- **CryoGlow Pro Collagène** — prix 399,00 €, tag `new`
-- **Eye Recovery LED** — prix 149,00 €
-- **Décolleté Glow LED** — prix 219,00 €
+- **AURÉLIA Signature** — prix 279,00 €, comparé 349,00 €, tag `best-seller`
+- **AURÉLIA Lumière Pro** — prix 379,00 €, comparé 449,00 €, tag `new`
+- **AURÉLIA Regard** — prix 129,00 €, comparé 179,00 €
+- **AURÉLIA Décolleté** — prix 199,00 €, comparé 269,00 €
 
 Pour chaque produit, ajoutez 3-5 images carrées (1200×1200 minimum).
 
@@ -48,7 +48,7 @@ Pour chaque produit, ajoutez 3-5 images carrées (1200×1200 minimum).
 - **Logo & favicon** : uploader le logo, définir le sous-titre
 - **Couleurs** : ajustables (ivoire, bordeaux, or…)
 - **Réseaux sociaux** : ajouter les URLs Instagram/TikTok/Pinterest
-- **Page d'accueil** : connecter le bloc "Produit vedette" au Shark CryoGlow, le bloc "Collection en vedette" à `la-gamme`
+- **Page d'accueil** : connecter le bloc "Produit vedette" à AURÉLIA Signature, le bloc "Collection en vedette" à `la-gamme`, et les 4 produits du comparateur dans la section "Comparator"
 
 ## 5. Activer le paiement
 
