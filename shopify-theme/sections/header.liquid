@@ -9,10 +9,7 @@
       {%- if settings.logo != blank -%}
         <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}">
       {%- else -%}
-        {{ settings.logo_text | default: shop.name }}
-        {%- if settings.logo_subtitle != blank -%}
-          <small>{{ settings.logo_subtitle }}</small>
-        {%- endif -%}
+        {% render 'logo-svg' %}
       {%- endif -%}
     </a>
     <div class="header-actions">

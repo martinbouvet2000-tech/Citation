@@ -45,7 +45,11 @@ Pour chaque produit, ajoutez 3-5 images carrées (1200×1200 minimum).
 
 ## 4. Configurer le thème (Personnaliser)
 
-- **Logo & favicon** : uploader le logo, définir le sous-titre
+- **Logo & favicon** : trois SVG par défaut sont déjà inclus dans `assets/` :
+  - Wordmark `AURÉLIA` rendu dynamiquement dans le header (via `snippets/logo-svg.liquid`) — utilise `Cormorant Garamond` et reprend le texte de `Nom de la boutique`
+  - `favicon.svg` (monogramme A doré dans un cercle) — utilisé automatiquement si aucun favicon PNG n'est uploadé
+  - `logo-stamp.svg` (estampille AURÉLIA Paris) — affiché en haut de la page À propos
+  - Pour remplacer par tes propres assets : Personnaliser → Paramètres du thème → Image du logo / Favicon
 - **Couleurs** : ajustables (ivoire, bordeaux, or…)
 - **Réseaux sociaux** : ajouter les URLs Instagram/TikTok/Pinterest
 - **Page d'accueil** : connecter le bloc "Produit vedette" à AURÉLIA Signature, le bloc "Collection en vedette" à `la-gamme`, et les 4 produits du comparateur dans la section "Comparator"
