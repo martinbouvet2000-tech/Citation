@@ -1,6 +1,6 @@
 {
   "current": {
-    "logo_text": "LUMIÈRE",
+    "logo_text": "AURÉLIA",
     "logo_subtitle": "Paris · Skincare",
     "color_ivory": "#FAF6F1",
     "color_cream": "#F5EDE4",
@@ -14,8 +14,8 @@
     "show_vendor": false
   },
   "presets": {
-    "Lumière": {
-      "logo_text": "LUMIÈRE",
+    "Aurélia": {
+      "logo_text": "AURÉLIA",
       "logo_subtitle": "Paris · Skincare",
       "color_ivory": "#FAF6F1",
       "color_cream": "#F5EDE4",

@@ -1,9 +1,9 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Lumière",
+    "theme_name": "Aurélia",
     "theme_version": "1.0.0",
-    "theme_author": "Lumière Paris",
+    "theme_author": "Aurélia Paris",
     "theme_documentation_url": "https://shopify.dev",
     "theme_support_url": "https://shopify.dev"
   },
@@ -20,7 +20,7 @@
         "type": "text",
         "id": "logo_text",
         "label": "Nom de la boutique",
-        "default": "LUMIÈRE"
+        "default": "AURÉLIA"
       },
       {
         "type": "text",

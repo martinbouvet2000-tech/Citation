@@ -1,4 +1,4 @@
-/* ─────────── LUMIÈRE Shopify theme — global JS ─────────── */
+/* ─────────── AURÉLIA Shopify theme — global JS ─────────── */
 
 const formatMoney = (cents) => {
   return (cents / 100).toFixed(2).replace('.', ',') + ' €';

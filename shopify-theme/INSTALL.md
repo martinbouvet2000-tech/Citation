@@ -1,4 +1,4 @@
-# Thème LUMIÈRE — Installation Shopify
+# Thème AURÉLIA — Installation Shopify
 
 Thème Shopify Online Store 2.0 prêt à l'emploi pour une boutique de masques LED de luminothérapie (Shark CryoGlow et gamme).
 
@@ -8,7 +8,7 @@ Depuis ce dossier `shopify-theme/`, lancez :
 
 ```bash
 cd shopify-theme
-zip -r ../lumiere-theme.zip assets config layout locales sections snippets templates
+zip -r ../aurelia-theme.zip assets config layout locales sections snippets templates
 ```
 
 > **Important** : le zip doit contenir les dossiers (`assets/`, `config/`, etc.) à sa racine — **pas** un dossier `shopify-theme/` à la racine. Sinon Shopify refusera l'upload.
@@ -17,7 +17,7 @@ zip -r ../lumiere-theme.zip assets config layout locales sections snippets templ
 
 1. Admin Shopify → **Boutique en ligne** → **Thèmes**
 2. En bas → **Ajouter un thème** → **Télécharger le fichier zip**
-3. Sélectionnez `lumiere-theme.zip`
+3. Sélectionnez `aurelia-theme.zip`
 4. Une fois importé, cliquez sur **Personnaliser** pour ajuster les couleurs/contenus
 5. **Publier** quand prêt
 
