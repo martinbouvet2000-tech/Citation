@@ -23,15 +23,16 @@ zip -r ../aurelia-theme.zip assets config layout locales sections snippets templ
 
 ## 3. Avant de publier — créer le contenu Shopify
 
-Dans l'admin Shopify, créez :
+### Produits — import en 30 secondes via CSV
 
-### Produits
-- **AURÉLIA Signature** — prix 279,00 €, comparé 349,00 €, tag `best-seller`
-- **AURÉLIA Lumière Pro** — prix 379,00 €, comparé 449,00 €, tag `new`
-- **AURÉLIA Regard** — prix 129,00 €, comparé 179,00 €
-- **AURÉLIA Décolleté** — prix 199,00 €, comparé 269,00 €
+Un fichier `products.csv` est livré à la racine du thème. Il contient les 4 produits Aurélia avec titres, descriptions HTML complètes, prix, prix barrés (anchor pricing), SKU, poids, tags, méta SEO, et metadata Google Shopping pré-remplis.
 
-Pour chaque produit, ajoutez 3-5 images carrées (1200×1200 minimum).
+1. Admin Shopify → **Produits** → **Importer** → uploader `products.csv`
+2. Cocher "Remplacer les produits avec un handle existant"
+3. Valider l'aperçu → Importer
+4. Aller dans chaque produit → ajouter 3-5 images (1200×1200 min) — utilisez `PHOTO-PROMPTS.md` pour générer les visuels via Nano Banana 2
+
+Si tu préfères créer les produits à la main, le fichier `PRODUCT-CONTENT.md` contient le même contenu formaté pour copier-coller champ par champ.
 
 ### Collection
 - **La gamme** (handle: `la-gamme`) — incluez les 4 produits ci-dessus
@@ -41,7 +42,29 @@ Pour chaque produit, ajoutez 3-5 images carrées (1200×1200 minimum).
 - Menus footer : Boutique / Maison / Aide
 
 ### Pages
-- À propos, Livraison & retours, CGV, Mentions légales, Politique de confidentialité
+
+Crée 5 pages avec les **handles exacts** suivants (Admin → Boutique en ligne → Pages → Ajouter une page) :
+
+| Titre de la page | Handle (URL) | Suffixe template |
+|---|---|---|
+| À propos | `a-propos` | `page.a-propos` |
+| CGV | `cgv` | `page.cgv` |
+| Mentions légales | `mentions-legales` | `page.mentions-legales` |
+| Livraison & retours | `livraison-retours` | `page.livraison-retours` |
+| Politique de confidentialité | `confidentialite` | `page.confidentialite` |
+
+Pour chaque page, dans l'admin Shopify : **Modèle de thème → sélectionne le bon suffixe**. Le contenu HTML est intégré au template, le champ "Contenu" Shopify peut rester vide.
+
+> ⚠ **Important** : les 4 pages légales contiennent des placeholders `[NOM DE LA SOCIÉTÉ]`, `[SIRET]`, `[ADRESSE]`, etc. Une bannière jaune les signale en mode preview. Édite directement les fichiers `templates/page.*.liquid` pour les remplacer avant publication, **OU** crée les pages avec ton contenu HTML direct (champ Contenu) si tu préfères ne pas toucher au code.
+
+### Articles de blog (SEO)
+
+3 articles SEO sont rédigés dans `BLOG-CONTENT.md` (longue traîne, 800-1200 mots chacun, sources scientifiques incluses) :
+- "Masque LED visage : comment ça marche vraiment ?"
+- "Combien de temps pour voir les résultats d'un masque LED ?"
+- "Lumière rouge, bleue, ambrée, infrarouge : longueurs d'onde LED"
+
+Admin → **Boutique en ligne → Articles de blog → Gérer les blogs** → créer "Le Journal" (handle `journal`) → publier les 3 articles.
 
 ## 4. Configurer le thème (Personnaliser)
 
@@ -100,3 +123,30 @@ templates/
 
 Toutes les sections sont éditables depuis **Boutique en ligne → Thèmes → Personnaliser**.
 Vous pouvez réordonner, ajouter, retirer des sections (hero, témoignages, FAQ…) à la souris.
+
+## Fichiers livrés (à la racine de `shopify-theme/`)
+
+| Fichier | Usage |
+|---|---|
+| `aurelia-theme.zip` (à la racine du repo) | À uploader dans Shopify (Thèmes → Ajouter un thème) |
+| `products.csv` | Import direct des 4 produits (Produits → Importer) |
+| `PRODUCT-CONTENT.md` | Mêmes 4 produits en format copy-paste manuel (titre, description HTML, FAQ, SEO) |
+| `PHOTO-PROMPTS.md` | 16 prompts Nano Banana 2 pour générer les photos produit (4 par produit) |
+| `BLOG-CONTENT.md` | 3 articles SEO prêts à publier (1 600 / 720 / 480 recherches/mois ciblées) |
+| `INSTALL.md` | Ce document |
+
+## Checklist de mise en ligne
+
+- [ ] Importer `aurelia-theme.zip` dans Shopify
+- [ ] Importer `products.csv` (Produits → Importer)
+- [ ] Créer la collection `la-gamme` et y ajouter les 4 produits
+- [ ] Créer les 5 pages avec les bons handles + suffixes template
+- [ ] Remplir les placeholders `[NOM SOCIÉTÉ]` etc. dans les 4 pages légales
+- [ ] Créer le blog `journal` + publier les 3 articles SEO
+- [ ] Générer les photos produit via Nano Banana 2 (`PHOTO-PROMPTS.md`)
+- [ ] Configurer les 2 menus de navigation (header + footer)
+- [ ] Connecter les URLs réseaux sociaux (Personnaliser → Réseaux sociaux)
+- [ ] Activer Shopify Payments
+- [ ] Tester un achat de bout en bout en mode bac à sable
+- [ ] Retirer la bannière "À compléter" des pages légales (supprimer `{% render 'legal-warning' %}` dans les 4 templates)
+- [ ] Publier le thème
