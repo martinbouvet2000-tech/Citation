@@ -1,0 +1,88 @@
+{%- comment -%}
+  Usage: {% render 'back-in-stock', product: product %}
+  Affiche un bouton "Me prévenir du retour en stock" + modal email.
+  Le formulaire poste sur /contact avec tag back-in-stock.
+{%- endcomment -%}
+{%- assign bis_variant = product.selected_or_first_available_variant -%}
+<button type="button" class="bis-trigger" data-bis-open aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+  </svg>
+  Me prévenir du retour en stock
+</button>
+
+<div class="bis-modal" id="BisModal" role="dialog" aria-modal="true" aria-labelledby="BisModalTitle" hidden>
+  <div class="bis-modal-overlay" data-bis-close></div>
+  <div class="bis-modal-card" role="document">
+    <button type="button" class="bis-modal-close" aria-label="Fermer" data-bis-close>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="5" y1="5" x2="19" y2="19"/>
+        <line x1="19" y1="5" x2="5" y2="19"/>
+      </svg>
+    </button>
+
+    <div class="bis-modal-body">
+      <p class="bis-modal-eyebrow">Retour en stock</p>
+      <h2 id="BisModalTitle" class="bis-modal-title">Soyez la <em>première prévenue</em>.</h2>
+      <p class="bis-modal-sub">Laissez-nous votre email — nous vous écrirons dès que <strong>{{ product.title }}</strong> est de nouveau disponible.</p>
+
+      <form action="{{ '/contact#back-in-stock' }}" method="post" accept-charset="UTF-8" class="bis-modal-form" id="BisModalForm" data-product-title="{{ product.title | escape }}">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[tags]" value="back-in-stock">
+        <input type="hidden" name="contact[variant_id]" value="{{ bis_variant.id }}">
+        <input type="hidden" name="contact[product]" value="{{ product.title | escape }}">
+        <input type="hidden" name="contact[body]" value="Demande d'alerte retour en stock pour {{ product.title | escape }} (variant {{ bis_variant.id }})">
+        <input type="email" name="contact[email]" placeholder="votre@email.com" autocomplete="email" required class="bis-modal-input" aria-label="Adresse email">
+        <button type="submit" class="bis-modal-submit">Me prévenir</button>
+      </form>
+
+      <div class="bis-modal-confirm" id="BisModalConfirm" hidden>
+        Merci, nous vous écrirons dès que <strong>{{ product.title }}</strong> est de nouveau disponible.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var modal = document.getElementById('BisModal');
+    if (!modal) return;
+    var triggers = document.querySelectorAll('[data-bis-open]');
+    var form = document.getElementById('BisModalForm');
+    var confirmEl = document.getElementById('BisModalConfirm');
+
+    function open() {
+      modal.hidden = false;
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          modal.setAttribute('data-visible', 'true');
+        });
+      });
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      modal.removeAttribute('data-visible');
+      document.body.style.overflow = '';
+      setTimeout(function () { modal.hidden = true; }, 350);
+    }
+
+    triggers.forEach(function (t) { t.addEventListener('click', open); });
+    modal.querySelectorAll('[data-bis-close]').forEach(function (el) { el.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.getAttribute('data-visible') === 'true') close();
+    });
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        // Show confirmation message inline before native submit redirects.
+        // We don't block the post — Shopify processes it as a contact submission.
+        if (confirmEl) {
+          confirmEl.hidden = false;
+          form.style.display = 'none';
+        }
+      });
+    }
+  })();
+</script>

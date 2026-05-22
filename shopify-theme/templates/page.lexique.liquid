@@ -1,0 +1,592 @@
+{% comment %}
+  Page Lexique LED & skincare — AURÉLIA
+  Handle Shopify attendu : lexique
+  Template autonome. CSS scopé par préfixe .lexique-*.
+  Glossaire éditorial de 30+ termes, ordonné alphabétiquement, index ancre.
+{% endcomment %}
+
+<style>
+  /* ─── Hero ─── */
+  .lexique-hero {
+    padding: 6rem 2rem 4rem;
+    background:
+      radial-gradient(ellipse at 20% 30%, var(--rose-pale) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, var(--gold-pale) 0%, transparent 55%),
+      var(--ivory);
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .lexique-hero-inner { max-width: 760px; margin: 0 auto; }
+  .lexique-hero .eyebrow { display: inline-block; margin-bottom: 1.2rem; color: var(--bordeaux); }
+  .lexique-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4.8vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1.4rem;
+    color: var(--ink);
+  }
+  .lexique-hero h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .lexique-hero .lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    color: var(--ink-2);
+    line-height: 1.6;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* ─── Index alphabétique sticky ─── */
+  .lexique-index {
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    padding: 1.1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .lexique-index-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.3rem 0.7rem;
+  }
+  .lexique-index a {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.35rem 0.55rem;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+  .lexique-index a:hover {
+    color: var(--bordeaux);
+    border-color: var(--gold);
+    background: var(--pearl);
+  }
+  .lexique-index a.is-empty {
+    color: var(--ink-faded);
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* ─── Layout principal ─── */
+  .lexique-main {
+    padding: 4rem 2rem 6rem;
+    background: var(--ivory);
+  }
+  .lexique-main-inner {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .lexique-letter-block {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .lexique-letter-block:last-child { border-bottom: none; }
+
+  .lexique-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 7vw, 6rem);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1;
+    position: sticky;
+    top: 90px;
+    align-self: flex-start;
+  }
+
+  .lexique-entries {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lexique-entry {
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .lexique-entry:last-child { border-bottom: none; }
+  .lexique-entry:first-child { padding-top: 0; }
+
+  .lexique-entry h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+    line-height: 1.2;
+  }
+  .lexique-entry h3 em { font-style: italic; color: var(--bordeaux); }
+  .lexique-entry p {
+    color: var(--ink-2);
+    font-size: 0.96rem;
+    line-height: 1.75;
+    margin-bottom: 0.7rem;
+  }
+  .lexique-entry p:last-child { margin-bottom: 0; }
+  .lexique-entry a {
+    color: var(--bordeaux);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--gold);
+  }
+  .lexique-entry a:hover {
+    text-decoration-color: var(--bordeaux);
+  }
+  .lexique-source {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--ink-3);
+    font-style: italic;
+  }
+
+  /* ─── CTA bas de page ─── */
+  .lexique-cta {
+    padding: 5rem 2rem;
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+  }
+  .lexique-cta-inner { max-width: 640px; margin: 0 auto; }
+  .lexique-cta h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .lexique-cta h2 em { font-style: italic; color: var(--gold-light); }
+  .lexique-cta p {
+    color: var(--ink-faded);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .lexique-cta a.cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2rem;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .lexique-cta a.cta-link:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 760px) {
+    .lexique-hero { padding: 4.5rem 1.4rem 3.5rem; }
+    .lexique-main { padding: 3rem 1.4rem 5rem; }
+    .lexique-letter-block {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+      padding-bottom: 2.4rem;
+      margin-bottom: 2.4rem;
+    }
+    .lexique-letter {
+      position: static;
+      font-size: 3.2rem;
+      margin-bottom: 0.4rem;
+    }
+    .lexique-index { padding: 0.8rem 1rem; }
+    .lexique-index a { font-size: 0.72rem; padding: 0.3rem 0.4rem; }
+    .lexique-cta { padding: 4rem 1.4rem; }
+  }
+
+  /* ─── Smooth scroll ─── */
+  html { scroll-behavior: smooth; }
+</style>
+
+{%- comment -%} ─────────────────────────────  HERO ───────────────────────────── {%- endcomment -%}
+<section class="lexique-hero">
+  <div class="lexique-hero-inner">
+    <span class="eyebrow">Lexique Aurélia</span>
+    <h1>Tout le <em>vocabulaire skincare</em>, démystifié.</h1>
+    <p class="lead">
+      Du collagène aux longueurs d'onde, voici le dictionnaire que vous auriez voulu avoir dès le début.
+    </p>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  INDEX ALPHA STICKY  ────────────────── {%- endcomment -%}
+<nav class="lexique-index" aria-label="Index alphabétique">
+  <div class="lexique-index-inner">
+    <a href="#lettre-A">A</a>
+    <a href="#lettre-B">B</a>
+    <a href="#lettre-C">C</a>
+    <a href="#lettre-D">D</a>
+    <a href="#lettre-E">E</a>
+    <a href="#lettre-F">F</a>
+    <a href="#lettre-G">G</a>
+    <a href="#lettre-H">H</a>
+    <a href="#lettre-I">I</a>
+    <a href="#lettre-J" class="is-empty" aria-disabled="true">J</a>
+    <a href="#lettre-K" class="is-empty" aria-disabled="true">K</a>
+    <a href="#lettre-L">L</a>
+    <a href="#lettre-M">M</a>
+    <a href="#lettre-N">N</a>
+    <a href="#lettre-O" class="is-empty" aria-disabled="true">O</a>
+    <a href="#lettre-P">P</a>
+    <a href="#lettre-Q" class="is-empty" aria-disabled="true">Q</a>
+    <a href="#lettre-R">R</a>
+    <a href="#lettre-S">S</a>
+    <a href="#lettre-T" class="is-empty" aria-disabled="true">T</a>
+    <a href="#lettre-U" class="is-empty" aria-disabled="true">U</a>
+    <a href="#lettre-V">V</a>
+    <a href="#lettre-W">W</a>
+    <a href="#lettre-X" class="is-empty" aria-disabled="true">X</a>
+    <a href="#lettre-Y" class="is-empty" aria-disabled="true">Y</a>
+    <a href="#lettre-Z" class="is-empty" aria-disabled="true">Z</a>
+  </div>
+</nav>
+
+{%- comment -%} ──────────────────  ENTRÉES  ────────────────── {%- endcomment -%}
+<section class="lexique-main">
+  <div class="lexique-main-inner">
+
+    {%- comment -%} ───── A ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-A">
+      <span class="lexique-letter">A</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Acide hyaluronique</h3>
+          <p>Molécule hydratante naturellement présente dans le derme, capable de retenir jusqu'à 1 000 fois son poids en eau. Sa production diminue avec l'âge, d'où son usage massif en cosmétique et en injection. Compatible avec la photothérapie LED en application post-séance, où la peau, légèrement vasodilatée, l'absorbe particulièrement bien.</p>
+          <span class="lexique-source">Voir aussi&nbsp;: <a href="/blogs/journal/routine-quotidienne-masque-led">la routine LED idéale</a>.</span>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Acné hormonale</h3>
+          <p>Acné déclenchée par les fluctuations hormonales (cycle menstruel, ménopause, grossesse, syndrome des ovaires polykystiques). Elle se localise typiquement sur le bas du visage, les mâchoires et le cou. La LED bleue (415 nm) agit sur la bactérie associée, mais ne corrige pas la cause hormonale&nbsp;: un suivi médical reste indispensable en cas d'acné inflammatoire persistante.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Anti-glycation</h3>
+          <p>Stratégie cosmétique visant à limiter la fixation du sucre sur les fibres de collagène (réaction de Maillard), qui rigidifie la peau et accélère son vieillissement. Les actifs anti-glycation les plus documentés sont la carnosine, l'aminoguanidine et certains polyphénols. Combinés à une alimentation maîtrisée en sucres rapides, ils complètent utilement la stimulation collagénique de la LED rouge.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── B ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-B">
+      <span class="lexique-letter">B</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Bactérie P. acnes (<em>Cutibacterium acnes</em>)</h3>
+          <p>Bactérie naturellement présente dans le follicule pileux, responsable de la composante inflammatoire de l'acné lorsqu'elle prolifère. Elle produit des porphyrines photosensibles, ce qui rend la LED bleue (415 nm) particulièrement efficace pour la réduire&nbsp;: les porphyrines absorbent la lumière bleue, génèrent de l'oxygène singulet et provoquent la lyse bactérienne.</p>
+          <span class="lexique-source">Source&nbsp;: <em>Photomedicine and Laser Surgery</em>, méta-analyse 2019.</span>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Blue light (LED bleue)</h3>
+          <p>Lumière de longueur d'onde 405-415 nm, à pénétration superficielle. Utilisée pour son action antibactérienne sur l'acné inflammatoire. À ne pas confondre avec la "lumière bleue" des écrans, beaucoup plus diffuse et à dose photonique non thérapeutique. Découvrez son usage dans le <a href="/products/masque-led-signature">masque Signature</a>.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Botox</h3>
+          <p>Nom commercial de la toxine botulique de type A, utilisée en injection médicale pour relaxer temporairement certains muscles du visage et atténuer les rides d'expression (rides dynamiques). Acte exclusivement médical en France. La LED ne remplace pas le Botox sur les rides musculaires actives, mais elle améliore la qualité globale de la peau autour&nbsp;: c'est une stratégie complémentaire, pas concurrente.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── C ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-C">
+      <span class="lexique-letter">C</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Collagène</h3>
+          <p>Protéine structurale principale du derme, responsable de la fermeté et de la résilience cutanée. Sa production diminue d'environ 1% par an dès 25 ans. La LED rouge (633 nm) et l'infrarouge proche (830 nm) stimulent les fibroblastes — les cellules qui produisent le collagène — ce qui se traduit, à 8-12 semaines de cure régulière, par une amélioration mesurable de la densité dermique.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Cryothérapie</h3>
+          <p>Application de froid intense (souvent autour de -5 °C en cabinet) sur la peau pour resserrer les pores, stimuler la microcirculation et calmer l'inflammation. Souvent associée à la LED dans les protocoles "glow" professionnels. Le couple chaud (LED) + froid (cryo) crée un effet pompe vasculaire intéressant.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── D ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-D">
+      <span class="lexique-letter">D</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Dermis (derme)</h3>
+          <p>Couche intermédiaire de la peau, située entre l'épiderme (superficiel) et l'hypoderme (profond). Contient les fibroblastes, le collagène, l'élastine et la vascularisation cutanée. C'est la cible principale de la photothérapie LED rouge et infrarouge, dont les longueurs d'onde pénètrent jusqu'à 3-5 mm.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── E ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-E">
+      <span class="lexique-letter">E</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Élastine</h3>
+          <p>Protéine fibreuse du derme qui, comme son nom l'indique, confère à la peau son élasticité (sa capacité à reprendre sa forme après étirement). Sa production diminue avec l'âge et les agressions environnementales (UV, pollution, tabac). La LED stimule indirectement sa synthèse via l'activation des fibroblastes.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Épiderme</h3>
+          <p>Couche la plus superficielle de la peau, en contact avec l'extérieur. Constituée principalement de kératinocytes, elle se renouvelle complètement en 28 jours environ chez l'adulte jeune (plus lentement avec l'âge). La LED bleue agit principalement à ce niveau, contrairement aux longueurs d'onde plus longues qui descendent dans le derme.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Érythème</h3>
+          <p>Rougeur cutanée transitoire causée par une vasodilatation. Peut être provoqué par la chaleur, l'inflammation, un actif irritant, un peeling ou un traitement laser. La LED jaune (590 nm) et rouge contribuent à apaiser l'érythème post-procédure, raison pour laquelle elles sont systématiquement utilisées en récupération en cabinet dermatologique.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── F ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-F">
+      <span class="lexique-letter">F</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Fibroblastes</h3>
+          <p>Cellules clés du derme, productrices de collagène, d'élastine et d'acide hyaluronique. Leur activité diminue avec l'âge et le photo-vieillissement. La photothérapie LED rouge stimule directement leur métabolisme via l'activation de la cytochrome C oxydase mitochondriale&nbsp;: c'est le mécanisme central de la photobiomodulation anti-âge.</p>
+          <span class="lexique-source">Source&nbsp;: Hamblin MR, <em>Photochemistry &amp; Photobiology</em>, 2018.</span>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Fitzpatrick (échelle de)</h3>
+          <p>Classification dermatologique de référence utilisée pour caractériser le phototype cutané, de I (peau très claire qui brûle systématiquement) à VI (peau très foncée qui ne brûle jamais). Elle conditionne la tolérance aux UV, le risque d'hyperpigmentation post-inflammatoire et les paramètres de réglage des lasers. La LED est validée pour tous les phototypes I à VI.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── G ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-G">
+      <span class="lexique-letter">G</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Glycation</h3>
+          <p>Réaction biochimique par laquelle un sucre se fixe sur une protéine (collagène, élastine) en l'absence d'enzyme. Cette fixation rigidifie les fibres, favorise leur dégradation et accélère le vieillissement cutané (apparition d'un teint terne, jaunâtre). Elle est aggravée par les régimes riches en sucres rapides et les pics glycémiques.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── H ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-H">
+      <span class="lexique-letter">H</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Hyperpigmentation</h3>
+          <p>Production excessive de mélanine, créant des taches plus foncées sur la peau. Causes principales&nbsp;: soleil (lentigos solaires), hormones (mélasma de grossesse ou pilule), inflammation cicatrisée (hyperpigmentation post-inflammatoire — fréquente sur phototypes IV à VI). La LED jaune contribue à uniformiser le teint mais n'efface pas les pigments installés en profondeur, qui relèvent du laser pigmentaire.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── I ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-I">
+      <span class="lexique-letter">I</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>IPL (Intense Pulsed Light)</h3>
+          <p>Lumière pulsée polychromatique (large spectre filtré), utilisée en cabinet dermatologique pour traiter les taches pigmentaires, la couperose et le rajeunissement global. À ne pas confondre avec la LED&nbsp;: l'IPL délivre des impulsions très énergétiques pour cibler des chromophores spécifiques, là où la LED stimule doucement le métabolisme cellulaire sans destruction. Les deux sont complémentaires.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── L ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-L">
+      <span class="lexique-letter">L</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Laser</h3>
+          <p>Faisceau lumineux monochromatique, cohérent et collimaté, utilisé en médecine esthétique pour des actes ciblés (épilation, taches, vaisseaux, rajeunissement, cicatrices). Contrairement à la LED, le laser délivre une énergie concentrée capable de détruire ou remodeler des tissus&nbsp;: c'est un acte médical à part entière. La LED s'utilise volontiers en récupération post-laser pour accélérer la cicatrisation.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>LED (Light Emitting Diode)</h3>
+          <p>Diode électroluminescente. Émet une lumière monochromatique (une seule longueur d'onde) à basse intensité, ce qui la rend particulièrement sûre pour un usage cutané quotidien. Le terme générique recouvre désormais l'ensemble de la photobiomodulation domestique et professionnelle. Voir aussi&nbsp;: <a href="/blogs/journal/masque-led-comment-ca-marche">comment ça marche vraiment</a>.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Lumière pulsée</h3>
+          <p>Voir <em>IPL</em>. À ne pas confondre avec la LED, dont l'émission est continue et de faible intensité.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── M ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-M">
+      <span class="lexique-letter">M</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Médecine esthétique</h3>
+          <p>Discipline médicale spécialisée dans l'amélioration de l'apparence par des actes non chirurgicaux&nbsp;: injections (toxine botulique, acide hyaluronique, biostimulateurs), lasers, peelings médicaux, radiofréquence. Encadrée par les ordres médicaux. La photothérapie LED y est utilisée largement en récupération et en entretien intercure.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Mélanine</h3>
+          <p>Pigment naturel produit par les mélanocytes (épiderme), responsable de la couleur de la peau, des cheveux et des yeux. Elle protège l'ADN cellulaire des UV. Sa production peut s'emballer localement, créant des hyperpigmentations. Elle absorbe certaines longueurs d'onde (notamment le bleu), ce qui explique pourquoi la LED bleue est légèrement moins efficace sur les phototypes très foncés.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Microcirculation</h3>
+          <p>Réseau des plus petits vaisseaux sanguins de la peau (artérioles, capillaires, veinules). Son bon fonctionnement conditionne l'éclat du teint, la nutrition cellulaire et l'élimination des déchets métaboliques. La LED rouge et infrarouge stimulent doucement la microcirculation par effet vasodilatateur local, contribuant à l'effet "bonne mine" rapide.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── N ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-N">
+      <span class="lexique-letter">N</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Nanomètre (nm)</h3>
+          <p>Milliardième de mètre. Unité de mesure des longueurs d'onde lumineuses. Pour mémoire&nbsp;: les UV vont de 100 à 400 nm, la lumière visible de 400 (violet) à 700 nm (rouge), l'infrarouge proche de 700 à 1400 nm. Les masques LED grand public et professionnels travaillent entre 415 et 850 nm — donc strictement hors UV.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Near-Infrared (NIR / infrarouge proche)</h3>
+          <p>Lumière de longueur d'onde 700-1400 nm, invisible à l'œil nu (sauf en bord de bande, où elle apparaît rouge sombre). Elle pénètre profondément (jusqu'à 5-10 mm dans la peau) et active la mitochondrie via la cytochrome C oxydase, augmentant la production d'ATP cellulaire. Utilisée dans tous les modes anti-âge profonds de nos masques (830-850 nm).</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── P ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-P">
+      <span class="lexique-letter">P</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Peeling</h3>
+          <p>Application d'un agent acide (glycolique, salicylique, lactique, TCA…) qui décolle les couches superficielles de la peau pour stimuler son renouvellement. Du plus doux (cosmétique grand public) au plus profond (acte médical). La LED rouge et jaune sont systématiquement utilisées en récupération post-peeling pour calmer l'érythème et accélérer la cicatrisation.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Photoageing (photo-vieillissement)</h3>
+          <p>Vieillissement cutané accéléré par exposition cumulée aux UV solaires. Responsable d'environ 80% des signes visibles de vieillissement&nbsp;: rides profondes, taches, perte de fermeté, teint terne. À distinguer du vieillissement intrinsèque (génétique, chronologique). La meilleure prévention reste un SPF quotidien, complété par une routine antioxydante et la stimulation LED.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Photosensibilité</h3>
+          <p>Sensibilité accrue de la peau à la lumière, causée par certains médicaments (antibiotiques cyclines, sulfamides, anti-inflammatoires, millepertuis), des actifs cosmétiques (rétinol, AHA, vitamine C pure) ou certaines pathologies (lupus, porphyrie). Avant toute séance LED, retirez les actifs photosensibilisants de votre peau et consultez si vous êtes sous traitement.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Phototype</h3>
+          <p>Voir <em>Fitzpatrick (échelle de)</em>.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── R ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-R">
+      <span class="lexique-letter">R</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Radiofréquence</h3>
+          <p>Technologie médico-esthétique utilisant des ondes électromagnétiques pour chauffer le derme en profondeur (40-45 °C), provoquant une rétraction immédiate du collagène existant et une stimulation de la néosynthèse. Effet tenseur visible. Souvent combinée à la LED dans les protocoles "lifting sans chirurgie".</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Rétinol</h3>
+          <p>Forme cosmétique de la vitamine A, gold standard anti-âge documenté depuis plus de quarante ans. Stimule le renouvellement cellulaire, atténue les rides et uniformise le teint. Photosensibilisant&nbsp;: à appliquer le soir uniquement, et <strong>jamais avant une séance LED</strong>. À introduire progressivement (2 fois par semaine puis montée en cadence).</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Rides dynamiques vs statiques</h3>
+          <p><strong>Dynamiques</strong>&nbsp;: apparaissent au mouvement (sourire, plissement du front) et disparaissent au repos. Causées par la contraction musculaire répétée. Traitement de référence&nbsp;: toxine botulique. <strong>Statiques</strong>&nbsp;: visibles même au repos, gravées dans le derme. Causées par la perte de collagène et d'élastine. C'est sur celles-ci que la LED rouge agit le mieux, à condition d'être régulière.</p>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Rosacée</h3>
+          <p>Pathologie cutanée chronique caractérisée par des rougeurs diffuses, des télangiectasies (petits vaisseaux dilatés visibles), des bouffées vasomotrices et parfois des papulo-pustules. Touche surtout les phototypes I-II adultes. La LED jaune (590 nm) apaise les composantes vasculaires et inflammatoires. Voir notre <a href="/blogs/journal/rosacee-photo-therapie-led">guide rosacée &amp; LED</a>.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── S ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-S">
+      <span class="lexique-letter">S</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>SPF (Sun Protection Factor)</h3>
+          <p>Indice de protection solaire mesurant la capacité d'un produit à filtrer les UVB. Un SPF 30 filtre environ 97% des UVB, un SPF 50 environ 98%. Pour une protection complète, choisissez un indice "large spectre" couvrant aussi les UVA. Le SPF est le complément quotidien indispensable de toute routine anti-âge — y compris LED, qui ne protège pas du soleil.</p>
+          <span class="lexique-source">Source&nbsp;: Société Française de Dermatologie.</span>
+        </article>
+
+        <article class="lexique-entry">
+          <h3>Stratum corneum</h3>
+          <p>Couche cornée la plus superficielle de l'épiderme, constituée de cellules mortes kératinisées formant une barrière hydrolipidique. Son intégrité conditionne la tolérance cutanée et l'efficacité des actifs déposés. Une barrière abîmée (sur-nettoyage, sur-exfoliation) provoque inconfort, rougeurs, hypersensibilité. La LED rouge contribue à la renforcer.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── V ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-V">
+      <span class="lexique-letter">V</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Vitamine C</h3>
+          <p>Antioxydant cutané majeur (forme acide L-ascorbique principalement). Neutralise les radicaux libres, illumine le teint, soutient la synthèse du collagène et atténue les taches pigmentaires. Photosensibilisante sous forme pure&nbsp;: à appliquer le matin sous SPF, ou en post-LED, jamais avant une séance. Les dérivés stables (ascorbyl glucoside, MAP) sont mieux tolérés.</p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%} ───── W ───── {%- endcomment -%}
+    <div class="lexique-letter-block" id="lettre-W">
+      <span class="lexique-letter">W</span>
+      <div class="lexique-entries">
+
+        <article class="lexique-entry">
+          <h3>Wavelength (longueur d'onde)</h3>
+          <p>Distance entre deux crêtes successives d'une onde lumineuse, exprimée en nanomètres (nm). Détermine la couleur perçue de la lumière et sa profondeur de pénétration cutanée. Règle pratique en photothérapie&nbsp;: plus la longueur d'onde est grande, plus la lumière pénètre profondément. C'est pourquoi le rouge (633 nm) atteint le derme là où le bleu (415 nm) reste épidermique.</p>
+        </article>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  CTA  ────────────────── {%- endcomment -%}
+<section class="lexique-cta">
+  <div class="lexique-cta-inner">
+    <h2>Et maintenant, <em>trouvez le masque qu'il vous faut</em></h2>
+    <p>Comprendre, c'est bien. Choisir avec discernement, c'est mieux. Faites notre diagnostic gratuit pour identifier le masque qui correspond à votre peau, votre rythme et vos priorités.</p>
+    <a href="/pages/diagnostic" class="cta-link">
+      Faire mon diagnostic
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>

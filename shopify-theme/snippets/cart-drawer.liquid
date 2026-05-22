@@ -6,6 +6,29 @@
       {% render 'icon', name: 'close' %}
     </button>
   </header>
+  {%- assign free_shipping_threshold_cents = 15000 -%}
+  {%- assign cart_total_cents = cart.total_price -%}
+  {%- assign cart_reached = false -%}
+  {%- if cart_total_cents >= free_shipping_threshold_cents -%}{%- assign cart_reached = true -%}{%- endif -%}
+  {%- assign remaining_cents = free_shipping_threshold_cents | minus: cart_total_cents -%}
+  {%- if remaining_cents < 0 -%}{%- assign remaining_cents = 0 -%}{%- endif -%}
+  {%- assign progress_pct = cart_total_cents | times: 100 | divided_by: free_shipping_threshold_cents -%}
+  {%- if progress_pct > 100 -%}{%- assign progress_pct = 100 -%}{%- endif -%}
+
+  <div class="cart-shipping-bar{% if cart_reached %} is-unlocked{% endif %}" id="CartShippingBar" role="status" aria-live="polite"{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+    <div class="cart-shipping-bar-msg">
+      {%- if cart_reached -%}
+        <svg class="cart-shipping-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        <span>Livraison offerte débloquée</span>
+      {%- else -%}
+        Plus que <strong>{{ remaining_cents | money }}</strong> pour la livraison offerte
+      {%- endif -%}
+    </div>
+    <div class="cart-shipping-track">
+      <div class="cart-shipping-fill" style="width: {% if cart_reached %}100{% else %}{{ progress_pct }}{% endif %}%;"></div>
+    </div>
+  </div>
+
   <div class="cart-items" id="CartItems">
     {%- if cart.item_count == 0 -%}
       <div class="cart-empty">

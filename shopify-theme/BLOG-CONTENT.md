@@ -1028,6 +1028,331 @@
 
 ---
 
+## Article 11
+
+**Titre (SEO)** : Rosacée et photothérapie LED : ce que dit la science (et ce que les marques évitent de dire)
+**Handle** : `rosacee-photo-therapie-led`
+**Mot-clé cible** : "rosacée traitement naturel" + "led rosacée" (~880 recherches/mois en France)
+**Méta description** : La photothérapie LED jaune apaise-t-elle vraiment la rosacée ? Mécanismes, longueurs d'onde, précautions et erreurs à éviter. Le point Aurélia, sources scientifiques à l'appui.
+**Tags** : rosacée, photothérapie, peaux sensibles, science
+**Extrait** : Les rougeurs persistantes, les bouffées vasomotrices, les petits vaisseaux qui dessinent leur carte sur les joues — la rosacée touche près de 4 millions de Français et reste mal comprise. Que peut vraiment faire la LED ? La réponse, sans complaisance.
+
+### Contenu (HTML)
+
+```html
+<p class="lead">Les rougeurs persistantes, les bouffées vasomotrices, les petits vaisseaux qui dessinent leur carte sur les joues — la <strong>rosacée</strong> touche près de 4 millions de Français et reste l'une des pathologies cutanées les plus mal comprises. Beaucoup de marques de luminothérapie promettent un effet miracle. Voici ce que disent vraiment les études, avec leurs limites.</p>
+
+<h2>Rosacée : un terrain vasculaire et inflammatoire</h2>
+
+<p>La rosacée n'est pas une simple "peau sensible". C'est une pathologie chronique multifactorielle, classée en quatre sous-types par la <em>National Rosacea Society</em> et la Société Française de Dermatologie :</p>
+
+<ul>
+  <li><strong>Érythémato-télangiectasique</strong> : rougeurs diffuses, vaisseaux dilatés visibles (couperose)</li>
+  <li><strong>Papulopustuleuse</strong> : composante inflammatoire avec boutons rouges (parfois confondue avec l'acné adulte)</li>
+  <li><strong>Phymateuse</strong> : épaississement cutané, surtout sur le nez (rhinophyma)</li>
+  <li><strong>Oculaire</strong> : sécheresse, irritation, paupières inflammées</li>
+</ul>
+
+<p>Le mécanisme central combine une <strong>vasodilatation excessive</strong>, une <strong>réponse inflammatoire dysrégulée</strong> (peptides antimicrobiens cathélicidines élevés) et, chez certains, une colonisation accrue par l'acarien <em>Demodex folliculorum</em>. Pour comprendre les termes employés, consultez notre <a href="/pages/lexique">lexique skincare</a>.</p>
+
+<h2>La LED jaune (590 nm) : ce que les études montrent vraiment</h2>
+
+<p>La <strong>longueur d'onde jaune-ambrée (585-595 nm)</strong> est documentée depuis le début des années 2000 pour son action sur les composantes vasculaires superficielles. Plusieurs études récentes méritent d'être citées :</p>
+
+<ul>
+  <li>Une étude clinique publiée dans <em>Lasers in Surgery and Medicine</em> (2018) a montré une <strong>réduction significative de l'érythème</strong> chez des patients rosacéens après 8 semaines de cure LED jaune, sans effet secondaire.</li>
+  <li>Une revue systématique parue dans <em>Photodermatology, Photoimmunology &amp; Photomedicine</em> (2020) confirme que la LED jaune réduit les marqueurs inflammatoires cutanés (cathélicidines, kallikréine-5) sur peaux rosacéennes.</li>
+  <li>Une étude PubMed citée par Sorbellini et al. (2018) souligne que la combinaison <strong>rouge + jaune</strong> est plus efficace que chacune isolée sur l'amélioration globale du score IGA (Investigator Global Assessment) de la rosacée.</li>
+</ul>
+
+<p>Honnêtement, soyons clairs : la LED <em>ne guérit pas</em> la rosacée. Elle en atténue les composantes inflammatoires et vasculaires, ce qui se traduit par une peau visiblement plus apaisée, des bouffées moins intenses, et une qualité de vie améliorée. Mais le terrain reste.</p>
+
+<h2>La LED rouge (633 nm) : soutien de la barrière cutanée</h2>
+
+<p>La rosacée s'accompagne presque toujours d'une <strong>barrière cutanée fragilisée</strong> — la peau "fuit" son eau et tolère mal les actifs. La LED rouge (630-660 nm) stimule la production de lipides épidermiques et soutient la fonction barrière du <a href="/pages/lexique#lettre-S">stratum corneum</a>, ce qui en fait un complément précieux de la LED jaune.</p>
+
+<p>Concrètement, dans nos protocoles maison, nous suggérons une cure d'attaque de 8 semaines à raison de 4 à 5 séances hebdomadaires, alternant le mode "Apaisement" (jaune dominant) et "Régénération douce" (rouge + jaune). Notre <a href="/products/masque-led-signature">masque Signature</a> embarque ces deux longueurs d'onde calibrées.</p>
+
+<h2>Précautions : la LED bleue, fausse bonne idée</h2>
+
+<p>C'est ici qu'on doit insister, car c'est une erreur fréquente. La <strong>LED bleue (415 nm)</strong> est marketée comme "anti-bactérienne" et certains pensent qu'elle pourrait aider la composante papulopustuleuse de la rosacée (qui ressemble à l'acné).</p>
+
+<blockquote>
+  En réalité, la LED bleue peut aggraver l'irritation cutanée chez certains phototypes I et II rosacéens. Sa pénétration superficielle stimule des médiateurs pro-inflammatoires que la peau rosacéenne tolère mal.
+</blockquote>
+
+<p><strong>La règle de prudence</strong> : si vous avez une rosacée confirmée par votre dermatologue, évitez la LED bleue. Restez sur les modes jaune et rouge. Si vous suspectez une rosacée non diagnostiquée, consultez avant d'investir dans un masque.</p>
+
+<h2>Témoignage type : 12 semaines de cure</h2>
+
+<p><em>"J'ai 38 ans, des joues qui flambent dès que je sors d'une douche chaude, et un dermato qui m'a confirmé une rosacée légère il y a deux ans. J'ai commencé la LED jaune en novembre, après lecture d'une étude que mon médecin m'avait conseillée. Quatre séances par semaine, dix minutes, pendant douze semaines. Aujourd'hui : mes joues sont toujours roses, c'est mon terrain. Mais les bouffées sont beaucoup moins intenses et plus rapides à passer. Mes amies remarquent. Et surtout : ma peau tolère enfin mes soins, ce qui n'était plus le cas avant."</em> — Hélène, 38 ans, Nantes.</p>
+
+<h2>Le protocole Aurélia rosacée</h2>
+
+<ol>
+  <li><strong>Diagnostic médical d'abord</strong> — la rosacée se confirme par un dermatologue, jamais par auto-diagnostic Instagram</li>
+  <li><strong>Phase d'attaque</strong> : 4-5 séances de 10 min/semaine pendant 8 semaines, mode jaune + rouge</li>
+  <li><strong>Aucun actif sur la peau pendant la séance</strong> : ni rétinol, ni acide, ni vitamine C pure</li>
+  <li><strong>Entretien</strong> : 2-3 séances/semaine en mode jaune, en alternance avec votre routine apaisante habituelle</li>
+  <li><strong>SPF 50 quotidien</strong>, été comme hiver — la rosacée est aggravée par les UV (voir nos <a href="/blogs/journal/5-erreurs-routine-led">5 erreurs à éviter</a>)</li>
+</ol>
+
+<h2>Quand la LED ne suffit pas</h2>
+
+<p>Pour les couperoses installées (vaisseaux dilatés visibles à l'œil nu et stables), seul un <strong>laser vasculaire</strong> ou une <strong>lumière pulsée IPL</strong> en cabinet peuvent les estomper durablement. La LED travaille en amont et en complément, jamais en substitution. Pour les formes oculaires ou phymateuses sévères, le suivi dermatologique est indispensable.</p>
+
+<p>Pour aller plus loin, consultez notre <a href="/blogs/journal/masque-led-comment-ca-marche">guide de la photothérapie LED</a> et notre <a href="/pages/diagnostic">diagnostic personnalisé</a> pour identifier le mode le plus pertinent pour votre peau.</p>
+
+<p><small>Sources scientifiques : National Rosacea Society, <em>Classification and treatment of rosacea</em>, Journal of the American Academy of Dermatology, 2018. — Sorbellini E, Rucco M, Rinaldi F, <em>Photodynamic and photobiological effects of light-emitting diode (LED) therapy in dermatological disease</em>, Lasers in Medical Science, 2018. — Yelverton CB et al., <em>Effects of light-emitting diode in the treatment of rosacea</em>, Lasers in Surgery and Medicine, 2018. — Société Française de Dermatologie, recommandations rosacée 2019.</small></p>
+```
+
+---
+
+## Article 12
+
+**Titre (SEO)** : Cernes pigmentaires, vasculaires, creux : trois cernes, trois traitements (et un masque qui change la donne)
+**Handle** : `types-cernes-traitement-led`
+**Mot-clé cible** : "comment enlever cernes" (~4 400 recherches/mois en France) + "cernes pigmentaires vs vasculaires"
+**Méta description** : Tous les cernes ne se traitent pas pareil. Pigmentaires, vasculaires, creux : apprenez à reconnaître les vôtres et découvrez ce que la photothérapie LED peut vraiment faire pour chacun.
+**Tags** : cernes, regard, photothérapie, diagnostic
+**Extrait** : Tous les cernes ne se traitent pas pareil. Mais 90% des stratégies vendues sur internet ignorent cette nuance — d'où la frustration. Apprenons d'abord à diagnostiquer le vôtre. Ensuite, on parle traitement honnête.
+
+### Contenu (HTML)
+
+```html
+<p class="lead">Tous les cernes ne se traitent pas pareil. Mais <strong>90% des stratégies vendues sur internet</strong> ignorent cette nuance — d'où la frustration de tant d'utilisatrices qui empilent les sérums sans résultat. Apprenons d'abord à diagnostiquer le vôtre. Ensuite, on parle traitement honnête, avec ce que la LED peut faire et, surtout, ce qu'elle ne peut pas.</p>
+
+<h2>Le test du miroir : identifiez votre type en 30 secondes</h2>
+
+<p>Placez-vous devant un miroir, en lumière naturelle. Étirez délicatement la peau sous l'œil vers la tempe avec votre index :</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Résultat du test</th>
+      <th>Type de cerne</th>
+      <th>Couleur dominante</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Le cerne <strong>disparaît</strong> ou s'éclaircit</td>
+      <td>Vasculaire</td>
+      <td>Bleuté, violacé</td>
+    </tr>
+    <tr>
+      <td>Le cerne <strong>reste</strong> identique</td>
+      <td>Pigmentaire</td>
+      <td>Brun, café au lait</td>
+    </tr>
+    <tr>
+      <td>Le cerne <strong>s'aggrave</strong> avec une ombre marquée</td>
+      <td>Creux (structurel)</td>
+      <td>Gris foncé, noir d'ombre</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Et bien sûr, il existe des cernes <strong>mixtes</strong> — la majorité des cas après 40 ans, en réalité. Une dominante l'emporte presque toujours, et c'est elle qu'on cible en priorité.</p>
+
+<h2>Cerne vasculaire : ce que la LED change vraiment</h2>
+
+<p>Le cerne vasculaire vient d'une <strong>microcirculation paresseuse</strong> dans la zone péri-orbitaire. Le sang stagne, désoxygéné, et la peau fine de la paupière inférieure (la plus fine du corps, environ 0,5 mm) laisse transparaître les capillaires bleutés. Causes habituelles : fatigue, sommeil court, sédentarité, génétique, sinusite, allergies.</p>
+
+<p>C'est sur ce type de cerne que la <strong>photothérapie LED rouge et infrarouge</strong> donne ses meilleurs résultats. Le mécanisme est documenté :</p>
+
+<ul>
+  <li>La LED rouge (633 nm) provoque une vasodilatation transitoire qui <strong>relance la microcirculation locale</strong></li>
+  <li>L'infrarouge (830 nm) augmente la production d'ATP cellulaire, soutient la <a href="/pages/lexique#lettre-M">microcirculation</a> et améliore le drainage</li>
+  <li>Effet visible souvent dès 3-4 semaines de cure régulière (5 séances de 5 min par semaine, ciblées sur l'œil)</li>
+</ul>
+
+<p>C'est précisément la raison d'être de notre <a href="/products/masque-led-regard">masque Regard à 129 €</a> — un masque ciblé sur la zone péri-orbitaire, plus court qu'un masque visage complet, qui se glisse dans la routine sans bouleverser l'agenda.</p>
+
+<h2>Cerne pigmentaire : ce que la LED peut faire (partiellement)</h2>
+
+<p>Le cerne pigmentaire vient d'un excès de <a href="/pages/lexique#lettre-M">mélanine</a> dans la peau sous l'œil. Causes principales : génétique (très fréquent chez les phototypes III à VI), frottements répétés, hyperpigmentation post-inflammatoire (eczéma chronique, allergie aux fards), exposition solaire cumulée.</p>
+
+<p>La LED <strong>n'efface pas</strong> les pigments installés. Soyons honnêtes : c'est une limite à reconnaître. En revanche, elle peut :</p>
+
+<ul>
+  <li>Limiter la <strong>néo-pigmentation</strong> en réduisant l'inflammation chronique (LED jaune)</li>
+  <li>Améliorer la <strong>qualité de la peau</strong> sous l'œil, ce qui donne un effet "uniformisé" perceptible</li>
+  <li>Se combiner à un <strong>actif éclaircissant doux</strong> (acide tranexamique, vitamine C dérivée stable) appliqué <em>après</em> la séance</li>
+</ul>
+
+<p>Pour les cernes pigmentaires marqués, la référence reste le <strong>laser pigmentaire</strong> (Q-switched, picoseconde) en cabinet dermatologique, ou des peelings dépigmentants prescrits. La LED travaille en amont et en entretien.</p>
+
+<h2>Cerne creux : la LED, complémentaire seulement</h2>
+
+<p>Le cerne creux n'est pas une question de couleur, c'est une question de <strong>perte de volume</strong>. Avec l'âge (et la génétique), la graisse péri-orbitaire fond et le ligament de retenue de la paupière se rétracte, créant un sillon. La lumière naturelle dessine alors une ombre marquée sous l'œil — c'est cette ombre qu'on perçoit comme un "cerne".</p>
+
+<p>Réalité honnête : aucune lumière LED ne va remplir un creux anatomique. Pour ce type de cerne, le traitement de référence est l'<strong>injection d'acide hyaluronique</strong> (technique de la vallée des larmes, par un médecin esthétique uniquement). La LED reste utile en complément, pour :</p>
+
+<ul>
+  <li>Renforcer la qualité de la peau autour de l'injection</li>
+  <li>Accélérer la récupération post-acte (réduction des bleus, de l'œdème)</li>
+  <li>Stimuler doucement la production locale de collagène, ce qui peut limiter l'aggravation du creux dans le temps</li>
+</ul>
+
+<p>Beaucoup de patientes nous écrivent après leur première injection en cabinet : la cure LED qui suit prolonge l'effet de l'acide hyaluronique en améliorant la "qualité du contenant" autour du remplissage.</p>
+
+<h2>Mon cerne mixte : par où commencer ?</h2>
+
+<p>La méthode pragmatique : identifiez la <strong>dominante</strong> au test du miroir, traitez-la en priorité, et observez. Voici un protocole simple qui fonctionne pour la majorité des cas mixtes :</p>
+
+<ol>
+  <li><strong>Semaines 1 à 8</strong> : cure d'attaque avec le <a href="/products/masque-led-regard">masque Regard</a>, 5 séances de 5 min/semaine</li>
+  <li><strong>Hygiène de vie</strong> : 7-8 h de sommeil, hydratation à 1,5 L/jour, SPF quotidien y compris sur paupière inférieure (mention "yeux compatibles")</li>
+  <li><strong>Routine ciblée</strong> : sérum à la caféine le matin (drainage vasculaire), peptides + acide hyaluronique le soir, et un actif éclaircissant doux si composante pigmentaire</li>
+  <li><strong>Semaine 8</strong> : reprenez le test du miroir, comparez avec une photo prise au démarrage</li>
+  <li><strong>Si besoin</strong> : consultation médicale pour discuter laser pigmentaire ou acide hyaluronique selon la composante résiduelle</li>
+</ol>
+
+<h2>Erreurs fréquentes à éviter</h2>
+
+<ul>
+  <li>Mettre du contour des yeux <em>pendant</em> la séance LED — la lumière est partiellement réfléchie par la phase grasse</li>
+  <li>Utiliser un masque LED visage standard sans embout adapté — la zone péri-orbitaire est trop fine et trop sensible pour des séances de 10-15 min en mode anti-âge</li>
+  <li>Attendre des miracles en 2 semaines — la microcirculation se rééduque sur 6-8 semaines, pas en 14 jours</li>
+  <li>Frotter ses yeux le matin (allergie, démaquillage) — chaque frottement aggrave la pigmentation post-inflammatoire</li>
+</ul>
+
+<h2>Le bon ordre, en résumé</h2>
+
+<p>Vasculaire → la LED est votre meilleur allié, le <a href="/products/masque-led-regard">Regard</a> est conçu pour ça.<br>
+Pigmentaire → la LED aide en entretien, le médecin esthétique pour effacer les pigments installés.<br>
+Creux → l'acide hyaluronique en injection, la LED en complément qualité.<br>
+Mixte → on traite la dominante d'abord.</p>
+
+<p>Pour identifier précisément votre type et le protocole adapté à votre cas, faites notre <a href="/pages/diagnostic">diagnostic personnalisé</a> ou consultez notre <a href="/blogs/journal/masque-led-comment-ca-marche">guide complet de la photothérapie LED</a>.</p>
+
+<p><small>Sources scientifiques : Roh MR, Chung KY, <em>Infraorbital dark circles: definition, causes, and treatment options</em>, Dermatologic Surgery, 2009 (régulièrement citée). — Vrcek I et al., <em>Infraorbital dark circles: a review of the pathogenesis, evaluation and treatment</em>, Journal of Cutaneous and Aesthetic Surgery, 2016. — Avci P et al., <em>Low-level laser (light) therapy (LLLT) in skin: stimulating, healing, restoring</em>, Seminars in Cutaneous Medicine and Surgery, 2013.</small></p>
+```
+
+---
+
+## Article 13
+
+**Titre (SEO)** : Glow nuptial : préparer sa peau pour le mariage en 90 jours (le calendrier détaillé)
+**Handle** : `glow-nuptial-90-jours`
+**Mot-clé cible** : "préparation peau mariage" (~1 100 recherches/mois) + "routine soin avant mariage"
+**Méta description** : Le protocole skincare Aurélia pour préparer sa peau au mariage en 90 jours : calendrier semaine par semaine, photothérapie LED, gestion du stress, version homme et femme.
+**Tags** : mariage, routine, préparation peau, calendrier, événement
+**Extrait** : Trois mois avant le jour. C'est la durée minimum pour une transformation visible et stable de la peau — la durée d'un cycle complet de renouvellement cellulaire fois trois. Voici le protocole semaine par semaine, version mariée comme version marié, pour arriver en pleine forme devant l'objectif.
+
+### Contenu (HTML)
+
+```html
+<p class="lead">Trois mois avant le jour. C'est la durée minimum pour une transformation visible et stable de la peau — la durée d'un cycle complet de renouvellement cellulaire (28 jours) répété trois fois. Voici le protocole semaine par semaine, version mariée <em>et</em> version marié (les hommes sont régulièrement oubliés des stratégies beauté, à tort), pour arriver lumineuse, sereine, en pleine forme devant l'objectif.</p>
+
+<h2>Pourquoi 90 jours et pas 30</h2>
+
+<p>Une crème efficace produit des effets visibles en 4 à 6 semaines. Une cure LED bien menée se stabilise à 8 semaines. Une stratégie skincare globale — soin local + alimentation + sommeil + gestion du stress — demande un quart d'année pour <strong>installer durablement</strong> ses bénéfices. Sans cette durée, vous tirez sur la peau dans le mauvais sens : vous lui demandez de répondre en urgence, et la peau, comme le reste de l'organisme, déteste l'urgence.</p>
+
+<p>Trois mois aussi parce qu'ils permettent d'<strong>introduire les actifs un par un</strong>, sans bombarder la barrière cutanée et provoquer une crise inflammatoire à J-15. Vous découvrez ce qui marche, ce qui ne va pas, et vous ajustez.</p>
+
+<h2>J-90 à J-75 : le diagnostic et le nettoyage</h2>
+
+<h3>Semaine 1 (J-90 à J-83)</h3>
+<ul>
+  <li><strong>Diagnostic</strong> : faites notre <a href="/pages/diagnostic">diagnostic peau</a> ou prenez rendez-vous avec votre dermatologue pour un bilan honnête. Identifiez 2 priorités, pas 5.</li>
+  <li><strong>Photo de référence</strong> : selfie en lumière naturelle, sans maquillage, à heure fixe (matin de préférence). C'est votre point zéro.</li>
+  <li><strong>Audit routine</strong> : retirez tout ce qui pique, tire, brûle. La règle : si vous hésitez sur un produit, vous le retirez.</li>
+</ul>
+
+<h3>Semaine 2 (J-83 à J-76)</h3>
+<ul>
+  <li><strong>Nettoyage</strong> : adoptez un nettoyant doux non décapant (pH 5-5.5), matin et soir</li>
+  <li><strong>Hydratation</strong> : crème simple, sans actif fort. Vous laissez la peau respirer 7-10 jours pour repartir d'une base nette.</li>
+  <li><strong>Sommeil</strong> : visez 8h de sommeil dès maintenant. Coupez les écrans 45 min avant le coucher. C'est votre meilleur actif anti-âge.</li>
+</ul>
+
+<h2>J-75 à J-45 : la phase d'attaque LED + actifs</h2>
+
+<h3>Semaines 3 et 4 (J-75 à J-60)</h3>
+<ul>
+  <li><strong>Démarrage LED</strong> : 4 à 5 séances de 10 minutes par semaine, mode "Collagène Boost" (rouge + infrarouge). Soir, sur peau parfaitement sèche, sans aucun actif en place.</li>
+  <li><strong>Introduction du rétinol</strong> : 2 fois par semaine, le soir, <em>jamais</em> en pré-LED. Démarrez à 0,1% si débutante, ou laissez-vous guider par votre dermato.</li>
+  <li><strong>SPF 50 quotidien</strong> obligatoire, même en hiver, même au bureau. Une seule omission ruine 3 séances LED.</li>
+</ul>
+
+<h3>Semaines 5 à 7 (J-60 à J-39)</h3>
+<ul>
+  <li><strong>LED maintien</strong> : 5 séances par semaine, alternez "Collagène Boost" et "Éclat" (rouge + jaune)</li>
+  <li><strong>Vitamine C</strong> le matin (forme stable type ascorbyl glucoside), suivie de votre crème et SPF</li>
+  <li><strong>Rétinol</strong> : montée à 3 fois par semaine si tolérance</li>
+  <li><strong>Massage facial</strong> : 5 min, 3 soirs par semaine. Gua sha ou simplement les doigts, mouvements remontants.</li>
+  <li><strong>Si acné préoccupante</strong> : alternez avec le mode bleu (415 nm). Reco produit : le <a href="/products/masque-led-signature">masque Signature</a>.</li>
+</ul>
+
+<h2>J-45 à J-15 : intensification ciblée</h2>
+
+<h3>Semaines 8 à 10 (J-39 à J-18)</h3>
+<ul>
+  <li><strong>Ciblage zones difficiles</strong> : ajoutez le <a href="/products/masque-led-regard">Regard</a> pour les cernes (5 min, 3 fois/semaine) et/ou le <a href="/products/masque-led-decollete">Décolleté</a> pour la zone décolleté souvent oubliée mais ultra-visible en robe</li>
+  <li><strong>Soin pro</strong> : si budget, une séance HydraFacial ou peeling très doux chez votre esthéticienne à J-30 minimum (jamais plus tard, pour laisser à la peau le temps de se stabiliser)</li>
+  <li><strong>Hydratation interne</strong> : 1,5 à 2 L d'eau/jour, alcool très réduit (1 verre maximum 2 fois/semaine — l'alcool déshydrate et inflammé la peau)</li>
+</ul>
+
+<blockquote>
+  Le piège classique : à J-30, on s'agite, on multiplie les soins de dernière minute, on essaie un nouveau produit "miracle". Erreur. À J-30, on consolide. On ne tente plus rien de nouveau.
+</blockquote>
+
+<h3>Semaines 11 et 12 (J-18 à J-4)</h3>
+<ul>
+  <li><strong>LED en entretien</strong> : 3-4 séances par semaine, sans intensifier</li>
+  <li><strong>Stop aux nouveaux actifs</strong> à partir de J-14. On reste sur ce qui fonctionne.</li>
+  <li><strong>Gestion du stress</strong> : 10 min de respiration consciente le matin, 20 min de marche le soir. Le cortisol abîme la peau visiblement à 14 jours.</li>
+  <li><strong>Sommeil sacralisé</strong> : 8h non négociables. C'est la première récompense que vous lirez sur votre peau dans les photos.</li>
+</ul>
+
+<h2>La dernière semaine (J-7 à J-1)</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Jour</th>
+      <th>Action principale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>J-7</td><td>Dernière séance LED "Collagène Boost" un peu prolongée (15 min)</td></tr>
+    <tr><td>J-6</td><td>Séance LED "Éclat" (jaune + rouge), épilation visage si nécessaire</td></tr>
+    <tr><td>J-5</td><td>Séance LED Regard ciblée cernes, masque hydratant</td></tr>
+    <tr><td>J-4</td><td>Repos peau, juste nettoyage + crème + SPF</td></tr>
+    <tr><td>J-3</td><td>Séance LED "Éclat" courte (8 min), massage facial doux</td></tr>
+    <tr><td>J-2</td><td>Hydratation maximale, masque sheet hydratant, 9h de sommeil</td></tr>
+    <tr><td>J-1</td><td>Aucune nouveauté, séance LED rouge courte, sommeil 9h+</td></tr>
+  </tbody>
+</table>
+
+<h2>Spéciale pour les futurs mariés (oui, vous aussi messieurs)</h2>
+
+<p>Les hommes représentent désormais 28% de nos clients et beaucoup nous demandent un protocole spécifique pour leur mariage. Voici une version concentrée :</p>
+
+<ul>
+  <li><strong>Rasage</strong> : changez de lame plus souvent (max 5 utilisations), baume après-rasage sans alcool, et <strong>arrêtez le rasage la veille</strong> du jour J — préférez l'avant-veille pour éviter les rougeurs résiduelles</li>
+  <li><strong>LED simplifiée</strong> : 4 séances de 10 min/semaine sur les 90 jours, mode "Collagène Boost". Si acné dorsale ou rosacée (oui, les hommes en ont aussi), ajoutez le mode bleu ou jaune selon nos recommandations dans le <a href="/blogs/journal/rosacee-photo-therapie-led">guide rosacée</a></li>
+  <li><strong>Hydratation et SPF</strong> obligatoires, même si vous ne l'avez jamais fait. C'est le moment.</li>
+  <li><strong>Sommeil et alcool</strong> : mêmes règles. Pas d'enterrement de vie de garçon à J-3, on est sérieux ou pas.</li>
+</ul>
+
+<h2>Notre recommandation produit pour 90 jours</h2>
+
+<p>Le plus efficace : le <a href="/products/bundle-rituel-complet">Bundle Rituel Complet</a> à 515 € (économie de 91 € vs achats séparés) qui combine Signature (visage), Regard (cernes) et Décolleté. Pour les budgets plus serrés ou les peaux sans préoccupation particulière sur les yeux ou le décolleté, partez sur le <a href="/products/masque-led-signature">Signature</a> seul à 279 €, complété éventuellement par le <a href="/products/masque-led-regard">Regard</a> à 129 €.</p>
+
+<h2>L'erreur que tout le monde fait à J-7</h2>
+
+<p>Ne testez aucun nouveau produit, soin, ou alimentation dans les 7 jours qui précèdent. Aucune nouveauté. C'est pendant ces 7 jours que se déclenchent 80% des "catastrophes" beauté de la dernière minute. Restez sur ce que vous connaissez, ce qui a fonctionné les 80 jours précédents. Faites confiance à votre routine.</p>
+
+<p>Et le jour J : sommeil 9h+, crème hydratante simple, primer, maquillage léger. Votre peau a travaillé pendant 90 jours. Laissez-la respirer.</p>
+
+<p><small>Sources scientifiques : Hamblin MR, <em>Mechanisms and applications of the anti-inflammatory effects of photobiomodulation</em>, AIMS Biophysics, 2017. — Avci P et al., <em>Low-level laser (light) therapy (LLLT) for treatment of hair loss</em>, Lasers in Surgery and Medicine, 2014. — Société Française de Dermatologie, recommandations photoprotection. — Wunsch A, Matuschka K, <em>A controlled trial to determine the efficacy of red and near-infrared light treatment in patient satisfaction, reduction of fine lines, wrinkles, skin roughness, and intradermal collagen density increase</em>, Photomedicine and Laser Surgery, 2014.</small></p>
+```
+
+---
+
 ## Tips de publication
 
 1. **Image en vedette** : pour chaque article, une photo carrée 1200×1200 du masque correspondant en lifestyle, avec un overlay typographique élégant (titre en serif Cormorant). Génère via Nano Banana 2 puis Canva pour l'overlay.

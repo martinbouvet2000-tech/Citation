@@ -1,0 +1,946 @@
+{% comment %}
+  Page Professionnels (B2B) — AURÉLIA
+  Handle Shopify attendu : professionnels
+  Template autonome. CSS scopé par préfixe .pro-*.
+  Cible : esthéticiennes, instituts, spas, dermatologues, médecins esthétiques.
+{% endcomment %}
+
+<style>
+  /* ─── Hero ─── */
+  .pro-hero {
+    padding: 7rem 2rem 5rem;
+    background:
+      radial-gradient(ellipse at 15% 25%, var(--gold-pale) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 75%, var(--rose-pale) 0%, transparent 55%),
+      var(--ivory);
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .pro-hero-inner { max-width: 820px; margin: 0 auto; }
+  .pro-hero .eyebrow { display: inline-block; margin-bottom: 1.4rem; color: var(--bordeaux); }
+  .pro-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1.08;
+    margin-bottom: 1.6rem;
+    color: var(--ink);
+  }
+  .pro-hero h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .pro-hero .lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    color: var(--ink-2);
+    line-height: 1.6;
+    max-width: 680px;
+    margin: 0 auto 2rem;
+  }
+  .pro-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2rem;
+    background: var(--ink);
+    color: var(--pearl);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: 1px solid var(--ink);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .pro-hero-cta:hover {
+    background: var(--bordeaux);
+    border-color: var(--bordeaux);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px -10px rgba(107, 35, 54, 0.4);
+  }
+
+  /* ─── Section head shared ─── */
+  .pro-section-head { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
+  .pro-section-head .eyebrow { display: inline-block; margin-bottom: 1rem; }
+  .pro-section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.6vw, 2.6rem);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .pro-section-head h2 em { font-style: italic; color: var(--bordeaux); }
+  .pro-section-head p { color: var(--ink-3); line-height: 1.7; font-size: 0.98rem; }
+
+  /* ─── Pourquoi nous choisir ─── */
+  .pro-why {
+    padding: 6rem 2rem;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+  }
+  .pro-why-inner { max-width: 1180px; margin: 0 auto; }
+  .pro-why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.6rem;
+  }
+  .pro-why-card {
+    background: var(--pearl);
+    border: 1px solid var(--line);
+    padding: 2.2rem 1.8rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .pro-why-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
+  }
+  .pro-why-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.9rem;
+    display: block;
+  }
+  .pro-why-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+    line-height: 1.22;
+  }
+  .pro-why-card p {
+    color: var(--ink-2);
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+
+  /* ─── Pour qui ─── */
+  .pro-audience { padding: 6rem 2rem; background: var(--ivory); }
+  .pro-audience-inner { max-width: 1180px; margin: 0 auto; }
+  .pro-audience-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+  }
+  .pro-audience-card {
+    border: 1px solid var(--line);
+    padding: 2rem 1.6rem;
+    background: var(--pearl);
+    display: flex;
+    flex-direction: column;
+  }
+  .pro-audience-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    line-height: 1.22;
+  }
+  .pro-audience-card h3 em { font-style: italic; color: var(--bordeaux); }
+  .pro-audience-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .pro-audience-card p {
+    color: var(--ink-2);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .pro-audience-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 1rem;
+  }
+  .pro-audience-card ul li {
+    color: var(--ink-3);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    padding: 0.2rem 0 0.2rem 1.2rem;
+    position: relative;
+  }
+  .pro-audience-card ul li::before {
+    content: '·';
+    color: var(--gold);
+    position: absolute;
+    left: 0.3rem;
+    font-weight: 700;
+  }
+
+  /* ─── Packs revendeurs ─── */
+  .pro-packs {
+    padding: 6rem 2rem;
+    background: var(--cream);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .pro-packs-inner { max-width: 1180px; margin: 0 auto; }
+  .pro-packs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+  }
+  .pro-pack {
+    background: var(--pearl);
+    border: 1px solid var(--line);
+    padding: 2.4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .pro-pack:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
+  }
+  .pro-pack-featured {
+    border-color: var(--bordeaux);
+    background: linear-gradient(180deg, var(--pearl) 0%, var(--rose-pale) 100%);
+  }
+  .pro-pack-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bordeaux);
+    color: var(--pearl);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    font-weight: 500;
+  }
+  .pro-pack h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+  .pro-pack h3 em { font-style: italic; color: var(--bordeaux); }
+  .pro-pack-sub {
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .pro-pack-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--ink-2);
+    margin-bottom: 1.4rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .pro-pack ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.6rem;
+    flex-grow: 1;
+  }
+  .pro-pack ul li {
+    color: var(--ink-2);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    padding: 0.4rem 0 0.4rem 1.4rem;
+    position: relative;
+  }
+  .pro-pack ul li::before {
+    content: '→';
+    color: var(--gold);
+    position: absolute;
+    left: 0;
+    font-weight: 500;
+  }
+
+  /* ─── Comment ça marche ─── */
+  .pro-steps { padding: 6rem 2rem; background: var(--ivory); }
+  .pro-steps-inner { max-width: 1080px; margin: 0 auto; }
+  .pro-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+    position: relative;
+  }
+  .pro-step {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+  .pro-step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 3rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .pro-step h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+    line-height: 1.25;
+  }
+  .pro-step p {
+    color: var(--ink-2);
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  /* ─── Témoignages pros ─── */
+  .pro-voices {
+    padding: 6rem 2rem;
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .pro-voices .pro-section-head h2,
+  .pro-voices .pro-section-head h2 em { color: var(--cream); }
+  .pro-voices .pro-section-head h2 em { color: var(--gold-light); font-style: italic; }
+  .pro-voices .pro-section-head p { color: var(--ink-faded); }
+  .pro-voices .eyebrow { color: var(--gold-light); }
+  .pro-voices-inner { max-width: 1180px; margin: 0 auto; }
+  .pro-voices-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .pro-voice {
+    padding: 2.4rem 2rem;
+    border-left: 2px solid var(--gold);
+    background: rgba(232, 220, 197, 0.03);
+  }
+  .pro-voice blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--cream);
+    line-height: 1.6;
+    margin-bottom: 1.6rem;
+    border: none;
+    padding: 0;
+  }
+  .pro-voice blockquote::before {
+    content: '«';
+    font-size: 2.4rem;
+    color: var(--gold-light);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .pro-voice cite { font-style: normal; display: block; }
+  .pro-voice cite strong {
+    color: var(--cream);
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .pro-voice cite span {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-weight: 400;
+  }
+
+  /* ─── FAQ B2B ─── */
+  .pro-faq {
+    padding: 6rem 2rem;
+    background: var(--cream);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .pro-faq-inner { max-width: 820px; margin: 0 auto; }
+  .pro-faq-list { margin-top: 2.6rem; }
+
+  /* ─── Formulaire contact pro ─── */
+  .pro-apply {
+    padding: 6rem 2rem;
+    background: var(--ivory);
+  }
+  .pro-apply-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--pearl);
+    padding: 3rem 2.6rem;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-soft);
+  }
+  .pro-apply-head { text-align: center; margin-bottom: 2.4rem; }
+  .pro-apply-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .pro-apply-head h2 em { font-style: italic; color: var(--bordeaux); }
+  .pro-apply-head p {
+    color: var(--ink-3);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .pro-form-row { margin-bottom: 1.4rem; }
+  .pro-form-row label {
+    display: block;
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .pro-form-row label small {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.78rem;
+    color: var(--ink-3);
+    font-weight: 300;
+    margin-left: 0.4rem;
+  }
+  .pro-form-row input[type="text"],
+  .pro-form-row input[type="email"],
+  .pro-form-row input[type="tel"],
+  .pro-form-row select,
+  .pro-form-row textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .pro-form-row input:focus,
+  .pro-form-row select:focus,
+  .pro-form-row textarea:focus {
+    outline: none;
+    border-color: var(--bordeaux);
+    background: var(--pearl);
+  }
+  .pro-form-row textarea { resize: vertical; min-height: 110px; }
+  .pro-form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .pro-form-consent { font-size: 0.85rem; }
+  .pro-form-consent label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .pro-form-consent label input { margin-top: 0.25rem; flex-shrink: 0; accent-color: var(--bordeaux); }
+  .pro-form-consent a { color: var(--bordeaux); text-decoration: underline; }
+
+  .pro-form-submit {
+    margin-top: 1.4rem;
+    width: 100%;
+    padding: 1.05rem;
+    background: var(--ink);
+    color: var(--pearl);
+    border: 1px solid var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .pro-form-submit:hover {
+    background: var(--bordeaux);
+    border-color: var(--bordeaux);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px -10px rgba(107, 35, 54, 0.4);
+  }
+
+  .pro-form-fineprint {
+    text-align: center;
+    margin-top: 1.4rem;
+    font-size: 0.82rem;
+    color: var(--ink-3);
+  }
+  .pro-form-fineprint a { color: var(--bordeaux); text-decoration: underline; }
+
+  .pro-form-success {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: var(--rose-pale);
+    border: 1px solid var(--bordeaux);
+    color: var(--bordeaux);
+  }
+  .pro-form-success strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+  .pro-form-success p {
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .pro-form-error {
+    padding: 1.2rem;
+    background: rgba(107, 35, 54, 0.08);
+    border-left: 3px solid var(--bordeaux);
+    margin-bottom: 1.6rem;
+    color: var(--bordeaux);
+    font-size: 0.88rem;
+  }
+  .pro-form-error ul { margin: 0.4rem 0 0 1.2rem; padding: 0; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 980px) {
+    .pro-why-grid, .pro-audience-grid { grid-template-columns: repeat(2, 1fr); }
+    .pro-packs-grid, .pro-voices-grid { grid-template-columns: 1fr; }
+    .pro-steps-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .pro-why-grid, .pro-audience-grid, .pro-steps-grid { grid-template-columns: 1fr; }
+    .pro-form-grid-2 { grid-template-columns: 1fr; }
+    .pro-hero, .pro-why, .pro-audience, .pro-packs, .pro-steps, .pro-voices, .pro-faq, .pro-apply {
+      padding: 4.5rem 1.4rem;
+    }
+    .pro-apply-inner { padding: 2.2rem 1.6rem; }
+  }
+</style>
+
+{%- comment -%} ─────────────────────────────  HERO ───────────────────────────── {%- endcomment -%}
+<section class="pro-hero">
+  <div class="pro-hero-inner">
+    <span class="eyebrow">Programme professionnels</span>
+    <h1>Aurélia, <em>au service des professionnels de la peau</em>.</h1>
+    <p class="lead">
+      Tarifs revendeurs, formation incluse, support dédié. Pour les esthéticiennes, instituts, spas et cabinets médicaux qui placent le résultat au cœur de leur métier.
+    </p>
+    <a href="#contact-pro" class="pro-hero-cta">
+      Demander un devis
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  POURQUOI NOUS CHOISIR  ────────────────── {%- endcomment -%}
+<section class="pro-why">
+  <div class="pro-why-inner">
+    <div class="pro-section-head">
+      <span class="eyebrow">Pourquoi Aurélia</span>
+      <h2>Une marque <em>pensée pour vos cabines</em></h2>
+      <p>Aurélia n'a pas été conçue à côté du marché professionnel — elle a été conçue avec lui. Quatre garanties qui structurent notre relation revendeurs.</p>
+    </div>
+
+    <div class="pro-why-grid">
+      <article class="pro-why-card">
+        <span class="pro-why-num">I.</span>
+        <h3>Dispositifs CE médical, classe IIa</h3>
+        <p>Conformes à la réglementation européenne sur les dispositifs médicaux (Règlement UE 2017/745). Utilisation en cabinet autorisée, traçabilité technique fournie pour chaque appareil livré.</p>
+      </article>
+      <article class="pro-why-card">
+        <span class="pro-why-num">II.</span>
+        <h3>Marge professionnelle</h3>
+        <p>Structure tarifaire claire et compétitive, adaptée à votre volume et à votre positionnement. Conditions précisées sur devis personnalisé après diagnostic de votre activité.</p>
+      </article>
+      <article class="pro-why-card">
+        <span class="pro-why-num">III.</span>
+        <h3>Formation initiale offerte</h3>
+        <p>Visio de 90 minutes avec notre référente technique, manuel de protocoles imprimé, fiches patient personnalisables. Vos équipes savent quand utiliser chaque longueur d'onde et pour qui.</p>
+      </article>
+      <article class="pro-why-card">
+        <span class="pro-why-num">IV.</span>
+        <h3>Support technique sous 24h ouvrées</h3>
+        <p>Ligne directe, e-mail prioritaire et hotline WhatsApp réservée aux comptes pro. Diagnostic à distance, échange standard sous 72h si défaillance avérée pendant la garantie.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  POUR QUI  ────────────────── {%- endcomment -%}
+<section class="pro-audience">
+  <div class="pro-audience-inner">
+    <div class="pro-section-head">
+      <span class="eyebrow">À qui s'adresse Aurélia Pro</span>
+      <h2>Quatre <em>profils, quatre usages</em></h2>
+      <p>Selon votre structure, Aurélia s'intègre différemment dans votre offre. Voici les trajectoires les plus fréquentes que nous accompagnons.</p>
+    </div>
+
+    <div class="pro-audience-grid">
+      <article class="pro-audience-card">
+        <span class="pro-audience-tag">Profil A</span>
+        <h3>Institut de <em>beauté</em></h3>
+        <p>Vous proposez des soins visage signature et cherchez à enrichir votre carte sans investir dans un appareil de cabine. Aurélia s'utilise en finition de soin (10 minutes) ou en cure express autonome.</p>
+        <ul>
+          <li>Signature : add-on anti-âge post-nettoyage</li>
+          <li>Régard : cure cernes/poches en 6 séances</li>
+          <li>Lumière Pro : cure intensive 8 semaines</li>
+        </ul>
+      </article>
+
+      <article class="pro-audience-card">
+        <span class="pro-audience-tag">Profil B</span>
+        <h3>Spa <em>hôtelier</em></h3>
+        <p>Vous accueillez une clientèle exigeante en court séjour. Aurélia s'intègre en soin signature de la maison, avec une promesse claire et un résultat immédiat (éclat, fermeté visible en sortie de cabine).</p>
+        <ul>
+          <li>Signature : soin "lumière de Paris"</li>
+          <li>Décolleté : soin nuque-décolleté duo</li>
+          <li>Mise en marque possible sur demande</li>
+        </ul>
+      </article>
+
+      <article class="pro-audience-card">
+        <span class="pro-audience-tag">Profil C</span>
+        <h3>Cabinet <em>dermatologue</em></h3>
+        <p>Vous suivez des patients en post-acte (peeling, laser, microneedling) et cherchez un outil de récupération doux, validé scientifiquement. La photothérapie LED accélère la cicatrisation et réduit l'érythème.</p>
+        <ul>
+          <li>Lumière Pro : protocole post-acte</li>
+          <li>Signature : entretien anti-âge patient</li>
+          <li>Vente en clinique possible</li>
+        </ul>
+      </article>
+
+      <article class="pro-audience-card">
+        <span class="pro-audience-tag">Profil D</span>
+        <h3>Médecin <em>esthétique</em></h3>
+        <p>Vous combinez injections, lasers et soins. Aurélia complète votre arsenal en intercure et en prescription patient pour la maison. Marge produit revendu, fidélisation longue.</p>
+        <ul>
+          <li>Bundle complet en revente cabinet</li>
+          <li>Lumière Pro : cure post-laser</li>
+          <li>Conventionnement réseau possible</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  PACKS REVENDEURS  ────────────────── {%- endcomment -%}
+<section class="pro-packs">
+  <div class="pro-packs-inner">
+    <div class="pro-section-head">
+      <span class="eyebrow">Nos packs revendeurs</span>
+      <h2>Trois <em>paliers, un même engagement</em></h2>
+      <p>Que vous testiez Aurélia sur une cabine ou que vous équipiez un réseau de dix instituts, nous calibrons l'accompagnement.</p>
+    </div>
+
+    <div class="pro-packs-grid">
+      <article class="pro-pack">
+        <h3>Découverte</h3>
+        <span class="pro-pack-sub">Pour tester en cabine</span>
+        <p class="pro-pack-price">Sur devis</p>
+        <ul>
+          <li>1 masque au choix de la gamme</li>
+          <li>Kit de formation initial (visio + manuel)</li>
+          <li>10 fiches patient personnalisables</li>
+          <li>Support technique 24h ouvrées</li>
+          <li>Garantie pro 24 mois</li>
+        </ul>
+      </article>
+
+      <article class="pro-pack pro-pack-featured">
+        <span class="pro-pack-badge">Le plus demandé</span>
+        <h3>Cabinet</h3>
+        <span class="pro-pack-sub">Institut établi · 3-5 masques</span>
+        <p class="pro-pack-price">Sur devis</p>
+        <ul>
+          <li>3 à 5 masques mixés selon vos besoins</li>
+          <li>Formation initiale élargie (équipe)</li>
+          <li>Marketing co-brandé (PLV, visuels presse)</li>
+          <li>Référencement annuaire pro Aurélia</li>
+          <li>Conditions tarifaires renforcées</li>
+        </ul>
+      </article>
+
+      <article class="pro-pack">
+        <h3>Réseau</h3>
+        <span class="pro-pack-sub">10+ masques · multi-sites</span>
+        <p class="pro-pack-price">Sur devis</p>
+        <ul>
+          <li>10 masques et plus, livraison étalée possible</li>
+          <li>Formation sur place envisageable (Paris IDF)</li>
+          <li>Référente dédiée nominative</li>
+          <li>Co-création de protocoles maison</li>
+          <li>Conditions sur mesure, paiement échelonné</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  COMMENT ÇA MARCHE  ────────────────── {%- endcomment -%}
+<section class="pro-steps">
+  <div class="pro-steps-inner">
+    <div class="pro-section-head">
+      <span class="eyebrow">Le processus</span>
+      <h2>De l'<em>échange initial</em> à votre première séance</h2>
+      <p>Un parcours en quatre étapes, transparent et calibré sur le rythme de votre activité.</p>
+    </div>
+
+    <div class="pro-steps-grid">
+      <div class="pro-step">
+        <span class="pro-step-num">1.</span>
+        <h3>Premier contact</h3>
+        <p>Vous remplissez le formulaire pro ci-dessous. Nous accusons réception sous 24h ouvrées et vous proposons un créneau.</p>
+      </div>
+      <div class="pro-step">
+        <span class="pro-step-num">2.</span>
+        <h3>Échange visio diagnostic</h3>
+        <p>30 minutes pour comprendre votre structure, votre clientèle, vos objectifs et identifier les masques pertinents pour vous.</p>
+      </div>
+      <div class="pro-step">
+        <span class="pro-step-num">3.</span>
+        <h3>Devis personnalisé</h3>
+        <p>Vous recevez sous 48h un devis nominatif avec conditions tarifaires, délais et modalités de paiement clairement détaillés.</p>
+      </div>
+      <div class="pro-step">
+        <span class="pro-step-num">4.</span>
+        <h3>Livraison + formation</h3>
+        <p>Expédition sous 7 jours ouvrés en France métropolitaine, suivie de la formation visio dans les deux semaines qui suivent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  TÉMOIGNAGES PROS  ────────────────── {%- endcomment -%}
+<section class="pro-voices">
+  <div class="pro-voices-inner">
+    <div class="pro-section-head">
+      <span class="eyebrow">Elles & ils en parlent</span>
+      <h2>Trois <em>voix professionnelles</em></h2>
+      <p>Trois témoignages partagés avec accord. Identités initialisées par respect de la confidentialité commerciale.</p>
+    </div>
+
+    <div class="pro-voices-grid">
+      <article class="pro-voice">
+        <blockquote>
+          Aurélia complète parfaitement ma carte de soins. Les clientes voient un vrai éclat dès la première séance et reviennent pour des cures. C'est devenu mon add-on signature en finition de soin.
+        </blockquote>
+        <cite>
+          <strong>Clarisse M.</strong>
+          <span>Fondatrice institut · Lyon · 14 mois de partenariat</span>
+        </cite>
+      </article>
+
+      <article class="pro-voice">
+        <blockquote>
+          Je cherchais un outil sérieux pour la récupération post-laser. Aurélia tient ses promesses scientifiques, et leur support technique est tip-top — j'ai eu une question un samedi matin, on m'a répondu en deux heures.
+        </blockquote>
+        <cite>
+          <strong>Dr Sarah V.</strong>
+          <span>Dermatologue · Paris · 8 mois de partenariat</span>
+        </cite>
+      </article>
+
+      <article class="pro-voice">
+        <blockquote>
+          On a équipé trois instituts du groupe avec le pack Réseau. La formation sur place a été précieuse pour aligner les équipes, et les conditions tarifaires nous permettent de proposer Aurélia en revente sans pression sur la marge.
+        </blockquote>
+        <cite>
+          <strong>Julien T.</strong>
+          <span>Directeur réseau spas · Côte d'Azur · 10 mois</span>
+        </cite>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  FAQ B2B  ────────────────── {%- endcomment -%}
+<section class="pro-faq">
+  <div class="pro-faq-inner">
+    <div class="pro-section-head">
+      <span class="eyebrow">Questions fréquentes pro</span>
+      <h2>Tout ce que vous devez <em>savoir avant de signer</em></h2>
+      <p>Six questions revenant systématiquement dans nos échanges avec les professionnels. Si la vôtre n'y figure pas, écrivez-nous.</p>
+    </div>
+
+    <div class="pro-faq-list faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          La formation initiale est-elle vraiment offerte&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui. Pour chaque pack signé, la formation visio de 90 minutes et le manuel de protocoles imprimé sont inclus. La formation aborde les longueurs d'onde, les indications, les contre-indications, les protocoles de cure, et la posture commerciale en cabine. Une session de rattrapage par an est également incluse pour les nouvelles recrues de votre équipe.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quelle garantie sur les masques en usage professionnel&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Garantie pro étendue à 24 mois (vs 24 mois également côté grand public, mais avec engagement de remplacement standard sous 72h en cas de défaillance bloquant l'activité). Cette garantie couvre les défauts électroniques et optiques, pas l'usure normale des coques ni les chocs.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Les masques sont-ils bien des dispositifs médicaux&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui. Nos masques sont marqués CE médical en classe IIa au titre du Règlement UE 2017/745 sur les dispositifs médicaux. Nous fournissons la déclaration de conformité, le résumé des caractéristiques de sécurité et de performance clinique (RCSCP) ainsi que la traçabilité UDI sur demande, pour chaque commande professionnelle.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Comment se passe la TVA professionnelle&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Nous facturons en TVA française (20%) avec mention du numéro intracommunautaire pour les comptes basés dans l'UE. Pour les commandes hors UE ou dans les DOM-TOM, des modalités d'export hors TVA sont possibles. Pour les structures médicales bénéficiant d'une exonération spécifique, signalez-le au moment du devis pour ajustement.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Le financement est-il envisageable&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Pour les packs Cabinet et Réseau, un paiement échelonné sur 3, 6 ou 12 mois est possible directement avec Aurélia, sans frais ni recours à un organisme tiers, après validation du dossier. Pour les financements plus longs ou les budgets supérieurs à 10 000 €, nous travaillons avec un partenaire de leasing professionnel sur demande.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Y a-t-il un contrat d'exclusivité géographique&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Par défaut, non. Nous travaillons sans exclusivité, ce qui nous permet d'être présents largement et de ne jamais bloquer une concurrence loyale. Une exclusivité de zone (ville moyenne, arrondissement parisien, station) est possible à partir du pack Réseau et fait l'objet d'un avenant contractuel avec engagement de volume annuel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  CTA FORMULAIRE PRO  ────────────────── {%- endcomment -%}
+<section class="pro-apply" id="contact-pro">
+  <div class="pro-apply-inner">
+    <div class="pro-apply-head">
+      <h2>Démarrez votre <em>candidature pro</em></h2>
+      <p>Tous les champs étoilés sont nécessaires pour préparer notre échange. Nous accusons réception sous 24h ouvrées.</p>
+    </div>
+
+    {% form 'contact', class: 'pro-form', id: 'pro-contact-form' %}
+      {% if form.posted_successfully? %}
+        <div class="pro-form-success" role="status">
+          <strong>Merci, votre demande est arrivée chez nous.</strong>
+          <p>Nous l'étudions et reviendrons vers vous sous 24h ouvrées avec un créneau visio. À très vite.</p>
+        </div>
+      {% else %}
+        {% if form.errors %}
+          <div class="pro-form-error" role="alert">
+            <strong>Quelques détails à compléter&nbsp;:</strong>
+            <ul>
+              {% for field in form.errors %}
+                <li>{{ form.errors.messages[field] }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <input type="hidden" name="contact[tags]" value="pro-candidature">
+
+        <div class="pro-form-row">
+          <label for="pro-name">Nom complet *</label>
+          <input id="pro-name" type="text" name="contact[name]" required autocomplete="name" placeholder="Prénom Nom">
+        </div>
+
+        <div class="pro-form-grid-2">
+          <div class="pro-form-row">
+            <label for="pro-structure">Type de structure *</label>
+            <select id="pro-structure" name="contact[structure]" required>
+              <option value="">Sélectionner</option>
+              <option value="institut">Institut de beauté</option>
+              <option value="spa">Spa / hôtellerie</option>
+              <option value="cabinet">Cabinet dermatologue</option>
+              <option value="medecin">Médecin esthétique</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div class="pro-form-row">
+            <label for="pro-siret">SIRET <small>(14 chiffres)</small></label>
+            <input id="pro-siret" type="text" name="contact[siret]" pattern="[0-9 ]{14,17}" placeholder="123 456 789 00012">
+          </div>
+        </div>
+
+        <div class="pro-form-grid-2">
+          <div class="pro-form-row">
+            <label for="pro-city">Ville *</label>
+            <input id="pro-city" type="text" name="contact[city]" required placeholder="Paris, Lyon, Bordeaux…">
+          </div>
+          <div class="pro-form-row">
+            <label for="pro-phone">Téléphone *</label>
+            <input id="pro-phone" type="tel" name="contact[phone]" required autocomplete="tel" placeholder="06 12 34 56 78">
+          </div>
+        </div>
+
+        <div class="pro-form-row">
+          <label for="pro-email">Adresse e-mail professionnelle *</label>
+          <input id="pro-email" type="email" name="contact[email]" required autocomplete="email" placeholder="vous@votre-structure.fr">
+        </div>
+
+        <div class="pro-form-row">
+          <label for="pro-message">Votre projet en quelques lignes
+            <small>(300 caractères maximum)</small>
+          </label>
+          <textarea id="pro-message" name="contact[body]" maxlength="300" rows="4" placeholder="Activité, volume envisagé, échéance, intégration souhaitée…"></textarea>
+        </div>
+
+        <div class="pro-form-row pro-form-consent">
+          <label>
+            <input type="checkbox" name="contact[consent]" required>
+            <span>J'accepte que mes informations soient utilisées dans le cadre de ma demande professionnelle. Voir notre <a href="/pages/confidentialite">politique de confidentialité</a>.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="pro-form-submit">
+          Envoyer ma demande
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <p class="pro-form-fineprint">
+          Ou écrivez-nous directement à <a href="mailto:pro@aurelia.paris">pro@aurelia.paris</a>.
+        </p>
+      {% endif %}
+    {% endform %}
+  </div>
+</section>

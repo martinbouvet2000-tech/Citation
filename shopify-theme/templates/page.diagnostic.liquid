@@ -1,0 +1,71 @@
+{% comment %}
+  Page Diagnostic — AURÉLIA
+  --------------------------------------------------------------------
+  Handle Shopify attendu : diagnostic
+  URL publique : /pages/diagnostic
+  --------------------------------------------------------------------
+  Quiz interactif de 7 questions, scoring pondéré (Q2 et Q6 ×2), capture
+  email optionnelle (form Shopify natif, tag « diagnostic-quiz »),
+  recommandation produit personnalisée avec ajout au panier via
+  /cart/add.js.
+
+  Tout est scopé sous .diagnostic-* — aucune classe globale n’est
+  surchargée. Les variant IDs sont des placeholders à remplacer par
+  l’admin Shopify dans assets/diagnostic.js (objet PRODUCTS).
+{% endcomment %}
+
+{{ 'diagnostic.css' | asset_url | stylesheet_tag }}
+
+<section class="diagnostic-wrap" data-diagnostic-root>
+  <div class="diagnostic-container">
+
+    <header class="diagnostic-topbar" data-diagnostic-topbar>
+      <button type="button"
+              class="diagnostic-back"
+              data-action="back"
+              aria-label="Revenir à la question précédente"
+              hidden>
+        ←
+      </button>
+
+      <div class="diagnostic-progress" aria-hidden="false">
+        <span class="diagnostic-progress-label" data-progress-label>Diagnostic</span>
+        <div class="diagnostic-progress-track" role="progressbar" aria-label="Progression du diagnostic">
+          <div class="diagnostic-progress-fill" data-progress-fill style="right:100%;"></div>
+        </div>
+      </div>
+
+      <button type="button"
+              class="diagnostic-reset"
+              data-action="reset"
+              aria-label="Recommencer le diagnostic"
+              hidden>
+        Recommencer
+      </button>
+    </header>
+
+    <div class="diagnostic-stage" data-diagnostic-stage aria-live="polite">
+      {% comment %} Le contenu est injecté par diagnostic.js {% endcomment %}
+      <noscript>
+        <div class="diagnostic-step diagnostic-landing is-active">
+          <span class="diagnostic-eyebrow">Diagnostic personnalisé · 2 minutes</span>
+          <h1>Trouvez <em>votre Aurélia</em></h1>
+          <p class="diagnostic-landing-lead">
+            Notre diagnostic nécessite JavaScript pour fonctionner.
+            En attendant, découvrez la gamme complète ou contactez-nous —
+            notre comité dermato vous orientera personnellement.
+          </p>
+          <div class="diagnostic-actions" style="justify-content:center;">
+            <a class="diagnostic-btn diagnostic-btn-primary diagnostic-btn-large" href="/collections/all">Voir la gamme</a>
+            <a class="diagnostic-btn diagnostic-btn-ghost diagnostic-btn-large" href="/pages/contact">Nous écrire</a>
+          </div>
+        </div>
+      </noscript>
+    </div>
+
+  </div>
+
+  {% render 'diagnostic-results' %}
+</section>
+
+{{ 'diagnostic.js' | asset_url | script_tag }}

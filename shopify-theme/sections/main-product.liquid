@@ -96,9 +96,15 @@
           </div>
         {%- endif -%}
 
-        <button type="submit" class="product-cta" data-main-atc {% unless product.available %}disabled{% endunless %}>
-          {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
-        </button>
+        {%- if product.available -%}
+          <button type="submit" class="product-cta" data-main-atc>
+            {{ 'products.product.add_to_cart' | t }}
+          </button>
+        {%- else -%}
+          {% render 'back-in-stock', product: product %}
+        {%- endif -%}
+
+        {% render 'wishlist-button', product: product %}
       </form>
 
       {% render 'google-shopping', product: product %}

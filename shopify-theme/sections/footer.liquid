@@ -27,7 +27,7 @@
     {%- endfor -%}
   </div>
   <div class="footer-bottom">
-    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. Tous droits réservés.</span>
+    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. Tous droits réservés. <a href="#" class="footer-cookie-link" data-cookie-manage>Gérer mes cookies</a></span>
     <div class="socials">
       {%- if settings.social_instagram != blank -%}
         <a href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">{% render 'icon', name: 'instagram' %}</a>

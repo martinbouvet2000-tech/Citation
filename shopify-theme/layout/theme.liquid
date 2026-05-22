@@ -87,7 +87,10 @@
   </div>
 
   {{ 'theme.js' | asset_url | script_tag }}
+  {{ 'wishlist.js' | asset_url | script_tag }}
 
   {% render 'popup-exit-intent' %}
+
+  {% render 'cookie-banner' %}
 </body>
 </html>

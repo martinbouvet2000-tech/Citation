@@ -83,6 +83,7 @@ async function refreshCart() {
   const cart = await fetchCart();
   renderCartDrawer(cart);
   updateCartCount(cart.item_count);
+  updateShippingBar(cart.total_price);
 }
 window.refreshCart = refreshCart;
 
@@ -282,5 +283,47 @@ document.querySelectorAll('[data-variant-picker]').forEach(picker => {
   }
 })();
 
-/* ─── Init cart count on load ─── */
-fetchCart().then(cart => updateCartCount(cart.item_count)).catch(() => {});
+/* ─── Free shipping progress bar (cart drawer) ─── */
+window.AURELIA_FREE_SHIPPING_THRESHOLD = 15000; // cents (150 €)
+
+function updateShippingBar(totalPriceCents) {
+  const bar = document.getElementById('CartShippingBar');
+  if (!bar) return;
+  const threshold = window.AURELIA_FREE_SHIPPING_THRESHOLD || 15000;
+  const fill = bar.querySelector('.cart-shipping-fill');
+  const msg = bar.querySelector('.cart-shipping-bar-msg');
+  if (!fill || !msg) return;
+
+  if (totalPriceCents === 0) {
+    bar.style.display = 'none';
+    return;
+  }
+  bar.style.display = '';
+
+  if (totalPriceCents >= threshold) {
+    bar.classList.add('is-unlocked');
+    fill.style.width = '100%';
+    msg.innerHTML = '<svg class="cart-shipping-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Livraison offerte débloquée</span>';
+  } else {
+    bar.classList.remove('is-unlocked');
+    const remaining = Math.max(0, threshold - totalPriceCents);
+    const pct = Math.min(100, Math.round((totalPriceCents / threshold) * 100));
+    fill.style.width = pct + '%';
+    msg.innerHTML = 'Plus que <strong>' + formatMoney(remaining) + '</strong> pour la livraison offerte';
+  }
+}
+window.updateShippingBar = updateShippingBar;
+
+/* ─── Init cart count + shipping bar on load ─── */
+fetchCart().then(cart => {
+  updateCartCount(cart.item_count);
+  updateShippingBar(cart.total_price);
+}).catch(() => {});
+
+/* ─── Wishlist DOM init hook (icons repaint on every page) ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.AureliaWishlist && typeof window.AureliaWishlist.read === 'function') {
+    // wishlist.js auto-inits, this is just an extra-safety hook for sync on slow paint
+    window.AureliaWishlist.read();
+  }
+});

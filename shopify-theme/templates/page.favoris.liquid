@@ -1,0 +1,146 @@
+{% comment %}
+  Page Favoris — AURÉLIA
+  Handle Shopify attendu : favoris
+  Liste les produits sauvegardés en localStorage (sans compte client).
+{% endcomment %}
+
+<section class="wishlist-page">
+  <div class="wishlist-page-inner">
+    <header class="wishlist-page-head">
+      <span class="eyebrow">Votre sélection</span>
+      <h1>Mes <em>favoris</em></h1>
+      <p class="lead">Vos coups de cœur, sauvegardés sur ce navigateur. Aucun compte requis.</p>
+    </header>
+
+    <div id="WishlistEmpty" class="wishlist-empty" hidden>
+      <p>Votre liste de favoris est vide. <a href="/collections/la-gamme">Découvrir la gamme</a></p>
+    </div>
+
+    <div id="WishlistList" class="wishlist-list" hidden></div>
+  </div>
+</section>
+
+<style>
+  .wishlist-page {
+    padding: 6rem 2rem 7rem;
+    background: var(--ivory);
+    min-height: 60vh;
+  }
+  .wishlist-page-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .wishlist-page-head {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .wishlist-page-head .eyebrow { display: inline-block; margin-bottom: 1rem; }
+  .wishlist-page-head h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .wishlist-page-head h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .wishlist-page-head .lead {
+    font-size: 1rem;
+    color: var(--ink-3);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .wishlist-empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--ink-3);
+    font-size: 1rem;
+    border: 1px dashed var(--line);
+    background: var(--cream);
+  }
+  .wishlist-empty a {
+    color: var(--bordeaux);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-left: 0.3rem;
+  }
+
+  .wishlist-list { display: flex; flex-direction: column; gap: 1.2rem; }
+  .wishlist-row {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 1.4rem;
+    align-items: center;
+    padding: 1.2rem;
+    background: var(--pearl);
+    border: 1px solid var(--line);
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .wishlist-row:hover { border-color: var(--gold-pale); box-shadow: var(--shadow-card); }
+  .wishlist-row-img {
+    aspect-ratio: 1;
+    background: var(--cream);
+    overflow: hidden;
+    display: block;
+  }
+  .wishlist-row-img img { width: 100%; height: 100%; object-fit: cover; }
+  .wishlist-row-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0 0 0.4rem;
+    color: var(--ink);
+  }
+  .wishlist-row-info h3 a { color: inherit; }
+  .wishlist-row-info h3 a:hover { color: var(--bordeaux); }
+  .wishlist-row-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--bordeaux);
+  }
+  .wishlist-row-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    min-width: 180px;
+  }
+  .wishlist-row-actions .btn {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .wishlist-row-remove {
+    font-size: 0.78rem;
+    color: var(--ink-3);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 0.3rem 0;
+    background: transparent;
+    transition: color 0.2s;
+  }
+  .wishlist-row-remove:hover { color: var(--bordeaux); }
+
+  @media (max-width: 640px) {
+    .wishlist-page { padding: 4rem 1.2rem 5rem; }
+    .wishlist-row {
+      grid-template-columns: 80px 1fr;
+      grid-template-rows: auto auto;
+      gap: 0.9rem 1rem;
+    }
+    .wishlist-row-actions {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 0;
+    }
+  }
+</style>
+
+<script src="{{ 'wishlist.js' | asset_url }}" defer></script>

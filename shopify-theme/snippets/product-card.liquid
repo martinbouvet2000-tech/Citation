@@ -10,6 +10,7 @@
     {%- elsif product.tags contains 'best-seller' -%}
       <span class="product-tag">Best-seller</span>
     {%- endif -%}
+    {% render 'wishlist-button', product: product, variant: 'card' %}
     <a href="{{ product.url }}" class="product-card-link" aria-label="{{ product.title }}">
       {%- if product.featured_image -%}
         <img src="{{ product.featured_image | image_url: width: 600 }}"
