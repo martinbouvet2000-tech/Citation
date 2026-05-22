@@ -1,0 +1,29 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": true,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    { "query": "tag:#handoff", "color": { "a": 1, "rgb": 13226308 } },
+    { "query": "tag:#shopify", "color": { "a": 1, "rgb": 7053230 } },
+    { "query": "tag:#brand", "color": { "a": 1, "rgb": 13226308 } },
+    { "query": "tag:#product", "color": { "a": 1, "rgb": 14729310 } },
+    { "query": "tag:#content", "color": { "a": 1, "rgb": 11195752 } },
+    { "query": "tag:#state", "color": { "a": 1, "rgb": 6792580 } }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1.4,
+  "lineSizeMultiplier": 1.2,
+  "collapse-forces": false,
+  "centerStrength": 0.5,
+  "repelStrength": 12,
+  "linkStrength": 1,
+  "linkDistance": 280,
+  "scale": 1,
+  "close": true
+}

@@ -1,7 +1,25 @@
-# État du projet AURÉLIA — instantané
+---
+title: État du projet AURÉLIA
+aliases:
+  - State
+  - État
+  - Project State
+tags:
+  - aurelia
+  - state
+  - dashboard
+created: 2026-05-22
+type: state
+sprint: 5
+---
 
-> Mise à jour : sprint 5 terminé. Tout est dans la branche
+# 📊 État du projet AURÉLIA — instantané
+
+> [!info] Mise à jour
+> Sprint 5 terminé. Tout est dans la branche
 > `claude/cryoglow-ecommerce-shop-mFjYb` côté GitHub.
+
+**Voir aussi** : [[HANDOFF-CLAUDE]] · [[SHOPIFY-RUNBOOK]] · [[CONTENT-INDEX]] · [[PRODUCT-CATALOG]]
 
 ## Vue d'ensemble
 

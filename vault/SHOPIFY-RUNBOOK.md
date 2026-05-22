@@ -1,8 +1,25 @@
-# Runbook de déploiement Shopify
+---
+title: Runbook Shopify
+aliases:
+  - Runbook
+  - Déploiement Shopify
+  - Shopify Deployment
+tags:
+  - aurelia
+  - shopify
+  - runbook
+  - deployment
+created: 2026-05-22
+type: runbook
+---
+
+# ⚙️ Runbook de déploiement Shopify
 
 Procédure pas à pas pour déployer la boutique AURÉLIA depuis le repo.
 Comprend deux versions : **automatique** (avec token Admin API) et
 **manuelle** (clics dans l'admin).
+
+**Voir aussi** : [[HANDOFF-CLAUDE]] · [[PRODUCT-CATALOG]] · [[CONTENT-INDEX]] · [[BRAND-CARD]]
 
 ## Pré-requis
 

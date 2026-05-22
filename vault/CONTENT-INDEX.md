@@ -1,4 +1,25 @@
-# Index de tous les contenus rédigés
+---
+title: Index des contenus rédigés
+aliases:
+  - Content
+  - Contenus
+  - Content Index
+tags:
+  - aurelia
+  - content
+  - editorial
+  - seo
+created: 2026-05-22
+type: index
+pages: 14
+articles: 13
+emails: 5
+---
+
+# 📝 Index de tous les contenus rédigés
+
+**Voir aussi** : [[PRODUCT-CATALOG]] · [[BRAND-CARD]] · [[SHOPIFY-RUNBOOK]]
+
 
 ## Pages (14)
 

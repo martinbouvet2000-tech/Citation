@@ -1,0 +1,17 @@
+{
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false,
+  "promptDelete": true,
+  "showLineNumber": false,
+  "spellcheck": true,
+  "spellcheckLanguages": ["fr", "en"],
+  "showFrontmatter": true,
+  "defaultViewMode": "preview",
+  "livePreview": true,
+  "readableLineLength": true,
+  "strictLineBreaks": false,
+  "showInlineTitle": true,
+  "tabSize": 2,
+  "attachmentFolderPath": "attachments"
+}

@@ -1,9 +1,27 @@
-# Brief de passation — pour nouvelle session Claude
+---
+title: Brief de passation Claude
+aliases:
+  - Handoff
+  - Passation
+  - Brief Claude
+tags:
+  - aurelia
+  - handoff
+  - shopify
+created: 2026-05-22
+type: handoff
+priority: critical
+---
 
-> Colle ce document **intégralement** dans une nouvelle session Claude qui
+# 📋 Brief de passation — pour nouvelle session Claude
+
+> [!important] À copier intégralement
+> Colle ce document **en entier** dans une nouvelle session Claude qui
 > a accès à ton navigateur (Computer Use, browser-use MCP, ou Claude Code
 > en local sur ton PC). C'est un brief autonome : il contient tout le
 > contexte nécessaire pour terminer l'installation Shopify sans aide.
+
+**Voir aussi** : [[PROJECT-STATE]] · [[SHOPIFY-RUNBOOK]] · [[PRODUCT-CATALOG]] · [[BRAND-CARD]] · [[CONTENT-INDEX]]
 
 ---
 

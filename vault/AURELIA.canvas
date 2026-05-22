@@ -1,0 +1,95 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "text": "# 🏛 AURÉLIA Paris\n\nMasques LED de luminothérapie premium\n\n**Boutique** : `3aff1g-y4.myshopify.com`",
+      "x": -360,
+      "y": -640,
+      "width": 720,
+      "height": 200,
+      "color": "5"
+    },
+    {
+      "id": "handoff",
+      "type": "file",
+      "file": "HANDOFF-CLAUDE.md",
+      "x": -700,
+      "y": -380,
+      "width": 400,
+      "height": 280,
+      "color": "1"
+    },
+    {
+      "id": "state",
+      "type": "file",
+      "file": "PROJECT-STATE.md",
+      "x": -200,
+      "y": -380,
+      "width": 400,
+      "height": 280,
+      "color": "4"
+    },
+    {
+      "id": "runbook",
+      "type": "file",
+      "file": "SHOPIFY-RUNBOOK.md",
+      "x": 300,
+      "y": -380,
+      "width": 400,
+      "height": 280,
+      "color": "2"
+    },
+    {
+      "id": "brand",
+      "type": "file",
+      "file": "BRAND-CARD.md",
+      "x": -700,
+      "y": -40,
+      "width": 400,
+      "height": 280,
+      "color": "6"
+    },
+    {
+      "id": "product",
+      "type": "file",
+      "file": "PRODUCT-CATALOG.md",
+      "x": -200,
+      "y": -40,
+      "width": 400,
+      "height": 280,
+      "color": "3"
+    },
+    {
+      "id": "content",
+      "type": "file",
+      "file": "CONTENT-INDEX.md",
+      "x": 300,
+      "y": -40,
+      "width": 400,
+      "height": 280,
+      "color": "5"
+    },
+    {
+      "id": "info",
+      "type": "text",
+      "text": "## 📦 Livrables\n\n- ✅ Thème Shopify 75 fichiers · 154 Ko\n- ✅ 14 pages rédigées\n- ✅ 13 articles SEO (~16 200 r/mois)\n- ✅ 5 emails transactionnels\n- ✅ 4 produits + 1 bundle (CSV import)\n- ✅ Quiz diagnostic + wishlist + RGPD\n\n## 🎯 Reste à faire\n\n- Token Admin API Shopify\n- Upload thème + activation\n- Import produits CSV\n- Création des 14 pages\n- Blog Journal + 13 articles\n- Codes promo WELCOME10 + RITUEL15\n- Templates emails (manuel)\n- Photos produit (Nano Banana 2)",
+      "x": -360,
+      "y": 320,
+      "width": 720,
+      "height": 480,
+      "color": "4"
+    }
+  ],
+  "edges": [
+    { "id": "e1", "fromNode": "title", "fromSide": "bottom", "toNode": "handoff", "toSide": "top" },
+    { "id": "e2", "fromNode": "title", "fromSide": "bottom", "toNode": "state", "toSide": "top" },
+    { "id": "e3", "fromNode": "title", "fromSide": "bottom", "toNode": "runbook", "toSide": "top" },
+    { "id": "e4", "fromNode": "handoff", "fromSide": "bottom", "toNode": "brand", "toSide": "top" },
+    { "id": "e5", "fromNode": "state", "fromSide": "bottom", "toNode": "product", "toSide": "top" },
+    { "id": "e6", "fromNode": "runbook", "fromSide": "bottom", "toNode": "content", "toSide": "top" },
+    { "id": "e7", "fromNode": "brand", "fromSide": "bottom", "toNode": "info", "toSide": "left" },
+    { "id": "e8", "fromNode": "product", "fromSide": "bottom", "toNode": "info", "toSide": "top" },
+    { "id": "e9", "fromNode": "content", "fromSide": "bottom", "toNode": "info", "toSide": "right" }
+  ]
+}

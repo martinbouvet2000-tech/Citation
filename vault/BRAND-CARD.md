@@ -1,4 +1,22 @@
-# Carte de marque AURÉLIA
+---
+title: Carte de marque AURÉLIA
+aliases:
+  - Brand Card
+  - Brand
+  - Charte
+tags:
+  - aurelia
+  - brand
+  - identity
+  - design
+created: 2026-05-22
+type: brand
+---
+
+# 🎨 Carte de marque AURÉLIA
+
+**Voir aussi** : [[PRODUCT-CATALOG]] · [[CONTENT-INDEX]] · [[HANDOFF-CLAUDE]]
+
 
 ## Identité
 

@@ -1,0 +1,9 @@
+{
+  "baseFontSize": 16,
+  "translucency": false,
+  "accentColor": "#C9A96E",
+  "theme": "obsidian",
+  "interfaceFontFamily": "Inter",
+  "textFontFamily": "Inter",
+  "monospaceFontFamily": "JetBrains Mono"
+}

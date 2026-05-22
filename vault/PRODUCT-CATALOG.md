@@ -1,7 +1,26 @@
-# Catalogue produits AURÉLIA
+---
+title: Catalogue produits AURÉLIA
+aliases:
+  - Catalog
+  - Catalogue
+  - Produits
+tags:
+  - aurelia
+  - product
+  - catalog
+created: 2026-05-22
+type: catalog
+products: 5
+---
 
-> Pour les fiches produit complètes (description longue, bullets, FAQ,
-> spécifications techniques), voir `shopify-theme/PRODUCT-CONTENT.md`.
+# 🛍 Catalogue produits AURÉLIA
+
+> [!note] Fiches produit complètes
+> Pour les descriptions longues, bullets, FAQ et specs techniques,
+> voir le fichier `shopify-theme/PRODUCT-CONTENT.md` du repo
+> (hors-vault, dans le code).
+
+**Voir aussi** : [[BRAND-CARD]] · [[CONTENT-INDEX]] · [[SHOPIFY-RUNBOOK]]
 
 ## Gamme
 

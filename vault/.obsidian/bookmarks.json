@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "type": "file",
+      "path": "README.md",
+      "title": "🏛 Index"
+    },
+    {
+      "type": "file",
+      "path": "HANDOFF-CLAUDE.md",
+      "title": "📋 Handoff Claude (priorité)"
+    },
+    {
+      "type": "file",
+      "path": "AURELIA.canvas",
+      "title": "🗺 Carte projet (canvas)"
+    },
+    {
+      "type": "file",
+      "path": "SHOPIFY-RUNBOOK.md",
+      "title": "⚙️ Runbook Shopify"
+    },
+    {
+      "type": "file",
+      "path": "PROJECT-STATE.md",
+      "title": "📊 État du projet"
+    },
+    {
+      "type": "file",
+      "path": "BRAND-CARD.md",
+      "title": "🎨 Charte marque"
+    },
+    {
+      "type": "file",
+      "path": "PRODUCT-CATALOG.md",
+      "title": "🛍 Catalogue produits"
+    },
+    {
+      "type": "file",
+      "path": "CONTENT-INDEX.md",
+      "title": "📝 Index contenus"
+    }
+  ]
+}
