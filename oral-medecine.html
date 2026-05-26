@@ -56,8 +56,9 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
 
-.app { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.app { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 3rem; }
 
+/* Header */
 .header {
   padding: 3rem 0 2rem;
   text-align: center;
@@ -93,19 +94,46 @@ body {
   font-weight: 300;
 }
 
+/* Streak Banner */
+.streak-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, rgba(251,191,36,0.12), rgba(248,113,113,0.08));
+  border: 1px solid rgba(251,191,36,0.25);
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(251,191,36,0); }
+  50% { box-shadow: 0 0 20px rgba(251,191,36,0.15); }
+}
+.streak-fire { font-size: 1.5rem; }
+.streak-count { font-size: 1.3rem; font-weight: 700; color: var(--warning); }
+.streak-label { font-size: 0.85rem; color: var(--text-secondary); }
+.streak-best { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Nav */
 .nav {
   display: flex;
   gap: 0.4rem;
   overflow-x: auto;
   padding: 0 0 1.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  padding-top: 0.5rem;
 }
 .nav::-webkit-scrollbar { display: none; }
 .nav__btn {
   flex-shrink: 0;
-  padding: 0.55rem 1rem;
+  padding: 0.5rem 1rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -116,377 +144,450 @@ body {
   transition: all 0.2s;
   white-space: nowrap;
 }
-.nav__btn:hover { background: var(--bg-card-hover); color: var(--text); }
+.nav__btn:hover { background: var(--bg-card-hover); color: var(--text); border-color: var(--border-light); }
 .nav__btn--active {
   background: var(--accent);
   border-color: var(--accent);
   color: white;
 }
+.nav__btn--highlight {
+  background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(248,113,113,0.1));
+  border-color: var(--warning);
+  color: var(--warning);
+}
+.nav__btn--highlight.nav__btn--active {
+  background: linear-gradient(135deg, var(--warning), #f59e0b);
+  color: #000;
+}
 
-.stats {
+/* Stats Bar */
+.stats-bar {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.8rem;
   margin-bottom: 2rem;
 }
-.stat {
+.stat-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   padding: 1rem;
   text-align: center;
+  transition: all 0.2s;
 }
-.stat__value {
-  font-size: 1.5rem;
+.stat-card:hover { border-color: var(--border-light); transform: translateY(-1px); }
+.stat-card__value { font-size: 1.4rem; font-weight: 700; }
+.stat-card__label { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; text-transform: uppercase; letter-spacing: 0.03em; }
+
+/* Section Title */
+.section-title {
+  font-size: 1.3rem;
   font-weight: 700;
-  color: var(--accent-light);
-}
-.stat__label {
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.questions { display: flex; flex-direction: column; gap: 0.5rem; }
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s;
+}
+.card:hover { border-color: var(--border-light); }
+.card--accent { border-left: 3px solid var(--accent); }
+.card--success { border-left: 3px solid var(--success); }
+.card--warning { border-left: 3px solid var(--warning); }
+.card--danger { border-left: 3px solid var(--danger); }
+
+/* Questions */
 .question {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 1rem 1.2rem;
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin-bottom: 0.8rem;
+  transition: all 0.25s;
   cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
 }
-.question:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-light);
-  transform: translateX(3px);
-}
-.question--done { opacity: 0.45; }
-.question--done::after {
-  content: '\2713';
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--success);
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-.question__text {
-  font-size: 0.88rem;
-  line-height: 1.5;
-  padding-right: 2rem;
-}
-.question__meta {
-  display: flex;
-  gap: 0.4rem;
-  margin-top: 0.5rem;
-  flex-wrap: wrap;
-}
+.question:hover { border-color: var(--accent-dim); background: var(--bg-card-hover); }
+.question--done { border-left: 3px solid var(--success); opacity: 0.7; }
+.question__text { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem; }
+.question__meta { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .question__tag {
-  font-size: 0.62rem;
+  padding: 0.15rem 0.5rem;
+  background: var(--accent-bg);
+  border-radius: 10px;
+  font-size: 0.68rem;
+  color: var(--accent-light);
+}
+.question__diff {
   padding: 0.15rem 0.5rem;
   border-radius: 10px;
-  background: var(--accent-bg);
-  color: var(--accent-light);
-  font-weight: 500;
+  font-size: 0.68rem;
+  font-weight: 600;
 }
-.question__tag--difficulty { background: var(--warning-bg); color: var(--warning); }
-.question__tag--type { background: var(--info-bg); color: var(--info); }
+.question__diff--1 { background: var(--success-bg); color: var(--success); }
+.question__diff--2 { background: var(--warning-bg); color: var(--warning); }
+.question__diff--3 { background: var(--danger-bg); color: var(--danger); }
 
+/* Search & Filters */
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.6rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--accent); }
+.filter-btn {
+  padding: 0.4rem 0.8rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn--active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent-light); }
+
+/* Progress Bar */
+.progress { height: 6px; background: var(--bg-elevated); border-radius: 3px; overflow: hidden; margin-bottom: 1rem; }
+.progress__fill { height: 100%; background: var(--gradient-3); border-radius: 3px; transition: width 0.5s ease; }
+
+/* Practice Mode */
+.practice {
+  background: var(--bg-card);
+  border: 2px solid var(--accent-dim);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+}
+.practice__timer {
+  font-size: 3rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  margin: 1rem 0;
+}
+.practice__timer--warn { color: var(--warning); }
+.practice__timer--danger { color: var(--danger); animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: 0.5; } }
+.practice__question {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+}
+
+/* Buttons */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn--primary { background: var(--accent); color: white; }
+.btn--primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+.btn--success { background: var(--success); color: #000; }
+.btn--success:hover { opacity: 0.9; }
+.btn--danger { background: var(--danger); color: white; }
+.btn--danger:hover { opacity: 0.9; }
+.btn--ghost { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
+.btn--ghost:hover { border-color: var(--accent); color: var(--accent-light); }
+.btn--small { padding: 0.35rem 0.8rem; font-size: 0.75rem; }
+.btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
+
+/* Method Cards */
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
 .method-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.5rem;
-  margin-bottom: 1rem;
-}
-.method-card__title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
-  color: var(--accent-light);
-}
-.method-card__steps {
-  list-style: none;
-  counter-reset: step;
-}
-.method-card__steps li {
-  counter-increment: step;
-  padding: 0.5rem 0 0.5rem 2.5rem;
-  position: relative;
-  font-size: 0.84rem;
-  color: var(--text-secondary);
-  border-bottom: 1px solid var(--border);
-}
-.method-card__steps li:last-child { border-bottom: none; }
-.method-card__steps li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0;
-  top: 0.5rem;
-  width: 22px; height: 22px;
-  background: var(--accent-bg);
-  border: 1px solid var(--accent-dim);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--accent-light);
-}
-
-.practice {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2.5rem;
-  text-align: center;
-}
-.practice__timer {
-  font-size: 3.5rem;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  color: var(--accent-light);
-  margin: 1rem 0;
-}
-.practice__question {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  line-height: 1.7;
-  margin: 1.5rem 0;
-  padding: 1.5rem;
-  background: var(--bg-elevated);
-  border-radius: var(--radius-sm);
-  border-left: 3px solid var(--accent);
-}
-.practice__type {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-  margin-bottom: 0.5rem;
-}
-.btn {
-  padding: 0.7rem 1.5rem;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-size: 0.84rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin: 0.3rem;
-}
-.btn--primary { background: var(--accent); color: white; }
-.btn--primary:hover { background: var(--accent-light); transform: translateY(-1px); }
-.btn--secondary { background: var(--bg-elevated); color: var(--text-secondary); border: 1px solid var(--border); }
-.btn--secondary:hover { background: var(--bg-card-hover); color: var(--text); }
-.btn--success { background: var(--success); color: #0a0a0f; }
-.btn--danger { background: var(--danger); color: white; }
-
-.info-panel {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-}
-.info-panel__title {
-  font-weight: 600;
-  font-size: 0.92rem;
-  margin-bottom: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.info-panel__content {
-  font-size: 0.84rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-.info-panel__content ul { padding-left: 1.2rem; margin-top: 0.5rem; }
-.info-panel__content li { margin-bottom: 0.3rem; }
-.info-panel__content strong { color: var(--text); }
-
-.actu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 0.8rem;
-}
-.actu-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 1.2rem;
   transition: all 0.2s;
 }
-.actu-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
-.actu-card__theme {
-  font-size: 0.62rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-light);
-  margin-bottom: 0.5rem;
-}
-.actu-card__title { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.5rem; }
-.actu-card__desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+.method-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
+.method-card__title { font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
+.method-card__list { list-style: none; }
+.method-card__list li { padding: 0.3rem 0; font-size: 0.85rem; color: var(--text-secondary); display: flex; gap: 0.5rem; align-items: flex-start; }
+.method-card__list li::before { content: ""; flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; margin-top: 0.5rem; }
 
-.search { margin-bottom: 1rem; }
-.search__input {
-  width: 100%;
-  padding: 0.8rem 1.2rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  font-size: 0.88rem;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.search__input:focus { border-color: var(--accent); }
-.search__input::placeholder { color: var(--text-muted); }
-.filters { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.filter-pill {
-  padding: 0.3rem 0.7rem;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.filter-pill:hover { border-color: var(--accent-dim); color: var(--text); }
-.filter-pill--active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent-light); }
-
-.progress { height: 4px; background: var(--bg-elevated); border-radius: 2px; overflow: hidden; }
-.progress__bar { height: 100%; background: var(--gradient-1); border-radius: 2px; transition: width 0.3s; }
-
-.example {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 1.2rem;
-  margin-top: 0.8rem;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  border-left: 3px solid var(--success);
-}
-.example__label {
-  font-weight: 600;
-  color: var(--success);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
-}
-
-.timeline { position: relative; padding-left: 2rem; }
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 8px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--border);
-}
-.timeline__item { position: relative; padding-bottom: 1.5rem; }
-.timeline__item::before {
-  content: '';
-  position: absolute;
-  left: -2rem;
-  top: 6px;
-  width: 10px; height: 10px;
-  background: var(--accent);
-  border-radius: 50%;
-  margin-left: 4px;
-}
-.timeline__time { font-size: 0.72rem; color: var(--accent-light); font-weight: 600; margin-bottom: 0.3rem; }
-.timeline__text { font-size: 0.84rem; color: var(--text-secondary); }
-
-.reset-btn {
-  background: none;
-  border: 1px solid var(--danger);
-  color: var(--danger);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.72rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.reset-btn:hover { background: var(--danger-bg); }
-
-.eval-grid {
-  display: grid;
-  gap: 0.4rem;
-  margin-top: 1rem;
-}
-.eval-item {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.6rem 0.8rem;
-  background: var(--bg-elevated);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.15s;
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-}
-.eval-item:hover { background: var(--bg-card-hover); }
-.eval-item--checked { color: var(--success); }
-.eval-check {
-  width: 18px; height: 18px;
-  border: 2px solid var(--border-light);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 0.7rem;
-  transition: all 0.15s;
-}
-.eval-check--on { background: var(--success); border-color: var(--success); color: #0a0a0f; }
-
+/* Fiche Cards */
+.fiche-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1rem; }
 .fiche-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.2rem;
+  padding: 1.5rem;
   transition: all 0.2s;
 }
-.fiche-card:hover { border-color: var(--border-light); }
-.fiche-card__title {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--accent-light);
-  margin-bottom: 0.6rem;
-}
-.fiche-card__args {
-  font-size: 0.76rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-.fiche-card__args li { margin-bottom: 0.25rem; }
-.fiche-card__args strong { color: var(--text); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.fiche-card:hover { transform: translateY(-2px); }
+.fiche-card__title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.8rem; }
+.fiche-card__section { margin-bottom: 0.8rem; }
+.fiche-card__label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+.fiche-card__items { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+.fiche-card__law { font-size: 0.8rem; padding: 0.5rem; background: var(--info-bg); border-radius: var(--radius-sm); color: var(--info); margin-bottom: 0.5rem; }
+.fiche-card__trap { font-size: 0.8rem; padding: 0.5rem; background: var(--danger-bg); border-radius: var(--radius-sm); color: var(--danger); }
 
-@media (max-width: 600px) {
-  .app { padding: 0 1rem; }
-  .header { padding: 2rem 0 1.5rem; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
-  .actu-grid { grid-template-columns: 1fr; }
-  .practice { padding: 1.5rem; }
-  .practice__question { font-size: 1rem; padding: 1rem; }
-  .practice__timer { font-size: 2.5rem; }
+/* Actu Grid */
+.actu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+.actu-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  transition: all 0.2s;
+  position: relative;
 }
+.actu-card:hover { border-color: var(--border-light); }
+.actu-card--hot { border-color: var(--danger); }
+.actu-card--hot::after {
+  content: "PROBABLE";
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  padding: 0.15rem 0.5rem;
+  background: var(--danger);
+  color: white;
+  border-radius: 10px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.actu-card__theme { font-size: 0.7rem; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+.actu-card__title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+.actu-card__desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before { content: ""; position: absolute; left: 0.5rem; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline__item { position: relative; margin-bottom: 1.2rem; }
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: -1.65rem;
+  top: 0.5rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+.timeline__time { font-size: 0.75rem; font-weight: 700; color: var(--accent-light); margin-bottom: 0.2rem; }
+.timeline__text { font-size: 0.85rem; color: var(--text-secondary); }
+
+/* Exemple Reponse */
+.exemple {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.exemple__question { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+.exemple__type { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 10px; font-size: 0.68rem; font-weight: 600; background: var(--accent-bg); color: var(--accent-light); margin-bottom: 1rem; }
+.exemple__section { margin-bottom: 0.8rem; }
+.exemple__label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+.exemple__text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* Auto-Eval Grid */
+.eval-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.eval-cat { background: var(--bg-elevated); border-radius: var(--radius); padding: 1rem; }
+.eval-cat__title { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.6rem; }
+.eval-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; }
+.eval-item:hover { color: var(--text); }
+.eval-check { width: 16px; height: 16px; border: 2px solid var(--border-light); border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.eval-check--done { background: var(--success); border-color: var(--success); }
+
+/* Journal */
+.journal-entry {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin-bottom: 0.8rem;
+  transition: all 0.2s;
+}
+.journal-entry:hover { border-color: var(--border-light); }
+.journal-entry__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+.journal-entry__date { font-weight: 600; font-size: 0.9rem; }
+.journal-entry__confidence {
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.journal-entry__stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.journal-entry__stat { font-size: 0.8rem; color: var(--text-secondary); }
+.journal-entry__stat strong { color: var(--text); }
+.journal-entry__notes { font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+.journal-entry__ratings { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.journal-entry__rating { padding: 0.2rem 0.5rem; background: var(--bg-elevated); border-radius: var(--radius-sm); font-size: 0.72rem; }
+
+/* Daily Goal */
+.daily-goal {
+  background: linear-gradient(135deg, rgba(124,109,240,0.08), rgba(96,165,250,0.05));
+  border: 1px solid var(--accent-dim);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.daily-goal__ring {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+.daily-goal__info { flex: 1; }
+.daily-goal__title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.2rem; }
+.daily-goal__sub { font-size: 0.78rem; color: var(--text-secondary); }
+
+/* Rating input */
+.rating-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+.rating-row__label { font-size: 0.82rem; color: var(--text-secondary); min-width: 110px; }
+.rating-stars { display: flex; gap: 0.2rem; }
+.rating-star {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border-light);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+.rating-star:hover { border-color: var(--accent); color: var(--accent); }
+.rating-star--active { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* Evolution Dashboard */
+.evo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.evo-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+}
+.evo-card__title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-secondary); }
+
+/* Calendar Heatmap */
+.heatmap { display: flex; gap: 2px; flex-wrap: wrap; }
+.heatmap__day {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--bg-elevated);
+}
+.heatmap__day--1 { background: rgba(124,109,240,0.25); }
+.heatmap__day--2 { background: rgba(124,109,240,0.45); }
+.heatmap__day--3 { background: rgba(124,109,240,0.7); }
+.heatmap__day--4 { background: var(--accent); }
+
+/* SVG Charts */
+.chart-container { width: 100%; overflow: hidden; }
+.chart-container svg { width: 100%; height: auto; }
+
+/* Form */
+.form-group { margin-bottom: 1rem; }
+.form-label { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.4rem; display: block; }
+.form-textarea {
+  width: 100%;
+  padding: 0.6rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 60px;
+  outline: none;
+}
+.form-textarea:focus { border-color: var(--accent); }
+.form-select {
+  padding: 0.5rem 0.8rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.82rem;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.3s ease-out; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.slide-up { animation: slideUp 0.4s ease-out; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app { padding: 0 1rem 2rem; }
+  .header { padding: 2rem 0 1.5rem; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .method-grid, .fiche-grid, .actu-grid, .evo-grid { grid-template-columns: 1fr; }
+  .practice { padding: 1.5rem; }
+  .practice__timer { font-size: 2.5rem; }
+  .eval-grid { grid-template-columns: 1fr; }
+  .daily-goal { flex-direction: column; text-align: center; }
+  .streak-banner { flex-wrap: wrap; justify-content: center; }
+}
+
+/* Confidence colors */
+.confidence--1 { background: var(--danger-bg); color: var(--danger); }
+.confidence--2 { background: var(--warning-bg); color: var(--warning); }
+.confidence--3 { background: var(--info-bg); color: var(--info); }
+.confidence--4 { background: var(--success-bg); color: var(--success); }
+.confidence--5 { background: linear-gradient(135deg, rgba(74,222,128,0.15), rgba(96,165,250,0.1)); color: var(--success); }
+
+/* Note input in questions */
+.note-input {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.8rem;
+  outline: none;
+}
+.note-input:focus { border-color: var(--accent); }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+}
+.empty-state__icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-state__text { font-size: 0.9rem; }
 </style>
 </head>
 <body>
@@ -554,7 +655,6 @@ const DATA = {
       { q: "Vous surprenez un collegue en train de voler dans les vestiaires. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["ethique", "confrontation", "justice"] },
       { q: "Un voisin age vit seul et vous n'avez pas de nouvelles depuis plusieurs jours. Que faites-vous ?", theme: "vie-quotidienne", difficulte: 2, tags: ["solidarite", "vigilance", "lien-social"] },
       { q: "Votre groupe de travail decide d'exclure un etudiant car il 'ralentit le groupe'. Votre reaction ?", theme: "vie-quotidienne", difficulte: 2, tags: ["inclusion", "ethique", "groupe"] },
-
       { q: "Un patient refuse une transfusion sanguine pour des raisons religieuses alors que sa vie est en danger. Que pensez-vous de cette situation ?", theme: "ethique", difficulte: 3, tags: ["autonomie", "croyances", "vie"] },
       { q: "Faut-il dire toute la verite a un patient atteint d'une maladie incurable ? Discutez.", theme: "ethique", difficulte: 3, tags: ["verite", "bienveillance", "autonomie"] },
       { q: "Un medecin decouvre qu'un patient, chauffeur de bus, a une pathologie qui le rend dangereux au volant. Le patient refuse d'arreter de conduire. Que faire ?", theme: "ethique", difficulte: 3, tags: ["secret-medical", "securite", "dilemme"] },
@@ -574,7 +674,6 @@ const DATA = {
       { q: "Un patient vous demande de lui prescrire un arret de travail de complaisance. Que faites-vous ?", theme: "ethique", difficulte: 2, tags: ["deontologie", "integrite", "pression"] },
       { q: "Un couple demande un diagnostic preimplantatoire pour choisir le sexe de leur enfant. Votre position ?", theme: "ethique", difficulte: 3, tags: ["bioethique", "selection", "limites"] },
       { q: "Un patient vous confie qu'il a agresse quelqu'un. Etes-vous tenu au secret medical ?", theme: "ethique", difficulte: 3, tags: ["secret-medical", "loi", "dilemme"] },
-
       { q: "Les reseaux sociaux ont-ils un impact sur la sante mentale des jeunes ? Analysez.", theme: "societe", difficulte: 2, tags: ["numerique", "sante-mentale", "jeunes"] },
       { q: "Comment lutter contre les deserts medicaux en France ?", theme: "societe", difficulte: 2, tags: ["acces-soins", "territoires", "solutions"] },
       { q: "L'intelligence artificielle va-t-elle remplacer les medecins ? Discutez.", theme: "societe", difficulte: 2, tags: ["IA", "avenir-medecine", "technologie"] },
@@ -593,7 +692,6 @@ const DATA = {
       { q: "Comment expliquer la defiance croissante envers la medecine et les medecins ?", theme: "societe", difficulte: 2, tags: ["confiance", "relation", "information"] },
       { q: "Faut-il interdire la publicite pour la malbouffe destinee aux enfants ?", theme: "societe", difficulte: 2, tags: ["prevention", "marketing", "liberte"] },
       { q: "Le vieillissement de la population est-il une menace ou une chance pour la societe ?", theme: "societe", difficulte: 2, tags: ["demographie", "solidarite", "adaptation"] },
-
       { q: "Quel est l'impact du changement climatique sur la sante humaine ?", theme: "ecologie", difficulte: 2, tags: ["climat", "sante-environnementale", "maladies"] },
       { q: "Faites le lien entre la pollution et la sante. Quels sont les enjeux et actions possibles ?", theme: "ecologie", difficulte: 2, tags: ["pollution", "sante-publique", "prevention"] },
       { q: "Les perturbateurs endocriniens representent-ils un danger pour la sante publique ?", theme: "ecologie", difficulte: 2, tags: ["environnement", "toxicologie", "prevention"] },
@@ -601,7 +699,6 @@ const DATA = {
       { q: "Le concept One Health (une seule sante) : expliquez et discutez son importance.", theme: "ecologie", difficulte: 2, tags: ["one-health", "zoonoses", "biodiversite"] },
       { q: "Les pandemies sont-elles liees a la destruction de l'environnement ? Argumentez.", theme: "ecologie", difficulte: 2, tags: ["pandemie", "biodiversite", "prevention"] },
       { q: "L'eau potable est-elle un bien commun ou une marchandise ? Discutez les enjeux sanitaires.", theme: "ecologie", difficulte: 2, tags: ["eau", "inegalites", "sante-publique"] },
-
       { q: "Comment expliquer un diagnostic grave a un patient de maniere comprehensible et humaine ?", theme: "communication", difficulte: 2, tags: ["annonce", "empathie", "pedagogie"] },
       { q: "Un patient ne parle pas francais. Comment assurez-vous une consultation de qualite ?", theme: "communication", difficulte: 2, tags: ["barriere-langue", "inclusion", "adaptation"] },
       { q: "Comment gerer un patient agressif aux urgences ?", theme: "communication", difficulte: 3, tags: ["conflit", "stress", "desescalade"] },
@@ -609,7 +706,6 @@ const DATA = {
       { q: "Comment promouvoir l'education a la sante aupres des populations defavorisees ?", theme: "communication", difficulte: 2, tags: ["prevention", "inegalites", "acces"] },
       { q: "Comment annoncer a une famille le deces d'un proche ?", theme: "communication", difficulte: 3, tags: ["annonce", "empathie", "accompagnement"] },
       { q: "Un patient demande un second avis medical. Comment reagissez-vous ?", theme: "communication", difficulte: 1, tags: ["humilite", "droit", "relation"] },
-
       { q: "Les donnees de sante des patients doivent-elles etre partagees pour faire avancer la recherche ?", theme: "technologie", difficulte: 3, tags: ["donnees", "vie-privee", "recherche"] },
       { q: "L'IA peut-elle poser un diagnostic aussi fiable qu'un medecin ? Enjeux ethiques ?", theme: "technologie", difficulte: 3, tags: ["IA", "diagnostic", "responsabilite"] },
       { q: "Les tests genetiques predictifs doivent-ils etre accessibles a tous ? Discutez.", theme: "technologie", difficulte: 3, tags: ["genetique", "discrimination", "assurance"] },
@@ -618,14 +714,12 @@ const DATA = {
       { q: "Le transhumanisme est-il compatible avec l'ethique medicale ?", theme: "technologie", difficulte: 3, tags: ["transhumanisme", "limites", "humanite"] },
       { q: "Les applications de sante (Apple Watch, capteurs) changent-elles la relation au corps et a la maladie ?", theme: "technologie", difficulte: 2, tags: ["quantified-self", "anxiete", "prevention"] },
       { q: "ChatGPT et les IA generatives en medecine : opportunite ou danger ? Discutez.", theme: "technologie", difficulte: 2, tags: ["IA", "desinformation", "outil"] },
-
       { q: "Comment destigmatiser les maladies mentales dans notre societe ?", theme: "sante-mentale", difficulte: 2, tags: ["stigmatisation", "psychiatrie", "inclusion"] },
       { q: "Le burn-out des soignants est-il une fatalite ? Comment y remedier ?", theme: "sante-mentale", difficulte: 2, tags: ["burn-out", "conditions-travail", "prevention"] },
       { q: "L'hospitalisation sous contrainte est-elle justifiable ? Dans quelles conditions ?", theme: "sante-mentale", difficulte: 3, tags: ["liberte", "psychiatrie", "protection"] },
       { q: "Quel est l'impact de la solitude sur la sante, notamment chez les personnes agees ?", theme: "sante-mentale", difficulte: 2, tags: ["isolement", "vieillissement", "lien-social"] },
       { q: "La sante mentale des etudiants est-elle suffisamment prise en charge en France ?", theme: "sante-mentale", difficulte: 2, tags: ["etudiants", "stress", "dispositifs"] },
       { q: "L'addiction aux ecrans chez les enfants est-elle un probleme de sante publique ?", theme: "sante-mentale", difficulte: 2, tags: ["numerique", "enfants", "dependance"] },
-
       { q: "Le numerus clausus (numerus apertus) est-il un bon systeme de selection ?", theme: "droit", difficulte: 2, tags: ["formation", "selection", "egalite"] },
       { q: "Un medecin peut-il etre tenu responsable d'une erreur medicale ? Discutez les limites.", theme: "droit", difficulte: 2, tags: ["responsabilite", "erreur", "alea"] },
       { q: "La loi Claeys-Leonetti sur la fin de vie est-elle suffisante ?", theme: "droit", difficulte: 3, tags: ["fin-de-vie", "legislation", "evolution"] },
@@ -691,70 +785,14 @@ const DATA = {
     ]
   },
   fichesThematiques: [
-    {
-      theme: "Fin de vie / Euthanasie",
-      color: "#f87171",
-      pour: ["Respect de l'autonomie du patient", "Droit a mourir dans la dignite", "Souffrance insupportable et irreversible", "Modeles existants : Belgique, Pays-Bas, Oregon"],
-      contre: ["Pente glissante : derive vers l'euthanasie de convenance", "Soins palliatifs encore insuffisamment developpes", "Role du medecin = guerir et soulager, pas donner la mort", "Pression potentielle sur les personnes vulnerables"],
-      lois: "Loi Claeys-Leonetti (2016) : sedation profonde et continue autorisee. Projet de loi aide active a mourir en debat (2025-2026).",
-      piege: "Ne jamais dire 'je suis pour/contre l'euthanasie' sans nuancer."
-    },
-    {
-      theme: "Intelligence artificielle en sante",
-      color: "#60a5fa",
-      pour: ["Performances superieures en imagerie (radiologie, dermato)", "Acces aux soins ameliore (zones rurales)", "Reduction des erreurs diagnostiques", "Gain de temps pour le medecin"],
-      contre: ["Boite noire : manque d'explicabilite", "Biais algorithmiques (donnees d'entrainement biaisees)", "Responsabilite en cas d'erreur non clarifiee", "Deshumanisation de la relation de soin"],
-      lois: "Reglement europeen sur l'IA (AI Act, 2024). La sante est classee 'haut risque'.",
-      piege: "L'IA assiste le medecin, elle ne le remplace pas. Toujours revenir a la relation humaine."
-    },
-    {
-      theme: "Vaccination et confiance",
-      color: "#4ade80",
-      pour: ["Eradication de maladies (variole, quasi-polio)", "Protection collective (immunite de groupe)", "Rapport benefice/risque scientifiquement prouve", "11 vaccins obligatoires depuis 2018 sans hausse d'effets graves"],
-      contre: ["Respect de la liberte individuelle", "Effets secondaires rares mais existants", "Defiance nourrie par des scandales sanitaires passes", "Paternalisme medical percu"],
-      lois: "11 vaccins obligatoires pour les nourrissons (2018). Obligation vaccinale COVID abrogee.",
-      piege: "Ne pas mepriser les anti-vax. Comprendre les racines de la defiance (peur, meconnaissance, scandales)."
-    },
-    {
-      theme: "Deserts medicaux",
-      color: "#fbbf24",
-      pour: ["Obligation d'installation pour equilibrer l'offre", "Telemedicine comme solution immediate", "Maisons de sante pluridisciplinaires", "Delegation de taches aux infirmiers/pharmaciens"],
-      contre: ["Liberte d'installation = principe fondamental", "L'obligation n'attire pas la vocation", "Manque global de medecins (formation insuffisante pendant des decennies)", "Solutions ne traitent pas la cause : conditions de travail, remuneration"],
-      lois: "Loi Neuder (2025) : quotas d'admission ajustes aux besoins territoriaux. CPTS (Communautes Professionnelles Territoriales de Sante).",
-      piege: "6 millions de Francais sans medecin traitant. Chiffre cle a retenir."
-    },
-    {
-      theme: "Secret medical vs securite publique",
-      color: "#a78bfa",
-      pour: ["Fondement de la confiance medecin-patient", "Droit fondamental du patient (art. L1110-4 CSP)", "Sans secret, les patients ne consulteraient plus", "Le medecin n'est pas un auxiliaire de police"],
-      contre: ["Maladies contagieuses a declaration obligatoire", "Patient dangereux pour lui-meme ou autrui", "Maltraitance d'enfant = obligation de signalement", "Protection de la societe peut primer"],
-      lois: "Art. 226-13 Code penal (violation du secret). Exceptions : signalement maltraitance, maladies a declaration obligatoire, dangerosity.",
-      piege: "Le secret n'est JAMAIS absolu. Connaitre les 3 exceptions legales."
-    },
-    {
-      theme: "Inegalites sociales de sante",
-      color: "#fb923c",
-      pour: ["13 ans d'ecart d'esperance de vie entre riches et pauvres (hommes)", "30% des precaires renoncent aux soins", "Determinants sociaux > determinants biologiques", "Les PASS hospitaliers sont debordees"],
-      contre: ["Responsabilite individuelle dans les comportements de sante", "Le systeme francais offre deja une couverture quasi-universelle (CMU, AME)", "Augmenter les depenses ne resout pas tout", "Education et prevention plus efficaces que le curatif"],
-      lois: "CMU-C, AME, PUMA (Protection Universelle Maladie). CSS 100% remboursement. PASS (Permanence d'Acces aux Soins de Sante).",
-      piege: "Ne jamais dire 'c'est la faute des pauvres'. Toujours penser en termes de determinants sociaux."
-    },
-    {
-      theme: "Environnement et sante (One Health)",
-      color: "#34d399",
-      pour: ["75% des maladies emergentes sont des zoonoses", "48 000 deces/an lies a la pollution en France", "Les PFAS contaminent l'eau potable", "Changement climatique = nouvelles pathologies (dengue en France metropolitaine)"],
-      contre: ["Transition ecologique peut augmenter les couts de sante", "Les pays en developpement ne peuvent pas se payer le luxe ecologique", "Risque de green-washing dans le systeme de sante"],
-      lois: "One Health adopte par l'OMS, la FAO et l'OIE. Plan national sante-environnement (PNSE4) en France.",
-      piege: "Toujours lier sante humaine, animale et environnementale. Le jury adore ce concept."
-    },
-    {
-      theme: "Sante mentale",
-      color: "#f472b6",
-      pour: ["+30% troubles anxieux chez les 15-25 ans post-COVID", "Manque criant de pedopsychiatres", "Stigmatisation encore forte = frein a la consultation", "Burn-out des soignants : 50% en souffrance psychologique"],
-      contre: ["Surmedicamentalisation des emotions normales", "Tendance a psychiatriser les difficultes de vie", "Mon Parcours Psy : 8 seances = insuffisant mais existant", "Necessite de distinguer mal-etre et pathologie"],
-      lois: "Mon Parcours Psy (2022) : 8 seances remboursees. Assises de la sante mentale (2021). Plan psychiatrie et sante mentale.",
-      piege: "Ne pas confondre tristesse et depression. Toujours nuancer entre souffrance et pathologie."
-    },
+    { theme: "Fin de vie / Euthanasie", color: "#f87171", pour: ["Respect de l'autonomie du patient", "Droit a mourir dans la dignite", "Souffrance insupportable et irreversible", "Modeles existants : Belgique, Pays-Bas, Oregon"], contre: ["Pente glissante : derive vers l'euthanasie de convenance", "Soins palliatifs encore insuffisamment developpes", "Role du medecin = guerir et soulager, pas donner la mort", "Pression potentielle sur les personnes vulnerables"], lois: "Loi Claeys-Leonetti (2016) : sedation profonde et continue autorisee. Projet de loi aide active a mourir en debat (2025-2026).", piege: "Ne jamais dire 'je suis pour/contre l'euthanasie' sans nuancer." },
+    { theme: "Intelligence artificielle en sante", color: "#60a5fa", pour: ["Performances superieures en imagerie (radiologie, dermato)", "Acces aux soins ameliore (zones rurales)", "Reduction des erreurs diagnostiques", "Gain de temps pour le medecin"], contre: ["Boite noire : manque d'explicabilite", "Biais algorithmiques (donnees d'entrainement biaisees)", "Responsabilite en cas d'erreur non clarifiee", "Deshumanisation de la relation de soin"], lois: "Reglement europeen sur l'IA (AI Act, 2024). La sante est classee 'haut risque'.", piege: "L'IA assiste le medecin, elle ne le remplace pas. Toujours revenir a la relation humaine." },
+    { theme: "Vaccination et confiance", color: "#4ade80", pour: ["Eradication de maladies (variole, quasi-polio)", "Protection collective (immunite de groupe)", "Rapport benefice/risque scientifiquement prouve", "11 vaccins obligatoires depuis 2018 sans hausse d'effets graves"], contre: ["Respect de la liberte individuelle", "Effets secondaires rares mais existants", "Defiance nourrie par des scandales sanitaires passes", "Paternalisme medical percu"], lois: "11 vaccins obligatoires pour les nourrissons (2018). Obligation vaccinale COVID abrogee.", piege: "Ne pas mepriser les anti-vax. Comprendre les racines de la defiance (peur, meconnaissance, scandales)." },
+    { theme: "Deserts medicaux", color: "#fbbf24", pour: ["Obligation d'installation pour equilibrer l'offre", "Telemedicine comme solution immediate", "Maisons de sante pluridisciplinaires", "Delegation de taches aux infirmiers/pharmaciens"], contre: ["Liberte d'installation = principe fondamental", "L'obligation n'attire pas la vocation", "Manque global de medecins (formation insuffisante pendant des decennies)", "Solutions ne traitent pas la cause : conditions de travail, remuneration"], lois: "Loi Neuder (2025) : quotas d'admission ajustes aux besoins territoriaux. CPTS (Communautes Professionnelles Territoriales de Sante).", piege: "6 millions de Francais sans medecin traitant. Chiffre cle a retenir." },
+    { theme: "Secret medical vs securite publique", color: "#a78bfa", pour: ["Fondement de la confiance medecin-patient", "Droit fondamental du patient (art. L1110-4 CSP)", "Sans secret, les patients ne consulteraient plus", "Le medecin n'est pas un auxiliaire de police"], contre: ["Maladies contagieuses a declaration obligatoire", "Patient dangereux pour lui-meme ou autrui", "Maltraitance d'enfant = obligation de signalement", "Protection de la societe peut primer"], lois: "Art. 226-13 Code penal (violation du secret). Exceptions : signalement maltraitance, maladies a declaration obligatoire, dangerosity.", piege: "Le secret n'est JAMAIS absolu. Connaitre les 3 exceptions legales." },
+    { theme: "Inegalites sociales de sante", color: "#fb923c", pour: ["13 ans d'ecart d'esperance de vie entre riches et pauvres (hommes)", "30% des precaires renoncent aux soins", "Determinants sociaux > determinants biologiques", "Les PASS hospitaliers sont debordees"], contre: ["Responsabilite individuelle dans les comportements de sante", "Le systeme francais offre deja une couverture quasi-universelle (CMU, AME)", "Augmenter les depenses ne resout pas tout", "Education et prevention plus efficaces que le curatif"], lois: "CMU-C, AME, PUMA (Protection Universelle Maladie). CSS 100% remboursement. PASS (Permanence d'Acces aux Soins de Sante).", piege: "Ne jamais dire 'c'est la faute des pauvres'. Toujours penser en termes de determinants sociaux." },
+    { theme: "Environnement et sante (One Health)", color: "#34d399", pour: ["75% des maladies emergentes sont des zoonoses", "48 000 deces/an lies a la pollution en France", "Les PFAS contaminent l'eau potable", "Changement climatique = nouvelles pathologies (dengue en France metropolitaine)"], contre: ["Transition ecologique peut augmenter les couts de sante", "Les pays en developpement ne peuvent pas se payer le luxe ecologique", "Risque de green-washing dans le systeme de sante"], lois: "One Health adopte par l'OMS, la FAO et l'OIE. Plan national sante-environnement (PNSE4) en France.", piege: "Toujours lier sante humaine, animale et environnementale. Le jury adore ce concept." },
+    { theme: "Sante mentale", color: "#f472b6", pour: ["+30% troubles anxieux chez les 15-25 ans post-COVID", "Manque criant de pedopsychiatres", "Stigmatisation encore forte = frein a la consultation", "Burn-out des soignants : 50% en souffrance psychologique"], contre: ["Surmedicamentalisation des emotions normales", "Tendance a psychiatriser les difficultes de vie", "Mon Parcours Psy : 8 seances = insuffisant mais existant", "Necessite de distinguer mal-etre et pathologie"], lois: "Mon Parcours Psy (2022) : 8 seances remboursees. Assises de la sante mentale (2021). Plan psychiatrie et sante mentale.", piege: "Ne pas confondre tristesse et depression. Toujours nuancer entre souffrance et pathologie." },
   ],
   autoEvaluation: [
     { cat: "Structure", items: ["J'ai fait une intro claire (contexte + problematique)", "Mon developpement etait organise en 2-3 axes", "J'ai conclu avec ma position + ouverture", "Mon discours avait un fil conducteur logique"] },
@@ -776,7 +814,7 @@ const DATA = {
     { theme: "Penuries de medicaments", titre: "Ruptures d'approvisionnement chroniques", desc: "3000+ signalements de ruptures en 2025. Causes : 80% des principes actifs fabriques en Chine/Inde, just-in-time, tensions geopolitiques. Medicaments critiques touches : antibiotiques, anticancereux, anesthesiques. Stock de securite de 4 mois impose." },
     { theme: "Numerique et Mon Espace Sante", titre: "Transformation numerique du systeme de sante", desc: "Mon Espace Sante : DMP + messagerie securisee. Telemedicine : ~10% des consultations. Risques : fracture numerique (personnes agees, precarite), cybersecurite des donnees de sante. Opportunites : suivi maladies chroniques, acces en zone rurale." },
     { theme: "Antibio-resistance", titre: "La resistance aux antibiotiques, menace majeure selon l'OMS", desc: "1,2 million de morts/an dans le monde lies a l'antibio-resistance. La France est parmi les plus gros consommateurs d'antibiotiques en Europe. Sans action, 10 millions de morts/an d'ici 2050. Solutions : usage raisonne, nouvelles molecules, diagnostic rapide." },
-    { theme: "Loi immigration et sante", titre: "Acces aux soins des etrangers en France", desc: "Debat sur l'AME (Aide Medicale d'Etat) pour les sans-papiers. Arguments pour : droit fondamental, enjeu de sante publique (maladies contagieuses). Arguments contre : cout pour les finances publiques, effet d'appel. Les medecins rappellent : soigner tout le monde est un impératif sanitaire ET ethique.", hot: true },
+    { theme: "Loi immigration et sante", titre: "Acces aux soins des etrangers en France", desc: "Debat sur l'AME (Aide Medicale d'Etat) pour les sans-papiers. Arguments pour : droit fondamental, enjeu de sante publique (maladies contagieuses). Arguments contre : cout pour les finances publiques, effet d'appel. Les medecins rappellent : soigner tout le monde est un imperatif sanitaire ET ethique.", hot: true },
   ],
   jourJ: {
     avant: [
@@ -795,7 +833,7 @@ const DATA = {
       { time: "Debut (0-1 min)", text: "Sourire, regarder le jury. Presenter la situation en 2-3 phrases. Formuler la problematique clairement." },
       { time: "Developpement (1-8 min)", text: "Suivre ta structure : analyser les points de vue, discuter les enjeux (ethique, pratique, emotionnel, juridique), proposer des pistes concretes." },
       { time: "Conclusion (8-9 min)", text: "Resumer ta position personnelle argumentee + ouverture vers une question plus large." },
-      { time: "Questions jury (9-10 min)", text: "Ecouter. Prendre 2-3 secondes. Reformuler si besoin. Repondre avec calme, nuance et honneteté." },
+      { time: "Questions jury (9-10 min)", text: "Ecouter. Prendre 2-3 secondes. Reformuler si besoin. Repondre avec calme, nuance et honnetete." },
     ],
     pieges: [
       "Le jury te contredit : c'est un TEST. Il veut voir si tu nuances. Dis 'C'est un point de vue interessant, en effet on peut aussi considerer que...'",
@@ -812,12 +850,7 @@ const DATA = {
       type: "RPC",
       reponse: {
         intro: "Cette situation met en tension le respect de la vie privee de mon voisin et la protection d'un animal en danger. C'est un dilemme entre non-intervention et devoir d'agir.",
-        developpement: [
-          "D'abord, j'evalue la gravite immediate : l'animal est-il en detresse visible (haletement, apathie) ? Si oui, c'est une urgence.",
-          "En premier lieu, je tente le dialogue avec mon voisin — peut-etre n'a-t-il pas conscience du danger. L'approche non-confrontationnelle est preferable.",
-          "Si le dialogue echoue ou est impossible, je contacte les autorites competentes (police municipale, SPA) car la loi protege les animaux contre la maltraitance.",
-          "En cas d'urgence vitale immediate, la loi autorise un citoyen a agir pour sauver un animal en danger de mort (casser la vitre en dernier recours, avec temoins)."
-        ],
+        developpement: ["D'abord, j'evalue la gravite immediate : l'animal est-il en detresse visible (haletement, apathie) ? Si oui, c'est une urgence.", "En premier lieu, je tente le dialogue avec mon voisin — peut-etre n'a-t-il pas conscience du danger. L'approche non-confrontationnelle est preferable.", "Si le dialogue echoue ou est impossible, je contacte les autorites competentes (police municipale, SPA) car la loi protege les animaux contre la maltraitance.", "En cas d'urgence vitale immediate, la loi autorise un citoyen a agir pour sauver un animal en danger de mort (casser la vitre en dernier recours, avec temoins)."],
         conclusion: "Je privilegie toujours la desescalade et le dialogue, mais ma responsabilite de citoyen m'impose d'agir si une vie est en danger, qu'elle soit humaine ou animale.",
         ouverture: "Cela pose la question plus large de notre rapport aux animaux et de leur statut juridique — depuis 2015, ce sont des 'etres vivants doues de sensibilite'."
       }
@@ -827,12 +860,7 @@ const DATA = {
       type: "ARED",
       reponse: {
         intro: "Cette photographie montre une personne sans domicile fixe allongee devant l'entree d'un service d'urgences hospitalier. Le contraste entre la precarite de cette personne et le batiment de soins cree une tension visuelle forte.",
-        developpement: [
-          "Observation : on voit un individu couche sur des cartons, probablement en hiver (vetements epais). L'enseigne lumineuse 'Urgences' est visible. Le cadrage met en evidence la proximite paradoxale entre lieu de soins et precarite.",
-          "Premiere problematique : l'acces aux soins des personnes precaires. Les urgences sont ouvertes a tous, mais les barrieres sont multiples (administrative, peur du jugement, meconnaissance des droits).",
-          "Deuxieme problematique : l'hopital a-t-il un role social au-dela du soin ? Les PASS existent mais sont debordees.",
-          "Esprit critique : cette photo a pu etre cadree pour accentuer le contraste. Elle ne montre pas les dispositifs existants (maraudes, SAMU social, lits halte soins sante)."
-        ],
+        developpement: ["Observation : on voit un individu couche sur des cartons, probablement en hiver (vetements epais). L'enseigne lumineuse 'Urgences' est visible. Le cadrage met en evidence la proximite paradoxale entre lieu de soins et precarite.", "Premiere problematique : l'acces aux soins des personnes precaires. Les urgences sont ouvertes a tous, mais les barrieres sont multiples (administrative, peur du jugement, meconnaissance des droits).", "Deuxieme problematique : l'hopital a-t-il un role social au-dela du soin ? Les PASS existent mais sont debordees.", "Esprit critique : cette photo a pu etre cadree pour accentuer le contraste. Elle ne montre pas les dispositifs existants (maraudes, SAMU social, lits halte soins sante)."],
         conclusion: "Cette image revele les inegalites sociales de sante au coeur meme du systeme de soins. Soigner ne suffit pas si les determinants sociaux ne sont pas pris en compte.",
         ouverture: "Cela rejoint le concept de 'medecine sociale' et les travaux sur les determinants sociaux de la sante."
       }
@@ -842,12 +870,7 @@ const DATA = {
       type: "RPC",
       reponse: {
         intro: "Cette situation cree une tension entre la liberte parentale de faire des choix pour leur enfant et la protection de la sante de l'enfant et de la collectivite.",
-        developpement: [
-          "Du point de vue des parents : ils exercent leur autorite parentale et peuvent avoir des peurs legitimes (effets secondaires, informations contradictoires sur Internet). Ils agissent probablement par amour et par souci de protection.",
-          "Du point de vue medical : les 11 vaccins obligatoires ont un rapport benefice/risque scientifiquement prouve. Les effets secondaires graves sont extremement rares. Ne pas vacciner expose l'enfant ET les enfants immunodeprimes qui ne peuvent pas etre vaccines.",
-          "Du point de vue juridique : depuis 2018, ces 11 vaccins sont obligatoires. L'enfant ne peut etre admis en collectivite sans. C'est une obligation legale, pas un choix.",
-          "L'approche ideale : ecouter les peurs des parents sans les juger, expliquer avec pedagogie, leur laisser le temps de reflechir. Si refus persistant : rappeler les obligations legales et les consequences pour l'enfant."
-        ],
+        developpement: ["Du point de vue des parents : ils exercent leur autorite parentale et peuvent avoir des peurs legitimes (effets secondaires, informations contradictoires sur Internet). Ils agissent probablement par amour et par souci de protection.", "Du point de vue medical : les 11 vaccins obligatoires ont un rapport benefice/risque scientifiquement prouve. Les effets secondaires graves sont extremement rares. Ne pas vacciner expose l'enfant ET les enfants immunodeprimes qui ne peuvent pas etre vaccines.", "Du point de vue juridique : depuis 2018, ces 11 vaccins sont obligatoires. L'enfant ne peut etre admis en collectivite sans. C'est une obligation legale, pas un choix.", "L'approche ideale : ecouter les peurs des parents sans les juger, expliquer avec pedagogie, leur laisser le temps de reflechir. Si refus persistant : rappeler les obligations legales et les consequences pour l'enfant."],
         conclusion: "La liberte individuelle s'arrete la ou la sante publique commence. Mais la contrainte seule ne suffit pas — il faut retablir la confiance par le dialogue et la transparence.",
         ouverture: "Cela renvoie a la question plus large de la confiance envers la medecine et la science, mise a mal par les scandales sanitaires et la desinformation en ligne."
       }
@@ -857,12 +880,7 @@ const DATA = {
       type: "RPC",
       reponse: {
         intro: "Cette question oppose la promesse technologique de l'IA a la dimension humaine irreductible de la medecine. C'est un sujet qui melange fascination et inquietude.",
-        developpement: [
-          "Ce que l'IA fait deja mieux : en radiologie et dermatologie, les algorithmes atteignent des taux de detection superieurs aux medecins pour certaines pathologies. L'IA peut aussi analyser des milliers d'articles scientifiques en quelques secondes.",
-          "Ce que l'IA ne peut pas faire : toucher un patient, percevoir son angoisse, adapter son discours a sa personnalite, faire preuve d'empathie, prendre une decision ethique dans l'incertitude. Le soin est une relation, pas un algorithme.",
-          "Les risques : biais algorithmiques (donnees d'entrainement qui sous-representent certaines populations), 'boite noire' (decisions non explicables), deresponsabilisation du medecin. Qui est responsable si l'IA se trompe ?",
-          "La bonne question n'est pas 'l'IA va-t-elle remplacer ?' mais 'comment l'integrer intelligemment ?'. L'IA comme outil d'aide a la decision, pas comme decisionnaire."
-        ],
+        developpement: ["Ce que l'IA fait deja mieux : en radiologie et dermatologie, les algorithmes atteignent des taux de detection superieurs aux medecins pour certaines pathologies. L'IA peut aussi analyser des milliers d'articles scientifiques en quelques secondes.", "Ce que l'IA ne peut pas faire : toucher un patient, percevoir son angoisse, adapter son discours a sa personnalite, faire preuve d'empathie, prendre une decision ethique dans l'incertitude. Le soin est une relation, pas un algorithme.", "Les risques : biais algorithmiques (donnees d'entrainement qui sous-representent certaines populations), 'boite noire' (decisions non explicables), deresponsabilisation du medecin. Qui est responsable si l'IA se trompe ?", "La bonne question n'est pas 'l'IA va-t-elle remplacer ?' mais 'comment l'integrer intelligemment ?'. L'IA comme outil d'aide a la decision, pas comme decisionnaire."],
         conclusion: "L'IA transformera profondement la pratique medicale, mais ne remplacera pas le medecin. Elle le liberera des taches repetitives pour qu'il se concentre sur ce qui fait le coeur du metier : la relation humaine.",
         ouverture: "Cela pose aussi la question de la formation des futurs medecins : faudra-t-il integrer des cours de data science et d'ethique de l'IA dans le cursus ?"
       }
@@ -872,12 +890,7 @@ const DATA = {
       type: "ARED",
       reponse: {
         intro: "Cette image montre un ecran d'ordinateur ou de tablette sur lequel un medecin en blouse blanche echange avec un patient age. C'est une illustration concrete de la telemedicine, qui s'est imposee depuis la pandemie.",
-        developpement: [
-          "Observation : l'ecran est divise en deux — le medecin a gauche, le patient a droite. Le patient semble age (cheveux blancs), possiblement a son domicile. Le medecin porte une blouse, signe de professionnalisme maintenu malgre la distance.",
-          "Avantages : acces aux soins pour les personnes a mobilite reduite, les zones rurales sans medecin, reduction du temps d'attente. 10% des consultations se font en telemedicine en 2024.",
-          "Limites : fracture numerique (25% des plus de 75 ans ne maitrisent pas les outils numeriques), impossibilite de l'examen clinique, perte du langage non-verbal subtil, risque de deshumanisation.",
-          "Esprit critique : cette image montre un cas 'ideal' — patient connecte, a l'aise avec la technologie. Elle ne montre pas les echecs : connexion qui coupe, patient isole sans materiel, medecin fatigue par l'enchainement de teleconsultations."
-        ],
+        developpement: ["Observation : l'ecran est divise en deux — le medecin a gauche, le patient a droite. Le patient semble age (cheveux blancs), possiblement a son domicile. Le medecin porte une blouse, signe de professionnalisme maintenu malgre la distance.", "Avantages : acces aux soins pour les personnes a mobilite reduite, les zones rurales sans medecin, reduction du temps d'attente. 10% des consultations se font en telemedicine en 2024.", "Limites : fracture numerique (25% des plus de 75 ans ne maitrisent pas les outils numeriques), impossibilite de l'examen clinique, perte du langage non-verbal subtil, risque de deshumanisation.", "Esprit critique : cette image montre un cas 'ideal' — patient connecte, a l'aise avec la technologie. Elle ne montre pas les echecs : connexion qui coupe, patient isole sans materiel, medecin fatigue par l'enchainement de teleconsultations."],
         conclusion: "La telemedicine est un outil complementaire precieux mais ne peut pas se substituer au contact humain, surtout pour les personnes agees ou les situations complexes.",
         ouverture: "Cela questionne plus largement la place du numerique dans le soin : comment innover sans exclure ?"
       }
@@ -887,12 +900,7 @@ const DATA = {
       type: "RPC",
       reponse: {
         intro: "L'annonce d'un deces est l'un des actes les plus difficiles de la pratique medicale. C'est un moment ou les mots ont un poids considerable et ou l'humanite du soignant est mise a l'epreuve.",
-        developpement: [
-          "La preparation : trouver un lieu calme et intime, s'assurer de connaitre les circonstances exactes du deces, verifier l'identite de la famille. Ne JAMAIS annoncer dans un couloir ou par telephone si evitable.",
-          "Les mots : aller a l'essentiel apres un court preambule. Utiliser des mots clairs — dire 'votre pere est decede' et non 'il nous a quittes' pour eviter toute ambiguite. Le silence qui suit est normal et necessaire.",
-          "L'attitude : etre present physiquement, maintenir le contact visuel, ne pas fuir apres l'annonce. Laisser la famille exprimer ses emotions (colere, pleurs, sideration) sans les interrompre. Ne pas dire 'je comprends votre douleur' — on ne comprend pas.",
-          "L'apres : proposer de voir le corps si c'est possible, donner des informations pratiques (demarches), proposer un soutien psychologique. Laisser un numero pour recontacter si besoin."
-        ],
+        developpement: ["La preparation : trouver un lieu calme et intime, s'assurer de connaitre les circonstances exactes du deces, verifier l'identite de la famille. Ne JAMAIS annoncer dans un couloir ou par telephone si evitable.", "Les mots : aller a l'essentiel apres un court preambule. Utiliser des mots clairs — dire 'votre pere est decede' et non 'il nous a quittes' pour eviter toute ambiguite. Le silence qui suit est normal et necessaire.", "L'attitude : etre present physiquement, maintenir le contact visuel, ne pas fuir apres l'annonce. Laisser la famille exprimer ses emotions (colere, pleurs, sideration) sans les interrompre. Ne pas dire 'je comprends votre douleur' — on ne comprend pas.", "L'apres : proposer de voir le corps si c'est possible, donner des informations pratiques (demarches), proposer un soutien psychologique. Laisser un numero pour recontacter si besoin."],
         conclusion: "Il n'y a pas de 'bonne' facon d'annoncer un deces — il y a des facons moins brutales. L'essentiel est d'etre authentique, present et respectueux du temps de la famille.",
         ouverture: "Cela souleve la question de la formation des soignants a ces situations : l'empathie s'apprend-elle, et comment preparer les futurs medecins a ces moments ?"
       }
@@ -902,12 +910,7 @@ const DATA = {
       type: "ARED",
       reponse: {
         intro: "Cette photographie montre un groupe de personnes assises au milieu d'une autoroute, bloquant la circulation. Des banderoles sont visibles, indiquant une action militante ecologiste.",
-        developpement: [
-          "Observation : des individus (probablement jeunes) sont assis sur le bitume. Derriere eux, des files de voitures a l'arret. Des forces de l'ordre sont presentes. Les banderoles evoquent l'urgence climatique.",
-          "Premiere problematique : la desobeissance civile est-elle legitime quand les institutions ne repondent pas a l'urgence ? L'histoire montre que des droits ont ete conquis par la desobeissance (droits civiques, suffragettes).",
-          "Deuxieme problematique : le blocage perturbe des personnes qui doivent aller au travail, a l'hopital, chercher leurs enfants. L'action fait aussi des 'victimes collerales' qui n'ont rien demande.",
-          "Esprit critique : la photo est cadree pour montrer le contraste militants/automobilistes. Elle ne montre pas le contexte — est-ce une action isolee ou la enieme apres des annees d'inaction politique ?"
-        ],
+        developpement: ["Observation : des individus (probablement jeunes) sont assis sur le bitume. Derriere eux, des files de voitures a l'arret. Des forces de l'ordre sont presentes. Les banderoles evoquent l'urgence climatique.", "Premiere problematique : la desobeissance civile est-elle legitime quand les institutions ne repondent pas a l'urgence ? L'histoire montre que des droits ont ete conquis par la desobeissance (droits civiques, suffragettes).", "Deuxieme problematique : le blocage perturbe des personnes qui doivent aller au travail, a l'hopital, chercher leurs enfants. L'action fait aussi des 'victimes collerales' qui n'ont rien demande.", "Esprit critique : la photo est cadree pour montrer le contraste militants/automobilistes. Elle ne montre pas le contexte — est-ce une action isolee ou la enieme apres des annees d'inaction politique ?"],
         conclusion: "La question n'est pas 'ont-ils le droit ?' mais 'la gravite de la cause justifie-t-elle ce moyen ?'. La reponse depend du rapport entre urgence climatique et liberte de circulation.",
         ouverture: "Cela renvoie au concept de 'dilemme du bien commun' : comment agir pour la planete sans pieger le quotidien de ceux qu'on veut proteger ?"
       }
@@ -915,607 +918,746 @@ const DATA = {
   ]
 };
 
+/* ============================================
+   REACT APP - Enhanced with Daily Journal + Evolution Dashboard
+   ============================================ */
 const { createElement: h, useState, useEffect, useCallback, useMemo, Fragment } = React;
 
+// Helpers
+const today = () => new Date().toISOString().split('T')[0];
+const formatDate = (d) => { const p = d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
+const allQuestions = [...DATA.questions.rpc, ...DATA.questions.ared, ...DATA.questions.motivation];
+const totalQ = allQuestions.length;
+
 function App() {
+  // Core state
   const [view, setView] = useState('accueil');
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
-  const [done, setDone] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('oral-pass-done') || '{}'); } catch { return {}; }
-  });
-  const [notes, setNotes] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('oral-pass-notes') || '{}'); } catch { return {}; }
-  });
+
+  // Persisted: done questions & notes
+  const [done, setDone] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-done')) || []; } catch(e) { return []; } });
+  const [notes, setNotes] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-notes')) || {}; } catch(e) { return {}; } });
+
+  // Persisted: daily journal entries
+  const [dailyLog, setDailyLog] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-daily')) || []; } catch(e) { return []; } });
+
+  // Persisted: streak
+  const [streak, setStreak] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-streak')) || { current: 0, best: 0, lastDate: '' }; } catch(e) { return { current: 0, best: 0, lastDate: '' }; } });
+
+  // Practice mode
   const [practiceMode, setPracticeMode] = useState(false);
   const [practiceQ, setPracticeQ] = useState(null);
+  const [practiceType, setPracticeType] = useState('rpc');
   const [timer, setTimer] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const [evalChecks, setEvalChecks] = useState({});
   const [showEval, setShowEval] = useState(false);
 
+  // Journal form state
+  const [journalRatings, setJournalRatings] = useState({ structure: 0, contenu: 0, communication: 0, timing: 0, jury: 0 });
+  const [journalConfidence, setJournalConfidence] = useState(3);
+  const [journalNotes, setJournalNotes] = useState('');
+  const [journalQCount, setJournalQCount] = useState(1);
+
+  // Persist to localStorage
   useEffect(() => { localStorage.setItem('oral-pass-done', JSON.stringify(done)); }, [done]);
   useEffect(() => { localStorage.setItem('oral-pass-notes', JSON.stringify(notes)); }, [notes]);
+  useEffect(() => { localStorage.setItem('oral-pass-daily', JSON.stringify(dailyLog)); }, [dailyLog]);
+  useEffect(() => { localStorage.setItem('oral-pass-streak', JSON.stringify(streak)); }, [streak]);
 
+  // Timer
   useEffect(() => {
-    let interval;
-    if (timerRunning) interval = setInterval(() => setTimer(t => t + 1), 1000);
-    return () => clearInterval(interval);
+    if (!timerRunning) return;
+    const id = setInterval(() => setTimer(t => t + 1), 1000);
+    return () => clearInterval(id);
   }, [timerRunning]);
 
-  const toggleDone = (key) => setDone(d => ({ ...d, [key]: !d[key] }));
-  const toggleEval = (key) => setEvalChecks(e => ({ ...e, [key]: !e[key] }));
-
-  const allQuestions = useMemo(() => {
-    const all = [];
-    DATA.questions.rpc.forEach((q, i) => all.push({ ...q, id: 'rpc-' + i, type: 'RPC' }));
-    DATA.questions.ared.forEach((q, i) => all.push({ ...q, id: 'ared-' + i, type: 'ARED' }));
-    DATA.questions.motivation.forEach((q, i) => all.push({ ...q, id: 'motiv-' + i, type: 'Motivation' }));
-    return all;
+  // Update streak on mount
+  useEffect(() => {
+    const t = today();
+    const y = new Date(); y.setDate(y.getDate()-1);
+    const yesterday = y.toISOString().split('T')[0];
+    setStreak(s => {
+      if (s.lastDate === t) return s;
+      if (s.lastDate === yesterday) return s; // streak still valid, just not incremented yet
+      if (s.lastDate && s.lastDate !== t && s.lastDate !== yesterday) return { ...s, current: 0 }; // streak broken
+      return s;
+    });
   }, []);
 
-  const filteredQuestions = useMemo(() => {
-    let qs = allQuestions;
-    if (view === 'rpc') qs = qs.filter(q => q.type === 'RPC');
-    else if (view === 'ared') qs = qs.filter(q => q.type === 'ARED');
-    else if (view === 'motivation') qs = qs.filter(q => q.type === 'Motivation');
-    if (filter === 'non-fait') qs = qs.filter(q => !done[q.id]);
-    else if (filter === 'fait') qs = qs.filter(q => done[q.id]);
-    else if (filter !== 'all') qs = qs.filter(q => q.theme === filter);
-    if (search) {
-      const s = search.toLowerCase();
-      qs = qs.filter(q => q.q.toLowerCase().includes(s) || q.tags.some(t => t.includes(s)) || q.theme.includes(s));
-    }
-    return qs;
-  }, [view, filter, search, allQuestions, done]);
+  const toggleDone = useCallback((q) => {
+    setDone(d => d.includes(q) ? d.filter(x => x !== q) : [...d, q]);
+  }, []);
 
-  const themes = useMemo(() => {
-    const set = new Set();
-    let source = allQuestions;
-    if (view === 'rpc') source = allQuestions.filter(q => q.type === 'RPC');
-    else if (view === 'ared') source = allQuestions.filter(q => q.type === 'ARED');
-    else if (view === 'motivation') source = allQuestions.filter(q => q.type === 'Motivation');
-    source.forEach(q => set.add(q.theme));
-    return Array.from(set).sort();
-  }, [view, allQuestions]);
-
-  const totalDone = Object.values(done).filter(Boolean).length;
-  const totalQ = allQuestions.length;
-
-  const startPractice = (type) => {
-    const pool = type ? allQuestions.filter(q => q.type === type) : allQuestions;
-    const undone = pool.filter(q => !done[q.id]);
-    const source = undone.length > 0 ? undone : pool;
-    const q = source[Math.floor(Math.random() * source.length)];
+  const startPractice = useCallback((type) => {
+    const pool = DATA.questions[type] || DATA.questions.rpc;
+    const q = pool[Math.floor(Math.random() * pool.length)];
+    setPracticeType(type);
     setPracticeQ(q);
     setPracticeMode(true);
     setTimer(0);
     setTimerRunning(true);
-    setShowEval(false);
     setEvalChecks({});
-  };
+    setShowEval(false);
+  }, []);
 
-  const nextPractice = () => {
-    if (practiceQ) toggleDone(practiceQ.id);
-    startPractice(practiceQ?.type === 'RPC' ? 'RPC' : practiceQ?.type === 'ARED' ? 'ARED' : null);
-  };
-
-  const stopPractice = () => {
+  const stopPractice = useCallback(() => {
     setTimerRunning(false);
     setShowEval(true);
+  }, []);
+
+  const nextPractice = useCallback(() => {
+    startPractice(practiceType);
+  }, [practiceType, startPractice]);
+
+  const exitPractice = useCallback(() => {
+    setPracticeMode(false);
+    setTimerRunning(false);
+    setShowEval(false);
+  }, []);
+
+  // Save journal entry
+  const saveJournalEntry = useCallback(() => {
+    const t = today();
+    const entry = {
+      date: t,
+      questionsCount: journalQCount,
+      ratings: { ...journalRatings },
+      confidence: journalConfidence,
+      notes: journalNotes,
+      timestamp: Date.now()
+    };
+    setDailyLog(log => [...log, entry]);
+    // Update streak
+    const y = new Date(); y.setDate(y.getDate()-1);
+    const yesterday = y.toISOString().split('T')[0];
+    setStreak(s => {
+      if (s.lastDate === t) return { ...s, lastDate: t }; // already logged today
+      const newCurrent = (s.lastDate === yesterday || s.lastDate === t) ? s.current + 1 : 1;
+      return { current: newCurrent, best: Math.max(s.best, newCurrent), lastDate: t };
+    });
+    // Reset form
+    setJournalRatings({ structure: 0, contenu: 0, communication: 0, timing: 0, jury: 0 });
+    setJournalConfidence(3);
+    setJournalNotes('');
+    setJournalQCount(1);
+  }, [journalRatings, journalConfidence, journalNotes, journalQCount]);
+
+  // Computed stats
+  const doneCount = done.length;
+  const progressPct = totalQ > 0 ? Math.round(doneCount / totalQ * 100) : 0;
+  const todayEntries = dailyLog.filter(e => e.date === today());
+  const todayQDone = todayEntries.reduce((s, e) => s + e.questionsCount, 0);
+  const dailyGoal = 5;
+
+  // Format timer
+  const fmtTimer = (s) => { const m = Math.floor(s/60); const sec = s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); };
+
+  // Get unique themes
+  const getThemes = (type) => [...new Set(DATA.questions[type].map(q => q.theme))];
+
+  // ===== RENDER FUNCTIONS =====
+
+  const renderNav = () => {
+    const tabs = [
+      { id: 'accueil', label: 'Accueil' },
+      { id: 'rpc', label: 'Epreuve 1 — RPC' },
+      { id: 'ared', label: 'Epreuve 2 — ARED' },
+      { id: 'motivation', label: 'Motivation' },
+      { id: 'methodo', label: 'Methodologie' },
+      { id: 'fiches', label: 'Fiches thematiques' },
+      { id: 'exemples', label: 'Exemples corriges' },
+      { id: 'actualites', label: 'Actualites 2026' },
+      { id: 'jourj', label: 'Jour J' },
+      { id: 'journal', label: 'Journal', highlight: true },
+      { id: 'evolution', label: 'Evolution', highlight: true },
+      { id: 'pratique', label: 'Entrainement' },
+    ];
+    return h('nav', { className: 'nav' },
+      tabs.map(t => h('button', {
+        key: t.id,
+        className: 'nav__btn' + (view === t.id ? ' nav__btn--active' : '') + (t.highlight ? ' nav__btn--highlight' : ''),
+        onClick: () => { setView(t.id); setSearch(''); setFilter('all'); }
+      }, t.label))
+    );
   };
 
-  const formatTimer = (s) => {
-    const m = Math.floor(s / 60);
-    const sec = s % 60;
-    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  const renderStreakBanner = () => {
+    if (streak.current === 0 && streak.best === 0) return null;
+    return h('div', { className: 'streak-banner fade-in' },
+      h('span', { className: 'streak-fire' }, streak.current > 0 ? '🔥' : '❄️'),
+      h('span', { className: 'streak-count' }, streak.current + ' jour' + (streak.current > 1 ? 's' : '')),
+      h('span', { className: 'streak-label' }, streak.current > 0 ? 'de suite !' : 'Streak perdu...'),
+      streak.best > 0 ? h('span', { className: 'streak-best' }, 'Record : ' + streak.best + 'j') : null
+    );
   };
 
-  const resetProgress = () => {
-    if (confirm('Remettre toute la progression a zero ?')) {
-      setDone({});
-      setNotes({});
-    }
-  };
-
-  const renderNav = () => h('nav', { className: 'nav' },
-    [
-      ['accueil', 'Accueil'],
-      ['rpc', 'Epreuve 1 — RPC'],
-      ['ared', 'Epreuve 2 — ARED'],
-      ['motivation', 'Motivation'],
-      ['methodo', 'Methodologie'],
-      ['fiches', 'Fiches thematiques'],
-      ['exemples', 'Exemples corriges'],
-      ['actualites', 'Actualites 2026'],
-      ['jourj', 'Jour J'],
-      ['pratique', 'Entrainement'],
-    ].map(([key, label]) =>
-      h('button', {
-        key,
-        className: 'nav__btn' + (view === key ? ' nav__btn--active' : ''),
-        onClick: () => { setView(key); setFilter('all'); setSearch(''); setPracticeMode(false); setShowEval(false); }
-      }, label)
-    )
-  );
-
-  const renderStats = () => h('div', { className: 'stats' },
-    h('div', { className: 'stat' }, h('div', { className: 'stat__value' }, totalQ), h('div', { className: 'stat__label' }, 'Questions')),
-    h('div', { className: 'stat' }, h('div', { className: 'stat__value' }, totalDone), h('div', { className: 'stat__label' }, 'Travaillees')),
-    h('div', { className: 'stat' }, h('div', { className: 'stat__value' }, Math.round(totalDone / totalQ * 100) + '%'), h('div', { className: 'stat__label' }, 'Progression')),
-    h('div', { className: 'stat' }, h('div', { className: 'stat__value' }, DATA.questions.rpc.length), h('div', { className: 'stat__label' }, 'RPC')),
-    h('div', { className: 'stat' }, h('div', { className: 'stat__value' }, DATA.questions.ared.length), h('div', { className: 'stat__label' }, 'ARED')),
-    h('div', { className: 'stat' }, h('div', { className: 'stat__value' }, DATA.questions.motivation.length), h('div', { className: 'stat__label' }, 'Motivation'))
-  );
-
-  const renderAccueil = () => h('div', null,
-    h('div', { className: 'info-panel', style: { borderLeft: '3px solid var(--accent)' } },
-      h('div', { className: 'info-panel__title' }, 'Preparation complete a l\'oral PASS Sorbonne 2026'),
-      h('div', { className: 'info-panel__content' },
-        h('p', null, 'Cette application regroupe TOUT ce dont tu as besoin :'),
-        h('ul', null,
-          h('li', null, h('strong', null, totalQ + ' questions'), ' classees par epreuve et thematique'),
-          h('li', null, h('strong', null, 'Methodologie detaillee'), ' pour chaque type d\'epreuve'),
-          h('li', null, h('strong', null, '8 fiches thematiques'), ' avec arguments pour/contre prets a l\'emploi'),
-          h('li', null, h('strong', null, DATA.exemplesReponses.length + ' exemples de reponses'), ' structurees et commentees'),
-          h('li', null, h('strong', null, DATA.actualites.length + ' actualites 2025-2026'), ' a connaitre'),
-          h('li', null, h('strong', null, 'Guide jour J'), ' : de la veille a la sortie de l\'epreuve'),
-          h('li', null, h('strong', null, 'Entrainement chrono'), ' + grille d\'auto-evaluation')
-        ),
-        h('p', { style: { marginTop: '0.8rem', fontStyle: 'italic', color: 'var(--text-muted)' } }, 'Clique sur une question pour la marquer comme travaillee. Ta progression est sauvegardee automatiquement.')
-      )
-    ),
-    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginBottom: '1.5rem' } },
-      h('div', { className: 'info-panel' },
-        h('div', { className: 'info-panel__title' }, 'Epreuve 1 — RPC'),
-        h('div', { className: 'info-panel__content' },
-          h('p', null, h('strong', null, DATA.format.epreuve1.nom)),
-          h('p', { style: { margin: '0.5rem 0' } }, DATA.format.epreuve1.description),
-          h('p', { style: { marginTop: '0.5rem', color: 'var(--warning)', fontWeight: 500, fontSize: '0.8rem' } }, DATA.format.epreuve1.conseil_cle)
-        )
+  const renderDailyGoal = () => {
+    const pct = Math.min(100, Math.round(todayQDone / dailyGoal * 100));
+    const r = 24, c = 2 * Math.PI * r;
+    const offset = c - (pct / 100) * c;
+    return h('div', { className: 'daily-goal fade-in' },
+      h('svg', { className: 'daily-goal__ring', viewBox: '0 0 60 60', width: 60, height: 60 },
+        h('circle', { cx: 30, cy: 30, r: r, fill: 'none', stroke: 'rgba(255,255,255,0.1)', strokeWidth: 4 }),
+        h('circle', { cx: 30, cy: 30, r: r, fill: 'none', stroke: pct >= 100 ? '#4ade80' : '#7c6df0', strokeWidth: 4, strokeDasharray: c, strokeDashoffset: offset, strokeLinecap: 'round', transform: 'rotate(-90 30 30)', style: { transition: 'stroke-dashoffset 0.5s ease' } }),
+        h('text', { x: 30, y: 33, textAnchor: 'middle', fill: 'white', fontSize: '13', fontWeight: '700' }, pct + '%')
       ),
-      h('div', { className: 'info-panel' },
-        h('div', { className: 'info-panel__title' }, 'Epreuve 2 — ARED'),
-        h('div', { className: 'info-panel__content' },
-          h('p', null, h('strong', null, DATA.format.epreuve2.nom)),
-          h('p', { style: { margin: '0.5rem 0' } }, DATA.format.epreuve2.description),
-          h('p', { style: { marginTop: '0.5rem', color: 'var(--warning)', fontWeight: 500, fontSize: '0.8rem' } }, DATA.format.epreuve2.conseil_cle)
-        )
-      )
-    ),
-    h('div', { className: 'info-panel' },
-      h('div', { className: 'info-panel__title' }, 'Format de l\'oral'),
-      h('div', { className: 'info-panel__content' },
-        h('ul', null,
-          h('li', null, h('strong', null, '2 epreuves'), ' sur 2 demi-journees differentes'),
-          h('li', null, h('strong', null, 'Duree : '), '10 minutes par epreuve (hors preparation)'),
-          h('li', null, h('strong', null, 'Poids : '), '33% de la note finale (1/3)'),
-          h('li', null, h('strong', null, 'Jury : '), '5 membres dont au moins 1 exterieur a l\'universite'),
-          h('li', null, h('strong', null, 'Egalite : '), 'Priorite a la meilleure note au bloc sante')
-        )
-      )
-    ),
-    renderStats(),
-    h('div', { className: 'info-panel' },
-      h('div', { className: 'info-panel__title' }, 'Competences evaluees par le jury'),
-      h('div', { className: 'info-panel__content' },
-        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '0.6rem' } },
-          DATA.competences.map((c, i) =>
-            h('div', { key: i, style: { padding: '0.7rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', borderLeft: c.poids === 'Elevee' ? '2px solid var(--accent)' : '2px solid var(--border)' } },
-              h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
-                h('strong', { style: { fontSize: '0.82rem' } }, c.nom),
-                h('span', { style: { fontSize: '0.6rem', color: c.poids === 'Elevee' ? 'var(--accent-light)' : 'var(--text-muted)', background: c.poids === 'Elevee' ? 'var(--accent-bg)' : 'var(--bg-card)', padding: '0.1rem 0.4rem', borderRadius: '8px' } }, c.poids)
-              ),
-              h('p', { style: { fontSize: '0.74rem', marginTop: '0.3rem', color: 'var(--text-muted)' } }, c.details)
-            )
-          )
-        )
-      )
-    ),
-    h('div', { style: { textAlign: 'center', marginTop: '1rem' } },
-      h('button', { className: 'reset-btn', onClick: resetProgress }, 'Remettre la progression a zero')
-    )
-  );
-
-  const renderQuestionList = () => h('div', null,
-    h('div', { className: 'search' },
-      h('input', {
-        className: 'search__input',
-        placeholder: 'Rechercher une question, un theme, un tag...',
-        value: search,
-        onChange: (e) => setSearch(e.target.value)
-      })
-    ),
-    h('div', { className: 'filters' },
-      h('span', { className: 'filter-pill' + (filter === 'all' ? ' filter-pill--active' : ''), onClick: () => setFilter('all') }, 'Tous'),
-      h('span', { className: 'filter-pill' + (filter === 'non-fait' ? ' filter-pill--active' : ''), onClick: () => setFilter('non-fait') }, 'A faire'),
-      h('span', { className: 'filter-pill' + (filter === 'fait' ? ' filter-pill--active' : ''), onClick: () => setFilter('fait') }, 'Faits'),
-      themes.map(t => h('span', {
-        key: t,
-        className: 'filter-pill' + (filter === t ? ' filter-pill--active' : ''),
-        onClick: () => setFilter(t)
-      }, t.replace(/-/g, ' ')))
-    ),
-    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' } },
-      h('span', { style: { fontSize: '0.78rem', color: 'var(--text-muted)' } }, filteredQuestions.length + ' question(s)'),
-      h('span', { style: { fontSize: '0.78rem', color: 'var(--success)' } }, filteredQuestions.filter(q => done[q.id]).length + '/' + filteredQuestions.length + ' travaillees')
-    ),
-    h('div', { className: 'progress', style: { marginBottom: '1rem' } },
-      h('div', { className: 'progress__bar', style: { width: (filteredQuestions.filter(q => done[q.id]).length / Math.max(filteredQuestions.length, 1) * 100) + '%' } })
-    ),
-    h('div', { className: 'questions' },
-      filteredQuestions.map(q =>
-        h('div', {
-          key: q.id,
-          className: 'question' + (done[q.id] ? ' question--done' : ''),
-          onClick: () => toggleDone(q.id)
-        },
-          h('div', { className: 'question__text' }, q.q),
-          h('div', { className: 'question__meta' },
-            h('span', { className: 'question__tag question__tag--type' }, q.type),
-            h('span', { className: 'question__tag' }, q.theme.replace(/-/g, ' ')),
-            h('span', { className: 'question__tag question__tag--difficulty' }, q.difficulte === 1 ? '★' : q.difficulte === 2 ? '★★' : '★★★'),
-            ...q.tags.slice(0, 3).map((t, i) => h('span', { key: i, className: 'question__tag' }, t))
-          )
-        )
-      )
-    )
-  );
-
-  const renderMethodo = () => h('div', null,
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Methode RPC — Reflexion devant un Probleme Complexe'),
-      h('ol', { className: 'method-card__steps' },
-        h('li', null, h('strong', null, 'LIRE'), ' attentivement — identifier les acteurs, le contexte, le probleme central'),
-        h('li', null, h('strong', null, 'PRESENTER'), ' la situation en 2-3 phrases (qui, quoi, ou, quel est le probleme)'),
-        h('li', null, h('strong', null, 'PROBLEMATISER'), ' — formuler la tension sous forme de question ("Comment concilier X et Y ?")'),
-        h('li', null, h('strong', null, 'ANALYSER'), ' les differents points de vue (au moins 2-3 perspectives)'),
-        h('li', null, h('strong', null, 'DISCUTER'), ' les enjeux : ethiques, pratiques, emotionnels, juridiques, sociaux'),
-        h('li', null, h('strong', null, 'PROPOSER'), ' des pistes d\'action concretes et nuancees'),
-        h('li', null, h('strong', null, 'CONCLURE'), ' avec ta position personnelle argumentee'),
-        h('li', null, h('strong', null, 'OUVRIR'), ' vers une question plus large (pour anticiper les questions du jury)')
-      )
-    ),
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Methode ARED — Analyse d\'une Photo de Presse'),
-      h('ol', { className: 'method-card__steps' },
-        h('li', null, h('strong', null, 'OBSERVER'), ' — decrire OBJECTIVEMENT ce qu\'on voit (plan, personnages, lieu, objets, cadrage)'),
-        h('li', null, h('strong', null, 'CONTEXTUALISER'), ' — epoque probable, evenement, source, intention du photographe'),
-        h('li', null, h('strong', null, 'ANALYSER'), ' — emotions transmises, symboles, contrastes, ce qui frappe'),
-        h('li', null, h('strong', null, 'PROBLEMATISER'), ' — quelle(s) question(s) de societe cette image souleve-t-elle ?'),
-        h('li', null, h('strong', null, 'ARGUMENTER'), ' — developper 2-3 axes de reflexion structures'),
-        h('li', null, h('strong', null, 'CRITIQUER'), ' — limites de l\'image, biais, ce qu\'elle ne montre PAS'),
-        h('li', null, h('strong', null, 'SYNTHETISER'), ' — reponse concise et structuree'),
-        h('li', null, h('strong', null, 'OUVRIR'), ' — relier a un enjeu plus large ou a l\'actualite')
-      )
-    ),
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Ce que le jury ATTEND'),
-      h('ol', { className: 'method-card__steps' },
-        h('li', null, h('strong', null, 'STRUCTURE'), ' — Toujours intro/dev/conclusion. Le jury voit en 10 secondes si tu es organise.'),
-        h('li', null, h('strong', null, 'NUANCE'), ' — JAMAIS d\'avis tranche sans considerer l\'argument oppose. C\'est le critere n°1.'),
-        h('li', null, h('strong', null, 'POSTURE'), ' — Regard franc, voix posee, pas de tics. Assurance sans arrogance.'),
-        h('li', null, h('strong', null, 'EMPATHIE'), ' — Montrer qu\'on se soucie des personnes impliquees.'),
-        h('li', null, h('strong', null, 'HUMILITE'), ' — Si tu ne sais pas, dis-le. Ne jamais inventer.'),
-        h('li', null, h('strong', null, 'TIMING'), ' — Viser 8-9 minutes sur 10. Ni trop court, ni depasser.'),
-        h('li', null, h('strong', null, 'AUTHENTICITE'), ' — Le jury detecte le par-coeur. Sois toi-meme avec un cadre.')
-      )
-    ),
-    h('div', { className: 'method-card', style: { borderLeft: '3px solid var(--danger)' } },
-      h('div', { className: 'method-card__title', style: { color: 'var(--danger)' } }, 'Erreurs ELIMINATOIRES'),
-      h('ol', { className: 'method-card__steps' },
-        h('li', null, 'Reciter un discours appris par coeur (le jury le detecte en 30 secondes)'),
-        h('li', null, 'Etre categorique sans nuance — "il faut absolument..." sans alternatives'),
-        h('li', null, 'Ignorer une partie du sujet ou de l\'image presentee'),
-        h('li', null, 'Parler de soi au lieu d\'analyser (sauf si explicitement demande)'),
-        h('li', null, 'Ne pas regarder les examinateurs ou parler trop bas/vite'),
-        h('li', null, 'Se braquer face a une question destabilisante (c\'est un TEST)'),
-        h('li', null, 'Mentir ou exagerer ses experiences'),
-        h('li', null, 'Ne pas avoir de structure visible dans son discours')
-      )
-    ),
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Gerer les questions du jury'),
-      h('ol', { className: 'method-card__steps' },
-        h('li', null, 'Prendre 2-3 secondes pour reflechir (le silence n\'est PAS un probleme)'),
-        h('li', null, 'Si la question destabilise : c\'est NORMAL, c\'est voulu. Rester calme et sourire.'),
-        h('li', null, 'Reformuler la question pour verifier la comprehension'),
-        h('li', null, 'Si le jury contredit : integrer son argument et nuancer, NE PAS se braquer'),
-        h('li', null, 'Si tu ne sais pas : "Je n\'ai pas la certitude, mais en reflechissant..." puis raisonne a voix haute'),
-        h('li', null, 'Montrer qu\'on est capable de changer d\'avis face a un bon argument = TRES valorise')
-      )
-    ),
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Phrases utiles a avoir en tete'),
-      h('ol', { className: 'method-card__steps' },
-        h('li', null, '"Cette situation met en tension [X] et [Y]..." (pour intro)'),
-        h('li', null, '"D\'un cote... de l\'autre..." (pour nuancer)'),
-        h('li', null, '"Cela souleve la question de..." (pour problematiser)'),
-        h('li', null, '"Si je me mets a la place de [acteur]..." (pour montrer l\'empathie)'),
-        h('li', null, '"C\'est un argument interessant, et en effet..." (quand le jury contredit)'),
-        h('li', null, '"Pour aller plus loin, on pourrait aussi se demander..." (pour l\'ouverture)'),
-        h('li', null, '"Je n\'ai pas de reponse definitive, mais je pense que..." (pour l\'humilite)'),
-        h('li', null, '"On pourrait objecter que... et c\'est vrai, mais..." (pour anticiper les critiques)')
-      )
-    )
-  );
-
-  const renderFiches = () => h('div', null,
-    h('div', { className: 'info-panel', style: { marginBottom: '1.5rem', borderLeft: '3px solid var(--accent)' } },
-      h('div', { className: 'info-panel__title' }, 'Fiches thematiques — Arguments prets a l\'emploi'),
-      h('div', { className: 'info-panel__content' },
-        'Chaque fiche contient les arguments POUR et CONTRE, les lois cles, et le piege a eviter. Ce ne sont PAS des reponses toutes faites — ce sont des briques a assembler dans ta reflexion.'
-      )
-    ),
-    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '1rem' } },
-      DATA.fichesThematiques.map((f, i) =>
-        h('div', { key: i, className: 'fiche-card', style: { borderTop: '3px solid ' + f.color } },
-          h('div', { className: 'fiche-card__title' }, f.theme),
-          h('div', { className: 'fiche-card__args' },
-            h('strong', { style: { color: 'var(--success)' } }, 'ARGUMENTS POUR :'),
-            h('ul', { style: { paddingLeft: '1rem', margin: '0.3rem 0 0.8rem' } },
-              f.pour.map((a, j) => h('li', { key: j }, a))
-            ),
-            h('strong', { style: { color: 'var(--danger)' } }, 'ARGUMENTS CONTRE :'),
-            h('ul', { style: { paddingLeft: '1rem', margin: '0.3rem 0 0.8rem' } },
-              f.contre.map((a, j) => h('li', { key: j }, a))
-            ),
-            h('div', { style: { padding: '0.5rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', marginBottom: '0.5rem' } },
-              h('strong', { style: { color: 'var(--info)' } }, 'LOI CLE : '),
-              h('span', null, f.lois)
-            ),
-            h('div', { style: { padding: '0.5rem', background: 'var(--warning-bg)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid var(--warning)' } },
-              h('strong', { style: { color: 'var(--warning)' } }, 'PIEGE A EVITER : '),
-              h('span', null, f.piege)
-            )
-          )
-        )
-      )
-    )
-  );
-
-  const renderExemples = () => h('div', null,
-    h('div', { className: 'info-panel', style: { marginBottom: '1.5rem' } },
-      h('div', { className: 'info-panel__title' }, DATA.exemplesReponses.length + ' exemples de reponses structurees'),
-      h('div', { className: 'info-panel__content' }, 'Ces exemples montrent la STRUCTURE attendue. Ne les apprends pas par coeur — comprends le schema et adapte-le a chaque sujet.')
-    ),
-    DATA.exemplesReponses.map((ex, i) =>
-      h('div', { key: i, className: 'method-card' },
-        h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' } },
-          h('span', { className: 'question__tag question__tag--type' }, ex.type),
-          h('span', { style: { fontSize: '0.7rem', color: 'var(--text-muted)' } }, 'Exemple ' + (i + 1) + '/' + DATA.exemplesReponses.length)
-        ),
-        h('div', { style: { fontSize: '0.9rem', fontWeight: 500, marginBottom: '1rem', padding: '0.8rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid var(--accent)' } }, ex.question),
-        h('div', { className: 'example' },
-          h('div', { className: 'example__label' }, 'Introduction (30 sec)'),
-          h('p', null, ex.reponse.intro)
-        ),
-        h('div', { className: 'example', style: { marginTop: '0.5rem' } },
-          h('div', { className: 'example__label' }, 'Developpement (6-7 min)'),
-          h('ul', { style: { paddingLeft: '1rem' } },
-            ex.reponse.developpement.map((d, j) => h('li', { key: j, style: { marginBottom: '0.4rem' } }, d))
-          )
-        ),
-        h('div', { className: 'example', style: { marginTop: '0.5rem' } },
-          h('div', { className: 'example__label' }, 'Conclusion (30 sec)'),
-          h('p', null, ex.reponse.conclusion)
-        ),
-        h('div', { className: 'example', style: { marginTop: '0.5rem' } },
-          h('div', { className: 'example__label' }, 'Ouverture'),
-          h('p', null, ex.reponse.ouverture)
-        )
-      )
-    )
-  );
-
-  const renderActualites = () => h('div', null,
-    h('div', { className: 'info-panel', style: { marginBottom: '1.5rem', borderLeft: '3px solid var(--warning)' } },
-      h('div', { className: 'info-panel__title' }, DATA.actualites.length + ' actualites a maitriser pour l\'oral 2026'),
-      h('div', { className: 'info-panel__content' },
-        'Ces sujets sont les plus susceptibles de tomber. Tu n\'as pas besoin de tout savoir — mais connaitre les grandes lignes et les arguments principaux est essentiel. Les sujets marques "TRES PROBABLE" sont a connaitre en priorite.'
-      )
-    ),
-    h('div', { className: 'actu-grid' },
-      DATA.actualites.map((a, i) =>
-        h('div', { key: i, className: 'actu-card', style: a.hot ? { borderLeft: '3px solid var(--danger)' } : {} },
-          h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
-            h('div', { className: 'actu-card__theme' }, a.theme),
-            a.hot && h('span', { style: { fontSize: '0.6rem', background: 'var(--danger-bg)', color: 'var(--danger)', padding: '0.1rem 0.4rem', borderRadius: '8px', fontWeight: 600 } }, 'TRES PROBABLE')
-          ),
-          h('div', { className: 'actu-card__title' }, a.titre),
-          h('div', { className: 'actu-card__desc' }, a.desc)
-        )
-      )
-    )
-  );
-
-  const renderJourJ = () => h('div', null,
-    h('div', { className: 'info-panel', style: { marginBottom: '1.5rem', borderLeft: '3px solid var(--success)' } },
-      h('div', { className: 'info-panel__title' }, 'Guide complet du Jour J'),
-      h('div', { className: 'info-panel__content' }, 'De la preparation la veille jusqu\'a la sortie de la salle — tout pour etre au top le jour de l\'oral.')
-    ),
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Avant le jour J'),
-      h('div', { className: 'timeline' },
-        DATA.jourJ.avant.map((item, i) =>
-          h('div', { key: i, className: 'timeline__item' },
-            h('div', { className: 'timeline__time' }, item.time),
-            h('div', { className: 'timeline__text' }, item.text)
-          )
-        )
-      )
-    ),
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Le matin de l\'oral'),
-      h('div', { className: 'timeline' },
-        DATA.jourJ.matin.map((item, i) =>
-          h('div', { key: i, className: 'timeline__item' },
-            h('div', { className: 'timeline__time' }, item.time),
-            h('div', { className: 'timeline__text' }, item.text)
-          )
-        )
-      )
-    ),
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Pendant l\'epreuve — Minute par minute'),
-      h('div', { className: 'timeline' },
-        DATA.jourJ.pendant.map((item, i) =>
-          h('div', { key: i, className: 'timeline__item' },
-            h('div', { className: 'timeline__time' }, item.time),
-            h('div', { className: 'timeline__text' }, item.text)
-          )
-        )
-      )
-    ),
-    h('div', { className: 'method-card', style: { borderLeft: '3px solid var(--warning)' } },
-      h('div', { className: 'method-card__title', style: { color: 'var(--warning)' } }, 'Pieges classiques du jury et comment reagir'),
-      h('ol', { className: 'method-card__steps' },
-        DATA.jourJ.pieges.map((p, i) => h('li', { key: i }, p))
-      )
-    ),
-    h('div', { className: 'method-card' },
-      h('div', { className: 'method-card__title' }, 'Technique de gestion du stress — Coherence cardiaque'),
-      h('div', { style: { fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: '1.7' } },
-        h('p', null, 'A faire dans la salle d\'attente, les yeux fermes :'),
-        h('ol', { style: { paddingLeft: '1.2rem', marginTop: '0.5rem' } },
-          h('li', null, 'Inspire par le nez pendant 5 secondes (gonfle le ventre)'),
-          h('li', null, 'Expire par la bouche pendant 5 secondes (degonfle le ventre)'),
-          h('li', null, 'Repete pendant 3 a 5 minutes'),
-          h('li', null, 'Effet : baisse du cortisol, ralentissement du coeur, clarte mentale')
-        ),
-        h('p', { style: { marginTop: '0.5rem', color: 'var(--accent-light)', fontWeight: 500 } }, 'Alternative rapide : inspire 4s, bloque 4s, expire 6s. 5 cycles suffisent.')
-      )
-    )
-  );
-
-  const renderAutoEval = () => h('div', { style: { marginTop: '1.5rem' } },
-    h('div', { className: 'method-card', style: { borderLeft: '3px solid var(--success)' } },
-      h('div', { className: 'method-card__title', style: { color: 'var(--success)' } }, 'Auto-evaluation — Coche ce que tu as reussi'),
-      DATA.autoEvaluation.map((cat, ci) =>
-        h('div', { key: ci, style: { marginBottom: '1rem' } },
-          h('div', { style: { fontSize: '0.76rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.4rem' } }, cat.cat),
-          h('div', { className: 'eval-grid' },
-            cat.items.map((item, ii) => {
-              const key = ci + '-' + ii;
-              return h('div', {
-                key: key,
-                className: 'eval-item' + (evalChecks[key] ? ' eval-item--checked' : ''),
-                onClick: () => toggleEval(key)
-              },
-                h('div', { className: 'eval-check' + (evalChecks[key] ? ' eval-check--on' : '') }, evalChecks[key] ? '✓' : ''),
-                h('span', null, item)
-              );
-            })
-          )
-        )
-      ),
-      h('div', { style: { marginTop: '1rem', padding: '0.8rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', textAlign: 'center' } },
-        h('span', { style: { fontSize: '1.2rem', fontWeight: 700, color: 'var(--accent-light)' } },
-          Object.values(evalChecks).filter(Boolean).length + '/' + DATA.autoEvaluation.reduce((acc, c) => acc + c.items.length, 0)
-        ),
-        h('span', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginLeft: '0.5rem' } }, 'criteres valides')
-      )
-    )
-  );
-
-  const renderPractice = () => {
-    if (showEval && practiceQ) {
-      return h('div', null,
-        h('div', { className: 'practice' },
-          h('div', { className: 'practice__type' }, 'Resultat — ' + practiceQ.type),
-          h('div', { style: { fontSize: '0.9rem', margin: '1rem 0', color: 'var(--text-secondary)' } }, practiceQ.q),
-          h('div', { className: 'practice__timer', style: { color: timer > 600 ? 'var(--danger)' : timer >= 480 && timer <= 600 ? 'var(--success)' : 'var(--warning)' } },
-            formatTimer(timer)
-          ),
-          h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1rem' } },
-            timer >= 480 && timer <= 600 ? 'Excellent timing ! Entre 8 et 10 minutes.' :
-            timer > 600 ? 'Tu as depasse les 10 minutes. Travaille la concision.' :
-            timer < 420 ? 'Trop court ! Developpe davantage tes arguments.' :
-            'Correct, mais vise 8-9 minutes pour laisser du temps au jury.'
-          ),
-          h('div', { style: { display: 'flex', gap: '0.5rem', justifyContent: 'center' } },
-            h('button', { className: 'btn btn--success', onClick: nextPractice }, 'Question suivante'),
-            h('button', { className: 'btn btn--secondary', onClick: () => { setPracticeMode(false); setShowEval(false); } }, 'Retour')
-          )
-        ),
-        renderAutoEval()
-      );
-    }
-    if (!practiceMode) {
-      return h('div', { style: { textAlign: 'center' } },
-        h('h2', { style: { marginBottom: '0.5rem', fontFamily: 'Playfair Display' } }, 'Mode Entrainement'),
-        h('p', { style: { color: 'var(--text-secondary)', marginBottom: '0.5rem', fontSize: '0.88rem' } },
-          'Conditions reelles : une question au hasard, 10 minutes chrono, puis auto-evaluation.'
-        ),
-        h('p', { style: { color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '0.78rem' } },
-          'Conseil : reponds a voix haute, debout si possible. Enregistre-toi avec ton telephone pour te reecouter.'
-        ),
-        h('div', { style: { display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' } },
-          h('button', { className: 'btn btn--primary', onClick: () => startPractice('RPC') }, 'Question RPC'),
-          h('button', { className: 'btn btn--primary', onClick: () => startPractice('ARED') }, 'Question ARED'),
-          h('button', { className: 'btn btn--secondary', onClick: () => startPractice('Motivation') }, 'Motivation'),
-          h('button', { className: 'btn btn--secondary', onClick: () => startPractice(null) }, 'Aleatoire')
-        ),
-        h('div', { style: { marginTop: '2rem', padding: '1rem', background: 'var(--bg-card)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', textAlign: 'left' } },
-          h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem', fontWeight: 600 } }, 'PROTOCOLE D\'ENTRAINEMENT RECOMMANDE'),
-          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '1. Lis la question et demarre le chrono'),
-          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '2. Prends 30s-1min pour structurer tes idees (note 3-4 mots-cles)'),
-          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '3. Reponds a voix haute pendant 8-9 minutes'),
-          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '4. Clique "Terminer" pour voir ta grille d\'auto-evaluation'),
-          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '5. Evalue-toi honnetement, identifie 1 point a ameliorer'),
-          h('p', { style: { fontSize: '0.76rem', color: 'var(--text-muted)' } }, '6. Passe a la suivante')
-        )
-      );
-    }
-    const isOverTime = timer > 600;
-    const isWarning = timer > 480 && timer <= 600;
-    return h('div', { className: 'practice' },
-      h('div', { className: 'practice__type' }, practiceQ.type + ' — ' + practiceQ.theme.replace(/-/g, ' ')),
-      h('div', { className: 'practice__question' }, practiceQ.q),
-      h('div', { className: 'practice__timer', style: { color: isOverTime ? 'var(--danger)' : isWarning ? 'var(--warning)' : 'var(--accent-light)' } },
-        formatTimer(timer)
-      ),
-      h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1rem' } },
-        isOverTime ? 'TEMPS DEPASSE — Le jury t\'aurait coupe !' :
-        isWarning ? 'Derniere ligne droite — pense a conclure maintenant.' :
-        timer < 60 ? 'Prends 30s pour structurer tes idees avant de parler.' :
-        'Objectif : terminer entre 8 et 10 minutes'
-      ),
-      h('div', { style: { display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' } },
-        h('button', { className: 'btn btn--success', onClick: stopPractice }, '✓ Terminer et s\'evaluer'),
-        h('button', { className: 'btn btn--secondary', onClick: () => setTimerRunning(!timerRunning) },
-          timerRunning ? '⏸ Pause' : '▶ Reprendre'
-        ),
-        h('button', { className: 'btn btn--danger', onClick: () => { setPracticeMode(false); setTimerRunning(false); setShowEval(false); } }, '✖ Abandonner')
+      h('div', { className: 'daily-goal__info' },
+        h('div', { className: 'daily-goal__title' }, pct >= 100 ? 'Objectif du jour atteint !' : 'Objectif du jour'),
+        h('div', { className: 'daily-goal__sub' }, todayQDone + '/' + dailyGoal + ' questions travaillees aujourd\'hui')
       )
     );
   };
 
+  const renderStats = () => {
+    const rpcDone = DATA.questions.rpc.filter(q => done.includes(q.q)).length;
+    const aredDone = DATA.questions.ared.filter(q => done.includes(q.q)).length;
+    const motDone = DATA.questions.motivation.filter(q => done.includes(q.q)).length;
+    return h('div', { className: 'stats-bar fade-in' },
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--accent-light)' } }, doneCount + '/' + totalQ), h('div', { className: 'stat-card__label' }, 'Questions faites')),
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--success)' } }, progressPct + '%'), h('div', { className: 'stat-card__label' }, 'Progression')),
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--info)' } }, rpcDone + '/' + DATA.questions.rpc.length), h('div', { className: 'stat-card__label' }, 'RPC')),
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--warning)' } }, aredDone + '/' + DATA.questions.ared.length), h('div', { className: 'stat-card__label' }, 'ARED')),
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: '#f472b6' } }, motDone + '/' + DATA.questions.motivation.length), h('div', { className: 'stat-card__label' }, 'Motivation')),
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--warning)' } }, dailyLog.length), h('div', { className: 'stat-card__label' }, 'Sessions journal'))
+    );
+  };
+
+  const renderAccueil = () => {
+    return h('div', { className: 'slide-up' },
+      renderDailyGoal(),
+      renderStats(),
+      h('div', { className: 'progress' }, h('div', { className: 'progress__fill', style: { width: progressPct + '%' } })),
+      h('div', { className: 'card card--accent' },
+        h('h2', { style: { marginBottom: '0.8rem' } }, 'Preparation complete a l\'oral PASS Sorbonne 2026'),
+        h('p', { style: { color: 'var(--text-secondary)', marginBottom: '1rem' } }, 'Cette application regroupe TOUT ce dont tu as besoin :'),
+        h('ul', { style: { listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem' } },
+          [totalQ + ' questions classees par epreuve et thematique',
+           'Methodologie detaillee pour chaque type d\'epreuve',
+           '8 fiches thematiques avec arguments pour/contre prets a l\'emploi',
+           '7 exemples de reponses structurees et commentees',
+           '13 actualites 2025-2026 a connaitre',
+           'Guide jour J : de la veille a la sortie de l\'epreuve',
+           'Journal quotidien + suivi d\'evolution avec graphiques',
+           'Entrainement chronometre avec auto-evaluation'].map((t,i) =>
+            h('li', { key: i, style: { fontSize: '0.9rem', color: 'var(--text-secondary)' } },
+              h('strong', { style: { color: 'var(--text)' } }, t.split(' ')[0] + ' ' + (t.split(' ')[1] || '')),
+              ' ' + t.split(' ').slice(2).join(' ')
+            )
+          )
+        )
+      ),
+      h('div', { className: 'card' },
+        h('h3', { style: { marginBottom: '0.8rem' } }, 'Format de l\'oral — ' + DATA.format.university),
+        h('div', { style: { display: 'grid', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' } },
+          h('div', null, 'Nombre d\'epreuves : ', h('strong', { style: { color: 'var(--text)' } }, DATA.format.epreuves)),
+          h('div', null, 'Poids de l\'oral : ', h('strong', { style: { color: 'var(--text)' } }, DATA.format.poids_oral)),
+          h('div', null, 'Jury : ', h('strong', { style: { color: 'var(--text)' } }, DATA.format.jury)),
+          h('div', null, 'Duree : ', h('strong', { style: { color: 'var(--text)' } }, DATA.format.duree_epreuve))
+        )
+      ),
+      h('div', { className: 'method-grid' },
+        h('div', { className: 'card card--accent' },
+          h('h3', { style: { marginBottom: '0.5rem', color: 'var(--accent-light)' } }, DATA.format.epreuve1.nom),
+          h('p', { style: { fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' } }, DATA.format.epreuve1.description),
+          h('p', { style: { fontSize: '0.82rem', color: 'var(--warning)', fontStyle: 'italic' } }, DATA.format.epreuve1.conseil_cle)
+        ),
+        h('div', { className: 'card card--warning' },
+          h('h3', { style: { marginBottom: '0.5rem', color: 'var(--warning)' } }, DATA.format.epreuve2.nom),
+          h('p', { style: { fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' } }, DATA.format.epreuve2.description),
+          h('p', { style: { fontSize: '0.82rem', color: 'var(--warning)', fontStyle: 'italic' } }, DATA.format.epreuve2.conseil_cle)
+        )
+      )
+    );
+  };
+
+  const renderQuestionList = (type) => {
+    const questions = DATA.questions[type];
+    const themes = getThemes(type);
+    const filtered = questions.filter(q => {
+      if (filter !== 'all' && q.theme !== filter) return false;
+      if (search && !q.q.toLowerCase().includes(search.toLowerCase()) && !q.tags.some(t => t.includes(search.toLowerCase()))) return false;
+      return true;
+    });
+    const fDone = filtered.filter(q => done.includes(q.q)).length;
+    const fPct = filtered.length > 0 ? Math.round(fDone / filtered.length * 100) : 0;
+
+    return h('div', { className: 'slide-up' },
+      h('div', { className: 'search-bar' },
+        h('input', { className: 'search-input', placeholder: 'Rechercher une question ou un tag...', value: search, onChange: e => setSearch(e.target.value) }),
+        h('button', { className: 'filter-btn' + (filter === 'all' ? ' filter-btn--active' : ''), onClick: () => setFilter('all') }, 'Tous'),
+        themes.map(t => h('button', { key: t, className: 'filter-btn' + (filter === t ? ' filter-btn--active' : ''), onClick: () => setFilter(t) }, t))
+      ),
+      h('div', { className: 'progress', style: { marginBottom: '0.5rem' } }, h('div', { className: 'progress__fill', style: { width: fPct + '%' } })),
+      h('div', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1rem' } }, fDone + '/' + filtered.length + ' faites (' + fPct + '%)'),
+      filtered.map((q, i) =>
+        h('div', { key: i, className: 'question' + (done.includes(q.q) ? ' question--done' : ''), onClick: () => toggleDone(q.q) },
+          h('div', { className: 'question__text' }, q.q),
+          h('div', { className: 'question__meta' },
+            h('span', { className: 'question__diff question__diff--' + q.difficulte }, ['Facile','Moyen','Difficile'][q.difficulte-1]),
+            q.tags.map((t,j) => h('span', { key: j, className: 'question__tag' }, t))
+          ),
+          notes[q.q] ? h('div', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.4rem', fontStyle: 'italic' } }, notes[q.q]) : null,
+          h('input', {
+            className: 'note-input',
+            placeholder: 'Ajouter une note...',
+            value: notes[q.q] || '',
+            onClick: e => e.stopPropagation(),
+            onChange: e => { const v = e.target.value; setNotes(n => ({...n, [q.q]: v})); }
+          })
+        )
+      )
+    );
+  };
+
+  const renderMethodo = () => {
+    return h('div', { className: 'slide-up' },
+      h('h2', { className: 'section-title' }, '📋 Methodologie'),
+      h('div', { className: 'method-grid' },
+        h('div', { className: 'method-card' },
+          h('div', { className: 'method-card__title' }, '🎯 Methode RPC (10 min)'),
+          h('ul', { className: 'method-card__list' },
+            ['Introduction (1 min) : Reformuler la situation + problematique', 'Analyse (3 min) : Identifier les acteurs, enjeux, points de vue', 'Discussion (4 min) : Arguments pour/contre, nuances, exemples', 'Conclusion (1.5 min) : Position personnelle argumentee + ouverture', 'Questions jury (0.5 min) : Ecouter, reflechir, nuancer'].map((t,i) =>
+              h('li', { key: i, style: { '--dot-color': 'var(--accent)' } }, h('span', { style: { color: 'var(--accent)', width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block', flexShrink: 0, marginTop: '0.5rem' } }), t)
+            )
+          )
+        ),
+        h('div', { className: 'method-card' },
+          h('div', { className: 'method-card__title' }, '📸 Methode ARED (10 min)'),
+          h('ul', { className: 'method-card__list' },
+            ['Observation (2 min) : Decrire ce que tu VOIS (personnes, lieu, objets, ambiance)', 'Contexte (1 min) : Situer l\'image (epoque, lieu probable, evenement)', 'Problematiques (4 min) : 2-3 enjeux souleves par l\'image', 'Esprit critique (2 min) : Limites de l\'image, biais du cadrage', 'Conclusion (1 min) : Synthese + ouverture'].map((t,i) =>
+              h('li', { key: i }, h('span', { style: { color: 'var(--warning)', width: 8, height: 8, borderRadius: '50%', background: 'var(--warning)', display: 'inline-block', flexShrink: 0, marginTop: '0.5rem' } }), t)
+            )
+          )
+        ),
+        h('div', { className: 'method-card' },
+          h('div', { className: 'method-card__title' }, '💡 Methode Motivation'),
+          h('ul', { className: 'method-card__list' },
+            ['Etre authentique : pas de reponse formatee', 'Montrer sa reflexion personnelle', 'Avoir des exemples concrets (stages, experiences)', 'Connaitre le systeme de sante et ses enjeux', 'Montrer humilite et ouverture d\'esprit'].map((t,i) =>
+              h('li', { key: i }, h('span', { style: { color: '#f472b6', width: 8, height: 8, borderRadius: '50%', background: '#f472b6', display: 'inline-block', flexShrink: 0, marginTop: '0.5rem' } }), t)
+            )
+          )
+        ),
+        h('div', { className: 'method-card' },
+          h('div', { className: 'method-card__title' }, '⚡ Competences evaluees'),
+          h('div', { style: { display: 'flex', flexDirection: 'column', gap: '0.4rem' } },
+            DATA.competences.map((c, i) =>
+              h('div', { key: i, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.82rem' } },
+                h('span', null, c.nom),
+                h('span', { style: { padding: '0.1rem 0.4rem', borderRadius: '8px', fontSize: '0.68rem', fontWeight: 600, background: c.poids === 'Elevee' ? 'var(--danger-bg)' : c.poids === 'Moyenne' ? 'var(--warning-bg)' : 'var(--bg-elevated)', color: c.poids === 'Elevee' ? 'var(--danger)' : c.poids === 'Moyenne' ? 'var(--warning)' : 'var(--text-muted)' } }, c.poids)
+              )
+            )
+          )
+        )
+      )
+    );
+  };
+
+  const renderFiches = () => {
+    return h('div', { className: 'slide-up' },
+      h('h2', { className: 'section-title' }, '📚 Fiches thematiques'),
+      h('p', { style: { color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' } }, 'Arguments pour/contre prets a l\'emploi pour les sujets les plus probables.'),
+      h('div', { className: 'fiche-grid' },
+        DATA.fichesThematiques.map((f, i) =>
+          h('div', { key: i, className: 'fiche-card', style: { borderTop: '3px solid ' + f.color } },
+            h('div', { className: 'fiche-card__title', style: { color: f.color } }, f.theme),
+            h('div', { className: 'fiche-card__section' },
+              h('div', { className: 'fiche-card__label', style: { color: 'var(--success)' } }, '✅ POUR'),
+              h('div', { className: 'fiche-card__items' }, f.pour.map((p, j) => h('div', { key: j }, '• ' + p)))
+            ),
+            h('div', { className: 'fiche-card__section' },
+              h('div', { className: 'fiche-card__label', style: { color: 'var(--danger)' } }, '❌ CONTRE'),
+              h('div', { className: 'fiche-card__items' }, f.contre.map((c, j) => h('div', { key: j }, '• ' + c)))
+            ),
+            h('div', { className: 'fiche-card__law' }, '📜 ' + f.lois),
+            h('div', { className: 'fiche-card__trap' }, '⚠️ ' + f.piege)
+          )
+        )
+      )
+    );
+  };
+
+  const renderExemples = () => {
+    return h('div', { className: 'slide-up' },
+      h('h2', { className: 'section-title' }, '✍️ Exemples de reponses corriges'),
+      DATA.exemplesReponses.map((ex, i) =>
+        h('div', { key: i, className: 'exemple' },
+          h('div', { className: 'exemple__question' }, ex.question),
+          h('span', { className: 'exemple__type' }, ex.type),
+          h('div', { className: 'exemple__section' }, h('div', { className: 'exemple__label', style: { color: 'var(--accent-light)' } }, 'Introduction'), h('div', { className: 'exemple__text' }, ex.reponse.intro)),
+          h('div', { className: 'exemple__section' }, h('div', { className: 'exemple__label', style: { color: 'var(--info)' } }, 'Developpement'), ex.reponse.developpement.map((d, j) => h('div', { key: j, className: 'exemple__text', style: { marginBottom: '0.3rem' } }, d))),
+          h('div', { className: 'exemple__section' }, h('div', { className: 'exemple__label', style: { color: 'var(--success)' } }, 'Conclusion'), h('div', { className: 'exemple__text' }, ex.reponse.conclusion)),
+          h('div', { className: 'exemple__section' }, h('div', { className: 'exemple__label', style: { color: 'var(--warning)' } }, 'Ouverture'), h('div', { className: 'exemple__text' }, ex.reponse.ouverture))
+        )
+      )
+    );
+  };
+
+  const renderActualites = () => {
+    return h('div', { className: 'slide-up' },
+      h('h2', { className: 'section-title' }, '📰 Actualites 2025-2026'),
+      h('p', { style: { color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' } }, 'Les sujets marques PROBABLE ont de fortes chances de tomber.'),
+      h('div', { className: 'actu-grid' },
+        DATA.actualites.map((a, i) =>
+          h('div', { key: i, className: 'actu-card' + (a.hot ? ' actu-card--hot' : '') },
+            h('div', { className: 'actu-card__theme' }, a.theme),
+            h('div', { className: 'actu-card__title' }, a.titre),
+            h('div', { className: 'actu-card__desc' }, a.desc)
+          )
+        )
+      )
+    );
+  };
+
+  const renderJourJ = () => {
+    return h('div', { className: 'slide-up' },
+      h('h2', { className: 'section-title' }, '🎯 Guide Jour J'),
+      h('h3', { style: { fontSize: '1rem', marginBottom: '1rem', color: 'var(--accent-light)' } }, 'Avant le jour J'),
+      h('div', { className: 'timeline' }, DATA.jourJ.avant.map((item, i) => h('div', { key: i, className: 'timeline__item' }, h('div', { className: 'timeline__time' }, item.time), h('div', { className: 'timeline__text' }, item.text)))),
+      h('h3', { style: { fontSize: '1rem', margin: '1.5rem 0 1rem', color: 'var(--success)' } }, 'Le matin'),
+      h('div', { className: 'timeline' }, DATA.jourJ.matin.map((item, i) => h('div', { key: i, className: 'timeline__item' }, h('div', { className: 'timeline__time' }, item.time), h('div', { className: 'timeline__text' }, item.text)))),
+      h('h3', { style: { fontSize: '1rem', margin: '1.5rem 0 1rem', color: 'var(--warning)' } }, 'Pendant l\'epreuve'),
+      h('div', { className: 'timeline' }, DATA.jourJ.pendant.map((item, i) => h('div', { key: i, className: 'timeline__item' }, h('div', { className: 'timeline__time' }, item.time), h('div', { className: 'timeline__text' }, item.text)))),
+      h('h3', { style: { fontSize: '1rem', margin: '1.5rem 0 1rem', color: 'var(--danger)' } }, '⚠️ Pieges classiques'),
+      h('div', { style: { display: 'flex', flexDirection: 'column', gap: '0.5rem' } },
+        DATA.jourJ.pieges.map((p, i) => h('div', { key: i, className: 'card card--danger', style: { fontSize: '0.85rem', color: 'var(--text-secondary)', padding: '0.8rem 1rem' } }, p))
+      )
+    );
+  };
+
+  const renderAutoEval = () => {
+    return h('div', { className: 'eval-grid' },
+      DATA.autoEvaluation.map((cat, i) =>
+        h('div', { key: i, className: 'eval-cat' },
+          h('div', { className: 'eval-cat__title' }, cat.cat),
+          cat.items.map((item, j) => {
+            const key = cat.cat + '-' + j;
+            return h('div', { key: j, className: 'eval-item', onClick: () => setEvalChecks(c => ({...c, [key]: !c[key]})) },
+              h('div', { className: 'eval-check' + (evalChecks[key] ? ' eval-check--done' : '') }, evalChecks[key] ? '✓' : ''),
+              item
+            );
+          })
+        )
+      )
+    );
+  };
+
+  const renderPractice = () => {
+    if (!practiceMode) {
+      return h('div', { className: 'slide-up' },
+        h('h2', { className: 'section-title' }, '🏋️ Entrainement chronometre'),
+        h('p', { style: { color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1.5rem' } }, 'Simule les conditions reelles : une question aleatoire + un chronometre de 10 minutes.'),
+        h('div', { className: 'btn-group' },
+          h('button', { className: 'btn btn--primary', onClick: () => startPractice('rpc') }, 'Entrainement RPC'),
+          h('button', { className: 'btn btn--primary', style: { background: 'var(--warning)', color: '#000' }, onClick: () => startPractice('ared') }, 'Entrainement ARED'),
+          h('button', { className: 'btn btn--primary', style: { background: '#f472b6' }, onClick: () => startPractice('motivation') }, 'Entrainement Motivation')
+        )
+      );
+    }
+
+    const timerClass = timer >= 600 ? ' practice__timer--danger' : timer >= 480 ? ' practice__timer--warn' : '';
+
+    return h('div', { className: 'practice slide-up' },
+      h('div', { style: { fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.5rem' } }, practiceType.toUpperCase() + ' — Entrainement'),
+      h('div', { className: 'practice__timer' + timerClass }, fmtTimer(timer)),
+      h('div', { className: 'practice__question' }, practiceQ.q),
+      h('div', { className: 'question__meta', style: { justifyContent: 'center', marginBottom: '1rem' } },
+        h('span', { className: 'question__tag' }, practiceQ.theme),
+        h('span', { className: 'question__diff question__diff--' + practiceQ.difficulte }, ['Facile','Moyen','Difficile'][practiceQ.difficulte-1])
+      ),
+      !showEval ? h('div', { className: 'btn-group' },
+        h('button', { className: 'btn btn--danger', onClick: stopPractice }, 'Terminer (voir eval)'),
+        h('button', { className: 'btn btn--ghost', onClick: exitPractice }, 'Quitter')
+      ) : h(Fragment, null,
+        h('h3', { style: { margin: '1rem 0', fontSize: '1rem' } }, 'Auto-evaluation — Comment ca s\'est passe ?'),
+        renderAutoEval(),
+        h('div', { className: 'btn-group', style: { marginTop: '1.5rem' } },
+          h('button', { className: 'btn btn--primary', onClick: nextPractice }, 'Question suivante'),
+          h('button', { className: 'btn btn--ghost', onClick: exitPractice }, 'Terminer')
+        )
+      )
+    );
+  };
+
+  // ===== JOURNAL VIEW =====
+  const renderJournal = () => {
+    const ratingLabels = { structure: 'Structure', contenu: 'Contenu', communication: 'Communication', timing: 'Timing', jury: 'Gestion jury' };
+    const confLabels = ['', 'Pas du tout', 'Un peu', 'Moyennement', 'Plutot', 'Tres confiant(e)'];
+    const confColors = ['', 'var(--danger)', 'var(--warning)', 'var(--info)', 'var(--success)', 'var(--success)'];
+
+    const sortedLog = [...dailyLog].sort((a, b) => b.timestamp - a.timestamp);
+
+    return h('div', { className: 'slide-up' },
+      h('h2', { className: 'section-title' }, '📓 Journal quotidien'),
+      h('p', { style: { color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1.5rem' } }, 'Apres chaque session d\'entrainement, note ton ressenti. C\'est la cle de la progression !'),
+
+      // Form
+      h('div', { className: 'card card--accent', style: { marginBottom: '1.5rem' } },
+        h('h3', { style: { marginBottom: '1rem', fontSize: '1rem' } }, 'Nouvelle entree — ' + formatDate(today())),
+
+        h('div', { className: 'form-group' },
+          h('label', { className: 'form-label' }, 'Nombre de questions travaillees'),
+          h('div', { style: { display: 'flex', gap: '0.5rem', alignItems: 'center' } },
+            h('button', { className: 'btn btn--ghost btn--small', onClick: () => setJournalQCount(Math.max(1, journalQCount - 1)) }, '-'),
+            h('span', { style: { fontSize: '1.2rem', fontWeight: 700, minWidth: '2rem', textAlign: 'center' } }, journalQCount),
+            h('button', { className: 'btn btn--ghost btn--small', onClick: () => setJournalQCount(journalQCount + 1) }, '+')
+          )
+        ),
+
+        // Rating rows
+        Object.keys(ratingLabels).map(key =>
+          h('div', { key: key, className: 'rating-row' },
+            h('span', { className: 'rating-row__label' }, ratingLabels[key]),
+            h('div', { className: 'rating-stars' },
+              [1,2,3,4,5].map(n =>
+                h('button', {
+                  key: n,
+                  className: 'rating-star' + (journalRatings[key] >= n ? ' rating-star--active' : ''),
+                  onClick: () => setJournalRatings(r => ({...r, [key]: n}))
+                }, n)
+              )
+            )
+          )
+        ),
+
+        h('div', { className: 'rating-row', style: { marginTop: '0.5rem' } },
+          h('span', { className: 'rating-row__label' }, 'Confiance'),
+          h('div', { className: 'rating-stars' },
+            [1,2,3,4,5].map(n =>
+              h('button', {
+                key: n,
+                className: 'rating-star' + (journalConfidence >= n ? ' rating-star--active' : ''),
+                style: journalConfidence >= n ? { background: confColors[n], borderColor: confColors[n] } : {},
+                onClick: () => setJournalConfidence(n)
+              }, n)
+            )
+          ),
+          h('span', { style: { fontSize: '0.78rem', color: confColors[journalConfidence] } }, confLabels[journalConfidence])
+        ),
+
+        h('div', { className: 'form-group', style: { marginTop: '0.8rem' } },
+          h('label', { className: 'form-label' }, 'Notes / ressenti'),
+          h('textarea', { className: 'form-textarea', value: journalNotes, onChange: e => setJournalNotes(e.target.value), placeholder: 'Comment s\'est passee cette session ? Points forts, axes d\'amelioration...' })
+        ),
+
+        h('button', { className: 'btn btn--success', onClick: saveJournalEntry, style: { marginTop: '0.5rem' } }, 'Enregistrer la session')
+      ),
+
+      // History
+      h('h3', { style: { fontSize: '1rem', marginBottom: '1rem' } }, 'Historique (' + dailyLog.length + ' sessions)'),
+      sortedLog.length === 0
+        ? h('div', { className: 'empty-state' }, h('div', { className: 'empty-state__icon' }, '📝'), h('div', { className: 'empty-state__text' }, 'Aucune session enregistree. Fais un entrainement puis note ton ressenti !'))
+        : sortedLog.map((entry, i) =>
+            h('div', { key: i, className: 'journal-entry fade-in' },
+              h('div', { className: 'journal-entry__header' },
+                h('span', { className: 'journal-entry__date' }, formatDate(entry.date)),
+                h('span', { className: 'journal-entry__confidence confidence--' + entry.confidence }, confLabels[entry.confidence])
+              ),
+              h('div', { className: 'journal-entry__stats' },
+                h('span', { className: 'journal-entry__stat' }, h('strong', null, entry.questionsCount), ' questions')
+              ),
+              h('div', { className: 'journal-entry__ratings' },
+                Object.entries(entry.ratings).filter(([,v]) => v > 0).map(([k, v]) =>
+                  h('span', { key: k, className: 'journal-entry__rating' }, ratingLabels[k] + ' : ' + v + '/5')
+                )
+              ),
+              entry.notes ? h('div', { className: 'journal-entry__notes' }, entry.notes) : null
+            )
+          )
+    );
+  };
+
+  // ===== EVOLUTION VIEW =====
+  const renderEvolution = () => {
+    const last30 = [];
+    const d = new Date(); d.setDate(d.getDate() - 29);
+    for (let i = 0; i < 30; i++) {
+      const ds = d.toISOString().split('T')[0];
+      const entries = dailyLog.filter(e => e.date === ds);
+      const avgRating = entries.length > 0
+        ? entries.reduce((s, e) => { const vals = Object.values(e.ratings).filter(v => v > 0); return s + (vals.length > 0 ? vals.reduce((a,b)=>a+b,0)/vals.length : 0); }, 0) / entries.length
+        : 0;
+      const qCount = entries.reduce((s, e) => s + e.questionsCount, 0);
+      last30.push({ date: ds, label: ds.slice(8), avgRating, qCount, entries: entries.length });
+      d.setDate(d.getDate() + 1);
+    }
+
+    // SVG Line Chart - Average ratings over 30 days
+    const maxR = 5;
+    const chartW = 560, chartH = 180, padL = 30, padR = 10, padT = 10, padB = 25;
+    const plotW = chartW - padL - padR, plotH = chartH - padT - padB;
+    const points = last30.map((d, i) => ({
+      x: padL + (i / 29) * plotW,
+      y: padT + plotH - (d.avgRating / maxR) * plotH,
+      val: d.avgRating
+    })).filter(p => p.val > 0);
+
+    const linePath = points.length > 1 ? points.map((p, i) => (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' ') : '';
+
+    // Radar chart data - average per category
+    const cats = ['structure', 'contenu', 'communication', 'timing', 'jury'];
+    const catLabels = ['Structure', 'Contenu', 'Comm.', 'Timing', 'Jury'];
+    const catAvgs = cats.map(c => {
+      const vals = dailyLog.filter(e => e.ratings[c] > 0).map(e => e.ratings[c]);
+      return vals.length > 0 ? vals.reduce((a,b)=>a+b,0)/vals.length : 0;
+    });
+    const radarR = 70, radarCx = 90, radarCy = 90;
+    const radarPoints = catAvgs.map((v, i) => {
+      const angle = (Math.PI * 2 * i / 5) - Math.PI / 2;
+      return { x: radarCx + Math.cos(angle) * (v / 5) * radarR, y: radarCy + Math.sin(angle) * (v / 5) * radarR };
+    });
+    const radarPath = radarPoints.map((p, i) => (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' ') + 'Z';
+
+    // Calendar heatmap - last 60 days
+    const heatDays = [];
+    const hd = new Date(); hd.setDate(hd.getDate() - 59);
+    for (let i = 0; i < 60; i++) {
+      const ds = hd.toISOString().split('T')[0];
+      const count = dailyLog.filter(e => e.date === ds).length;
+      heatDays.push({ date: ds, level: count === 0 ? 0 : count === 1 ? 1 : count === 2 ? 2 : count >= 3 ? 3 : 4 });
+      hd.setDate(hd.getDate() + 1);
+    }
+
+    // Confidence trend
+    const confTrend = dailyLog.slice(-10).map(e => e.confidence);
+
+    // Weak areas
+    const weakAreas = cats.map((c, i) => ({ cat: catLabels[i], avg: catAvgs[i] })).filter(a => a.avg > 0).sort((a, b) => a.avg - b.avg);
+
+    return h('div', { className: 'slide-up' },
+      h('h2', { className: 'section-title' }, '📈 Evolution & Progression'),
+
+      dailyLog.length === 0
+        ? h('div', { className: 'empty-state' }, h('div', { className: 'empty-state__icon' }, '📊'), h('div', { className: 'empty-state__text' }, 'Commence a remplir le journal quotidien pour voir ta progression ici !'))
+        : h(Fragment, null,
+
+          // Top stats
+          h('div', { className: 'stats-bar' },
+            h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--warning)' } }, streak.current), h('div', { className: 'stat-card__label' }, 'Streak actuel')),
+            h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--accent-light)' } }, streak.best), h('div', { className: 'stat-card__label' }, 'Record streak')),
+            h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--success)' } }, dailyLog.length), h('div', { className: 'stat-card__label' }, 'Sessions totales')),
+            h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--info)' } }, dailyLog.reduce((s,e) => s + e.questionsCount, 0)), h('div', { className: 'stat-card__label' }, 'Questions totales'))
+          ),
+
+          h('div', { className: 'evo-grid' },
+
+            // Line chart
+            h('div', { className: 'evo-card' },
+              h('div', { className: 'evo-card__title' }, '📉 Note moyenne / 30 derniers jours'),
+              h('div', { className: 'chart-container' },
+                h('svg', { viewBox: '0 0 ' + chartW + ' ' + chartH, preserveAspectRatio: 'xMidYMid meet' },
+                  // Grid lines
+                  [1,2,3,4,5].map(v => h('line', { key: v, x1: padL, y1: padT + plotH - (v/5)*plotH, x2: padL + plotW, y2: padT + plotH - (v/5)*plotH, stroke: 'rgba(255,255,255,0.06)', strokeWidth: 1 })),
+                  [1,2,3,4,5].map(v => h('text', { key: 't'+v, x: padL - 5, y: padT + plotH - (v/5)*plotH + 4, fill: 'rgba(255,255,255,0.3)', fontSize: 10, textAnchor: 'end' }, v)),
+                  // X labels
+                  last30.filter((_, i) => i % 5 === 0).map((d, i) => h('text', { key: 'x'+i, x: padL + ((i*5)/29)*plotW, y: chartH - 5, fill: 'rgba(255,255,255,0.3)', fontSize: 9, textAnchor: 'middle' }, d.label)),
+                  // Line
+                  linePath ? h('path', { d: linePath, fill: 'none', stroke: '#7c6df0', strokeWidth: 2.5, strokeLinecap: 'round', strokeLinejoin: 'round' }) : null,
+                  // Dots
+                  points.map((p, i) => h('circle', { key: i, cx: p.x, cy: p.y, r: 3.5, fill: '#7c6df0', stroke: '#0a0a0f', strokeWidth: 1.5 }))
+                )
+              )
+            ),
+
+            // Radar chart
+            h('div', { className: 'evo-card' },
+              h('div', { className: 'evo-card__title' }, '🕸️ Profil de competences'),
+              h('div', { className: 'chart-container' },
+                h('svg', { viewBox: '0 0 180 180', preserveAspectRatio: 'xMidYMid meet' },
+                  // Grid pentagons
+                  [0.2, 0.4, 0.6, 0.8, 1].map((s, si) => {
+                    const pts = Array.from({length: 5}, (_, i) => {
+                      const a = (Math.PI * 2 * i / 5) - Math.PI / 2;
+                      return (radarCx + Math.cos(a) * s * radarR).toFixed(1) + ',' + (radarCy + Math.sin(a) * s * radarR).toFixed(1);
+                    }).join(' ');
+                    return h('polygon', { key: si, points: pts, fill: 'none', stroke: 'rgba(255,255,255,0.08)', strokeWidth: 1 });
+                  }),
+                  // Labels
+                  catLabels.map((label, i) => {
+                    const a = (Math.PI * 2 * i / 5) - Math.PI / 2;
+                    const lx = radarCx + Math.cos(a) * (radarR + 15);
+                    const ly = radarCy + Math.sin(a) * (radarR + 15);
+                    return h('text', { key: i, x: lx, y: ly + 3, fill: 'rgba(255,255,255,0.5)', fontSize: 9, textAnchor: 'middle' }, label);
+                  }),
+                  // Data polygon
+                  catAvgs.some(v => v > 0) ? h('polygon', { points: radarPoints.map(p => p.x.toFixed(1)+','+p.y.toFixed(1)).join(' '), fill: 'rgba(124,109,240,0.2)', stroke: '#7c6df0', strokeWidth: 2 }) : null,
+                  // Data dots
+                  radarPoints.map((p, i) => catAvgs[i] > 0 ? h('circle', { key: i, cx: p.x, cy: p.y, r: 3, fill: '#7c6df0' }) : null)
+                )
+              )
+            ),
+
+            // Calendar heatmap
+            h('div', { className: 'evo-card' },
+              h('div', { className: 'evo-card__title' }, '📅 Activite (60 derniers jours)'),
+              h('div', { className: 'heatmap' },
+                heatDays.map((d, i) => h('div', { key: i, className: 'heatmap__day heatmap__day--' + d.level, title: formatDate(d.date) + ' : ' + d.level + ' session(s)' }))
+              )
+            ),
+
+            // Weak areas
+            h('div', { className: 'evo-card' },
+              h('div', { className: 'evo-card__title' }, '🎯 Axes d\'amelioration'),
+              weakAreas.length === 0
+                ? h('div', { style: { fontSize: '0.82rem', color: 'var(--text-muted)' } }, 'Pas encore assez de donnees.')
+                : weakAreas.map((a, i) =>
+                    h('div', { key: i, style: { display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '0.6rem' } },
+                      h('span', { style: { fontSize: '0.82rem', minWidth: '90px', color: i === 0 ? 'var(--danger)' : 'var(--text-secondary)' } }, a.cat),
+                      h('div', { style: { flex: 1, height: '6px', background: 'var(--bg-elevated)', borderRadius: '3px', overflow: 'hidden' } },
+                        h('div', { style: { height: '100%', width: (a.avg / 5 * 100) + '%', background: i === 0 ? 'var(--danger)' : i === 1 ? 'var(--warning)' : 'var(--gradient-3)', borderRadius: '3px', transition: 'width 0.5s' } })
+                      ),
+                      h('span', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', minWidth: '35px', textAlign: 'right' } }, a.avg.toFixed(1) + '/5')
+                    )
+                  )
+            ),
+
+            // Confidence trend
+            confTrend.length > 0 ? h('div', { className: 'evo-card' },
+              h('div', { className: 'evo-card__title' }, '💪 Confiance (10 dernieres sessions)'),
+              h('div', { style: { display: 'flex', gap: '4px', alignItems: 'flex-end', height: '80px' } },
+                confTrend.map((c, i) =>
+                  h('div', { key: i, style: { flex: 1, height: (c / 5 * 100) + '%', background: c >= 4 ? 'var(--success)' : c >= 3 ? 'var(--info)' : c >= 2 ? 'var(--warning)' : 'var(--danger)', borderRadius: '3px 3px 0 0', minHeight: '4px', transition: 'height 0.3s' } })
+                )
+              ),
+              h('div', { style: { display: 'flex', gap: '4px', marginTop: '4px' } },
+                confTrend.map((c, i) => h('div', { key: i, style: { flex: 1, textAlign: 'center', fontSize: '0.65rem', color: 'var(--text-muted)' } }, c))
+              )
+            ) : null
+          )
+        )
+    );
+  };
+
+  // ===== MAIN RENDER =====
   const renderContent = () => {
-    switch (view) {
+    if (practiceMode) return renderPractice();
+    switch(view) {
       case 'accueil': return renderAccueil();
-      case 'rpc': return renderQuestionList();
-      case 'ared': return renderQuestionList();
-      case 'motivation': return renderQuestionList();
+      case 'rpc': return renderQuestionList('rpc');
+      case 'ared': return renderQuestionList('ared');
+      case 'motivation': return renderQuestionList('motivation');
       case 'methodo': return renderMethodo();
       case 'fiches': return renderFiches();
       case 'exemples': return renderExemples();
       case 'actualites': return renderActualites();
       case 'jourj': return renderJourJ();
+      case 'journal': return renderJournal();
+      case 'evolution': return renderEvolution();
       case 'pratique': return renderPractice();
-      default: return null;
+      default: return renderAccueil();
     }
   };
 
   return h('div', null,
     h('header', { className: 'header' },
-      h('div', { className: 'header__badge' }, 'PASS Sorbonne Universite 2026'),
-      h('div', { className: 'header__title' }, 'Preparation Oral Medecine'),
-      h('div', { className: 'header__subtitle' }, totalQ + ' questions · Fiches thematiques · ' + DATA.exemplesReponses.length + ' exemples corriges · ' + DATA.actualites.length + ' actualites · Guide jour J · Entrainement + auto-eval')
+      h('div', { className: 'header__badge' }, 'PASS SORBONNE UNIVERSITE 2026'),
+      h('h1', { className: 'header__title' }, 'Preparation Oral Medecine'),
+      h('p', { className: 'header__subtitle' }, totalQ + ' questions · Fiches thematiques · 7 exemples corriges · 13 actualites · Journal quotidien · Evolution · Entrainement + auto-eval')
     ),
+    renderStreakBanner(),
     renderNav(),
-    renderContent(),
-    h('div', { style: { height: '4rem' } })
+    renderContent()
   );
 }
 
