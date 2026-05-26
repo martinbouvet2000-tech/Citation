@@ -598,31 +598,77 @@ body {
 <script>
 const DATA = {
   format: {
-    university: "Sorbonne Universite",
+    university: "Sorbonne Universite - PASS 2025-2026",
     epreuves: 2,
     poids_oral: "33% (1/3 de la note finale)",
+    scoring: "Classement final = 2/3 Note ecrit (bloc sante S1+S2) + 1/3 Note oral. Oral minimum 50% pour MMOPK.",
     jury: "5 membres par jury dont au moins 1 exterieur",
-    duree_epreuve: "10 minutes hors temps de preparation",
+    dates: {
+      preparation_oraux: "2 et 3 Juin 2026",
+      amphi_garnison: "28 Mai 2026",
+    },
+    places: {
+      total_mmopk: 315,
+      attribuees_ecrit: 155,
+      attribuees_oral: 160,
+      capacites: {
+        medecine: 215, pharmacie: 57, odontologie: 15, maieutique: 13,
+        kine_ekp: 8, kine_aphp: 5, ergotherapie: 2
+      },
+      garnison_28mai: {
+        medecine: 107, pharmacie: 28, odontologie: 7, maieutique: 6,
+        kine_ekp: 4, kine_aphp: 2, ergotherapie: 1
+      }
+    },
+    historique_2024_25: {
+      convoques: 536,
+      presents_oraux: 369,
+      refus: 370,
+      absents: 3,
+      recus: { medecine: 115, pharmacie: 28, odontologie: 7, maieutique: 6, kine_aphp: 2, kine_ekp: 7 },
+      reclassement: {
+        nb_reclasses: 43,
+        nb_declasses: 43,
+        meilleur_gain: "187 places (rang ecrit 311 → rang final 124)",
+        plus_grand_gain_reclasse: "182 places (rang 246 → 64 ; rang 228 → 46)",
+        pire_perte: "225 places (rang ecrit 16 → rang final 241)",
+        premier_convoque: { rang: 124, note: 15.423 },
+        dernier_convoque: { rang: 536, note: 10.022 }
+      }
+    },
+    consignes_garnison: [
+      "60 ECTS valides obligatoires",
+      "Carte etudiante + courrier de convocation obligatoires",
+      "Convocations par groupes de 200 etudiants",
+      "Appel par rang de classement",
+      "Descendre au pupitre et annoncer son choix de filiere au micro",
+      "Attestation de choix signee sur place",
+      "Choix DEFINITIF — aucun retour en arriere possible",
+      "Aucun accompagnateur autorise dans l'amphi"
+    ],
     epreuve1: {
       nom: "Reflexion devant un Probleme Complexe (RPC)",
-      description: "Analyse d'une situation complexe SANS lien avec le domaine medical. On te presente un scenario de la vie quotidienne ou un dilemme ethique/social. Tu dois analyser, problematiser et proposer des pistes.",
+      description: "On te presente un court scenario (une vignette) decrivant une situation qui conduit a une discussion autour d'un probleme complexe. PAS necessairement lie au domaine medical.",
+      format_detail: "10 min de preparation SEUL(E) sans le jury → puis 10 min d'entretien SANS diaporama : 5 min d'expose maximum + 5 min de questions du jury.",
       objectifs: [
         "Presenter en quelques mots la situation",
-        "Formuler et discuter les problemes souleves",
-        "Proposer des pistes pour faire evoluer la situation"
+        "Formuler et discuter les problemes souleves par la situation",
+        "Proposer des pistes pour faire evoluer cette situation"
       ],
       conseil_cle: "Le jury evalue ta capacite de reflexion, PAS tes connaissances medicales."
     },
     epreuve2: {
       nom: "Analyse et Raisonnement devant un Ensemble de Donnees (ARED)",
-      description: "Analyse d'une photographie de presse. On te montre une image d'actualite et tu dois l'analyser de maniere structuree, identifier les problematiques et faire preuve d'esprit critique.",
+      description: "On te donne un DOCUMENT (texte, graphique, tableau, image) a analyser. ATTENTION : pendant la preparation, tu N'AS PAS acces au document ni a internet ! Tu dois le memoriser pendant les 10 premieres minutes, puis on te le retire.",
+      format_detail: "10 min de preparation SANS acces au document ni a internet → puis 10 min de passage devant le jury : 5 min d'expose maximum suivant les consignes, puis questions du jury.",
       objectifs: [
         "Observer et restituer les informations contenues dans le document",
-        "Identifier les problematiques soulevees",
-        "Avoir un esprit critique et d'ouverture",
+        "Identifier les problematiques soulevees par le document",
+        "Avoir un esprit critique",
+        "Avoir un esprit d'ouverture",
         "Synthetiser"
       ],
-      conseil_cle: "Decris AVANT d'interpreter. Ne saute jamais l'etape d'observation."
+      conseil_cle: "MEMORISE le document pendant les 10 premieres minutes ! Tu ne l'auras plus ensuite. Note les chiffres cles, les tendances, les elements marquants."
     }
   },
   competences: [
@@ -1069,6 +1115,7 @@ function App() {
       { id: 'fiches', label: 'Fiches thematiques' },
       { id: 'exemples', label: 'Exemples corriges' },
       { id: 'actualites', label: 'Actualites 2026' },
+      { id: 'chiffres', label: 'Chiffres cles', highlight: true },
       { id: 'jourj', label: 'Jour J' },
       { id: 'journal', label: 'Journal', highlight: true },
       { id: 'evolution', label: 'Evolution', highlight: true },
@@ -1148,24 +1195,34 @@ function App() {
           )
         )
       ),
+      h('div', { className: 'card', style: { borderLeft: '4px solid var(--danger)' } },
+        h('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.8rem' } },
+          h('div', { style: { fontSize: '0.82rem' } }, '📅 Garnison : ', h('strong', { style: { color: 'var(--danger)' } }, '28 Mai 2026')),
+          h('div', { style: { fontSize: '0.82rem' } }, '📅 Prep oraux : ', h('strong', { style: { color: 'var(--warning)' } }, '2-3 Juin 2026')),
+          h('div', { style: { fontSize: '0.82rem' } }, '🎯 Places oral : ', h('strong', { style: { color: 'var(--success)' } }, '160'))
+        )
+      ),
       h('div', { className: 'card' },
         h('h3', { style: { marginBottom: '0.8rem' } }, 'Format de l\'oral — ' + DATA.format.university),
         h('div', { style: { display: 'grid', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' } },
           h('div', null, 'Nombre d\'epreuves : ', h('strong', { style: { color: 'var(--text)' } }, DATA.format.epreuves)),
           h('div', null, 'Poids de l\'oral : ', h('strong', { style: { color: 'var(--text)' } }, DATA.format.poids_oral)),
+          h('div', null, 'Scoring : ', h('strong', { style: { color: 'var(--accent-light)' } }, DATA.format.scoring)),
           h('div', null, 'Jury : ', h('strong', { style: { color: 'var(--text)' } }, DATA.format.jury)),
-          h('div', null, 'Duree : ', h('strong', { style: { color: 'var(--text)' } }, DATA.format.duree_epreuve))
+          h('div', null, 'Places MMOPK totales : ', h('strong', { style: { color: 'var(--success)' } }, DATA.format.places.total_mmopk + ' (155 ecrit + 160 oral)'))
         )
       ),
       h('div', { className: 'method-grid' },
         h('div', { className: 'card card--accent' },
           h('h3', { style: { marginBottom: '0.5rem', color: 'var(--accent-light)' } }, DATA.format.epreuve1.nom),
-          h('p', { style: { fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' } }, DATA.format.epreuve1.description),
+          h('p', { style: { fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.3rem' } }, DATA.format.epreuve1.description),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--info)', marginBottom: '0.3rem' } }, DATA.format.epreuve1.format_detail),
           h('p', { style: { fontSize: '0.82rem', color: 'var(--warning)', fontStyle: 'italic' } }, DATA.format.epreuve1.conseil_cle)
         ),
         h('div', { className: 'card card--warning' },
           h('h3', { style: { marginBottom: '0.5rem', color: 'var(--warning)' } }, DATA.format.epreuve2.nom),
-          h('p', { style: { fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' } }, DATA.format.epreuve2.description),
+          h('p', { style: { fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.3rem' } }, DATA.format.epreuve2.description),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--danger)', fontWeight: 600, marginBottom: '0.3rem' } }, DATA.format.epreuve2.format_detail),
           h('p', { style: { fontSize: '0.82rem', color: 'var(--warning)', fontStyle: 'italic' } }, DATA.format.epreuve2.conseil_cle)
         )
       )
@@ -1216,17 +1273,20 @@ function App() {
       h('h2', { className: 'section-title' }, '📋 Methodologie'),
       h('div', { className: 'method-grid' },
         h('div', { className: 'method-card' },
-          h('div', { className: 'method-card__title' }, '🎯 Methode RPC (10 min)'),
+          h('div', { className: 'method-card__title' }, '🎯 Methode RPC — Expose (5 min max) + Questions (5 min)'),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--accent-light)', marginBottom: '0.5rem', fontStyle: 'italic' } }, '⏱ 10 min de preparation seul(e) → puis 10 min devant le jury (sans diaporama)'),
           h('ul', { className: 'method-card__list' },
-            ['Introduction (1 min) : Reformuler la situation + problematique', 'Analyse (3 min) : Identifier les acteurs, enjeux, points de vue', 'Discussion (4 min) : Arguments pour/contre, nuances, exemples', 'Conclusion (1.5 min) : Position personnelle argumentee + ouverture', 'Questions jury (0.5 min) : Ecouter, reflechir, nuancer'].map((t,i) =>
+            ['PREPARATION (10 min seul) : Lire la vignette, identifier problematique + 2-3 axes', 'Introduction (1 min) : Reformuler la situation + annoncer la problematique', 'Analyse (2 min) : Identifier acteurs, enjeux, points de vue divergents', 'Discussion (1.5 min) : Arguments pour/contre, nuances, exemples concrets', 'Conclusion (0.5 min) : Position personnelle argumentee + ouverture', 'Questions jury (5 min) : Ecouter, reflechir, nuancer, pas de reponse precipitee'].map((t,i) =>
               h('li', { key: i, style: { '--dot-color': 'var(--accent)' } }, h('span', { style: { color: 'var(--accent)', width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block', flexShrink: 0, marginTop: '0.5rem' } }), t)
             )
           )
         ),
         h('div', { className: 'method-card' },
-          h('div', { className: 'method-card__title' }, '📸 Methode ARED (10 min)'),
+          h('div', { className: 'method-card__title' }, '📊 Methode ARED — Expose (5 min max) + Questions'),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--warning)', marginBottom: '0.5rem', fontStyle: 'italic', fontWeight: 600 } }, '⚠️ ATTENTION : Tu n\'auras PAS le document pendant ta preparation ! Memorise-le d\'abord.'),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem' } }, '⏱ 10 min avec le document (memoriser) → document retire → 10 min de preparation sans document ni internet → 10 min devant le jury'),
           h('ul', { className: 'method-card__list' },
-            ['Observation (2 min) : Decrire ce que tu VOIS (personnes, lieu, objets, ambiance)', 'Contexte (1 min) : Situer l\'image (epoque, lieu probable, evenement)', 'Problematiques (4 min) : 2-3 enjeux souleves par l\'image', 'Esprit critique (2 min) : Limites de l\'image, biais du cadrage', 'Conclusion (1 min) : Synthese + ouverture'].map((t,i) =>
+            ['MEMORISATION (10 min) : Note tous les chiffres, tendances, elements visuels cles du document', 'PREPARATION (10 min sans document) : Structure ton expose de memoire', 'Restitution (1.5 min) : Decrire le document et ses donnees de memoire', 'Problematiques (2 min) : 2-3 enjeux souleves par les donnees', 'Esprit critique (1 min) : Limites des donnees, biais possibles, ce qui manque', 'Conclusion (0.5 min) : Synthese + ouverture', 'Questions jury : Ecouter, nuancer, montrer esprit d\'ouverture'].map((t,i) =>
               h('li', { key: i }, h('span', { style: { color: 'var(--warning)', width: 8, height: 8, borderRadius: '50%', background: 'var(--warning)', display: 'inline-block', flexShrink: 0, marginTop: '0.5rem' } }), t)
             )
           )
@@ -1629,6 +1689,107 @@ function App() {
     );
   };
 
+  // ===== CHIFFRES CLES =====
+  const renderChiffres = () => {
+    const f = DATA.format;
+    const p = f.places;
+    const h2025 = f.historique_2024_25;
+    const r = h2025.reclassement;
+    const mkStat = (label, value, color) => h('div', { style: { textAlign: 'center', padding: '1rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' } },
+      h('div', { style: { fontSize: '1.6rem', fontWeight: 800, color: color || 'var(--accent-light)' } }, value),
+      h('div', { style: { fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.03em' } }, label)
+    );
+    const mkRow = (label, value) => h('div', { style: { display: 'flex', justifyContent: 'space-between', padding: '0.5rem 0', borderBottom: '1px solid var(--border)', fontSize: '0.85rem' } },
+      h('span', { style: { color: 'var(--text-secondary)' } }, label),
+      h('span', { style: { fontWeight: 600, color: 'var(--text)' } }, value)
+    );
+    return h('div', { className: 'slide-up' },
+      // Dates importantes
+      h('div', { className: 'card', style: { borderLeft: '4px solid var(--danger)', marginBottom: '1.5rem' } },
+        h('h2', { className: 'section-title' }, '📅 Dates importantes'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.8rem' } },
+          mkStat('Amphi de garnison', '28 Mai', 'var(--danger)'),
+          mkStat('Preparation oraux', '2-3 Juin', 'var(--warning)'),
+          mkStat('Epreuves orales', 'Apres ecrit', 'var(--accent)')
+        )
+      ),
+      // Places 2025-2026
+      h('div', { className: 'card', style: { marginBottom: '1.5rem' } },
+        h('h2', { className: 'section-title' }, '🎯 Places MMOPK 2025-2026'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '0.8rem', marginBottom: '1rem' } },
+          mkStat('Total', p.total_mmopk, 'var(--success)'),
+          mkStat('Via ecrit', p.attribuees_ecrit, 'var(--info)'),
+          mkStat('Via oral', p.attribuees_oral, 'var(--warning)')
+        ),
+        h('h3', { style: { fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.5rem', marginTop: '1rem' } }, 'Capacites par filiere'),
+        mkRow('Medecine', p.capacites.medecine),
+        mkRow('Pharmacie', p.capacites.pharmacie),
+        mkRow('Odontologie', p.capacites.odontologie),
+        mkRow('Maieutique', p.capacites.maieutique),
+        mkRow('Kinesitherapie EKP', p.capacites.kine_ekp),
+        mkRow('Kinesitherapie APHP', p.capacites.kine_aphp),
+        mkRow('Ergotherapie', p.capacites.ergotherapie)
+      ),
+      // Scoring
+      h('div', { className: 'card', style: { borderLeft: '4px solid var(--accent)', marginBottom: '1.5rem' } },
+        h('h2', { className: 'section-title' }, '📐 Formule de classement'),
+        h('div', { style: { background: 'var(--accent-bg)', padding: '1.2rem', borderRadius: 'var(--radius-sm)', marginBottom: '0.8rem', textAlign: 'center' } },
+          h('div', { style: { fontSize: '1.1rem', fontWeight: 700, color: 'var(--accent-light)' } }, 'Classement final = 2/3 Note ecrit + 1/3 Note oral'),
+          h('div', { style: { fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '0.4rem' } }, 'Oral minimum 50% pour etre admis en MMOPK')
+        ),
+        h('p', { style: { fontSize: '0.85rem', color: 'var(--text-secondary)' } }, 'Note ecrit = bloc sante S1 + S2 (60 ECTS). Le classement apres l\'ecrit determine la convocation aux oraux.')
+      ),
+      // Historique 2024-2025
+      h('div', { className: 'card', style: { borderLeft: '4px solid var(--success)', marginBottom: '1.5rem' } },
+        h('h2', { className: 'section-title' }, '📊 Historique 2024-2025 — L\'oral redistribue TOUT'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.8rem', marginBottom: '1rem' } },
+          mkStat('Convoques', h2025.convoques, 'var(--text)'),
+          mkStat('Presents oraux', h2025.presents_oraux, 'var(--info)'),
+          mkStat('Refus garnison', h2025.refus, 'var(--danger)'),
+          mkStat('Absents', h2025.absents, 'var(--text-muted)')
+        ),
+        h('h3', { style: { fontSize: '0.9rem', color: 'var(--success)', marginBottom: '0.5rem', marginTop: '1rem' } }, '✅ Recus par filiere (2024-25)'),
+        mkRow('Medecine', h2025.recus.medecine),
+        mkRow('Pharmacie', h2025.recus.pharmacie),
+        mkRow('Odontologie', h2025.recus.odontologie),
+        mkRow('Maieutique', h2025.recus.maieutique),
+        mkRow('Kine APHP', h2025.recus.kine_aphp),
+        mkRow('Kine EKP', h2025.recus.kine_ekp)
+      ),
+      // Reclassement — le plus motivant
+      h('div', { className: 'card', style: { borderLeft: '4px solid var(--warning)', background: 'linear-gradient(135deg, rgba(251,191,36,0.05), rgba(74,222,128,0.05))' } },
+        h('h2', { className: 'section-title' }, '🔥 Reclassement par l\'oral — Pourquoi tout est encore possible'),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.8rem', marginBottom: '1rem' } },
+          mkStat('Reclasses', r.nb_reclasses + ' etudiants', 'var(--success)'),
+          mkStat('Declasses', r.nb_declasses + ' etudiants', 'var(--danger)')
+        ),
+        h('div', { className: 'card', style: { background: 'var(--success-bg)', border: '1px solid rgba(74,222,128,0.3)', marginBottom: '0.8rem' } },
+          h('div', { style: { fontSize: '0.82rem', fontWeight: 600, color: 'var(--success)', marginBottom: '0.3rem' } }, '🚀 Plus grand gain : ' + r.meilleur_gain),
+          h('div', { style: { fontSize: '0.78rem', color: 'var(--text-secondary)' } }, 'Un etudiant classe 311e a l\'ecrit est passe 124e grace a l\'oral !'),
+          h('div', { style: { fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '0.3rem' } }, 'Plus grand bond parmi les reclasses : ' + r.plus_grand_gain_reclasse)
+        ),
+        h('div', { className: 'card', style: { background: 'var(--danger-bg)', border: '1px solid rgba(248,113,113,0.3)' } },
+          h('div', { style: { fontSize: '0.82rem', fontWeight: 600, color: 'var(--danger)', marginBottom: '0.3rem' } }, '⚠️ Plus grande perte : ' + r.pire_perte),
+          h('div', { style: { fontSize: '0.78rem', color: 'var(--text-secondary)' } }, 'Meme bien classe a l\'ecrit, un mauvais oral peut tout renverser.')
+        ),
+        h('div', { style: { marginTop: '1rem', padding: '1rem', background: 'var(--bg-elevated)', borderRadius: 'var(--radius-sm)', textAlign: 'center' } },
+          h('div', { style: { fontSize: '0.9rem', fontWeight: 700, color: 'var(--warning)' } }, '💡 Message cle : L\'oral est une SECONDE CHANCE'),
+          h('div', { style: { fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '0.3rem' } }, 'Peu importe ton classement ecrit, une bonne preparation a l\'oral peut te faire gagner plus de 180 places. Chaque minute de preparation compte !')
+        )
+      ),
+      // Consignes garnison
+      h('div', { className: 'card', style: { borderLeft: '4px solid var(--info)', marginTop: '1.5rem' } },
+        h('h2', { className: 'section-title' }, '🏛️ Consignes Amphi de Garnison'),
+        h('ul', { style: { listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem' } },
+          f.consignes_garnison.map((c, i) => h('li', { key: i, style: { fontSize: '0.85rem', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' } },
+            h('span', { style: { color: 'var(--info)', flexShrink: 0, marginTop: '0.1rem' } }, '•'),
+            c
+          ))
+        )
+      )
+    );
+  };
+
   // ===== MAIN RENDER =====
   const renderContent = () => {
     if (practiceMode) return renderPractice();
@@ -1641,6 +1802,7 @@ function App() {
       case 'fiches': return renderFiches();
       case 'exemples': return renderExemples();
       case 'actualites': return renderActualites();
+      case 'chiffres': return renderChiffres();
       case 'jourj': return renderJourJ();
       case 'journal': return renderJournal();
       case 'evolution': return renderEvolution();
