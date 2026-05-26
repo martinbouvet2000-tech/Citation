@@ -936,11 +936,11 @@ function App() {
   const [filter, setFilter] = useState('all');
 
   // Persisted: done questions & notes
-  const [done, setDone] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-done')) || []; } catch(e) { return []; } });
+  const [done, setDone] = useState(() => { try { const v = JSON.parse(localStorage.getItem('oral-pass-done')); return Array.isArray(v) ? v : []; } catch(e) { return []; } });
   const [notes, setNotes] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-notes')) || {}; } catch(e) { return {}; } });
 
   // Persisted: daily journal entries
-  const [dailyLog, setDailyLog] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-daily')) || []; } catch(e) { return []; } });
+  const [dailyLog, setDailyLog] = useState(() => { try { const v = JSON.parse(localStorage.getItem('oral-pass-daily')); return Array.isArray(v) ? v : []; } catch(e) { return []; } });
 
   // Persisted: streak
   const [streak, setStreak] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-streak')) || { current: 0, best: 0, lastDate: '' }; } catch(e) { return { current: 0, best: 0, lastDate: '' }; } });
