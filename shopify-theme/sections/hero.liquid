@@ -1,0 +1,64 @@
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h1>{{ section.settings.heading }}</h1>
+      {%- if section.settings.lead != blank -%}
+        <p class="lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+      <div class="hero-cta">
+        {%- if section.settings.cta_primary_label != blank and section.settings.cta_primary_url != blank -%}
+          <a href="{{ section.settings.cta_primary_url }}" class="btn btn-primary">
+            {{ section.settings.cta_primary_label }}
+            <span class="arrow">→</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_label != blank and section.settings.cta_secondary_url != blank -%}
+          <a href="{{ section.settings.cta_secondary_url }}" class="btn btn-ghost">{{ section.settings.cta_secondary_label }}</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.show_rating -%}
+        <div style="display:flex;align-items:center;gap:1rem;margin-top:2.6rem;padding-top:2rem;border-top:1px solid var(--line);">
+          <div class="stars">
+            {% for i in (1..5) %}{% render 'icon', name: 'star' %}{% endfor %}
+          </div>
+          <div style="font-size:0.84rem;color:var(--ink-3);">
+            <strong style="color:var(--ink);font-weight:500;">{{ section.settings.rating_value }}</strong> · {{ section.settings.rating_text }}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="hero-visual">
+      {%- if section.settings.image != blank -%}
+        <img class="hero-image" src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}" loading="eager">
+      {%- else -%}
+        <div class="hero-placeholder">Ajoutez une image produit</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "Nouveau · Édition limitée" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>La lumière, ce nouveau <em>geste de beauté.</em></p>" },
+    { "type": "textarea", "id": "lead", "label": "Accroche", "default": "Découvrez les masques LED de luminothérapie les plus avancés. Une routine de 10 minutes par jour pour révéler l'éclat naturel de votre peau." },
+    { "type": "text", "id": "cta_primary_label", "label": "CTA principal", "default": "Découvrir la gamme" },
+    { "type": "url", "id": "cta_primary_url", "label": "Lien CTA principal" },
+    { "type": "text", "id": "cta_secondary_label", "label": "CTA secondaire", "default": "Voir la gamme" },
+    { "type": "url", "id": "cta_secondary_url", "label": "Lien CTA secondaire" },
+    { "type": "image_picker", "id": "image", "label": "Image hero" },
+    { "type": "header", "content": "Note" },
+    { "type": "checkbox", "id": "show_rating", "label": "Afficher la note", "default": true },
+    { "type": "text", "id": "rating_value", "label": "Note", "default": "4,8/5" },
+    { "type": "text", "id": "rating_text", "label": "Texte note", "default": "plus de 1 200 avis vérifiés" }
+  ],
+  "presets": [
+    { "name": "Hero" }
+  ]
+}
+{% endschema %}

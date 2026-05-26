@@ -1,0 +1,84 @@
+{% comment %}
+  Snippet — Formulaire candidature programme ambassadrices
+  Usage : {% render 'contact-form-ambassadrices' %}
+  Utilise le helper Shopify {% form 'contact' %} pour envoyer une candidature
+  vers la boîte boutique. Les emails de candidatures peuvent être ensuite redirigés
+  côté Shopify (Settings → Notifications) vers ambassadrices@aurelia.paris.
+{% endcomment %}
+
+{% form 'contact', class: 'ambass-form', id: 'ambassadrices-form' %}
+  {% if form.posted_successfully? %}
+    <div class="ambass-form-success" role="status">
+      <strong>Merci, votre candidature est arrivée chez nous.</strong>
+      <p>Nous étudions chaque dossier avec soin. Vous recevrez une réponse sous 10 jours ouvrés, sur l'adresse que vous nous avez laissée.</p>
+    </div>
+  {% else %}
+    {% if form.errors %}
+      <div class="ambass-form-error" role="alert">
+        <strong>Quelques détails à compléter&nbsp;:</strong>
+        <ul>
+          {% for field in form.errors %}
+            <li>{{ form.errors.messages[field] }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <input type="hidden" name="contact[tags]" value="ambassadrices-candidature">
+
+    <div class="ambass-form-row">
+      <label for="ambass-name">Nom complet *</label>
+      <input id="ambass-name" type="text" name="contact[name]" required autocomplete="name" placeholder="Prénom Nom">
+    </div>
+
+    <div class="ambass-form-row">
+      <label for="ambass-email">Adresse e-mail *</label>
+      <input id="ambass-email" type="email" name="contact[email]" required autocomplete="email" placeholder="vous@exemple.com">
+    </div>
+
+    <div class="ambass-form-grid-2">
+      <div class="ambass-form-row">
+        <label for="ambass-insta">Compte Instagram</label>
+        <input id="ambass-insta" type="text" name="contact[instagram]" placeholder="@votrecompte">
+      </div>
+      <div class="ambass-form-row">
+        <label for="ambass-tiktok">Compte TikTok</label>
+        <input id="ambass-tiktok" type="text" name="contact[tiktok]" placeholder="@votrecompte">
+      </div>
+    </div>
+
+    <div class="ambass-form-row">
+      <label for="ambass-audience">Audience cumulée *</label>
+      <select id="ambass-audience" name="contact[audience]" required>
+        <option value="">Sélectionner</option>
+        <option value="1k-5k">1 000 à 5 000 abonnés</option>
+        <option value="5k-15k">5 000 à 15 000 abonnés</option>
+        <option value="15k-50k">15 000 à 50 000 abonnés</option>
+        <option value="50k+">Plus de 50 000 abonnés</option>
+      </select>
+    </div>
+
+    <div class="ambass-form-row">
+      <label for="ambass-motivation">Pourquoi Aurélia&nbsp;? *
+        <small>(200 caractères maximum, soyez vraie)</small>
+      </label>
+      <textarea id="ambass-motivation" name="contact[body]" required maxlength="200" rows="4" placeholder="Ce qui vous touche dans la marque, ce que vous voudriez partager avec votre audience…"></textarea>
+    </div>
+
+    <div class="ambass-form-row ambass-form-consent">
+      <label>
+        <input type="checkbox" name="contact[consent]" required>
+        <span>J'accepte que mes informations soient utilisées dans le cadre de l'étude de ma candidature. Voir notre <a href="/pages/confidentialite">politique de confidentialité</a>.</span>
+      </label>
+    </div>
+
+    <button type="submit" class="ambass-form-submit">
+      Envoyer ma candidature
+      <span aria-hidden="true">→</span>
+    </button>
+
+    <p class="ambass-form-fineprint">
+      Ou écrivez-nous directement à <a href="mailto:ambassadrices@aurelia.paris">ambassadrices@aurelia.paris</a>.
+    </p>
+  {% endif %}
+{% endform %}

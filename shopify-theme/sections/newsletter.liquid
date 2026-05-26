@@ -1,0 +1,29 @@
+<section class="newsletter">
+  <div class="newsletter-inner">
+    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+    {% form 'customer', class: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}" required aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+      <button type="submit">{{ 'general.newsletter_form.submit' | t }}</button>
+      {%- if form.posted_successfully? -%}
+        <script>showToast('{{ 'general.newsletter_form.confirmation' | t }}');</script>
+      {%- endif -%}
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "Lettres d'éclat" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>Recevez 10% sur votre <em>première commande.</em></p>" },
+    { "type": "textarea", "id": "subheading", "label": "Sous-titre", "default": "Conseils de beauté, rituels exclusifs et accès anticipé aux nouveautés. Une lettre par mois, jamais plus." }
+  ],
+  "presets": [
+    { "name": "Newsletter" }
+  ]
+}
+{% endschema %}

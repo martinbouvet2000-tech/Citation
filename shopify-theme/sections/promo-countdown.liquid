@@ -1,0 +1,186 @@
+{%- comment -%}
+  AURÉLIA — Promo countdown section (optional, manually placed)
+  Hides itself if end date has passed.
+{%- endcomment -%}
+
+{%- assign end_date_iso = section.settings.end_date | default: '' | strip -%}
+{%- assign bg_color = section.settings.bg_color | default: '#1A1410' -%}
+{%- assign text_color = section.settings.text_color | default: '#FFFFFF' -%}
+
+<section class="promo-countdown"
+         id="PromoCountdown-{{ section.id }}"
+         data-end="{{ end_date_iso }}"
+         style="background: {{ bg_color }}; color: {{ text_color }};"
+         hidden>
+  <div class="promo-countdown-inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="promo-countdown-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.title != blank -%}
+      <div class="promo-countdown-title">{{ section.settings.title }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="promo-countdown-sub">{{ section.settings.subtitle | escape }}</p>
+    {%- endif -%}
+
+    <div class="promo-countdown-timer" role="timer" aria-live="off">
+      <div class="promo-countdown-unit">
+        <span class="promo-countdown-value" data-unit="days">00</span>
+        <span class="promo-countdown-label">{{ section.settings.label_days | default: 'Jours' | escape }}</span>
+      </div>
+      <div class="promo-countdown-unit">
+        <span class="promo-countdown-value" data-unit="hours">00</span>
+        <span class="promo-countdown-label">{{ section.settings.label_hours | default: 'Heures' | escape }}</span>
+      </div>
+      <div class="promo-countdown-unit">
+        <span class="promo-countdown-value" data-unit="minutes">00</span>
+        <span class="promo-countdown-label">{{ section.settings.label_minutes | default: 'Minutes' | escape }}</span>
+      </div>
+      <div class="promo-countdown-unit">
+        <span class="promo-countdown-value" data-unit="seconds">00</span>
+        <span class="promo-countdown-label">{{ section.settings.label_seconds | default: 'Secondes' | escape }}</span>
+      </div>
+    </div>
+
+    {%- if section.settings.cta_text != blank and section.settings.cta_url != blank -%}
+      <a href="{{ section.settings.cta_url }}" class="promo-countdown-cta">{{ section.settings.cta_text | escape }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('PromoCountdown-{{ section.id }}');
+    if (!root) return;
+    var endRaw = root.getAttribute('data-end');
+    if (!endRaw) return;
+    var end = new Date(endRaw).getTime();
+    if (isNaN(end)) return;
+    if (end <= Date.now()) { root.hidden = true; return; }
+
+    var daysEl = root.querySelector('[data-unit="days"]');
+    var hoursEl = root.querySelector('[data-unit="hours"]');
+    var minutesEl = root.querySelector('[data-unit="minutes"]');
+    var secondsEl = root.querySelector('[data-unit="seconds"]');
+
+    function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+    function tick() {
+      var diff = end - Date.now();
+      if (diff <= 0) {
+        if (daysEl) daysEl.textContent = '00';
+        if (hoursEl) hoursEl.textContent = '00';
+        if (minutesEl) minutesEl.textContent = '00';
+        if (secondsEl) secondsEl.textContent = '00';
+        root.hidden = true;
+        clearInterval(timerId);
+        return;
+      }
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      if (daysEl) daysEl.textContent = pad(d);
+      if (hoursEl) hoursEl.textContent = pad(h);
+      if (minutesEl) minutesEl.textContent = pad(m);
+      if (secondsEl) secondsEl.textContent = pad(s);
+    }
+
+    root.hidden = false;
+    tick();
+    var timerId = setInterval(tick, 1000);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Compte à rebours promo",
+  "tag": "section",
+  "class": "section-promo-countdown",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Sur-titre",
+      "default": "Offre limitée"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Titre promo",
+      "default": "<p>Soldes <em>d'été</em></p>"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Jusqu'à -25% sur la sélection lumineuse. Profitez-en avant la fin du compte à rebours."
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "Date de fin (ISO, ex : 2026-06-15T23:59:00)",
+      "info": "Format ISO 8601 — la section disparaît automatiquement après cette date.",
+      "default": "2026-06-15T23:59:00"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Couleur de fond",
+      "default": "#1A1410"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Couleur du texte",
+      "default": "#FAF6F1"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA texte",
+      "default": "Profiter de l'offre"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA lien"
+    },
+    {
+      "type": "header",
+      "content": "Libellés du timer"
+    },
+    {
+      "type": "text",
+      "id": "label_days",
+      "label": "Libellé jours",
+      "default": "Jours"
+    },
+    {
+      "type": "text",
+      "id": "label_hours",
+      "label": "Libellé heures",
+      "default": "Heures"
+    },
+    {
+      "type": "text",
+      "id": "label_minutes",
+      "label": "Libellé minutes",
+      "default": "Minutes"
+    },
+    {
+      "type": "text",
+      "id": "label_seconds",
+      "label": "Libellé secondes",
+      "default": "Secondes"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Compte à rebours promo"
+    }
+  ]
+}
+{% endschema %}

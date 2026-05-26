@@ -1,0 +1,221 @@
+{% comment %}
+  Section: Bandeau presse — AURÉLIA
+  Affiche une ligne de mentions presse (logos + citations courtes) en grayscale,
+  passant en couleur au survol. CSS scopé .press-band-* pour éviter tout conflit.
+{% endcomment %}
+
+{%- assign block_count = section.blocks.size -%}
+{%- if block_count > 0 -%}
+  {%- assign cols = block_count -%}
+  {%- if cols > 6 -%}{%- assign cols = 6 -%}{%- endif -%}
+{%- else -%}
+  {%- assign cols = 4 -%}
+{%- endif -%}
+
+<style>
+  .press-band-{{ section.id }} {
+    background: var(--cream);
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .press-band-{{ section.id }} .press-band-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .press-band-{{ section.id }} .press-band-title {
+    text-align: center;
+    margin-bottom: 2.6rem;
+  }
+  .press-band-{{ section.id }} .press-band-title .eyebrow {
+    color: var(--bordeaux);
+    display: inline-block;
+  }
+  .press-band-{{ section.id }} .press-band-grid {
+    display: grid;
+    grid-template-columns: repeat({{ cols }}, minmax(0, 1fr));
+    gap: 2.4rem 2rem;
+    align-items: center;
+  }
+  .press-band-{{ section.id }} .press-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    min-height: 80px;
+  }
+  .press-band-{{ section.id }} .press-item-logo {
+    max-height: 44px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: opacity 0.35s ease, filter 0.35s ease;
+  }
+  .press-band-{{ section.id }} .press-item:hover .press-item-logo {
+    opacity: 1;
+    filter: grayscale(0%);
+  }
+  .press-band-{{ section.id }} .press-item-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    opacity: 0.6;
+    transition: opacity 0.35s ease, color 0.35s ease;
+  }
+  .press-band-{{ section.id }} .press-item:hover .press-item-name {
+    opacity: 1;
+    color: var(--bordeaux);
+  }
+  .press-band-{{ section.id }} .press-item-quote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--ink-3);
+    max-width: 220px;
+  }
+  .press-band-{{ section.id }} .press-item-quote::before { content: '« '; }
+  .press-band-{{ section.id }} .press-item-quote::after { content: ' »'; }
+
+  @media (max-width: 1024px) {
+    .press-band-{{ section.id }} .press-band-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
+    .press-band-{{ section.id }} {
+      padding: 3rem 1.2rem;
+    }
+    .press-band-{{ section.id }} .press-band-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem 1.2rem;
+    }
+    .press-band-{{ section.id }} .press-item-quote { font-size: 0.85rem; }
+  }
+</style>
+
+<section class="press-band-{{ section.id }}" aria-label="{{ section.settings.title | default: 'Vues dans la presse' | escape }}">
+  <div class="press-band-inner">
+    {%- if section.settings.title != blank -%}
+      <div class="press-band-title">
+        <span class="eyebrow">{{ section.settings.title }}</span>
+      </div>
+    {%- endif -%}
+
+    <div class="press-band-grid">
+      {%- for block in section.blocks -%}
+        <div class="press-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image_logo != blank -%}
+            <img
+              class="press-item-logo"
+              src="{{ block.settings.image_logo | image_url: width: 240 }}"
+              alt="{{ block.settings.nom_publication | escape }}"
+              loading="lazy"
+              width="120"
+              height="44">
+          {%- else -%}
+            <span class="press-item-name">{{ block.settings.nom_publication }}</span>
+          {%- endif -%}
+
+          {%- if block.settings.citation_courte != blank -%}
+            <span class="press-item-quote">{{ block.settings.citation_courte }}</span>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bandeau presse",
+  "tag": "section",
+  "class": "section-press-band",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Vues dans la presse"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "press_item",
+      "name": "Mention presse",
+      "settings": [
+        {
+          "type": "text",
+          "id": "nom_publication",
+          "label": "Nom de la publication",
+          "default": "Vogue Paris"
+        },
+        {
+          "type": "text",
+          "id": "citation_courte",
+          "label": "Citation courte (optionnel)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_logo",
+          "label": "Logo (optionnel)",
+          "info": "Si absent, le nom de la publication est affiché en typographie."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bandeau presse",
+      "blocks": [
+        {
+          "type": "press_item",
+          "settings": {
+            "nom_publication": "Top Santé",
+            "citation_courte": "Notre coup de cœur LED de l'année"
+          }
+        },
+        {
+          "type": "press_item",
+          "settings": {
+            "nom_publication": "Vogue Paris"
+          }
+        },
+        {
+          "type": "press_item",
+          "settings": {
+            "nom_publication": "Marie Claire",
+            "citation_courte": "Le rituel beauté qui change tout"
+          }
+        },
+        {
+          "type": "press_item",
+          "settings": {
+            "nom_publication": "ELLE"
+          }
+        },
+        {
+          "type": "press_item",
+          "settings": {
+            "nom_publication": "Madame Figaro",
+            "citation_courte": "L'élégance d'un soin d'institut, à domicile"
+          }
+        },
+        {
+          "type": "press_item",
+          "settings": {
+            "nom_publication": "Victoires de la Beauté 2024"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,547 @@
+{% comment %}
+  Page Devenir ambassadrice — AURÉLIA
+  Handle Shopify attendu : devenir-ambassadrice
+  Template autonome. CSS scopé par préfixe .ambass-*.
+{% endcomment %}
+
+<style>
+  /* ─── Hero ─── */
+  .ambass-hero {
+    padding: 7rem 2rem 5rem;
+    background:
+      radial-gradient(ellipse at 80% 20%, var(--rose-pale) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 80%, var(--gold-pale) 0%, transparent 55%),
+      var(--ivory);
+    text-align: center;
+  }
+  .ambass-hero-inner { max-width: 780px; margin: 0 auto; }
+  .ambass-hero .eyebrow { display: inline-block; margin-bottom: 1.4rem; color: var(--bordeaux); }
+  .ambass-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1.08;
+    margin-bottom: 1.6rem;
+    color: var(--ink);
+  }
+  .ambass-hero h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .ambass-hero .lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.15rem, 1.9vw, 1.45rem);
+    color: var(--ink-2);
+    line-height: 1.55;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* ─── Manifesto ─── */
+  .ambass-manifesto { padding: 5rem 2rem; background: var(--ivory); }
+  .ambass-manifesto-inner { max-width: 780px; margin: 0 auto; }
+  .ambass-manifesto h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 2.8vw, 2.1rem);
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1.6rem;
+    line-height: 1.25;
+  }
+  .ambass-manifesto h2 em { font-style: italic; color: var(--bordeaux); }
+  .ambass-manifesto p {
+    color: var(--ink-2);
+    line-height: 1.85;
+    font-size: 1.02rem;
+    margin-bottom: 1.2rem;
+  }
+  .ambass-manifesto p strong { color: var(--ink); font-weight: 500; }
+
+  /* ─── Section avantages ─── */
+  .ambass-benefits {
+    padding: 6rem 2rem;
+    background: var(--cream);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .ambass-benefits-inner { max-width: 1180px; margin: 0 auto; }
+  .ambass-section-head { text-align: center; max-width: 640px; margin: 0 auto 3.5rem; }
+  .ambass-section-head .eyebrow { display: inline-block; margin-bottom: 1rem; }
+  .ambass-section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.6vw, 2.6rem);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .ambass-section-head h2 em { font-style: italic; color: var(--bordeaux); }
+  .ambass-section-head p { color: var(--ink-3); line-height: 1.7; }
+
+  .ambass-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+  }
+  .ambass-benefit {
+    background: var(--pearl);
+    border: 1px solid var(--line);
+    padding: 2rem 1.8rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .ambass-benefit:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
+  }
+  .ambass-benefit-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .ambass-benefit h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+    line-height: 1.2;
+  }
+  .ambass-benefit p {
+    color: var(--ink-2);
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  /* ─── Engagements mutuels ─── */
+  .ambass-pacts { padding: 6rem 2rem; background: var(--ivory); }
+  .ambass-pacts-inner { max-width: 1080px; margin: 0 auto; }
+  .ambass-pacts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.6rem;
+    margin-top: 3rem;
+  }
+  .ambass-pact {
+    border: 1px solid var(--line);
+    padding: 2rem;
+    background: var(--pearl);
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1.4rem;
+    align-items: start;
+  }
+  .ambass-pact-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.9rem;
+    color: var(--bordeaux);
+    line-height: 1;
+  }
+  .ambass-pact h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .ambass-pact p {
+    color: var(--ink-2);
+    font-size: 0.94rem;
+    line-height: 1.7;
+  }
+
+  /* ─── Témoignages ─── */
+  .ambass-voices {
+    padding: 6rem 2rem;
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .ambass-voices .ambass-section-head h2,
+  .ambass-voices .ambass-section-head h2 em { color: var(--cream); }
+  .ambass-voices .ambass-section-head h2 em { color: var(--gold-light); font-style: italic; }
+  .ambass-voices .ambass-section-head p { color: var(--ink-faded); }
+  .ambass-voices .eyebrow { color: var(--gold-light); }
+  .ambass-voices-inner { max-width: 1180px; margin: 0 auto; }
+  .ambass-voices-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .ambass-voice {
+    padding: 2.4rem 2rem;
+    border-left: 2px solid var(--gold);
+    background: rgba(232, 220, 197, 0.03);
+  }
+  .ambass-voice blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--cream);
+    line-height: 1.6;
+    margin-bottom: 1.6rem;
+    border: none;
+    padding: 0;
+  }
+  .ambass-voice blockquote::before {
+    content: '«';
+    font-size: 2.4rem;
+    color: var(--gold-light);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .ambass-voice cite {
+    font-style: normal;
+    display: block;
+  }
+  .ambass-voice cite strong {
+    color: var(--cream);
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .ambass-voice cite span {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-weight: 400;
+  }
+
+  /* ─── Formulaire ─── */
+  .ambass-apply {
+    padding: 6rem 2rem;
+    background: var(--cream);
+    border-top: 1px solid var(--line);
+  }
+  .ambass-apply-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--pearl);
+    padding: 3rem 2.6rem;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-soft);
+  }
+  .ambass-apply-head { text-align: center; margin-bottom: 2.4rem; }
+  .ambass-apply-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .ambass-apply-head h2 em { font-style: italic; color: var(--bordeaux); }
+  .ambass-apply-head p {
+    color: var(--ink-3);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .ambass-form-row { margin-bottom: 1.4rem; }
+  .ambass-form-row label {
+    display: block;
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .ambass-form-row label small {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.78rem;
+    color: var(--ink-3);
+    font-weight: 300;
+    margin-left: 0.4rem;
+  }
+  .ambass-form-row input[type="text"],
+  .ambass-form-row input[type="email"],
+  .ambass-form-row select,
+  .ambass-form-row textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .ambass-form-row input:focus,
+  .ambass-form-row select:focus,
+  .ambass-form-row textarea:focus {
+    outline: none;
+    border-color: var(--bordeaux);
+    background: var(--pearl);
+  }
+  .ambass-form-row textarea { resize: vertical; min-height: 110px; }
+  .ambass-form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .ambass-form-consent { font-size: 0.85rem; }
+  .ambass-form-consent label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.85rem;
+    color: var(--ink-2);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .ambass-form-consent label input { margin-top: 0.25rem; flex-shrink: 0; accent-color: var(--bordeaux); }
+  .ambass-form-consent a { color: var(--bordeaux); text-decoration: underline; }
+
+  .ambass-form-submit {
+    margin-top: 1.4rem;
+    width: 100%;
+    padding: 1.05rem;
+    background: var(--ink);
+    color: var(--pearl);
+    border: 1px solid var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .ambass-form-submit:hover {
+    background: var(--bordeaux);
+    border-color: var(--bordeaux);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px -10px rgba(107, 35, 54, 0.4);
+  }
+
+  .ambass-form-fineprint {
+    text-align: center;
+    margin-top: 1.4rem;
+    font-size: 0.82rem;
+    color: var(--ink-3);
+  }
+  .ambass-form-fineprint a { color: var(--bordeaux); text-decoration: underline; }
+
+  .ambass-form-success {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: var(--rose-pale);
+    border: 1px solid var(--bordeaux);
+    color: var(--bordeaux);
+  }
+  .ambass-form-success strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+  .ambass-form-success p {
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .ambass-form-error {
+    padding: 1.2rem;
+    background: rgba(107, 35, 54, 0.08);
+    border-left: 3px solid var(--bordeaux);
+    margin-bottom: 1.6rem;
+    color: var(--bordeaux);
+    font-size: 0.88rem;
+  }
+  .ambass-form-error ul { margin: 0.4rem 0 0 1.2rem; padding: 0; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 880px) {
+    .ambass-benefits-grid, .ambass-voices-grid { grid-template-columns: 1fr; }
+    .ambass-pacts-grid { grid-template-columns: 1fr; }
+    .ambass-form-grid-2 { grid-template-columns: 1fr; }
+    .ambass-hero, .ambass-manifesto, .ambass-benefits, .ambass-pacts, .ambass-voices, .ambass-apply {
+      padding: 4.5rem 1.4rem;
+    }
+    .ambass-apply-inner { padding: 2.2rem 1.6rem; }
+  }
+</style>
+
+{%- comment -%} ─────────────────────────────  HERO ───────────────────────────── {%- endcomment -%}
+<section class="ambass-hero">
+  <div class="ambass-hero-inner">
+    <span class="eyebrow">Programme partenariat</span>
+    <h1>Devenez <em>ambassadrice Aurélia</em>.</h1>
+    <p class="lead">
+      Pas un programme d'influenceuses. Un cercle de voix justes, qui parlent vrai de leur peau et de leur rituel — depuis Paris, Lyon, Bordeaux ou ailleurs.
+    </p>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  MANIFESTO  ────────────────── {%- endcomment -%}
+<section class="ambass-manifesto">
+  <div class="ambass-manifesto-inner">
+    <h2>Ce que nous <em>cherchons vraiment</em>.</h2>
+    <p>
+      Nous croyons que le meilleur conseil beauté ne vient pas d'une agence ni d'un brief de marque, mais d'une personne qui a essayé, observé, et qui sait dire ce qu'elle pense — même quand c'est nuancé.
+    </p>
+    <p>
+      <strong>Pas besoin d'être influenceuse au sens classique du terme.</strong> Mille abonnés engagés valent mieux que cent mille distraits. Si vous parlez skincare, ralenti, soin de soi, ou simplement de ce qui vous touche — et si Aurélia résonne avec vos valeurs — nous serions ravis d'en parler.
+    </p>
+    <p>
+      Nous cherchons aussi des hommes. La photothérapie LED ne fait pas de différence de genre, et nos clients masculins représentent déjà un quart de nos commandes.
+    </p>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  AVANTAGES  ────────────────── {%- endcomment -%}
+<section class="ambass-benefits">
+  <div class="ambass-benefits-inner">
+    <div class="ambass-section-head">
+      <span class="eyebrow">Ce que nous offrons</span>
+      <h2>Cinq choses, <em>tangibles</em></h2>
+      <p>Pas de "visibilité" floue. Du concret&nbsp;: argent, produit, accès, exposition.</p>
+    </div>
+
+    <div class="ambass-benefits-grid">
+      <article class="ambass-benefit">
+        <span class="ambass-benefit-num">I.</span>
+        <h3>15% de commission</h3>
+        <p>Sur chaque vente attribuée à votre code personnel. Versée mensuellement par virement, dès 80&nbsp;€ de commissions cumulées. Suivi transparent depuis votre espace partenaire.</p>
+      </article>
+      <article class="ambass-benefit">
+        <span class="ambass-benefit-num">II.</span>
+        <h3>Un code promo à votre nom</h3>
+        <p>Codes personnalisés offrant 10% à votre audience. Lisibles, faciles à retenir, créés avec vous. Vous gardez la liberté éditoriale&nbsp;: nous ne vous demandons jamais une formulation imposée.</p>
+      </article>
+      <article class="ambass-benefit">
+        <span class="ambass-benefit-num">III.</span>
+        <h3>Le masque, offert</h3>
+        <p>À votre entrée dans le programme, un masque Aurélia de votre choix vous est envoyé — pour le tester en conditions réelles, pendant huit semaines, avant tout contenu.</p>
+      </article>
+      <article class="ambass-benefit">
+        <span class="ambass-benefit-num">IV.</span>
+        <h3>Une mise en avant éditoriale</h3>
+        <p>Nous reprenons vos meilleurs contenus sur nos canaux (avec votre accord) et publions un portrait éditorial dans notre Journal pour les ambassadrices après six mois de partenariat.</p>
+      </article>
+      <article class="ambass-benefit">
+        <span class="ambass-benefit-num">V.</span>
+        <h3>Les événements privés</h3>
+        <p>Invitations aux soirées de lancement à Paris, deux à trois fois par an. Rencontre avec l'équipe, le comité scientifique, et les autres ambassadrices du Cercle.</p>
+      </article>
+      <article class="ambass-benefit">
+        <span class="ambass-benefit-num">VI.</span>
+        <h3>Une vraie interlocutrice</h3>
+        <p>Pas un chatbot, pas un Slack géant. Une référente, joignable par email et par téléphone, qui connaît votre dossier et vous accompagne sur la durée.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  ENGAGEMENTS MUTUELS  ────────────────── {%- endcomment -%}
+<section class="ambass-pacts">
+  <div class="ambass-pacts-inner">
+    <div class="ambass-section-head">
+      <span class="eyebrow">Le pacte</span>
+      <h2>Nos engagements <em>réciproques</em></h2>
+      <p>Quatre principes simples qui nous protègent, vous et nous, d'une collaboration qui dérive.</p>
+    </div>
+
+    <div class="ambass-pacts-grid">
+      <article class="ambass-pact">
+        <span class="ambass-pact-num">i.</span>
+        <div>
+          <h3>Transparence</h3>
+          <p>Mention obligatoire du partenariat sur tout contenu sponsorisé, en clair, conformément à la loi française. Pas d'astuce, pas de "collab" cachée derrière un emoji.</p>
+        </div>
+      </article>
+      <article class="ambass-pact">
+        <span class="ambass-pact-num">ii.</span>
+        <div>
+          <h3>Qualité du contenu</h3>
+          <p>Vous parlez de votre expérience réelle, pas d'un argumentaire. Si quelque chose vous déplaît dans le produit, dites-le — nous préférons un avis honnête à un éloge complaisant.</p>
+        </div>
+      </article>
+      <article class="ambass-pact">
+        <span class="ambass-pact-num">iii.</span>
+        <div>
+          <h3>Rythme respecté</h3>
+          <p>Pas de quota mensuel imposé. Nous suggérons un contenu original par mois, mais nous préférons trois posts sincères à dix forcés. Votre temps et votre ligne éditoriale vous appartiennent.</p>
+        </div>
+      </article>
+      <article class="ambass-pact">
+        <span class="ambass-pact-num">iv.</span>
+        <div>
+          <h3>Pas de spam</h3>
+          <p>De notre côté&nbsp;: une newsletter dédiée par mois, jamais de relances. Pas de pression sur les conversions. Si votre audience ne convertit pas, ce n'est pas grave — nous restons partenaires.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  TÉMOIGNAGES  ────────────────── {%- endcomment -%}
+<section class="ambass-voices">
+  <div class="ambass-voices-inner">
+    <div class="ambass-section-head">
+      <span class="eyebrow">Elles en parlent</span>
+      <h2>Trois <em>voix du cercle</em></h2>
+      <p>Trois portraits d'ambassadrices, partagés avec leur accord. Identités initialisées pour leur confidentialité.</p>
+    </div>
+
+    <div class="ambass-voices-grid">
+      <article class="ambass-voice">
+        <blockquote>
+          C'est la première marque qui m'a laissée parler comme je voulais. Pas de brief contraignant, pas de relance. Et derrière, une équipe qui répond en moins de 24h dès qu'on a une question.
+        </blockquote>
+        <cite>
+          <strong>Léa M.</strong>
+          <span>Lyon · 4 200 followers · 8 mois</span>
+        </cite>
+      </article>
+
+      <article class="ambass-voice">
+        <blockquote>
+          J'avais peur que mon audience trouve ça commercial. Au contraire&nbsp;: comme je raconte mes vraies séances, mes vraies erreurs, on me demande presque chaque jour le code. Et la commission tombe vraiment chaque mois.
+        </blockquote>
+        <cite>
+          <strong>Camille T.</strong>
+          <span>Paris · 12 800 followers · 14 mois</span>
+        </cite>
+      </article>
+
+      <article class="ambass-voice">
+        <blockquote>
+          Je suis dermato et j'écris sur TikTok pour vulgariser. Aurélia est l'une des seules marques de luminothérapie LED dont les longueurs d'onde tiennent vraiment la route. C'est pour ça que j'ai accepté.
+        </blockquote>
+        <cite>
+          <strong>Dr Sophie R.</strong>
+          <span>Bordeaux · 22 500 followers · 6 mois</span>
+        </cite>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  FORMULAIRE CANDIDATURE  ────────────────── {%- endcomment -%}
+<section class="ambass-apply" id="candidature">
+  <div class="ambass-apply-inner">
+    <div class="ambass-apply-head">
+      <h2>Postuler <em>en cinq champs</em></h2>
+      <p>Nous étudions chaque dossier à la main. Réponse sous 10 jours ouvrés, qu'elle soit positive ou non.</p>
+    </div>
+
+    {% render 'contact-form-ambassadrices' %}
+  </div>
+</section>

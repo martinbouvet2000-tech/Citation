@@ -1,0 +1,554 @@
+{% comment %}
+  Page FAQ — AURÉLIA
+  Handle Shopify attendu : faq
+  Template autonome. CSS scopé par préfixe .faq-page-*.
+  Réutilise les classes globales .faq-item / .faq-question / .faq-answer
+  (animation et logique JS gérées par theme.css et theme.js).
+{% endcomment %}
+
+<style>
+  /* ─── Hero ─── */
+  .faq-page-hero {
+    position: relative;
+    padding: 6.5rem 2rem 4.5rem;
+    background:
+      radial-gradient(ellipse at 20% 30%, var(--rose-pale) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, var(--gold-pale) 0%, transparent 55%),
+      var(--ivory);
+    text-align: center;
+  }
+  .faq-page-hero-inner { max-width: 780px; margin: 0 auto; }
+  .faq-page-hero .eyebrow { display: inline-block; margin-bottom: 1.2rem; }
+  .faq-page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1.4rem;
+    color: var(--ink);
+  }
+  .faq-page-hero h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .faq-page-hero .lead {
+    font-size: 1.05rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* ─── Mini navigation interne ─── */
+  .faq-page-nav {
+    background: var(--cream);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 1.4rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .faq-page-nav-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .faq-page-nav a {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    font-weight: 500;
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+  .faq-page-nav a:hover { color: var(--bordeaux); }
+
+  /* ─── Catégories ─── */
+  .faq-page-section {
+    padding: 5rem 2rem;
+    background: var(--ivory);
+  }
+  .faq-page-section:nth-of-type(even) { background: var(--cream); }
+  .faq-page-section-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .faq-page-cat-head {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .faq-page-cat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .faq-page-cat-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .faq-page-cat-head h2 em { font-style: italic; color: var(--bordeaux); }
+  .faq-page-cat-head p {
+    margin-top: 0.8rem;
+    color: var(--ink-3);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* ─── CTA bas de page ─── */
+  .faq-page-cta {
+    padding: 5rem 2rem;
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+  }
+  .faq-page-cta-inner { max-width: 640px; margin: 0 auto; }
+  .faq-page-cta h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  .faq-page-cta h2 em { font-style: italic; color: var(--gold-light); }
+  .faq-page-cta p {
+    color: var(--ink-faded);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .faq-page-cta .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2.2rem;
+    background: var(--pearl);
+    color: var(--ink);
+    border: 1px solid var(--pearl);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .faq-page-cta .btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 760px) {
+    .faq-page-hero, .faq-page-section, .faq-page-cta { padding: 4rem 1.4rem; }
+    .faq-page-nav { position: static; }
+    .faq-page-nav-inner { gap: 0.6rem 1.2rem; }
+  }
+</style>
+
+{%- comment -%} ─────────────────────────────  HERO ───────────────────────────── {%- endcomment -%}
+<section class="faq-page-hero">
+  <div class="faq-page-hero-inner">
+    <span class="eyebrow">Tout savoir</span>
+    <h1>Vos questions, <em>nos réponses</em>.</h1>
+    <p class="lead">
+      Photothérapie, rituel quotidien, garanties — nous avons rassemblé ici les questions que vous nous posez le plus souvent. Si la vôtre n'y figure pas, notre équipe vous répond sous 24h ouvrées.
+    </p>
+  </div>
+</section>
+
+{%- comment -%} ────────────────────  NAVIGATION INTERNE  ──────────────────── {%- endcomment -%}
+<nav class="faq-page-nav" aria-label="Sommaire de la FAQ">
+  <div class="faq-page-nav-inner">
+    <a href="#photo">La photothérapie</a>
+    <a href="#quotidien">Au quotidien</a>
+    <a href="#resultats">Résultats</a>
+    <a href="#precautions">Précautions</a>
+    <a href="#sav">SAV &amp; commande</a>
+  </div>
+</nav>
+
+{%- comment -%} ────────────  1. PHOTOTHÉRAPIE LED  ──────────── {%- endcomment -%}
+<section class="faq-page-section" id="photo">
+  <div class="faq-page-section-inner">
+    <div class="faq-page-cat-head">
+      <span class="faq-page-cat-num">I.</span>
+      <h2>La <em>photothérapie LED</em></h2>
+      <p>Comprendre ce que la lumière fait — et ne fait pas — à votre peau.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Qu'est-ce que la photothérapie LED, exactement&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>La photothérapie LED utilise des longueurs d'onde précises de lumière visible et infrarouge pour stimuler des réponses biologiques dans la peau. Validée par la NASA dans les années 90, puis adoptée par la dermatologie esthétique, elle agit en profondeur sans chaleur, sans rayonnement UV et sans agression mécanique.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Comment la lumière peut-elle agir sur la peau&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Les chromophores de vos cellules (cytochrome C oxydase, mélanine, eau) absorbent des longueurs d'onde spécifiques. Cette absorption déclenche une cascade biochimique&nbsp;: production accrue d'ATP, stimulation des fibroblastes, modulation de l'inflammation. C'est la raison pour laquelle on parle aujourd'hui de photobiomodulation plutôt que de simple "luminothérapie".</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quelles longueurs d'onde utilise AURÉLIA&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Nos masques combinent quatre longueurs d'onde calibrées&nbsp;: rouge 630&nbsp;nm (collagène, fermeté), infrarouge proche 830&nbsp;nm (réparation profonde), bleu 415&nbsp;nm (action sur la bactérie <em>C. acnes</em>) et ambré 590&nbsp;nm (apaisement, taches pigmentaires). Aucun UV, jamais.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Est-ce dangereux pour les yeux&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Non. Nos masques sont équipés d'une protection oculaire intégrée et n'émettent aucun UV. Vous pouvez garder les yeux fermés pendant la séance — c'est même ce que nous recommandons pour profiter pleinement de ces dix minutes de pause. La lumière reste perceptible à travers les paupières, c'est normal.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          La photothérapie LED chauffe-t-elle la peau&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Très légèrement. La sensation est celle d'une douce tiédeur, jamais d'une chaleur inconfortable. Les LEDs de qualité dissipent leur chaleur vers l'arrière du masque, pas vers la peau. Si vous ressentez une chaleur excessive, c'est le signe d'un dispositif mal conçu.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Convient-il à tous les phototypes&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui, du phototype I (peau très claire) au phototype VI (peau très foncée). Les longueurs d'onde que nous utilisons sont sûres pour tous les types de peau, contrairement à certaines technologies laser. Les peaux sensibles tolèrent également très bien la photothérapie LED, à condition de respecter les durées recommandées.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          La photothérapie LED rend-elle photosensible&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Non. Contrairement à des actifs comme les rétinoïdes ou les AHA, la photothérapie LED ne sensibilise pas votre peau au soleil. Vous pouvez sortir normalement après une séance. Nous recommandons cependant, comme toujours, une protection solaire quotidienne — pour des raisons indépendantes du masque.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quelle différence avec un appareil d'institut&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Les appareils d'institut affichent souvent une irradiance plus élevée, ce qui permet des séances plus courtes (3 à 8 min). Nos masques sont calibrés pour un usage quotidien à domicile&nbsp;: irradiance modérée, séance de 10 minutes, sécurité absolue. Sur la durée, les résultats sont comparables — à condition d'être régulière.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ────────────  2. UTILISATION AU QUOTIDIEN  ──────────── {%- endcomment -%}
+<section class="faq-page-section" id="quotidien">
+  <div class="faq-page-section-inner">
+    <div class="faq-page-cat-head">
+      <span class="faq-page-cat-num">II.</span>
+      <h2>L'utilisation <em>au quotidien</em></h2>
+      <p>Intégrer le masque à votre rituel, sans en faire une corvée.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          À quelle fréquence faut-il l'utiliser&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Cinq à sept séances par semaine, pendant les huit premières semaines. Une fois les résultats installés, vous pouvez passer à trois ou quatre séances hebdomadaires en entretien. La régularité prime toujours sur l'intensité&nbsp;: dix minutes chaque soir valent mieux qu'une heure deux fois par mois.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Combien de temps doit durer une séance&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Dix minutes pour les masques Signature, Lumière Pro et Décolleté. Sept minutes pour le Regard, plus court car la peau du contour des yeux est plus fine. Le masque s'arrête automatiquement à la fin du programme — vous n'avez rien à surveiller.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          À quel moment de ma routine l'intégrer&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Après le démaquillage et le nettoyage, sur peau propre et sèche. Pas de sérum ni d'huile avant la séance&nbsp;: les actifs et la lumière n'interfèrent pas, mais les corps gras peuvent créer une fine couche qui réfléchit une partie des photons. Appliquez vos soins habituels après la séance — la peau, mieux oxygénée, les absorbe d'ailleurs avec plus d'efficacité.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Plutôt le matin ou le soir&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Le soir, idéalement, pour deux raisons. D'abord, c'est le moment où la peau entre en phase de régénération&nbsp;: la lumière agit en synergie avec ce processus naturel. Ensuite, c'est souvent le seul moment de la journée où l'on peut s'allonger dix minutes sans interruption. Mais si votre rythme dicte le matin, le matin convient aussi.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Peut-on l'utiliser sur peau humide&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Non. Pour deux raisons&nbsp;: l'humidité diffuse la lumière (perte d'efficacité) et le masque est un appareil électronique. Séchez bien la peau au préalable. C'est aussi pour cela que nous déconseillons d'appliquer un masque tissu juste avant la séance — attendez plutôt qu'il ait complètement pénétré.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Puis-je le partager avec quelqu'un d'autre&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui, tout à fait. La surface intérieure se nettoie en quelques secondes avec une lingette désinfectante douce (sans alcool fort, qui altèrerait le silicone). Beaucoup de nos clientes l'utilisent en couple ou entre sœurs. Chacune trouvera la sangle ajustable confortable, indépendamment du tour de tête.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ────────────  3. RÉSULTATS ET DÉLAIS  ──────────── {%- endcomment -%}
+<section class="faq-page-section" id="resultats">
+  <div class="faq-page-section-inner">
+    <div class="faq-page-cat-head">
+      <span class="faq-page-cat-num">III.</span>
+      <h2>Les <em>résultats</em></h2>
+      <p>Ce qu'on observe, à quel moment — et avec quelle honnêteté nous en parlons.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quand verrai-je les premiers résultats&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Sur l'éclat et le confort de la peau&nbsp;: dès deux à trois semaines d'utilisation quotidienne. Sur la fermeté et les ridules&nbsp;: à partir de six à huit semaines. Sur les imperfections (acné) ou les taches&nbsp;: comptez huit à douze semaines. Les résultats sont progressifs — la peau a besoin de temps pour produire son propre collagène.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quels types de résultats puis-je espérer&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Sur la majorité des peaux, on observe&nbsp;: un teint plus uniforme et lumineux, une peau plus dense au toucher, une atténuation des ridules superficielles, une réduction de la rougeur diffuse, et une cicatrisation plus rapide des petites imperfections. La photothérapie LED n'efface pas les rides profondes installées — soyons honnêtes — mais elle ralentit visiblement leur progression.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Garantissez-vous les résultats&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Nous garantissons la qualité de notre appareil et la conformité de ses longueurs d'onde aux protocoles cliniques publiés. Nous ne garantissons pas un résultat précis, car chaque peau réagit différemment — et toute marque qui le prétendrait mentirait. En revanche, vous disposez de 30 jours pour tester votre masque&nbsp;: si vous n'êtes pas convaincue, nous le reprenons sans discussion.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Pourquoi ne montrez-vous pas de photos avant/après&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Parce que ces photos sont presque toujours trompeuses&nbsp;: lumière différente, maquillage, retouche, choix de l'angle. Nous préférons documenter le mécanisme d'action (longueurs d'onde, études cliniques publiques) plutôt que de promettre un visage transformé. Vous trouverez sur notre <a href="/blogs/journal">Journal</a> des témoignages détaillés de nos clientes — sans filtre.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Que se passe-t-il si j'arrête&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Les bénéfices acquis (production de collagène, atténuation des marques) ne disparaissent pas du jour au lendemain. En revanche, le vieillissement cutané naturel reprend son cours. C'est pourquoi nous recommandons un entretien à trois ou quatre séances hebdomadaires une fois les résultats obtenus — comme on entretient une activité physique.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ────────────  4. CONTRE-INDICATIONS ET PRÉCAUTIONS  ──────────── {%- endcomment -%}
+<section class="faq-page-section" id="precautions">
+  <div class="faq-page-section-inner">
+    <div class="faq-page-cat-head">
+      <span class="faq-page-cat-num">IV.</span>
+      <h2>Contre-indications &amp; <em>précautions</em></h2>
+      <p>Les seules questions qui méritent une vraie prudence.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Puis-je l'utiliser pendant une grossesse&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Par principe de précaution, nous déconseillons l'utilisation pendant la grossesse et l'allaitement. Bien qu'aucune étude n'ait démontré de risque, la littérature reste limitée sur ces populations. Reprenez votre rituel après l'accouchement et la fin de l'allaitement — votre peau aura justement besoin d'un coup de pouce.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Et si je suis sous traitement photosensibilisant&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Certains médicaments (isotrétinoïne, certains antibiotiques, certains antidépresseurs, le millepertuis) peuvent sensibiliser la peau à la lumière. Demandez l'avis de votre médecin avant de commencer le rituel. La règle générale&nbsp;: si votre traitement vous interdit l'exposition solaire, il vous interdit la photothérapie LED.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Pendant l'allaitement&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Même position que pour la grossesse&nbsp;: nous préférons la prudence. La photothérapie LED n'agit pas systémiquement, mais la littérature scientifique reste insuffisante. Si vous y tenez, parlez-en à votre sage-femme ou à votre médecin — la décision finale leur revient.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          À partir de quel âge peut-on l'utiliser&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Nos masques sont conçus pour un usage adulte. Nous déconseillons l'utilisation avant 18 ans — non parce que la lumière serait dangereuse, mais parce qu'une peau adolescente n'a pas les mêmes besoins. Si une question d'acné se pose à l'adolescence, mieux vaut consulter un dermatologue. À partir de 18 ans, le masque convient à tous les âges, jusqu'à très tard.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Après une procédure esthétique (peeling, laser, injection)&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Attendez la cicatrisation complète&nbsp;: une à deux semaines après un peeling moyen, deux à quatre semaines après un laser fractionné, 48 heures après des injections d'acide hyaluronique. La photothérapie LED accélère ensuite la récupération — beaucoup de dermatologues la prescrivent en complément post-procédure. Demandez confirmation au praticien qui vous a soignée.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ────────────  5. SAV, GARANTIE, COMMANDE  ──────────── {%- endcomment -%}
+<section class="faq-page-section" id="sav">
+  <div class="faq-page-section-inner">
+    <div class="faq-page-cat-head">
+      <span class="faq-page-cat-num">V.</span>
+      <h2>SAV, garantie &amp; <em>commande</em></h2>
+      <p>Tout ce qui touche à la vie de votre commande, du clic à la maison.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quelle est la durée de la garantie&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Deux ans, à compter de la date de réception. La garantie couvre tout défaut de fabrication&nbsp;: LEDs défaillantes, batterie, télécommande, connectique. En cas de panne, nous prenons en charge l'envoi retour et le remplacement. Nos ateliers parisiens conservent un stock de pièces détachées sur dix ans.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quelle est votre politique de retour&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Trente jours pour tester votre masque, à compter de la réception. Retour offert depuis la France métropolitaine, l'Union européenne, la Suisse et le Royaume-Uni. Le masque doit être renvoyé dans son emballage d'origine, en état d'usage normal. Remboursement intégral sous 7 jours après réception du colis dans nos ateliers.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quels moyens de paiement acceptez-vous&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Cartes bancaires (Visa, Mastercard, American Express), Apple Pay, Google Pay, Shop Pay, virement bancaire. Paiement en trois ou quatre fois sans frais via notre partenaire, à partir de 100&nbsp;€ d'achat. Tous les paiements sont sécurisés par chiffrement SSL et certification PCI-DSS.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Quels sont les délais de livraison&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>France métropolitaine&nbsp;: 24 à 48h ouvrées, livraison offerte dès 150&nbsp;€. Union européenne&nbsp;: 3 à 5 jours ouvrés. Suisse, Royaume-Uni, États-Unis, Canada&nbsp;: 5 à 8 jours ouvrés. Toutes les commandes passées avant 14h sont expédiées le jour même depuis notre entrepôt parisien.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Comment suivre ma commande&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Vous recevez un e-mail de confirmation à la commande, puis un lien de suivi dès l'expédition. Tous nos colis voyagent en suivi avec signature à la livraison. Vous pouvez aussi consulter l'historique et le statut de vos commandes depuis votre <a href="/account">espace client</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          Comment vous contacter&nbsp;?
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Par e-mail à <strong>bonjour@aurelia.paris</strong>, du lundi au vendredi de 9h à 18h&nbsp;: réponse garantie sous 24h ouvrées. Pour les questions de produit ou de rituel, vous pouvez aussi prendre rendez-vous pour un appel de quinze minutes avec une conseillère — gratuit, sans engagement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ─────────────────────────────  CTA  ───────────────────────────── {%- endcomment -%}
+<section class="faq-page-cta">
+  <div class="faq-page-cta-inner">
+    <h2>Une question qui n'<em>apparaît pas ici</em>&nbsp;?</h2>
+    <p>Écrivez-nous. Une vraie personne vous répondra, depuis Paris, sous 24h ouvrées.</p>
+    <a class="btn" href="mailto:bonjour@aurelia.paris">
+      Nous écrire
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>

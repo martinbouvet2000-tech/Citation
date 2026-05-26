@@ -1,0 +1,104 @@
+<div class="drawer-overlay" id="DrawerOverlay"></div>
+<aside class="cart-drawer" id="CartDrawer" aria-label="Panier">
+  <header class="cart-header">
+    <h3>{{ 'cart.general.title' | t }}</h3>
+    <button class="cart-close" id="CartClose" aria-label="{{ 'accessibility.close' | t }}">
+      {% render 'icon', name: 'close' %}
+    </button>
+  </header>
+  {%- assign free_shipping_threshold_cents = 15000 -%}
+  {%- assign cart_total_cents = cart.total_price -%}
+  {%- assign cart_reached = false -%}
+  {%- if cart_total_cents >= free_shipping_threshold_cents -%}{%- assign cart_reached = true -%}{%- endif -%}
+  {%- assign remaining_cents = free_shipping_threshold_cents | minus: cart_total_cents -%}
+  {%- if remaining_cents < 0 -%}{%- assign remaining_cents = 0 -%}{%- endif -%}
+  {%- assign progress_pct = cart_total_cents | times: 100 | divided_by: free_shipping_threshold_cents -%}
+  {%- if progress_pct > 100 -%}{%- assign progress_pct = 100 -%}{%- endif -%}
+
+  <div class="cart-shipping-bar{% if cart_reached %} is-unlocked{% endif %}" id="CartShippingBar" role="status" aria-live="polite"{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+    <div class="cart-shipping-bar-msg">
+      {%- if cart_reached -%}
+        <svg class="cart-shipping-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        <span>Livraison offerte débloquée</span>
+      {%- else -%}
+        Plus que <strong>{{ remaining_cents | money }}</strong> pour la livraison offerte
+      {%- endif -%}
+    </div>
+    <div class="cart-shipping-track">
+      <div class="cart-shipping-fill" style="width: {% if cart_reached %}100{% else %}{{ progress_pct }}{% endif %}%;"></div>
+    </div>
+  </div>
+
+  <div class="cart-items" id="CartItems">
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-empty">
+        <p>{{ 'cart.general.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-ghost" onclick="closeCart()">{{ 'cart.general.continue_shopping' | t }}</a>
+      </div>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="cart-item">
+          <div class="cart-item-img">
+            {%- if item.image -%}
+              <img src="{{ item.image | image_url: width: 140 }}" alt="{{ item.product.title | escape }}" loading="lazy">
+            {%- endif -%}
+          </div>
+          <div class="cart-item-info">
+            <h4><a href="{{ item.url }}">{{ item.product.title }}</a></h4>
+            {%- if item.variant.title != 'Default Title' -%}
+              <span style="font-size:0.78rem;color:var(--ink-3)">{{ item.variant.title }}</span>
+            {%- endif -%}
+            <div class="qty">
+              <button onclick="changeCartItem({{ forloop.index }}, {{ item.quantity | minus: 1 }})" aria-label="{{ 'products.product.decrease_quantity' | t }}">−</button>
+              <span>{{ item.quantity }}</span>
+              <button onclick="changeCartItem({{ forloop.index }}, {{ item.quantity | plus: 1 }})" aria-label="{{ 'products.product.increase_quantity' | t }}">+</button>
+            </div>
+          </div>
+          <div>
+            <div class="cart-item-price">{{ item.final_line_price | money }}</div>
+            <button class="cart-item-remove" onclick="removeCartItem({{ forloop.index }})">{{ 'cart.general.remove' | t }}</button>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  <footer class="cart-footer" id="CartFooter" {% if cart.item_count == 0 %}style="display:none"{% endif %}>
+    {%- comment -%} Cart upsell — surfaces 1-2 products not already in cart {%- endcomment -%}
+    {%- assign upsell_collection = collections['la-gamme'] | default: collections.all -%}
+    {%- if cart.item_count > 0 and upsell_collection.products.size > 0 -%}
+      {%- assign cart_product_ids = cart.items | map: 'product_id' | join: ',' -%}
+      {%- assign upsell_count = 0 -%}
+      <div class="cart-upsell">
+        <h5 class="cart-upsell-title">Souvent associé&nbsp;:</h5>
+        <div class="cart-upsell-items">
+          {%- for product in upsell_collection.products limit: 6 -%}
+            {%- unless cart_product_ids contains product.id -%}
+              {%- if upsell_count < 2 -%}
+                <a href="{{ product.url }}" class="cart-upsell-item">
+                  <div class="cart-upsell-img">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}" loading="lazy">
+                    {%- endif -%}
+                  </div>
+                  <div class="cart-upsell-info">
+                    <span class="cart-upsell-name">{{ product.title | truncate: 30 }}</span>
+                    <span class="cart-upsell-price">{{ product.price | money }}</span>
+                  </div>
+                  <button type="button" class="cart-upsell-add" data-quick-add data-variant-id="{{ product.selected_or_first_available_variant.id }}" aria-label="Ajouter {{ product.title | escape }}" onclick="event.preventDefault();event.stopPropagation();">+</button>
+                </a>
+                {%- assign upsell_count = upsell_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="cart-total">
+      <span>{{ 'cart.general.subtotal' | t }}</span>
+      <span id="CartTotal">{{ cart.total_price | money }}</span>
+    </div>
+    <a href="{{ routes.cart_url }}/checkout" class="cart-checkout">{{ 'cart.general.checkout' | t }}</a>
+    <p class="cart-note">{{ 'cart.general.shipping_at_checkout' | t }}</p>
+  </footer>
+</aside>

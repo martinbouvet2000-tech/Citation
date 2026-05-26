@@ -1,0 +1,553 @@
+{% comment %}
+  Page Guide d'utilisation — AURÉLIA
+  Handle Shopify attendu : guide-utilisation
+  Template autonome. CSS scopé par préfixe .guide-*.
+{% endcomment %}
+
+<style>
+  /* ─── Hero ─── */
+  .guide-hero {
+    padding: 6.5rem 2rem 4.5rem;
+    background:
+      radial-gradient(ellipse at 15% 25%, var(--gold-pale) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 75%, var(--rose-pale) 0%, transparent 55%),
+      var(--ivory);
+    text-align: center;
+  }
+  .guide-hero-inner { max-width: 760px; margin: 0 auto; }
+  .guide-hero .eyebrow { display: inline-block; margin-bottom: 1.2rem; }
+  .guide-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1.4rem;
+    color: var(--ink);
+  }
+  .guide-hero h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .guide-hero .lead {
+    font-size: 1.05rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* ─── Section pas-à-pas ─── */
+  .guide-rituel { padding: 7rem 2rem; background: var(--ivory); }
+  .guide-rituel-inner { max-width: 1180px; margin: 0 auto; }
+  .guide-section-head { text-align: center; max-width: 640px; margin: 0 auto 4rem; }
+  .guide-section-head .eyebrow { margin-bottom: 1rem; display: inline-block; }
+  .guide-section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .guide-section-head h2 em { font-style: italic; color: var(--bordeaux); }
+  .guide-section-head p { color: var(--ink-3); line-height: 1.7; }
+
+  .guide-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .guide-step {
+    background: var(--pearl);
+    border: 1px solid var(--line);
+    padding: 2.4rem 2rem;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .guide-step:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+  }
+  .guide-step-num {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2.4rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .guide-step-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1.6rem;
+    color: var(--bordeaux);
+  }
+  .guide-step h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+    line-height: 1.25;
+  }
+  .guide-step p {
+    color: var(--ink-2);
+    font-size: 0.94rem;
+    line-height: 1.75;
+  }
+  .guide-step .duration {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bordeaux);
+    font-weight: 500;
+    background: var(--rose-pale);
+    padding: 0.3rem 0.7rem;
+  }
+
+  /* ─── Section modes ─── */
+  .guide-modes { padding: 7rem 2rem; background: var(--cream); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .guide-modes-inner { max-width: 1180px; margin: 0 auto; }
+  .guide-modes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.6rem;
+  }
+  .guide-mode-card {
+    background: var(--pearl);
+    border: 1px solid var(--line);
+    padding: 2rem 1.6rem;
+    border-top: 4px solid transparent;
+  }
+  .guide-mode-card[data-mode="rouge"] { border-top-color: #b8364b; }
+  .guide-mode-card[data-mode="bleu"] { border-top-color: #3a6a96; }
+  .guide-mode-card[data-mode="ambre"] { border-top-color: #d4a045; }
+  .guide-mode-card[data-mode="cryo"] { border-top-color: #8fbacb; }
+  .guide-mode-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .guide-mode-card .wave {
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bordeaux);
+    font-weight: 500;
+    margin-bottom: 1.4rem;
+    display: block;
+  }
+  .guide-mode-card .stat {
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.85rem;
+  }
+  .guide-mode-card .stat-label {
+    color: var(--ink-3);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .guide-mode-card .stat-value {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .guide-mode-card p {
+    color: var(--ink-2);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ─── Timeline 8 semaines ─── */
+  .guide-timeline { padding: 7rem 2rem; background: var(--ivory); }
+  .guide-timeline-inner { max-width: 980px; margin: 0 auto; }
+  .guide-timeline-track {
+    position: relative;
+    margin-top: 3rem;
+    padding-left: 2.4rem;
+    border-left: 1px solid var(--line);
+  }
+  .guide-tl-item {
+    position: relative;
+    padding-bottom: 2.4rem;
+  }
+  .guide-tl-item:last-child { padding-bottom: 0; }
+  .guide-tl-item::before {
+    content: '';
+    position: absolute;
+    left: -2.85rem;
+    top: 0.4rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--ivory);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .guide-tl-week {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--bordeaux);
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+  .guide-tl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .guide-tl-item p {
+    color: var(--ink-2);
+    line-height: 1.7;
+    font-size: 0.96rem;
+  }
+
+  /* ─── Erreurs à éviter ─── */
+  .guide-errors { padding: 7rem 2rem; background: var(--ink); color: var(--cream); }
+  .guide-errors .guide-section-head h2,
+  .guide-errors .guide-section-head h2 em { color: var(--cream); }
+  .guide-errors .guide-section-head h2 em { color: var(--gold-light); font-style: italic; }
+  .guide-errors .guide-section-head p { color: var(--ink-faded); }
+  .guide-errors .eyebrow { color: var(--gold-light); }
+  .guide-errors-inner { max-width: 880px; margin: 0 auto; }
+  .guide-error {
+    padding: 1.8rem 0;
+    border-top: 1px solid rgba(232, 220, 197, 0.18);
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 1.6rem;
+    align-items: start;
+  }
+  .guide-error:last-child { border-bottom: 1px solid rgba(232, 220, 197, 0.18); }
+  .guide-error-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2.2rem;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .guide-error h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .guide-error p {
+    color: var(--ink-faded);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* ─── CTA ─── */
+  .guide-cta { padding: 6rem 2rem; background: var(--ivory); text-align: center; }
+  .guide-cta-inner { max-width: 640px; margin: 0 auto; }
+  .guide-cta h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+  .guide-cta h2 em { font-style: italic; color: var(--bordeaux); }
+  .guide-cta p {
+    color: var(--ink-3);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .guide-cta .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2.2rem;
+    background: var(--ink);
+    color: var(--pearl);
+    border: 1px solid var(--ink);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .guide-cta .btn:hover {
+    background: var(--bordeaux);
+    border-color: var(--bordeaux);
+    transform: translateY(-1px);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 880px) {
+    .guide-steps { grid-template-columns: 1fr; }
+    .guide-modes-grid { grid-template-columns: 1fr 1fr; }
+    .guide-hero, .guide-rituel, .guide-modes, .guide-timeline, .guide-errors, .guide-cta {
+      padding: 4.5rem 1.4rem;
+    }
+  }
+  @media (max-width: 520px) {
+    .guide-modes-grid { grid-template-columns: 1fr; }
+    .guide-error { grid-template-columns: 48px 1fr; gap: 1rem; }
+  }
+</style>
+
+{%- comment -%} ─────────────────────────────  HERO ───────────────────────────── {%- endcomment -%}
+<section class="guide-hero">
+  <div class="guide-hero-inner">
+    <span class="eyebrow">Premiers pas</span>
+    <h1>Votre première séance, <em>en 5 minutes</em>.</h1>
+    <p class="lead">
+      Le rituel AURÉLIA est conçu pour être simple, court, et silencieux. Voici tout ce qu'il faut savoir pour bien commencer — et tirer le meilleur de votre masque dès le premier soir.
+    </p>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  LE RITUEL PAS À PAS  ────────────────── {%- endcomment -%}
+<section class="guide-rituel">
+  <div class="guide-rituel-inner">
+    <div class="guide-section-head">
+      <span class="eyebrow">Le rituel</span>
+      <h2>Pas à pas, <em>en six étapes</em></h2>
+      <p>Comptez dix minutes du démaquillage à la fin de la séance. Aucun matériel à préparer, aucun produit à acheter en plus.</p>
+    </div>
+
+    <div class="guide-steps">
+      <article class="guide-step">
+        <span class="guide-step-num">01</span>
+        <svg class="guide-step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="32" cy="22" r="9"/>
+          <path d="M14 54c2-9 9-15 18-15s16 6 18 15"/>
+          <path d="M24 19c1-2 4-3 8-3s7 1 8 3"/>
+        </svg>
+        <h3>Nettoyer la peau</h3>
+        <p>Démaquillez complètement, puis nettoyez à l'eau tiède avec votre gel ou votre huile habituelle. La peau doit être nue, propre, et débarrassée de toute crème ou maquillage. Évitez les sérums et huiles juste avant la séance.</p>
+        <span class="duration">2 minutes</span>
+      </article>
+
+      <article class="guide-step">
+        <span class="guide-step-num">02</span>
+        <svg class="guide-step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="14" y="12" width="36" height="28" rx="3"/>
+          <path d="M22 24h20M22 30h14"/>
+          <path d="M28 48l-4 6M36 48l4 6"/>
+        </svg>
+        <h3>Sécher délicatement</h3>
+        <p>Tamponnez le visage avec une serviette douce, sans frotter. La peau doit être parfaitement sèche au moment où le masque entre en contact — l'humidité diffuse la lumière et altère la pénétration des longueurs d'onde.</p>
+        <span class="duration">30 secondes</span>
+      </article>
+
+      <article class="guide-step">
+        <span class="guide-step-num">03</span>
+        <svg class="guide-step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 28c0-8 7-14 16-14s16 6 16 14v6c0 8-7 14-16 14s-16-6-16-14z"/>
+          <circle cx="24" cy="32" r="1.2" fill="currentColor"/>
+          <circle cx="40" cy="32" r="1.2" fill="currentColor"/>
+          <path d="M10 24l-3-3M54 24l3-3"/>
+        </svg>
+        <h3>Positionner le masque</h3>
+        <p>Placez le masque contre le visage, sangle réglée selon votre tour de tête. Le contact doit être stable mais sans pression. Pour le Décolleté, posez-le sur la zone à plat. Pour le Regard, ajustez doucement sur les orbites.</p>
+        <span class="duration">30 secondes</span>
+      </article>
+
+      <article class="guide-step">
+        <span class="guide-step-num">04</span>
+        <svg class="guide-step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="18" y="18" width="28" height="28" rx="4"/>
+          <circle cx="26" cy="28" r="2"/>
+          <circle cx="38" cy="28" r="2"/>
+          <circle cx="26" cy="38" r="2"/>
+          <circle cx="38" cy="38" r="2"/>
+        </svg>
+        <h3>Sélectionner le mode</h3>
+        <p>Rouge pour la fermeté et l'éclat, bleu pour les imperfections, ambré pour l'apaisement et les taches, ou un programme combiné selon votre objectif. Reportez-vous au tableau des modes ci-dessous pour choisir.</p>
+        <span class="duration">10 secondes</span>
+      </article>
+
+      <article class="guide-step">
+        <span class="guide-step-num">05</span>
+        <svg class="guide-step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="32" cy="32" r="20"/>
+          <path d="M32 18v14l9 5"/>
+        </svg>
+        <h3>Profiter de la séance</h3>
+        <p>Allongez-vous, fermez les yeux, respirez profondément. Le masque s'arrête tout seul à la fin du programme. Vous pouvez écouter une musique douce ou un podcast — c'est aussi un moment pour vous, pas seulement pour votre peau.</p>
+        <span class="duration">7 à 10 minutes</span>
+      </article>
+
+      <article class="guide-step">
+        <span class="guide-step-num">06</span>
+        <svg class="guide-step-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 38l8-10 6 6 8-12 10 14"/>
+          <circle cx="20" cy="22" r="3"/>
+          <rect x="12" y="42" width="40" height="8" rx="2"/>
+        </svg>
+        <h3>Appliquer vos soins</h3>
+        <p>La peau, mieux oxygénée et plus réceptive, absorbe désormais vos actifs avec plus d'efficacité. C'est le moment idéal pour votre sérum, votre crème de nuit ou votre huile. Le masque, lui, se range dans son étui ou sur sa station.</p>
+        <span class="duration">3 minutes</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  LES 4 MODES  ────────────────── {%- endcomment -%}
+<section class="guide-modes">
+  <div class="guide-modes-inner">
+    <div class="guide-section-head">
+      <span class="eyebrow">Les modes</span>
+      <h2>Quatre lumières, <em>quatre intentions</em></h2>
+      <p>Chaque longueur d'onde a son rôle. Vous pouvez les utiliser séparément ou en programmes combinés.</p>
+    </div>
+
+    <div class="guide-modes-grid">
+      <article class="guide-mode-card" data-mode="rouge">
+        <h3>Rouge</h3>
+        <span class="wave">630 &amp; 830 nm</span>
+        <div class="stat"><span class="stat-label">Durée</span><span class="stat-value">10 min</span></div>
+        <div class="stat"><span class="stat-label">Fréquence</span><span class="stat-value">5 à 7 / sem.</span></div>
+        <div class="stat"><span class="stat-label">Cible</span><span class="stat-value">Fermeté · éclat</span></div>
+        <p>Le mode signature. Stimule la production de collagène, redensifie la peau, atténue les ridules superficielles. À utiliser le soir, en routine de fond.</p>
+      </article>
+
+      <article class="guide-mode-card" data-mode="bleu">
+        <h3>Bleu</h3>
+        <span class="wave">415 nm</span>
+        <div class="stat"><span class="stat-label">Durée</span><span class="stat-value">8 min</span></div>
+        <div class="stat"><span class="stat-label">Fréquence</span><span class="stat-value">3 à 5 / sem.</span></div>
+        <div class="stat"><span class="stat-label">Cible</span><span class="stat-value">Imperfections</span></div>
+        <p>Action ciblée sur la bactérie <em>C. acnes</em>. Idéal pour les peaux à imperfections récurrentes ou les poussées ponctuelles. Pas pour un usage quotidien à long terme.</p>
+      </article>
+
+      <article class="guide-mode-card" data-mode="ambre">
+        <h3>Ambré</h3>
+        <span class="wave">590 nm</span>
+        <div class="stat"><span class="stat-label">Durée</span><span class="stat-value">10 min</span></div>
+        <div class="stat"><span class="stat-label">Fréquence</span><span class="stat-value">3 à 4 / sem.</span></div>
+        <div class="stat"><span class="stat-label">Cible</span><span class="stat-value">Taches · rougeurs</span></div>
+        <p>Atténue les taches pigmentaires et apaise les rougeurs diffuses. Particulièrement adapté aux peaux sensibles, sujettes à la rosacée ou aux marques post-acné.</p>
+      </article>
+
+      <article class="guide-mode-card" data-mode="cryo">
+        <h3>Cryo</h3>
+        <span class="wave">Tête froide</span>
+        <div class="stat"><span class="stat-label">Durée</span><span class="stat-value">5 min</span></div>
+        <div class="stat"><span class="stat-label">Fréquence</span><span class="stat-value">2 à 3 / sem.</span></div>
+        <div class="stat"><span class="stat-label">Cible</span><span class="stat-value">Tonus · pores</span></div>
+        <p>Disponible sur la Lumière Pro. Action vasoconstrictrice à 8°C, resserre les pores, lisse le grain de peau et raffermit instantanément. Parfait en finition d'une séance rouge.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  TIMELINE 8 SEMAINES  ────────────────── {%- endcomment -%}
+<section class="guide-timeline">
+  <div class="guide-timeline-inner">
+    <div class="guide-section-head">
+      <span class="eyebrow">Progression</span>
+      <h2>Huit semaines, <em>jour après jour</em></h2>
+      <p>Ce que vous pouvez raisonnablement attendre, étape par étape. Chaque peau réagit à son rythme — ces repères sont indicatifs.</p>
+    </div>
+
+    <div class="guide-timeline-track">
+      <div class="guide-tl-item">
+        <span class="guide-tl-week">Semaine 1</span>
+        <h3 class="guide-tl-title">Installation du rituel</h3>
+        <p>Les premiers soirs, l'enjeu est l'habitude. La peau ne montre rien encore, mais le rituel s'installe. Tenez bon&nbsp;: c'est la régularité, plus que l'intensité, qui fera la différence.</p>
+      </div>
+      <div class="guide-tl-item">
+        <span class="guide-tl-week">Semaines 2-3</span>
+        <h3 class="guide-tl-title">L'éclat revient</h3>
+        <p>Le teint paraît plus uniforme, plus reposé. La peau "boit" mieux ses soins. Beaucoup remarquent un effet "bonne mine" avant tout autre changement structurel. C'est normal — la microcirculation est la première à répondre.</p>
+      </div>
+      <div class="guide-tl-item">
+        <span class="guide-tl-week">Semaines 4-5</span>
+        <h3 class="guide-tl-title">La peau s'apaise</h3>
+        <p>Les petites rougeurs s'estompent, le grain de peau s'affine, les pores semblent moins visibles. Si vous traitez des imperfections en mode bleu, leur fréquence d'apparition diminue sensiblement.</p>
+      </div>
+      <div class="guide-tl-item">
+        <span class="guide-tl-week">Semaines 6-7</span>
+        <h3 class="guide-tl-title">La fermeté se redessine</h3>
+        <p>C'est ici que la production de collagène devient palpable&nbsp;: la peau est plus dense au toucher, le contour du visage paraît plus net. Les ridules superficielles s'atténuent. Les photos avant/après prises maintenant montreront une vraie différence.</p>
+      </div>
+      <div class="guide-tl-item">
+        <span class="guide-tl-week">Semaine 8 et au-delà</span>
+        <h3 class="guide-tl-title">Le palier d'entretien</h3>
+        <p>Vous pouvez passer à trois ou quatre séances hebdomadaires en entretien. Les bénéfices se consolident sur les mois suivants. Pensez à refaire un cycle intensif de 8 semaines deux à trois fois par an, notamment en sortie d'hiver.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ──────────────────  ERREURS À ÉVITER  ────────────────── {%- endcomment -%}
+<section class="guide-errors">
+  <div class="guide-errors-inner">
+    <div class="guide-section-head">
+      <span class="eyebrow">À ne pas faire</span>
+      <h2>Cinq <em>erreurs classiques</em></h2>
+      <p>La photothérapie LED est sûre — mais ces petits pièges, fréquents chez les débutantes, freinent les résultats.</p>
+    </div>
+
+    <div class="guide-error">
+      <span class="guide-error-num">i.</span>
+      <div>
+        <h3>Sauter une semaine "parce que rien ne se voit"</h3>
+        <p>Les deux premières semaines sont celles où il ne se passe visiblement rien — mais la cascade biochimique est déjà lancée. Abandonner ici, c'est annuler tout le travail invisible.</p>
+      </div>
+    </div>
+
+    <div class="guide-error">
+      <span class="guide-error-num">ii.</span>
+      <div>
+        <h3>Mettre un sérum sous le masque</h3>
+        <p>Tentant, mais contre-productif. Les corps gras créent une fine pellicule qui réfléchit une partie des photons. Gardez vos actifs pour après la séance — la peau les absorbera mieux.</p>
+      </div>
+    </div>
+
+    <div class="guide-error">
+      <span class="guide-error-num">iii.</span>
+      <div>
+        <h3>Doubler la durée pour aller plus vite</h3>
+        <p>Au-delà du programme calibré, l'efficacité ne progresse plus — au mieux, elle plafonne. Dix minutes par jour valent mieux que vingt deux fois par semaine.</p>
+      </div>
+    </div>
+
+    <div class="guide-error">
+      <span class="guide-error-num">iv.</span>
+      <div>
+        <h3>Mélanger les modes au hasard</h3>
+        <p>Chaque longueur d'onde a sa cible. Le bleu ne raffermit pas, le rouge ne traite pas les boutons. Identifiez votre objectif principal et tenez-le pendant huit semaines avant d'ajuster.</p>
+      </div>
+    </div>
+
+    <div class="guide-error">
+      <span class="guide-error-num">v.</span>
+      <div>
+        <h3>Négliger l'entretien du masque</h3>
+        <p>Un essuyage à la lingette désinfectante douce après chaque séance, c'est trente secondes. Cela prolonge la durée de vie des LEDs et préserve le silicone. Pas de nettoyant abrasif ni d'alcool fort.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ─────────────────────────────  CTA  ───────────────────────────── {%- endcomment -%}
+<section class="guide-cta">
+  <div class="guide-cta-inner">
+    <h2>Et maintenant, <em>choisir son masque</em>.</h2>
+    <p>Quatre formats pour quatre zones du visage et du corps. Si vous hésitez, notre conseillère vous aide à choisir en quinze minutes au téléphone.</p>
+    <a class="btn" href="/collections/la-gamme">
+      Découvrir les masques Aurélia
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>

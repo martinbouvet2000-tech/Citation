@@ -1,0 +1,56 @@
+{%- comment -%}
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+<article class="product-card">
+  <div class="product-img">
+    {%- if product.compare_at_price > product.price -%}
+      <span class="product-tag sale">−{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%</span>
+    {%- elsif product.tags contains 'new' -%}
+      <span class="product-tag new">Nouveau</span>
+    {%- elsif product.tags contains 'best-seller' -%}
+      <span class="product-tag">Best-seller</span>
+    {%- endif -%}
+    {% render 'wishlist-button', product: product, variant: 'card' %}
+    <a href="{{ product.url }}" class="product-card-link" aria-label="{{ product.title }}">
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 600 }}"
+             alt="{{ product.featured_image.alt | default: product.title | escape }}"
+             loading="lazy" width="600" height="600">
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+      {%- endif -%}
+    </a>
+  </div>
+  <div class="product-info">
+    {%- if settings.show_vendor and product.vendor != blank -%}
+      <span class="eyebrow">{{ product.vendor }}</span>
+    {%- elsif product.type != blank -%}
+      <span class="eyebrow">{{ product.type }}</span>
+    {%- endif -%}
+    <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- if product.description != blank -%}
+      <p class="product-desc">{{ product.description | strip_html | truncatewords: 18 }}</p>
+    {%- endif -%}
+    <div class="product-footer">
+      <div class="product-price">
+        {{ product.price | money }}
+        {%- if settings.show_compare_at_price and product.compare_at_price > product.price -%}
+          <s>{{ product.compare_at_price | money }}</s>
+        {%- endif -%}
+      </div>
+      {%- if product.available -%}
+        {%- if product.variants.size == 1 -%}
+          <button class="add-btn" data-quick-add data-variant-id="{{ product.selected_or_first_available_variant.id }}" aria-label="Ajouter au panier">
+            {% render 'icon', name: 'plus' %}
+          </button>
+        {%- else -%}
+          <a href="{{ product.url }}" class="add-btn" aria-label="Voir le produit">
+            {% render 'icon', name: 'arrow-right' %}
+          </a>
+        {%- endif -%}
+      {%- else -%}
+        <span style="font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faded);">Épuisé</span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

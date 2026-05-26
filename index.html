@@ -3,542 +3,2012 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pour toi, chaque matin.</title>
+<title>AURÉLIA — Masques LED de luminothérapie</title>
+<meta name="description" content="Aurélia Paris — Masques LED de luminothérapie premium conçus à Paris. Photothérapie clinique, cryo regard, rituels d'éclat à domicile." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
   --ivory: #FAF6F1;
   --cream: #F5EDE4;
-  --bordeaux: #7A2332;
-  --bordeaux-light: #9B3A4A;
-  --rose: #D4A0A0;
-  --rose-light: #E8C4C4;
-  --rose-pale: #F0D6D6;
-  --ink: #1A1A1A;
-  --ink-light: #4A4A4A;
-  --ink-faded: #8A8A8A;
+  --champagne: #E8D8C4;
+  --pearl: #FFFFFF;
+  --rose-pale: #F0D8D8;
+  --rose: #E0B6B6;
+  --rose-deep: #B97D7D;
+  --bordeaux: #6B2336;
   --gold: #C9A96E;
-  --gold-light: #D4BC8E;
+  --gold-light: #D9BC85;
+  --gold-pale: #EBDDB9;
+  --ink: #1A1410;
+  --ink-2: #44362C;
+  --ink-3: #7A6A5C;
+  --ink-faded: #B0A294;
+  --line: #E8DDD0;
+  --shadow-soft: 0 20px 60px -20px rgba(107, 35, 54, 0.18);
+  --shadow-card: 0 8px 32px -12px rgba(26, 20, 16, 0.12);
 }
 
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
+html { font-size: 16px; scroll-behavior: smooth; }
 
 body {
-  font-family: 'Lora', Georgia, serif;
-  background-color: var(--ivory);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 300;
+  background: var(--ivory);
   color: var(--ink);
-  min-height: 100vh;
-  position: relative;
+  line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Grain texture overlay */
 body::before {
   content: '';
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 256px 256px;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Subtle botanical corner decorations */
-.botanical-corner {
-  position: fixed;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.06;
-}
-.botanical-corner--top-right {
-  top: -20px; right: -20px;
-  width: 300px; height: 300px;
-}
-.botanical-corner--bottom-left {
-  bottom: -20px; left: -20px;
-  width: 280px; height: 280px;
-  transform: rotate(180deg);
-}
-
-/* Header */
-.header {
-  text-align: center;
-  padding: 3rem 1.5rem 1rem;
-  position: relative;
-}
-.header__title {
+h1, h2, h3, h4, .display {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
-  font-size: 1rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--bordeaux);
-  margin-bottom: 0.5rem;
-}
-.header__subtitle {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 300;
-  font-style: italic;
-  font-size: 1.4rem;
-  color: var(--ink-light);
-  letter-spacing: 0.02em;
-}
-.header__line {
-  width: 60px;
-  height: 1px;
-  background: var(--rose);
-  margin: 1.2rem auto 0;
-}
-
-/* Countdown */
-.countdown {
-  text-align: center;
-  padding: 0.8rem 1.5rem 0;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 0.95rem;
-  color: var(--ink-faded);
-  font-style: italic;
-  letter-spacing: 0.03em;
-}
-.countdown__number {
-  color: var(--bordeaux);
-  font-weight: 500;
-  font-style: normal;
-}
-
-/* Today's citation - hero */
-.hero {
-  padding: 3rem 1.5rem 2.5rem;
-  max-width: 680px;
-  margin: 0 auto;
-  text-align: center;
-  min-height: 50vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.hero__date {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--rose);
-  margin-bottom: 2rem;
-  font-weight: 500;
-}
-.hero__quote {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.6rem, 5vw, 2.4rem);
-  font-weight: 300;
-  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
   color: var(--ink);
-  position: relative;
-  padding: 0 1rem;
-}
-.hero__quote::before {
-  content: '\201C';
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 5rem;
-  color: var(--rose-light);
-  position: absolute;
-  top: -2.5rem;
-  left: -0.5rem;
-  line-height: 1;
-  opacity: 0.5;
-}
-.hero__ornament {
-  margin-top: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  justify-content: center;
-}
-.hero__ornament-line {
-  width: 40px;
-  height: 1px;
-  background: var(--rose);
-}
-.hero__ornament-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--bordeaux);
-  opacity: 0.4;
 }
 
-/* Fade-in animation */
-.fade-in {
-  animation: fadeInUp 1.2s ease-out forwards;
-  opacity: 0;
-}
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fade-in-delay-1 { animation-delay: 0.2s; }
-.fade-in-delay-2 { animation-delay: 0.5s; }
-.fade-in-delay-3 { animation-delay: 0.8s; }
-
-/* Section title */
-.section-title {
-  text-align: center;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 0.8rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--ink-faded);
-  padding: 0 1.5rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-.section-title::before,
-.section-title::after {
-  content: '';
-  display: inline-block;
-  width: 30px;
-  height: 1px;
-  background: var(--rose-light);
-  vertical-align: middle;
-  margin: 0 0.8rem;
-}
-
-/* Past citations */
-.past-section {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 1.5rem 2rem;
-}
-.past-card {
-  border-top: 1px solid var(--rose-pale);
-  padding: 1.5rem 0;
-  opacity: 0;
-  animation: fadeIn 0.6s ease-out forwards;
-}
-.past-card:last-child {
-  border-bottom: 1px solid var(--rose-pale);
-}
-@keyframes fadeIn {
-  to { opacity: 0.72; }
-}
-.past-card__date {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--rose);
-  margin-bottom: 0.6rem;
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
   font-weight: 500;
-}
-.past-card__quote {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.15rem;
-  font-weight: 300;
-  line-height: 1.55;
-  color: var(--ink-light);
-  font-style: italic;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
 }
 
-/* Future / locked citations */
-.future-section {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 1.5rem 4rem;
-}
-.future-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 0.8rem;
-}
-.future-card {
-  background: var(--cream);
-  border: 1px solid var(--rose-pale);
-  border-radius: 4px;
-  padding: 1.2rem 0.8rem;
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+.announce {
+  background: var(--ink);
+  color: var(--cream);
   text-align: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s ease;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.7rem 1rem;
+  font-weight: 400;
 }
-.future-card:hover {
-  transform: translateY(-2px);
+.announce span { opacity: 0.85; }
+.announce .sep { margin: 0 1rem; opacity: 0.4; }
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 246, 241, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line);
 }
-.future-card__date {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 0.75rem;
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2rem;
+}
+.nav { display: flex; gap: 2.2rem; align-items: center; }
+.nav a {
+  font-size: 0.82rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-faded);
-  margin-bottom: 0.5rem;
+  color: var(--ink-2);
+  transition: color 0.2s;
+  position: relative;
 }
-.future-card__icon {
-  font-size: 1.3rem;
-  opacity: 0.35;
-  color: var(--bordeaux);
-}
-.future-card__label {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 0.7rem;
-  color: var(--rose);
-  font-style: italic;
-  margin-top: 0.4rem;
-}
-/* Sealed envelope effect */
-.future-card::after {
+.nav a:hover { color: var(--bordeaux); }
+.nav a::after {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--bordeaux);
+  transition: width 0.3s ease;
+}
+.nav a:hover::after { width: 100%; }
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.logo small {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  margin-top: 0.1rem;
+  font-weight: 400;
 }
 
-/* Pre-start state */
-.pre-start {
-  text-align: center;
-  padding: 4rem 1.5rem;
-  max-width: 580px;
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.4rem;
+  align-items: center;
+}
+.icon-btn {
+  width: 36px; height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--ink-2);
+  transition: color 0.2s;
+  position: relative;
+}
+.icon-btn:hover { color: var(--bordeaux); }
+.icon-btn svg { width: 20px; height: 20px; stroke-width: 1.5; }
+.cart-count {
+  position: absolute;
+  top: 2px; right: 2px;
+  background: var(--bordeaux);
+  color: var(--pearl);
+  font-size: 0.6rem;
+  font-weight: 500;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  letter-spacing: 0;
+  font-family: 'Inter', sans-serif;
+}
+.cart-count.hidden { display: none; }
+
+.menu-toggle { display: none; }
+
+.hero {
+  position: relative;
+  padding: 5rem 2rem 6rem;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, var(--rose-pale) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, var(--gold-pale) 0%, transparent 50%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.hero-text { max-width: 540px; }
+.hero h1 {
+  font-size: clamp(2.5rem, 5.5vw, 4.6rem);
+  line-height: 1.05;
+  margin: 1.4rem 0 1.8rem;
+  font-weight: 400;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--bordeaux);
+  font-weight: 300;
+}
+.hero p.lead {
+  font-size: 1.08rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+  margin-bottom: 2.4rem;
+  font-weight: 300;
+  max-width: 460px;
+}
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.1rem 2.2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-family: 'Inter', sans-serif;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--pearl);
+}
+.btn-primary:hover {
+  background: var(--bordeaux);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px -10px rgba(107, 35, 54, 0.4);
+}
+.btn-ghost {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.btn-ghost:hover {
+  background: var(--ink);
+  color: var(--pearl);
+}
+.btn .arrow { transition: transform 0.3s; }
+.btn:hover .arrow { transform: translateX(4px); }
+
+.hero-visual {
+  position: relative;
+  height: 600px;
+  display: grid;
+  place-items: center;
+}
+.mask-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.mask-glow {
+  position: absolute;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(224, 182, 182, 0.45) 0%, rgba(201, 169, 110, 0.18) 40%, transparent 70%);
+  filter: blur(40px);
+  animation: pulse 6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.led-mask {
+  position: relative;
+  width: 380px;
+  height: 460px;
+  z-index: 2;
+  filter: drop-shadow(0 30px 60px rgba(107, 35, 54, 0.2));
+}
+
+.hero-badge {
+  position: absolute;
+  top: 2rem; right: 0;
+  background: var(--pearl);
+  border: 1px solid var(--line);
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
+  font-weight: 500;
+  box-shadow: var(--shadow-card);
+  z-index: 3;
+}
+.hero-badge .dot {
+  width: 8px; height: 8px;
+  background: var(--bordeaux);
+  border-radius: 50%;
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero-rating {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.6rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.stars {
+  display: flex;
+  gap: 2px;
+  color: var(--gold);
+}
+.stars svg { width: 16px; height: 16px; }
+.hero-rating-text {
+  font-size: 0.84rem;
+  color: var(--ink-3);
+}
+.hero-rating-text strong { color: var(--ink); font-weight: 500; }
+
+.promise {
+  background: var(--cream);
+  padding: 2.4rem 2rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.promise-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.promise-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.86rem;
+  color: var(--ink-2);
+}
+.promise-item svg {
+  width: 28px; height: 28px;
+  color: var(--bordeaux);
+  stroke-width: 1.3;
+  flex-shrink: 0;
+}
+.promise-item strong {
+  display: block;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 0.92rem;
+  margin-bottom: 0.15rem;
+}
+.promise-item small {
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+.section { padding: 7rem 2rem; }
+.section-narrow {
+  max-width: 1400px;
   margin: 0 auto;
 }
-.pre-start__message {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.4rem;
-  font-weight: 300;
-  line-height: 1.7;
-  color: var(--ink-light);
-  font-style: italic;
-}
-
-/* Footer */
-.footer {
+.section-head {
   text-align: center;
-  padding: 2rem 1.5rem 3rem;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 0.75rem;
-  color: var(--rose);
-  letter-spacing: 0.1em;
+  max-width: 640px;
+  margin: 0 auto 4rem;
+}
+.section-head .eyebrow { margin-bottom: 1rem; display: inline-block; }
+.section-head h2 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  margin-bottom: 1.2rem;
+}
+.section-head h2 em {
+  font-style: italic;
+  color: var(--bordeaux);
+}
+.section-head p {
+  color: var(--ink-3);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.featured {
+  background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%);
+  padding: 7rem 2rem;
+}
+.featured-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.featured-visual {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: var(--pearl);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+.featured-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, var(--rose-pale) 0%, transparent 65%);
+  opacity: 0.6;
+}
+.featured-visual .led-mask {
+  width: 70%;
+  height: auto;
+  z-index: 2;
+}
+.featured-tag {
+  position: absolute;
+  top: 1.5rem; left: 1.5rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
+  font-weight: 500;
+  background: var(--pearl);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--line);
+  z-index: 3;
+}
+.featured-content .eyebrow { display: block; margin-bottom: 1rem; }
+.featured-content h2 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  margin-bottom: 1.4rem;
+  line-height: 1.1;
+}
+.featured-content h2 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+.featured-content .desc {
+  color: var(--ink-2);
+  line-height: 1.8;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  max-width: 500px;
+}
+.featured-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem 2rem;
+  padding: 2rem 0;
+  margin: 2rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.spec strong {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--bordeaux);
+  margin-bottom: 0.2rem;
+}
+.spec span {
+  font-size: 0.82rem;
+  color: var(--ink-3);
+  letter-spacing: 0.06em;
+}
+.featured-price {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.price-current {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.price-old {
+  font-size: 1.2rem;
+  color: var(--ink-faded);
+  text-decoration: line-through;
+}
+.price-save {
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
+  background: var(--rose-pale);
+  padding: 0.3rem 0.7rem;
+}
+
+.gamme {
+  padding: 7rem 2rem;
+  background: var(--ivory);
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.product-card {
+  background: var(--pearl);
+  border: 1px solid var(--line);
+  transition: all 0.4s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-soft);
+  border-color: var(--gold-pale);
+}
+.product-img {
+  aspect-ratio: 1;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--pearl) 100%);
+  overflow: hidden;
+}
+.product-img .led-mask {
+  width: 65%;
+  height: auto;
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,0.1));
+  transition: transform 0.5s ease;
+}
+.product-card:hover .product-img .led-mask { transform: scale(1.04); }
+
+.product-tag {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
+  background: var(--pearl);
+  padding: 0.35rem 0.7rem;
+  font-weight: 500;
+  border: 1px solid var(--line);
+  z-index: 2;
+}
+.product-tag.new { color: var(--gold); }
+.product-fav {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--pearl);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  z-index: 2;
+  transition: all 0.2s;
+}
+.product-fav:hover { color: var(--bordeaux); border-color: var(--bordeaux); }
+.product-fav svg { width: 16px; height: 16px; stroke-width: 1.5; }
+
+.product-info {
+  padding: 1.6rem 1.4rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+.product-info .eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-3);
+}
+.product-info h3 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin: 0.2rem 0 0.4rem;
+  line-height: 1.2;
+}
+.product-info .product-desc {
+  font-size: 0.85rem;
+  color: var(--ink-3);
+  line-height: 1.55;
+  margin-bottom: 0.8rem;
+  flex: 1;
+}
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+.product-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.product-price s {
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  margin-left: 0.4rem;
+  font-weight: 300;
+}
+.add-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--pearl);
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+}
+.add-btn:hover {
+  background: var(--bordeaux);
+  transform: scale(1.08);
+}
+.add-btn svg { width: 16px; height: 16px; stroke-width: 2; }
+
+.rituel {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 7rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.rituel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(201, 169, 110, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+.rituel .section-head h2 { color: var(--cream); }
+.rituel .section-head h2 em { color: var(--gold-light); }
+.rituel .section-head p { color: var(--ink-faded); }
+.rituel .eyebrow { color: var(--gold-light); }
+.steps {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+.step { text-align: center; }
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--gold-light);
+  font-style: italic;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.step h3 {
+  color: var(--cream);
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+.step p {
+  color: var(--ink-faded);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.science {
+  padding: 7rem 2rem;
+  background: var(--cream);
+}
+.wavelengths {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+}
+.wave-card {
+  background: var(--pearl);
+  padding: 2.4rem 2rem;
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.wave-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+.wave-card.red::before { background: linear-gradient(90deg, #C84B5C, #E0809B); }
+.wave-card.blue::before { background: linear-gradient(90deg, #4A6FA5, #7AA0CC); }
+.wave-card.amber::before { background: linear-gradient(90deg, #C99547, #E5BC7A); }
+.wave-nm {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+  line-height: 1;
+}
+.wave-card.red .wave-nm { color: #C84B5C; }
+.wave-card.blue .wave-nm { color: #4A6FA5; }
+.wave-card.amber .wave-nm { color: #C99547; }
+.wave-nm span {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+  margin-left: 0.4rem;
+}
+.wave-card h4 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0.8rem 0 0.8rem;
+}
+.wave-card p {
+  color: var(--ink-3);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 1.4rem;
+}
+.wave-card ul { list-style: none; }
+.wave-card li {
+  font-size: 0.84rem;
+  color: var(--ink-2);
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.wave-card li::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.testimonials {
+  padding: 7rem 2rem;
+  background: var(--ivory);
+}
+.testimonial-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.testimonial {
+  background: var(--pearl);
+  padding: 2.4rem 2rem;
+  border: 1px solid var(--line);
+  position: relative;
+}
+.testimonial::before {
+  content: '"';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem;
+  color: var(--gold-pale);
+  position: absolute;
+  top: 0.4rem; left: 1.4rem;
+  line-height: 1;
   font-style: italic;
 }
-
-/* Responsive */
-@media (max-width: 480px) {
-  .header { padding: 2rem 1rem 0.8rem; }
-  .hero { padding: 2rem 1rem 2rem; min-height: 40vh; }
-  .hero__quote { font-size: 1.4rem; padding: 0 0.5rem; }
-  .hero__quote::before { font-size: 3.5rem; top: -1.8rem; left: -0.3rem; }
-  .future-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.6rem; }
-  .section-title::before, .section-title::after { width: 20px; }
+.testimonial .stars {
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+.testimonial blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-bottom: 1.4rem;
+  position: relative;
+  z-index: 1;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+.avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose-pale), var(--gold-pale));
+  display: grid;
+  place-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: var(--bordeaux);
+  font-weight: 500;
+}
+.testimonial-author strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.testimonial-author span {
+  font-size: 0.78rem;
+  color: var(--ink-3);
 }
 
-@media (min-width: 768px) {
-  .header { padding: 4rem 2rem 1.5rem; }
-  .hero { padding: 4rem 2rem 3rem; }
+.faq {
+  padding: 7rem 2rem;
+  background: var(--cream);
+}
+.faq-list {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item:first-child { border-top: 1px solid var(--line); }
+.faq-question {
+  width: 100%;
+  text-align: left;
+  padding: 1.6rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+.faq-question:hover { color: var(--bordeaux); }
+.faq-question .plus {
+  width: 28px; height: 28px;
+  flex-shrink: 0;
+  position: relative;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+.faq-question .plus::before,
+.faq-question .plus::after {
+  content: '';
+  position: absolute;
+  background: var(--ink);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s;
+}
+.faq-question .plus::before { width: 12px; height: 1px; }
+.faq-question .plus::after { width: 1px; height: 12px; }
+.faq-item.open .faq-question .plus { background: var(--ink); }
+.faq-item.open .faq-question .plus::before,
+.faq-item.open .faq-question .plus::after { background: var(--pearl); }
+.faq-item.open .faq-question .plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s;
+  color: var(--ink-2);
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+.faq-item.open .faq-answer {
+  max-height: 400px;
+  padding-bottom: 1.6rem;
+}
+
+.newsletter {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+.newsletter-inner { max-width: 640px; margin: 0 auto; }
+.newsletter .eyebrow { color: var(--gold-light); }
+.newsletter h2 {
+  color: var(--cream);
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 1rem 0 1.2rem;
+}
+.newsletter h2 em { color: var(--gold-light); font-style: italic; }
+.newsletter p {
+  color: var(--ink-faded);
+  margin-bottom: 2.4rem;
+  line-height: 1.7;
+}
+.newsletter-form {
+  display: flex;
+  gap: 0.4rem;
+  max-width: 480px;
+  margin: 0 auto;
+  border: 1px solid rgba(245, 237, 228, 0.2);
+  padding: 0.4rem;
+}
+.newsletter-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  padding: 0.9rem 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+}
+.newsletter-form input::placeholder { color: var(--ink-faded); }
+.newsletter-form button {
+  background: var(--gold);
+  color: var(--ink);
+  padding: 0.9rem 1.6rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.newsletter-form button:hover { background: var(--gold-light); }
+
+.footer {
+  background: var(--ivory);
+  padding: 5rem 2rem 2rem;
+  border-top: 1px solid var(--line);
+}
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--line);
+}
+.footer-brand .logo { font-size: 1.5rem; }
+.footer-brand p {
+  margin-top: 1.4rem;
+  color: var(--ink-3);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  max-width: 280px;
+}
+.footer-col h5 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.footer-col a {
+  font-size: 0.88rem;
+  color: var(--ink-3);
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--bordeaux); }
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+.socials { display: flex; gap: 1rem; }
+.socials a {
+  width: 32px; height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--ink-2);
+  transition: color 0.2s;
+}
+.socials a:hover { color: var(--bordeaux); }
+.socials svg { width: 18px; height: 18px; stroke-width: 1.5; }
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 20, 16, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 200;
+}
+.drawer-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.cart-drawer {
+  position: fixed;
+  top: 0; right: 0;
+  bottom: 0;
+  width: 420px;
+  max-width: 100%;
+  background: var(--ivory);
+  z-index: 201;
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -20px 0 60px -20px rgba(0,0,0,0.2);
+}
+.cart-drawer.open { transform: translateX(0); }
+.cart-header {
+  padding: 1.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+.cart-header h3 {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+.cart-close {
+  width: 32px; height: 32px;
+  display: grid;
+  place-items: center;
+}
+.cart-close svg { width: 18px; height: 18px; stroke-width: 1.5; }
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.4rem 2rem;
+}
+.cart-empty {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--ink-3);
+}
+.cart-empty p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  margin-bottom: 1.4rem;
+}
+.cart-item {
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  gap: 1rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.cart-item-img {
+  width: 70px; height: 70px;
+  background: var(--cream);
+  display: grid;
+  place-items: center;
+}
+.cart-item-img svg { width: 60%; height: auto; }
+.cart-item-info h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+.cart-item-info .qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+  font-size: 0.84rem;
+  color: var(--ink-3);
+}
+.qty button {
+  width: 22px; height: 22px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  transition: all 0.15s;
+}
+.qty button:hover { background: var(--ink); color: var(--pearl); border-color: var(--ink); }
+.cart-item-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.cart-item-remove {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--ink-3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+  text-align: right;
+}
+.cart-item-remove:hover { color: var(--bordeaux); }
+.cart-footer {
+  padding: 1.6rem 2rem 2rem;
+  border-top: 1px solid var(--line);
+  background: var(--cream);
+}
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+.cart-checkout {
+  width: 100%;
+  background: var(--ink);
+  color: var(--pearl);
+  padding: 1.1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.cart-checkout:hover { background: var(--bordeaux); }
+.cart-note {
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--ink-3);
+  margin-top: 0.8rem;
+}
+
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0.9rem 1.4rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.06em;
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 12px 40px -10px rgba(0,0,0,0.3);
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast svg { width: 16px; height: 16px; color: var(--gold-light); }
+
+@media (max-width: 980px) {
+  .hero-inner, .featured-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-visual { height: 460px; }
+  .led-mask { width: 300px; height: 360px; }
+  .hero-badge { right: 1rem; top: 1rem; }
+  .product-grid, .promise-inner, .steps, .wavelengths, .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+  .nav { display: none; }
+  .menu-toggle {
+    display: grid;
+    place-items: center;
+    width: 36px; height: 36px;
+  }
+  .menu-toggle svg { width: 22px; height: 22px; }
+  .header-inner { grid-template-columns: auto 1fr auto; gap: 1rem; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .section, .featured, .gamme, .rituel, .science, .testimonials, .faq { padding: 4.5rem 1.4rem; }
+  .hero { padding: 3rem 1.4rem 4rem; }
+  .featured-content h2, .hero h1 { font-size: 2.4rem; }
+}
+@media (max-width: 580px) {
+  .product-grid, .promise-inner, .steps, .wavelengths, .testimonial-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .header-inner { padding: 1rem 1.2rem; }
+  .logo { font-size: 1.3rem; letter-spacing: 0.24em; }
+  .featured-specs { grid-template-columns: 1fr; gap: 1rem; }
+  .newsletter-form { flex-direction: column; }
+  .announce { font-size: 0.68rem; letter-spacing: 0.1em; }
+  .announce .sep { display: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- Botanical SVG corner decorations -->
-<svg class="botanical-corner botanical-corner--top-right" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M300 0C300 0 250 50 240 100C230 150 260 180 220 220C180 260 150 230 100 240C50 250 0 300 0 300" stroke="#7A2332" stroke-width="1" fill="none"/>
-  <path d="M280 0C280 0 240 30 230 70C220 110 240 140 210 170C180 200 160 180 120 185C80 190 40 230 40 230" stroke="#7A2332" stroke-width="0.5" fill="none"/>
-  <path d="M260 10C255 30 250 60 260 80C270 100 255 120 240 135" stroke="#7A2332" stroke-width="0.5" fill="none"/>
-  <ellipse cx="240" cy="95" rx="8" ry="14" transform="rotate(-30 240 95)" stroke="#7A2332" stroke-width="0.5" fill="none"/>
-  <ellipse cx="225" cy="145" rx="6" ry="11" transform="rotate(15 225 145)" stroke="#7A2332" stroke-width="0.5" fill="none"/>
-  <path d="M200 50C195 65 190 85 195 100" stroke="#7A2332" stroke-width="0.3" fill="none"/>
-  <path d="M160 90C165 110 160 130 145 145" stroke="#7A2332" stroke-width="0.3" fill="none"/>
-  <circle cx="260" cy="80" r="2" fill="#7A2332" opacity="0.3"/>
-  <circle cx="220" cy="150" r="1.5" fill="#7A2332" opacity="0.3"/>
-  <circle cx="195" cy="100" r="1.5" fill="#7A2332" opacity="0.2"/>
-</svg>
+<div class="announce">
+  <span>Livraison offerte dès 150€</span>
+  <span class="sep">·</span>
+  <span>Paiement en 3× sans frais</span>
+  <span class="sep">·</span>
+  <span>Retour gratuit sous 30 jours</span>
+</div>
 
-<svg class="botanical-corner botanical-corner--bottom-left" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M280 0C280 0 230 50 220 95C210 140 240 165 205 200C170 235 140 210 95 220C50 230 0 280 0 280" stroke="#7A2332" stroke-width="1" fill="none"/>
-  <path d="M260 0C260 0 225 25 215 60C205 95 225 120 200 150C175 180 155 165 120 170C85 175 50 210 50 210" stroke="#7A2332" stroke-width="0.5" fill="none"/>
-  <ellipse cx="220" cy="85" rx="7" ry="12" transform="rotate(-25 220 85)" stroke="#7A2332" stroke-width="0.5" fill="none"/>
-  <circle cx="200" cy="140" r="1.5" fill="#7A2332" opacity="0.2"/>
-</svg>
+<header class="header">
+  <div class="header-inner">
+    <nav class="nav">
+      <a href="#gamme">La gamme</a>
+      <a href="#rituel">Le rituel</a>
+      <a href="#science">La science</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#" class="logo">
+      AURÉLIA
+      <small>Paris · Skincare</small>
+    </a>
+    <div class="header-actions">
+      <button class="menu-toggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Compte">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <button class="icon-btn cart-toggle" aria-label="Panier">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count hidden">0</span>
+      </button>
+    </div>
+  </div>
+</header>
 
-<div id="root"></div>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">Nouveau · Édition limitée</span>
+      <h1>La lumière, ce nouveau <em>geste de beauté.</em></h1>
+      <p class="lead">Découvrez les masques LED de luminothérapie les plus avancés. Une routine de 10 minutes par jour pour révéler l'éclat naturel de votre peau, depuis le confort de votre maison.</p>
+      <div class="hero-cta">
+        <a href="#featured" class="btn btn-primary">
+          Découvrir la gamme
+          <span class="arrow">→</span>
+        </a>
+        <a href="#gamme" class="btn btn-ghost">Voir la gamme</a>
+      </div>
+      <div class="hero-rating">
+        <div class="stars" aria-label="4.8 sur 5">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+        </div>
+        <div class="hero-rating-text">
+          <strong>4,8/5</strong> · plus de 1 200 avis vérifiés
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="mask-stage">
+        <div class="mask-glow"></div>
+        <div class="hero-badge"><span class="dot"></span> En stock — Édition limitée</div>
+        <svg class="led-mask" viewBox="0 0 380 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="maskShellHero" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#FFFFFF"/>
+              <stop offset="50%" stop-color="#F5EDE4"/>
+              <stop offset="100%" stop-color="#E8D8C4"/>
+            </linearGradient>
+            <radialGradient id="eyeGlowHero" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#E0B6B6" stop-opacity="0.9"/>
+              <stop offset="60%" stop-color="#C49A9A" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#C49A9A" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="mouthGlowHero" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFE4B0" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#FFE4B0" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+              <feOffset dx="0" dy="6" result="offsetblur"/>
+              <feComponentTransfer><feFuncA type="linear" slope="0.2"/></feComponentTransfer>
+              <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <path d="M 190 30 C 290 30, 350 110, 350 230 C 350 330, 300 410, 220 440 C 200 445, 180 445, 160 440 C 80 410, 30 330, 30 230 C 30 110, 90 30, 190 30 Z" fill="url(#maskShellHero)" filter="url(#softShadow)"/>
+          <path d="M 190 50 C 280 50, 332 124, 332 230 C 332 322, 286 396, 215 422 C 199 426, 181 426, 165 422 C 94 396, 48 322, 48 230 C 48 124, 100 50, 190 50 Z" fill="none" stroke="#E8DDD0" stroke-width="1" opacity="0.6"/>
+          <ellipse cx="125" cy="190" rx="55" ry="38" fill="url(#eyeGlowHero)"/>
+          <ellipse cx="255" cy="190" rx="55" ry="38" fill="url(#eyeGlowHero)"/>
+          <ellipse cx="125" cy="190" rx="32" ry="20" fill="#1A1410" opacity="0.85"/>
+          <ellipse cx="255" cy="190" rx="32" ry="20" fill="#1A1410" opacity="0.85"/>
+          <ellipse cx="190" cy="340" rx="60" ry="22" fill="url(#mouthGlowHero)"/>
+          <ellipse cx="190" cy="340" rx="38" ry="11" fill="#1A1410" opacity="0.8"/>
+          <g opacity="0.55" fill="#C49A9A">
+            <circle cx="90" cy="120" r="1.8"/><circle cx="120" cy="100" r="1.8"/><circle cx="155" cy="95" r="1.8"/><circle cx="190" cy="92" r="1.8"/><circle cx="225" cy="95" r="1.8"/><circle cx="260" cy="100" r="1.8"/><circle cx="290" cy="120" r="1.8"/>
+            <circle cx="75" cy="240" r="1.8"/><circle cx="305" cy="240" r="1.8"/><circle cx="80" cy="280" r="1.8"/><circle cx="300" cy="280" r="1.8"/>
+            <circle cx="130" cy="270" r="1.8"/><circle cx="170" cy="265" r="1.8"/><circle cx="210" cy="265" r="1.8"/><circle cx="250" cy="270" r="1.8"/>
+            <circle cx="140" cy="380" r="1.8"/><circle cx="170" cy="395" r="1.8"/><circle cx="210" cy="395" r="1.8"/><circle cx="240" cy="380" r="1.8"/>
+          </g>
+          <text x="190" y="430" text-anchor="middle" fill="#7A6A5C" font-family="serif" font-size="10" letter-spacing="3">AURÉLIA</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
 
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<section class="promise">
+  <div class="promise-inner">
+    <div class="promise-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h14v9H3z"/><path d="M17 13h4l-1.5-4H17v4z"/><circle cx="7" cy="20" r="2"/><circle cx="17" cy="20" r="2"/></svg>
+      <div>
+        <strong>Livraison offerte</strong>
+        <small>Dès 150€ · expédié en 24h</small>
+      </div>
+    </div>
+    <div class="promise-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+      <div>
+        <strong>Cliniquement testé</strong>
+        <small>Études dermatologiques</small>
+      </div>
+    </div>
+    <div class="promise-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div>
+        <strong>Garantie 2 ans</strong>
+        <small>Satisfait ou remboursé</small>
+      </div>
+    </div>
+    <div class="promise-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="13" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      <div>
+        <strong>Paiement 3× sans frais</strong>
+        <small>Via Klarna ou Alma</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="featured" id="featured">
+  <div class="featured-inner">
+    <div class="featured-visual">
+      <span class="featured-tag">Best-seller · Édition Paris</span>
+      <svg class="led-mask" viewBox="0 0 380 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="maskShellFeat" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#EFE2D2"/>
+          </linearGradient>
+          <radialGradient id="eyeGlowFeat" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#8FAFD0" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#8FAFD0" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="mouthGlowFeat" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#E8809A" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#E8809A" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <path d="M 190 30 C 290 30, 350 110, 350 230 C 350 330, 300 410, 220 440 C 200 445, 180 445, 160 440 C 80 410, 30 330, 30 230 C 30 110, 90 30, 190 30 Z" fill="url(#maskShellFeat)"/>
+        <path d="M 190 50 C 280 50, 332 124, 332 230 C 332 322, 286 396, 215 422 C 199 426, 181 426, 165 422 C 94 396, 48 322, 48 230 C 48 124, 100 50, 190 50 Z" fill="none" stroke="#E8DDD0" stroke-width="1"/>
+        <ellipse cx="125" cy="195" rx="70" ry="45" fill="url(#eyeGlowFeat)"/>
+        <ellipse cx="255" cy="195" rx="70" ry="45" fill="url(#eyeGlowFeat)"/>
+        <ellipse cx="125" cy="195" rx="34" ry="20" fill="#1A1410" opacity="0.85"/>
+        <ellipse cx="255" cy="195" rx="34" ry="20" fill="#1A1410" opacity="0.85"/>
+        <ellipse cx="190" cy="340" rx="75" ry="28" fill="url(#mouthGlowFeat)"/>
+        <ellipse cx="190" cy="340" rx="40" ry="12" fill="#1A1410" opacity="0.8"/>
+        <g opacity="0.5" fill="#7A6A5C">
+          <circle cx="80" cy="100" r="2"/><circle cx="115" cy="80" r="2"/><circle cx="155" cy="72" r="2"/><circle cx="190" cy="68" r="2"/><circle cx="225" cy="72" r="2"/><circle cx="265" cy="80" r="2"/><circle cx="300" cy="100" r="2"/>
+          <circle cx="60" cy="245" r="2"/><circle cx="320" cy="245" r="2"/>
+        </g>
+        <text x="190" y="425" text-anchor="middle" fill="#7A6A5C" font-family="serif" font-size="10" letter-spacing="3">CRYOGLOW</text>
+      </svg>
+    </div>
+    <div class="featured-content">
+      <span class="eyebrow">Le best-seller</span>
+      <h2>AURÉLIA <em>Signature</em></h2>
+      <p class="desc">Le masque LED le plus complet de notre sélection. Trois longueurs d'onde scientifiquement étudiées, une cryothérapie sous les yeux pour décongestionner les poches, et une télécommande intelligente. Pensé pour un rituel quotidien en 10 minutes seulement.</p>
+      <div class="featured-specs">
+        <div class="spec">
+          <strong>3</strong>
+          <span>Longueurs d'onde LED</span>
+        </div>
+        <div class="spec">
+          <strong>10 min</strong>
+          <span>Séance quotidienne</span>
+        </div>
+        <div class="spec">
+          <strong>−7°C</strong>
+          <span>Cryothérapie sous les yeux</span>
+        </div>
+        <div class="spec">
+          <strong>4 semaines</strong>
+          <span>Résultats visibles</span>
+        </div>
+      </div>
+      <div class="featured-price">
+        <span class="price-current">279,00 €</span>
+        <span class="price-old">349,00 €</span>
+        <span class="price-save">−66 €</span>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary add-to-cart" data-id="aurelia-signature" data-name="AURÉLIA Signature" data-price="279.00">
+          Ajouter au panier
+          <span class="arrow">→</span>
+        </button>
+        <a href="#science" class="btn btn-ghost">La science</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gamme" id="gamme">
+  <div class="section-narrow">
+    <div class="section-head">
+      <span class="eyebrow">La gamme</span>
+      <h2>Quatre masques, <em>un rituel.</em></h2>
+      <p>Du visage au décolleté, en passant par le contour des yeux, notre sélection couvre tous les besoins d'une routine de luminothérapie complète.</p>
+    </div>
+    <div class="product-grid">
+      <article class="product-card">
+        <div class="product-img">
+          <span class="product-tag">Best-seller</span>
+          <button class="product-fav" aria-label="Favori">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <svg class="led-mask" viewBox="0 0 380 460" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ms1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#EFE2D2"/></linearGradient>
+              <radialGradient id="eg1"><stop offset="0%" stop-color="#8FAFD0" stop-opacity="0.9"/><stop offset="100%" stop-color="#8FAFD0" stop-opacity="0"/></radialGradient>
+              <radialGradient id="mg1"><stop offset="0%" stop-color="#E8809A" stop-opacity="0.9"/><stop offset="100%" stop-color="#E8809A" stop-opacity="0"/></radialGradient>
+            </defs>
+            <path d="M 190 30 C 290 30, 350 110, 350 230 C 350 330, 300 410, 220 440 C 200 445, 180 445, 160 440 C 80 410, 30 330, 30 230 C 30 110, 90 30, 190 30 Z" fill="url(#ms1)"/>
+            <ellipse cx="125" cy="195" rx="65" ry="40" fill="url(#eg1)"/>
+            <ellipse cx="255" cy="195" rx="65" ry="40" fill="url(#eg1)"/>
+            <ellipse cx="125" cy="195" rx="30" ry="18" fill="#1A1410" opacity="0.85"/>
+            <ellipse cx="255" cy="195" rx="30" ry="18" fill="#1A1410" opacity="0.85"/>
+            <ellipse cx="190" cy="340" rx="70" ry="24" fill="url(#mg1)"/>
+            <ellipse cx="190" cy="340" rx="36" ry="10" fill="#1A1410" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="eyebrow">Visage complet</span>
+          <h3>AURÉLIA Signature</h3>
+          <p class="product-desc">3 longueurs d'onde · Cryothérapie sous les yeux · Télécommande intelligente.</p>
+          <div class="product-footer">
+            <div class="product-price">279,00 € <s>349,00 €</s></div>
+            <button class="add-btn add-to-cart" aria-label="Ajouter au panier" data-id="aurelia-signature" data-name="AURÉLIA Signature" data-price="279.00">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card">
+        <div class="product-img">
+          <span class="product-tag new">Nouveau</span>
+          <button class="product-fav" aria-label="Favori">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <svg class="led-mask" viewBox="0 0 380 460" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ms2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E8D8C4"/></linearGradient>
+              <radialGradient id="eg2"><stop offset="0%" stop-color="#E0B6B6" stop-opacity="0.95"/><stop offset="100%" stop-color="#E0B6B6" stop-opacity="0"/></radialGradient>
+              <radialGradient id="mg2"><stop offset="0%" stop-color="#E0B6B6" stop-opacity="0.95"/><stop offset="100%" stop-color="#E0B6B6" stop-opacity="0"/></radialGradient>
+            </defs>
+            <path d="M 190 30 C 290 30, 350 110, 350 230 C 350 330, 300 410, 220 440 C 200 445, 180 445, 160 440 C 80 410, 30 330, 30 230 C 30 110, 90 30, 190 30 Z" fill="url(#ms2)"/>
+            <ellipse cx="125" cy="195" rx="65" ry="40" fill="url(#eg2)"/>
+            <ellipse cx="255" cy="195" rx="65" ry="40" fill="url(#eg2)"/>
+            <ellipse cx="125" cy="195" rx="30" ry="18" fill="#1A1410" opacity="0.85"/>
+            <ellipse cx="255" cy="195" rx="30" ry="18" fill="#1A1410" opacity="0.85"/>
+            <ellipse cx="190" cy="340" rx="70" ry="24" fill="url(#mg2)"/>
+            <ellipse cx="190" cy="340" rx="36" ry="10" fill="#1A1410" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="eyebrow">Anti-âge intensif</span>
+          <h3>AURÉLIA Lumière Pro</h3>
+          <p class="product-desc">7 longueurs d'onde · Mode collagène boost · Idéal après 35 ans.</p>
+          <div class="product-footer">
+            <div class="product-price">379,00 € <s>449,00 €</s></div>
+            <button class="add-btn add-to-cart" aria-label="Ajouter au panier" data-id="aurelia-lumiere-pro" data-name="AURÉLIA Lumière Pro" data-price="379.00">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card">
+        <div class="product-img">
+          <button class="product-fav" aria-label="Favori">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <svg class="led-mask" viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ms3" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#EFE2D2"/></linearGradient>
+              <radialGradient id="eg3"><stop offset="0%" stop-color="#FFE4B0" stop-opacity="0.95"/><stop offset="100%" stop-color="#FFE4B0" stop-opacity="0"/></radialGradient>
+            </defs>
+            <path d="M 40 80 C 40 50, 80 30, 140 30 L 240 30 C 300 30, 340 50, 340 80 L 340 140 C 340 200, 290 240, 230 240 L 150 240 C 90 240, 40 200, 40 140 Z" fill="url(#ms3)"/>
+            <ellipse cx="125" cy="130" rx="55" ry="38" fill="url(#eg3)"/>
+            <ellipse cx="255" cy="130" rx="55" ry="38" fill="url(#eg3)"/>
+            <ellipse cx="125" cy="130" rx="28" ry="16" fill="#1A1410" opacity="0.85"/>
+            <ellipse cx="255" cy="130" rx="28" ry="16" fill="#1A1410" opacity="0.85"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="eyebrow">Contour des yeux</span>
+          <h3>AURÉLIA Regard</h3>
+          <p class="product-desc">Spécifique poches & cernes · Lumière ambrée + froid −5°C.</p>
+          <div class="product-footer">
+            <div class="product-price">129,00 € <s>179,00 €</s></div>
+            <button class="add-btn add-to-cart" aria-label="Ajouter au panier" data-id="aurelia-regard" data-name="AURÉLIA Regard" data-price="129.00">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card">
+        <div class="product-img">
+          <span class="product-tag">Édition limitée</span>
+          <button class="product-fav" aria-label="Favori">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <svg class="led-mask" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ms4" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#EFE2D2"/></linearGradient>
+              <radialGradient id="mg4"><stop offset="0%" stop-color="#E8809A" stop-opacity="0.85"/><stop offset="100%" stop-color="#E8809A" stop-opacity="0"/></radialGradient>
+            </defs>
+            <path d="M 60 60 C 60 60, 130 30, 190 30 C 250 30, 320 60, 320 60 L 360 220 C 340 270, 280 340, 190 350 C 100 340, 40 270, 20 220 Z" fill="url(#ms4)"/>
+            <ellipse cx="190" cy="180" rx="120" ry="55" fill="url(#mg4)" opacity="0.7"/>
+            <g opacity="0.5" fill="#7A6A5C">
+              <circle cx="90" cy="120" r="2.5"/><circle cx="140" cy="100" r="2.5"/><circle cx="190" cy="95" r="2.5"/><circle cx="240" cy="100" r="2.5"/><circle cx="290" cy="120" r="2.5"/>
+              <circle cx="80" cy="180" r="2.5"/><circle cx="140" cy="170" r="2.5"/><circle cx="190" cy="168" r="2.5"/><circle cx="240" cy="170" r="2.5"/><circle cx="300" cy="180" r="2.5"/>
+              <circle cx="90" cy="240" r="2.5"/><circle cx="150" cy="245" r="2.5"/><circle cx="190" cy="248" r="2.5"/><circle cx="230" cy="245" r="2.5"/><circle cx="290" cy="240" r="2.5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="product-info">
+          <span class="eyebrow">Cou & décolleté</span>
+          <h3>AURÉLIA Décolleté</h3>
+          <p class="product-desc">Zone oubliée par les soins · Raffermit cou et décolleté en 6 semaines.</p>
+          <div class="product-footer">
+            <div class="product-price">199,00 € <s>269,00 €</s></div>
+            <button class="add-btn add-to-cart" aria-label="Ajouter au panier" data-id="aurelia-decollete" data-name="AURÉLIA Décolleté" data-price="199.00">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="rituel" id="rituel">
+  <div class="section-narrow">
+    <div class="section-head">
+      <span class="eyebrow">Le rituel</span>
+      <h2>Dix minutes par jour, <em>vingt-huit jours.</em></h2>
+      <p>Un protocole simple, conçu pour s'intégrer naturellement à votre routine du matin ou du soir.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">I.</span>
+        <h3>Préparer</h3>
+        <p>Sur peau nettoyée et démaquillée, appliquez votre sérum habituel pour préparer la peau à recevoir la lumière.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">II.</span>
+        <h3>Illuminer</h3>
+        <p>Positionnez le masque, choisissez votre programme et profitez d'une séance de 10 minutes les yeux fermés.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">III.</span>
+        <h3>Sceller</h3>
+        <p>Terminez par votre crème de jour ou de nuit pour sceller les bénéfices et nourrir la peau en profondeur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="science" id="science">
+  <div class="section-narrow">
+    <div class="section-head">
+      <span class="eyebrow">La science</span>
+      <h2>Trois lumières, <em>trois promesses.</em></h2>
+      <p>La luminothérapie LED repose sur des longueurs d'onde précises, chacune ciblant une couche spécifique de la peau. Validée par plus de 30 ans de recherche dermatologique.</p>
+    </div>
+    <div class="wavelengths">
+      <div class="wave-card red">
+        <div class="wave-nm">633<span>nm</span></div>
+        <h4>Lumière rouge · Anti-âge</h4>
+        <p>Stimule la production de collagène et d'élastine dans le derme. La référence pour atténuer les rides et raffermir la peau.</p>
+        <ul>
+          <li>Réduit les rides et ridules</li>
+          <li>Stimule le collagène naturel</li>
+          <li>Améliore l'élasticité</li>
+        </ul>
+      </div>
+      <div class="wave-card blue">
+        <div class="wave-nm">415<span>nm</span></div>
+        <h4>Lumière bleue · Anti-imperfections</h4>
+        <p>Cible la bactérie responsable de l'acné (P. acnes) et purifie les pores en profondeur, sans assécher la peau.</p>
+        <ul>
+          <li>Réduit les imperfections</li>
+          <li>Purifie les pores</li>
+          <li>Apaise les inflammations</li>
+        </ul>
+      </div>
+      <div class="wave-card amber">
+        <div class="wave-nm">590<span>nm</span></div>
+        <h4>Lumière ambrée · Éclat</h4>
+        <p>Unifie le teint, atténue les rougeurs et les taches pigmentaires, et redonne instantanément un effet bonne mine.</p>
+        <ul>
+          <li>Unifie le teint</li>
+          <li>Atténue les rougeurs</li>
+          <li>Apporte de l'éclat</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-narrow">
+    <div class="section-head">
+      <span class="eyebrow">Elles témoignent</span>
+      <h2>Plus de 12 000 routines <em>transformées.</em></h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <div class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+        </div>
+        <blockquote>En trois semaines, mes ridules au coin des yeux se sont visiblement estompées. Je n'aurais jamais cru qu'un masque LED pouvait remplacer mes soins en institut.</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar">CL</div>
+          <div>
+            <strong>Claire L.</strong>
+            <span>Cliente vérifiée · Paris 16e</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+        </div>
+        <blockquote>La cryothérapie sous les yeux le matin, c'est une révélation. Plus aucune trace de fatigue avant les visios, et la peau du contour est devenue beaucoup plus ferme.</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar">SM</div>
+          <div>
+            <strong>Sophie M.</strong>
+            <span>Cliente vérifiée · Lyon</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"/></svg>
+        </div>
+        <blockquote>J'ai testé deux marques avant AURÉLIA. C'est de loin le plus confortable et le plus efficace. Mon teint est plus uniforme dès le premier mois.</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar">AB</div>
+          <div>
+            <strong>Amélie B.</strong>
+            <span>Cliente vérifiée · Bordeaux</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="section-narrow">
+    <div class="section-head">
+      <span class="eyebrow">Questions</span>
+      <h2>Tout ce que vous vouliez <em>savoir.</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question">
+          À partir de quand voit-on les premiers résultats ?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Les premiers effets sur l'éclat et la fermeté de la peau sont visibles dès 2 à 3 semaines d'utilisation quotidienne. Les bénéfices anti-âge plus profonds (rides, élasticité) s'observent généralement à partir de 6 à 8 semaines.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Combien de fois par semaine utiliser le masque ?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Pour des résultats optimaux, nous recommandons 5 à 7 séances par semaine de 10 minutes, idéalement le matin ou le soir après le nettoyage. Une cure intensive peut être faite tous les jours pendant 4 semaines, puis 3 fois par semaine en entretien.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          La luminothérapie LED est-elle sûre pour les yeux ?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Oui. Nos masques sont conçus avec une protection oculaire intégrée et émettent une lumière non UV, sans danger pour les yeux. Il est néanmoins recommandé de garder les yeux fermés pendant la séance pour un meilleur confort.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Convient-il à tous les types de peau ?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Absolument. La luminothérapie LED est adaptée à tous les phototypes et tous les types de peau, y compris sensibles. Elle est non invasive et indolore. Déconseillée uniquement en cas de grossesse, de prise de médicaments photosensibilisants, ou d'épilepsie photosensible.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Quels sont les délais de livraison ?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Vos commandes sont expédiées sous 24h ouvrées depuis notre entrepôt parisien. La livraison à domicile en France métropolitaine prend 2 à 3 jours ouvrés, et 4 à 6 jours dans le reste de l'Europe. Livraison offerte à partir de 150€ d'achat.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Quelle est votre politique de retour ?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-answer">
+          <p>Nous offrons 30 jours pour tester votre masque. Si vous n'êtes pas convaincue, retournez-le-nous gratuitement et nous vous remboursons intégralement. Tous nos produits bénéficient également d'une garantie constructeur de 2 ans.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <span class="eyebrow">Lettres d'éclat</span>
+    <h2>Recevez 10% sur votre <em>première commande.</em></h2>
+    <p>Conseils de beauté, rituels exclusifs et accès anticipé aux nouveautés. Une lettre par mois, jamais plus.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Merci, vous êtes inscrite ✦');">
+      <input type="email" placeholder="Votre adresse email" required />
+      <button type="submit">S'inscrire</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        AURÉLIA
+        <small>Paris · Skincare</small>
+      </a>
+      <p>La maison française de la luminothérapie haute exigence. Conçu à Paris, fabriqué en Europe.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Boutique</h5>
+      <ul>
+        <li><a href="#gamme">Toute la gamme</a></li>
+        <li><a href="#featured">Le Signature</a></li>
+        <li><a href="#">Accessoires</a></li>
+        <li><a href="#">Cartes cadeaux</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Maison</h5>
+      <ul>
+        <li><a href="#">Notre histoire</a></li>
+        <li><a href="#science">La science</a></li>
+        <li><a href="#rituel">Le rituel</a></li>
+        <li><a href="#">Journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Aide</h5>
+      <ul>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#">Livraison & retours</a></li>
+        <li><a href="#">Nous contacter</a></li>
+        <li><a href="#">CGV</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AURÉLIA Paris. Tous droits réservés.</span>
+    <div class="socials">
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+      </a>
+      <a href="#" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+      </a>
+      <a href="#" aria-label="Pinterest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M8 21l4-9"/><path d="M9 13c0-3 2-5 4-5s4 1.5 4 4-2 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<div class="drawer-overlay" id="overlay"></div>
+<aside class="cart-drawer" id="cart">
+  <header class="cart-header">
+    <h3>Votre panier</h3>
+    <button class="cart-close" id="cart-close" aria-label="Fermer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </header>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty">
+      <p>Votre panier est vide</p>
+      <a href="#gamme" class="btn btn-ghost" onclick="closeCart()">Découvrir la gamme</a>
+    </div>
+  </div>
+  <footer class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-total">
+      <span>Sous-total</span>
+      <span id="cart-total">0,00 €</span>
+    </div>
+    <button class="cart-checkout" onclick="showToast('Le paiement sera disponible très bientôt ✦')">Procéder au paiement</button>
+    <p class="cart-note">Livraison et taxes calculées au paiement</p>
+  </footer>
+</aside>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg">Ajouté au panier</span>
+</div>
 
 <script>
-const e = React.createElement;
+const cart = [];
 
-const CITATIONS = {
-  "2026-04-13": "Demain, ça commence vraiment. Ce soir, repose-toi comme quelqu'un qui sait exactement ce qu'elle vaut — et demain, montre-le.",
-  "2026-04-14": "Tu portes déjà en toi tout ce qu'il faut. Aujourd'hui, rappelle-toi juste pourquoi tu as commencé.",
-  "2026-04-15": "Chaque page tournée ce soir, c'est un patient que tu sauveras demain. Continue, même quand les mots se brouillent.",
-  "2026-04-16": "T'as pas sacrifié tes soirées, tes week-ends et ta santé mentale pour t'arrêter maintenant. Pas toi. Pas aujourd'hui.",
-  "2026-04-17": "Il y a quelque chose de magnifique chez quelqu'un qui refuse d'abandonner. Tu es exactement cette personne.",
-  "2026-04-18": "Le doute, c'est juste ton cerveau qui te dit qu'il travaille. Laisse-le bosser, et toi, continue d'avancer.",
-  "2026-04-19": "Un jour, une petite fille dans un couloir d'hôpital te regardera avec des yeux immenses et dira « merci, docteure ». Tout part de cette table de travail.",
-  "2026-04-20": "Aujourd'hui, tu as le droit d'être fatiguée. Tu n'as pas le droit de lâcher. Ce n'est pas la même chose.",
-  "2026-04-21": "Tes fiches ne te jugeront pas. Tes profs ne te jugeront pas. Et moi non plus. Mais toi tu te jugeras si tu n'y vas pas à fond.",
-  "2026-04-22": "La médecine, c'est une histoire d'amour difficile. Tu en es au chapitre le plus dur. Mais les plus beaux chapitres arrivent.",
-  "2026-04-23": "Ferme les réseaux. Ouvre tes cours. Dans trois heures, tu seras fière de toi. Dans trois semaines, tu seras libre.",
-  "2026-04-24": "Tu n'es pas en train de « réviser pour un examen ». Tu es en train de devenir quelqu'un qui sauve des vies. Agis en conséquence.",
-  "2026-04-25": "Même les plus grands médecins ont eu cette nuit-là où tout semblait impossible. Ils ont juste tourné une page de plus.",
-  "2026-04-26": "Je ne vais pas te dire que c'est facile. Je vais te dire que tu es plus forte que tout ce qui te fait peur en ce moment.",
-  "2026-04-27": "Quelque part entre la fatigue et la détermination, il y a toi. Et tu es exactement là où tu dois être.",
-  "2026-04-28": "Personne ne viendra faire le travail à ta place. Mais personne ne pourra non plus t'enlever ce que tu construis, nuit après nuit.",
-  "2026-04-29": "Respire. Relis. Recommence. Les trois R de ceux qui réussissent quand les autres s'écroulent.",
-  "2026-04-30": "T'es pas juste « en train de réviser ». T'es en train de prouver à tout le monde — et surtout à toi — que t'es faite pour ça.",
-  "2026-05-01": "Aujourd'hui le monde se repose. Toi, tu prends de l'avance. Et c'est exactement cette différence qui fera tout.",
-  "2026-05-02": "Cinq jours. Cent vingt heures. Chaque minute compte, mais toi aussi tu comptes. Mange. Bois. Puis replonge.",
-  "2026-05-03": "La peur que tu ressens, c'est le signe que ça compte vraiment pour toi. Utilise-la comme carburant, pas comme frein.",
-  "2026-05-04": "Tu es si proche que tu pourrais presque toucher la ligne d'arrivée. Ne marche pas. Cours.",
-  "2026-05-05": "Dernière ligne droite. Tu n'as plus besoin de motivation — tu as besoin de discipline. Et ça, tu l'as déjà prouvé mille fois.",
-  "2026-05-06": "Demain, tu entres dans cette salle et tu déposes sur la table tout ce que tu es. Et ce que tu es, c'est suffisant. C'est immense.",
-  "2026-05-07": "C'est aujourd'hui. Tu sais tout ce qu'il faut savoir. Fais-toi confiance autant que moi je te fais confiance. Va tout donner."
-};
+const formatPrice = (n) => n.toFixed(2).replace('.', ',') + ' €';
 
-const EXAM_DATE = new Date(2026, 4, 6); // May 6 - index 4
-
-const MONTHS_FR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-
-function formatDate(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
-  return d.getDate() + ' ' + MONTHS_FR[d.getMonth()];
+function getProductSvg() {
+  return `<svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 50 10 C 75 10, 90 30, 90 60 C 90 85, 75 105, 55 110 C 52 111, 48 111, 45 110 C 25 105, 10 85, 10 60 C 10 30, 25 10, 50 10 Z" fill="#F5EDE4"/>
+    <ellipse cx="32" cy="50" rx="9" ry="6" fill="#1A1410" opacity="0.75"/>
+    <ellipse cx="68" cy="50" rx="9" ry="6" fill="#1A1410" opacity="0.75"/>
+    <ellipse cx="50" cy="85" rx="10" ry="3.5" fill="#1A1410" opacity="0.7"/>
+  </svg>`;
 }
 
-function formatDateLong(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
-  const jours = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
-  return jours[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS_FR[d.getMonth()];
-}
+function renderCart() {
+  const itemsEl = document.getElementById('cart-items');
+  const footerEl = document.getElementById('cart-footer');
+  const countEl = document.querySelector('.cart-count');
 
-function getToday() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  return y + '-' + m + '-' + d;
-}
+  const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+  countEl.textContent = totalQty;
+  countEl.classList.toggle('hidden', totalQty === 0);
 
-function getDaysUntilExam() {
-  const now = new Date();
-  now.setHours(0,0,0,0);
-  const exam = new Date(EXAM_DATE);
-  exam.setHours(0,0,0,0);
-  const diff = Math.ceil((exam - now) / (1000 * 60 * 60 * 24));
-  return diff;
-}
-
-function App() {
-  const today = getToday();
-  const allDates = Object.keys(CITATIONS).sort();
-  const daysUntil = getDaysUntilExam();
-
-  const todayCitation = CITATIONS[today];
-  const pastDates = allDates.filter(function(d) { return d < today && CITATIONS[d]; }).reverse();
-  const futureDates = allDates.filter(function(d) { return d > today; });
-
-  // Countdown text
-  var countdownText = null;
-  if (daysUntil > 0) {
-    countdownText = e('div', { className: 'countdown fade-in' },
-      'J-', e('span', { className: 'countdown__number' }, daysUntil), ' avant le grand jour'
-    );
-  } else if (daysUntil === 0) {
-    countdownText = e('div', { className: 'countdown fade-in' },
-      e('span', { className: 'countdown__number' }, "C'est aujourd'hui.")
-    );
+  if (cart.length === 0) {
+    itemsEl.innerHTML = `<div class="cart-empty">
+      <p>Votre panier est vide</p>
+      <a href="#gamme" class="btn btn-ghost" onclick="closeCart()">Découvrir la gamme</a>
+    </div>`;
+    footerEl.style.display = 'none';
+    return;
   }
 
-  // Header
-  var header = e('header', { className: 'header' },
-    e('h1', { className: 'header__title fade-in' }, 'Calendrier'),
-    e('p', { className: 'header__subtitle fade-in fade-in-delay-1' }, 'Pour toi, chaque matin.'),
-    e('div', { className: 'header__line fade-in fade-in-delay-2' })
-  );
+  itemsEl.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-img">${getProductSvg()}</div>
+      <div class="cart-item-info">
+        <h4>${item.name}</h4>
+        <span style="font-size:0.78rem;color:var(--ink-3)">${formatPrice(item.price)}</span>
+        <div class="qty">
+          <button onclick="changeQty('${item.id}', -1)">−</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty('${item.id}', 1)">+</button>
+        </div>
+      </div>
+      <div>
+        <div class="cart-item-price">${formatPrice(item.price * item.qty)}</div>
+        <button class="cart-item-remove" onclick="removeItem('${item.id}')">Retirer</button>
+      </div>
+    </div>
+  `).join('');
 
-  // Hero - today's citation
-  var hero = null;
-  if (todayCitation) {
-    hero = e('section', { className: 'hero' },
-      e('div', { className: 'hero__date fade-in fade-in-delay-1' }, formatDateLong(today)),
-      e('blockquote', { className: 'hero__quote fade-in fade-in-delay-2' }, todayCitation),
-      e('div', { className: 'hero__ornament fade-in fade-in-delay-3' },
-        e('span', { className: 'hero__ornament-line' }),
-        e('span', { className: 'hero__ornament-dot' }),
-        e('span', { className: 'hero__ornament-line' })
-      )
-    );
-  } else if (today < allDates[0]) {
-    hero = e('section', { className: 'pre-start' },
-      e('p', { className: 'pre-start__message fade-in fade-in-delay-2' },
-        'Les mots arrivent bientôt. Le 14 avril, ouvre cette page au réveil.'
-      )
-    );
-  } else if (today > allDates[allDates.length - 1]) {
-    hero = e('section', { className: 'pre-start' },
-      e('p', { className: 'pre-start__message fade-in fade-in-delay-2' },
-        'Tu l\u2019as fait. Chaque mot était pour toi, et tu les as tous mérités.'
-      )
-    );
-  }
-
-  // Past citations
-  var pastSection = null;
-  if (pastDates.length > 0) {
-    pastSection = e('section', { className: 'past-section' },
-      e('h2', { className: 'section-title' }, 'Jours passés'),
-      pastDates.map(function(d, i) {
-        return e('div', {
-          className: 'past-card',
-          key: d,
-          style: { animationDelay: (i * 0.1) + 's' }
-        },
-          e('div', { className: 'past-card__date' }, formatDate(d)),
-          e('p', { className: 'past-card__quote' }, '\u201C' + CITATIONS[d] + '\u201D')
-        );
-      })
-    );
-  }
-
-  // Future locked cards
-  var futureSection = null;
-  if (futureDates.length > 0) {
-    futureSection = e('section', { className: 'future-section' },
-      e('h2', { className: 'section-title' }, '\u00C0 venir'),
-      e('div', { className: 'future-grid' },
-        futureDates.map(function(d) {
-          return e('div', { className: 'future-card', key: d },
-            e('div', { className: 'future-card__date' }, formatDate(d)),
-            e('div', { className: 'future-card__icon' }, '\u2709'),
-            e('div', { className: 'future-card__label' }, 'patience\u2026')
-          );
-        })
-      )
-    );
-  }
-
-  // Footer
-  var footer = e('footer', { className: 'footer' }, '\u2014 avec tout ce que j\u2019ai \u2014');
-
-  return e(React.Fragment, null,
-    header,
-    countdownText,
-    hero,
-    pastSection,
-    futureSection,
-    footer
-  );
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('cart-total').textContent = formatPrice(total);
+  footerEl.style.display = 'block';
 }
 
-var root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(e(App));
+function addToCart(id, name, price) {
+  const existing = cart.find(i => i.id === id);
+  if (existing) { existing.qty += 1; }
+  else { cart.push({ id, name, price, qty: 1 }); }
+  renderCart();
+  showToast(`${name} · ajouté au panier`);
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { removeItem(id); return; }
+  renderCart();
+}
+
+function removeItem(id) {
+  const idx = cart.findIndex(i => i.id === id);
+  if (idx >= 0) cart.splice(idx, 1);
+  renderCart();
+}
+
+const overlay = document.getElementById('overlay');
+const drawer = document.getElementById('cart');
+
+function openCart() {
+  drawer.classList.add('open');
+  overlay.classList.add('open');
+}
+function closeCart() {
+  drawer.classList.remove('open');
+  overlay.classList.remove('open');
+}
+document.querySelector('.cart-toggle').addEventListener('click', openCart);
+document.getElementById('cart-close').addEventListener('click', closeCart);
+overlay.addEventListener('click', closeCart);
+
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.id;
+    const name = btn.dataset.name;
+    const price = parseFloat(btn.dataset.price);
+    addToCart(id, name, price);
+    setTimeout(openCart, 350);
+  });
+});
+
+document.querySelectorAll('.faq-item').forEach(item => {
+  const q = item.querySelector('.faq-question');
+  q.addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+document.querySelector('.menu-toggle')?.addEventListener('click', () => {
+  const nav = document.querySelector('.nav');
+  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+});
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+document.querySelectorAll('.product-fav').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const svg = btn.querySelector('svg');
+    const isFav = svg.getAttribute('fill') === 'currentColor';
+    svg.setAttribute('fill', isFav ? 'none' : 'currentColor');
+    btn.style.color = isFav ? '' : 'var(--bordeaux)';
+  });
+});
 </script>
+
 </body>
 </html>

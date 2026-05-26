@@ -1,0 +1,82 @@
+{% comment %} Use main-page section so the customizer still sees it as a page {% endcomment %}
+
+<section class="cart-page" style="padding-top:4rem;">
+  <h1>Livraison et Retours</h1>
+  <div style="margin-top:2rem;line-height:1.8;color:var(--ink-2);font-size:1rem;max-width:820px;">
+    {% render 'legal-warning' %}
+
+    <p><em>Dernière mise à jour : {{ 'now' | date: '%d/%m/%Y' }}</em></p>
+
+    <p>Chez AURÉLIA, nous mettons un soin particulier à la préparation et à l'expédition de chaque commande. Vous trouverez ci-dessous l'ensemble des informations relatives à la livraison de vos produits ainsi qu'à la procédure de retour et de remboursement.</p>
+
+    <h2>1. Zones et délais de livraison</h2>
+
+    <h3>France métropolitaine</h3>
+    <p>Délai de livraison estimé : <strong>2 à 3 jours ouvrés</strong> à compter de l'expédition.</p>
+
+    <h3>Union européenne</h3>
+    <p>Délai de livraison estimé : <strong>4 à 6 jours ouvrés</strong> à compter de l'expédition. Les pays desservis sont notamment : Allemagne, Autriche, Belgique, Espagne, Italie, Luxembourg, Pays-Bas, Portugal.</p>
+
+    <h3>Hors Union européenne</h3>
+    <p>Les livraisons hors Union européenne peuvent être proposées sur demande. Les éventuels frais de douane, taxes ou droits d'importation restent à la charge exclusive du destinataire.</p>
+
+    <h2>2. Tarifs de livraison</h2>
+    <ul>
+      <li><strong>Livraison offerte</strong> en France métropolitaine et en Union européenne dès <strong>150 € d'achat</strong>.</li>
+      <li>En dessous de ce montant, les frais de livraison s'élèvent à <strong>6,90 €</strong>.</li>
+      <li>Les options de livraison express (Chronopost) peuvent faire l'objet d'une tarification spécifique, indiquée au moment de la validation de la commande.</li>
+    </ul>
+
+    <h2>3. Transporteurs</h2>
+    <p>Nous travaillons avec des partenaires logistiques de confiance afin de garantir une expérience de livraison optimale :</p>
+    <ul>
+      <li><strong>Colissimo</strong> (La Poste) — livraison à domicile avec ou sans signature</li>
+      <li><strong>Mondial Relay</strong> — livraison en point relais</li>
+      <li><strong>Chronopost</strong> — livraison express en 24h sur la France métropolitaine</li>
+    </ul>
+    <p>Le choix du transporteur est proposé au moment de la validation du panier.</p>
+
+    <h2>4. Préparation et expédition</h2>
+    <p>Les commandes passées avant 14h (heure de Paris), du lundi au vendredi, sont expédiées le jour même. Les commandes passées le week-end ou les jours fériés sont expédiées le premier jour ouvré suivant.</p>
+    <p>Vous recevrez un email de confirmation d'expédition contenant un <strong>numéro de suivi</strong> dès que votre colis sera remis au transporteur.</p>
+
+    <h2>5. Suivi de la commande</h2>
+    <p>Vous pouvez suivre l'acheminement de votre colis à tout moment grâce au lien de suivi fourni dans l'email d'expédition. En cas de difficulté, n'hésitez pas à nous contacter à <strong>[EMAIL DE CONTACT]</strong>.</p>
+
+    <h2>6. Réception du colis</h2>
+    <p>Nous vous invitons à vérifier l'état du colis dès sa réception. En cas de colis endommagé, ouvert ou présentant des traces suspectes, nous vous recommandons d'émettre des réserves précises et détaillées auprès du transporteur lors de la livraison, puis de nous en informer dans les meilleurs délais.</p>
+
+    <h2>7. Droit de rétractation</h2>
+    <p>Conformément aux articles L. 221-18 et suivants du Code de la consommation, vous disposez d'un délai de <strong>quatorze (14) jours</strong> à compter de la réception de votre commande pour exercer votre droit de rétractation, sans avoir à motiver votre décision.</p>
+    <p>Pour exercer ce droit, il vous suffit de nous notifier votre décision par email à <strong>[EMAIL DE CONTACT]</strong> en précisant les références de votre commande. Vous pouvez également utiliser le modèle de formulaire de rétractation prévu par la réglementation.</p>
+
+    <h2>8. Procédure de retour</h2>
+    <ol>
+      <li>Envoyez votre demande de retour par email à <strong>[EMAIL DE CONTACT]</strong> dans le délai de 14 jours suivant la réception.</li>
+      <li>Vous recevrez un email de confirmation accompagné de l'adresse de retour et, le cas échéant, des instructions complémentaires.</li>
+      <li>Renvoyez le produit dans son <strong>état d'origine</strong>, non utilisé, complet et dans son <strong>emballage d'origine</strong>, dans un délai maximum de quatorze (14) jours suivant la communication de votre décision de rétractation.</li>
+      <li>Nous vous recommandons fortement d'expédier votre retour en mode suivi afin de pouvoir justifier de la date d'envoi et conserver la preuve de dépôt.</li>
+    </ol>
+    <p><strong>Frais de retour :</strong> les frais de retour sont à la charge du Client, sauf en cas de produit défectueux, non conforme ou erreur de notre part.</p>
+
+    <h2>9. Exclusions du droit de rétractation</h2>
+    <p>Conformément à l'article L. 221-28 du Code de la consommation, le droit de rétractation ne peut être exercé pour les biens descellés par le Client après la livraison et qui ne peuvent être renvoyés pour des raisons d'hygiène ou de protection de la santé.</p>
+
+    <h2>10. Remboursement</h2>
+    <p>À réception du produit retourné et après vérification de son état, nous procéderons au remboursement de votre commande, frais de livraison standard inclus, dans un délai maximum de <strong>quatorze (14) jours</strong>.</p>
+    <p>Le remboursement est effectué via le même moyen de paiement que celui utilisé lors de la commande initiale, sauf accord exprès du Client pour un autre mode. Aucun frais ne sera prélevé à l'occasion de ce remboursement.</p>
+    <p>Conformément à l'article L. 221-24 du Code de la consommation, nous pouvons différer le remboursement jusqu'à la récupération effective du produit ou jusqu'à ce que le Client ait fourni une preuve d'expédition, la date retenue étant celle du premier de ces faits.</p>
+
+    <h2>11. Produits défectueux ou non conformes</h2>
+    <p>Si vous recevez un produit défectueux ou non conforme à votre commande, contactez-nous dans les meilleurs délais à <strong>[EMAIL DE CONTACT]</strong>. Conformément aux garanties légales de conformité et des vices cachés, nous prendrons en charge le retour et procéderons à l'échange ou au remboursement du produit.</p>
+
+    <h2>12. Contact</h2>
+    <p>Pour toute question relative à la livraison ou aux retours, notre service client est à votre disposition :</p>
+    <ul>
+      <li>Email : <strong>[EMAIL DE CONTACT]</strong></li>
+      <li>Téléphone : <strong>[TÉLÉPHONE]</strong></li>
+      <li>Horaires : du lundi au vendredi, de 9h à 18h</li>
+    </ul>
+
+  </div>
+</section>

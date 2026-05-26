@@ -1,0 +1,10 @@
+{%- comment -%}
+  Bannière "À compléter" — s'affiche tant que des placeholders [...] sont présents.
+  À retirer manuellement avant publication, ou ajouter ?nowarning=1 à l'URL pour la masquer.
+{%- endcomment -%}
+{%- unless request.host contains '.myshopify.com' == false and request.path contains 'nowarning' -%}
+  <div style="background:#FEF3C7;border:1px solid #F59E0B;border-radius:4px;padding:1rem 1.4rem;margin:1.5rem 0 2rem;font-family:'Inter',sans-serif;font-size:0.88rem;color:#78350F;line-height:1.6;">
+    <strong style="display:block;margin-bottom:0.3rem;letter-spacing:0.05em;text-transform:uppercase;font-size:0.72rem;">⚠ À compléter avant publication</strong>
+    Cette page contient des champs entre crochets <code style="background:rgba(255,255,255,0.6);padding:1px 6px;border-radius:3px;font-family:monospace;font-size:0.82rem;">[COMME CECI]</code> à remplacer par les informations réelles de votre société (raison sociale, SIRET, adresse, etc.). Visible uniquement sur le store de prévisualisation Shopify. Retirez ce snippet du template une fois la page complétée.
+  </div>
+{%- endunless -%}

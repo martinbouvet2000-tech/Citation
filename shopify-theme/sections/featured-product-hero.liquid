@@ -1,0 +1,101 @@
+{%- assign product = all_products[section.settings.product] -%}
+<section class="featured" id="featured">
+  <div class="featured-inner">
+    <div class="featured-visual">
+      {%- if section.settings.tag != blank -%}<span class="featured-tag">{{ section.settings.tag }}</span>{%- endif -%}
+      {%- if product != empty and product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title | escape }}" loading="lazy">
+      {%- elsif section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
+      {%- else -%}
+        <div class="hero-placeholder" style="aspect-ratio:4/5;width:100%;">Ajoutez un produit ou une image</div>
+      {%- endif -%}
+    </div>
+    <div class="featured-content">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow" style="display:block;margin-bottom:1rem;">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.description != blank -%}
+        <p class="desc">{{ section.settings.description }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="featured-specs">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'spec' -%}
+              <div class="spec" {{ block.shopify_attributes }}>
+                <strong>{{ block.settings.value }}</strong>
+                <span>{{ block.settings.label }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if product != empty -%}
+        <div class="featured-price">
+          <span class="price-current">{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="price-old">{{ product.compare_at_price | money }}</span>
+            <span class="price-save">−{{ product.compare_at_price | minus: product.price | money }}</span>
+          {%- endif -%}
+        </div>
+        <form data-add-to-cart>
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <div class="hero-cta">
+            <button type="submit" class="btn btn-primary" {% unless product.available %}disabled{% endunless %}>
+              {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}<span class="arrow">→</span>{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+            </button>
+            {%- if section.settings.secondary_label != blank and section.settings.secondary_url != blank -%}
+              <a href="{{ section.settings.secondary_url }}" class="btn btn-ghost">{{ section.settings.secondary_label }}</a>
+            {%- endif -%}
+          </div>
+        </form>
+      {%- else -%}
+        <div class="hero-cta">
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Découvrir<span class="arrow">→</span></a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Produit vedette",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Produit" },
+    { "type": "text", "id": "tag", "label": "Tag visuel", "default": "Best-seller · Édition Paris" },
+    { "type": "image_picker", "id": "image", "label": "Image (si pas de produit)" },
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "Le best-seller" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>AURÉLIA <em>Signature</em></p>" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Le masque LED le plus complet de notre sélection. Trois longueurs d'onde scientifiquement étudiées, une cryothérapie sous les yeux pour décongestionner les poches, et une télécommande intelligente." },
+    { "type": "text", "id": "secondary_label", "label": "CTA secondaire", "default": "La science" },
+    { "type": "url", "id": "secondary_url", "label": "Lien CTA secondaire" }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Caractéristique",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Valeur", "default": "3" },
+        { "type": "text", "id": "label", "label": "Légende", "default": "Longueurs d'onde LED" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Produit vedette",
+      "blocks": [
+        { "type": "spec", "settings": { "value": "3", "label": "Longueurs d'onde LED" } },
+        { "type": "spec", "settings": { "value": "10 min", "label": "Séance quotidienne" } },
+        { "type": "spec", "settings": { "value": "−7°C", "label": "Cryothérapie sous les yeux" } },
+        { "type": "spec", "settings": { "value": "4 semaines", "label": "Résultats visibles" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

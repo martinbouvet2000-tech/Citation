@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product"
+    },
+    "promise": {
+      "type": "promise-strip",
+      "blocks": {
+        "p1": { "type": "item", "settings": { "icon": "truck", "title": "Livraison offerte", "subtitle": "Dès 150€ · expédié en 24h" } },
+        "p2": { "type": "item", "settings": { "icon": "check-circle", "title": "Cliniquement testé", "subtitle": "Études dermatologiques" } },
+        "p3": { "type": "item", "settings": { "icon": "shield", "title": "Garantie 2 ans", "subtitle": "Satisfait ou remboursé" } },
+        "p4": { "type": "item", "settings": { "icon": "card", "title": "Paiement 3× sans frais", "subtitle": "Via Klarna ou Alma" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"]
+    },
+    "science": {
+      "type": "science",
+      "settings": {
+        "eyebrow": "La science",
+        "heading": "<p>Trois lumières, <em>trois promesses.</em></p>",
+        "subheading": "La luminothérapie LED repose sur des longueurs d'onde précises, chacune ciblant une couche spécifique de la peau."
+      },
+      "blocks": {
+        "w1": { "type": "wavelength", "settings": { "color": "red", "wavelength": "633", "title": "Lumière rouge · Anti-âge", "description": "Stimule la production de collagène et d'élastine dans le derme.", "bullet_1": "Réduit les rides et ridules", "bullet_2": "Stimule le collagène", "bullet_3": "Améliore l'élasticité" } },
+        "w2": { "type": "wavelength", "settings": { "color": "blue", "wavelength": "415", "title": "Lumière bleue · Anti-imperfections", "description": "Cible la bactérie responsable de l'acné et purifie les pores.", "bullet_1": "Réduit les imperfections", "bullet_2": "Purifie les pores", "bullet_3": "Apaise les inflammations" } },
+        "w3": { "type": "wavelength", "settings": { "color": "amber", "wavelength": "590", "title": "Lumière ambrée · Éclat", "description": "Unifie le teint, atténue les rougeurs et redonne un effet bonne mine.", "bullet_1": "Unifie le teint", "bullet_2": "Atténue les rougeurs", "bullet_3": "Apporte de l'éclat" } }
+      },
+      "block_order": ["w1", "w2", "w3"]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "eyebrow": "Questions",
+        "heading": "<p>Tout ce que vous vouliez <em>savoir.</em></p>"
+      },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "À partir de quand voit-on les premiers résultats ?", "answer": "Les premiers effets sont visibles dès 2 à 3 semaines d'utilisation quotidienne." } },
+        "q2": { "type": "qa", "settings": { "question": "Combien de fois par semaine ?", "answer": "5 à 7 séances par semaine de 10 minutes pour des résultats optimaux." } },
+        "q3": { "type": "qa", "settings": { "question": "Politique de retour ?", "answer": "30 jours pour tester. Garantie constructeur de 2 ans." } }
+      },
+      "block_order": ["q1", "q2", "q3"]
+    }
+  },
+  "order": ["main", "promise", "science", "faq"]
+}

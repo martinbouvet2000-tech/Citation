@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Votre panier vous attend · {{ shop.name }}</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #FAF6F1; font-family: 'Inter', Helvetica, Arial, sans-serif; color: #1A1410; -webkit-font-smoothing: antialiased;">
+
+  <!-- Subject suggéré : ✨ Votre panier vous attend chez Aurélia -->
+  <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
+    Quelques articles vous attendent &mdash; reprenez là où vous vous étiez arrêtée.
+  </div>
+
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #FAF6F1;">
+    <tr>
+      <td align="center" style="padding: 32px 16px;">
+
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px; width: 100%; background-color: #FFFFFF;">
+
+          <!-- HEADER -->
+          <tr>
+            <td align="center" style="padding: 40px 32px 24px 32px; background-color: #FAF6F1;">
+              <div style="font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-size: 36px; letter-spacing: 8px; color: #1A1410; font-weight: 400; line-height: 1;">
+                AURÉLIA
+              </div>
+              <div style="margin-top: 10px; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 10px; letter-spacing: 4px; color: #C9A96E; text-transform: uppercase;">
+                Paris &middot; Skincare
+              </div>
+            </td>
+          </tr>
+
+          <!-- BANDEAU IVOIRE -->
+          <tr>
+            <td align="center" style="padding: 48px 32px 12px 32px; background-color: #FAF6F1;">
+              <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 32px; line-height: 1.3; color: #1A1410; font-weight: 400; font-style: italic;">
+                Votre panier vous attend
+              </div>
+              <div style="margin-top: 12px; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 13px; letter-spacing: 1px; color: #6B2336;">
+                Sans précipitation &mdash; à votre rythme.
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="height: 40px; background-color: #FAF6F1; line-height: 40px; font-size: 1px;">&nbsp;</td>
+          </tr>
+
+          <!-- MESSAGE -->
+          <tr>
+            <td style="padding: 40px 40px 16px 40px;">
+              <p style="margin: 0 0 16px 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.7; color: #1A1410;">
+                Bonjour {{ customer.first_name | default: 'chère cliente' }},
+              </p>
+              <p style="margin: 0 0 16px 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.7; color: #1A1410;">
+                Vous avez sélectionné quelques pièces sur la maison Aurélia, puis la vie a sans doute repris ses droits. C'est très bien ainsi.
+              </p>
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.7; color: #1A1410;">
+                Votre panier est conservé &mdash; lorsque le moment sera juste, il vous suffira d'un clic pour le retrouver.
+              </p>
+            </td>
+          </tr>
+
+          <!-- LINE ITEMS -->
+          <tr>
+            <td style="padding: 24px 40px 8px 40px;">
+              <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 11px; letter-spacing: 3px; color: #C9A96E; text-transform: uppercase; border-bottom: 1px solid #C9A96E; padding-bottom: 12px;">
+                Votre sélection
+              </div>
+            </td>
+          </tr>
+          {% for line in checkout.line_items %}
+          <tr>
+            <td style="padding: 20px 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td width="80" valign="top" style="padding-right: 16px;">
+                    {% if line.image %}
+                      <img src="{{ line.image | img_url: '160x' }}" alt="{{ line.title | escape }}" width="80" style="display: block; width: 80px; height: auto; border: 1px solid #F5EDE4;">
+                    {% else %}
+                      <div style="width: 80px; height: 80px; background-color: #F5EDE4;">&nbsp;</div>
+                    {% endif %}
+                  </td>
+                  <td valign="top" style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.5; color: #1A1410;">
+                    <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; color: #1A1410; margin-bottom: 4px;">
+                      {{ line.product.title | default: line.title }}
+                    </div>
+                    {% if line.variant.title != 'Default Title' %}
+                    <div style="font-size: 12px; color: #6B6B6B; margin-bottom: 4px;">
+                      {{ line.variant.title }}
+                    </div>
+                    {% endif %}
+                    <div style="font-size: 12px; color: #6B6B6B;">
+                      Quantité : {{ line.quantity }}
+                    </div>
+                  </td>
+                  <td valign="top" align="right" style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; color: #1A1410; white-space: nowrap;">
+                    {{ line.line_price | money }}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          {% endfor %}
+
+          <!-- CTA -->
+          <tr>
+            <td align="center" style="padding: 32px 40px 16px 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" style="background-color: #1A1410;">
+                    <a href="{{ checkout.recovery_url }}" style="display: inline-block; padding: 18px 48px; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 3px; color: #FAF6F1; text-decoration: none; text-transform: uppercase; font-weight: 500;">
+                      Reprendre mon panier
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- LIVRAISON OFFERTE -->
+          <tr>
+            <td align="center" style="padding: 8px 40px 40px 40px;">
+              <p style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px; line-height: 1.5; color: #6B2336; font-style: italic;">
+                Livraison offerte dès 150 &euro; d'achat.
+              </p>
+            </td>
+          </tr>
+
+          <!-- RÉASSURANCE -->
+          <tr>
+            <td style="padding: 0 40px 48px 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #F5EDE4;">
+                <tr>
+                  <td align="center" style="padding: 28px 24px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                      <tr>
+                        <td align="center" valign="top" width="33%" style="padding: 0 8px;">
+                          <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; color: #6B2336; margin-bottom: 6px;">Made in France</div>
+                          <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #1A1410;">Conçu &amp; fabriqué à Paris</div>
+                        </td>
+                        <td align="center" valign="top" width="33%" style="padding: 0 8px; border-left: 1px solid #C9A96E; border-right: 1px solid #C9A96E;">
+                          <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; color: #6B2336; margin-bottom: 6px;">2 ans</div>
+                          <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #1A1410;">Garantie incluse</div>
+                        </td>
+                        <td align="center" valign="top" width="33%" style="padding: 0 8px;">
+                          <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; color: #6B2336; margin-bottom: 6px;">30 jours</div>
+                          <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 11px; line-height: 1.5; color: #1A1410;">Pour changer d'avis</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td align="center" style="padding: 40px 32px; background-color: #1A1410;">
+              <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; letter-spacing: 6px; color: #FAF6F1; margin-bottom: 16px;">
+                AURÉLIA
+              </div>
+              <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 11px; letter-spacing: 2px; color: #C9A96E; margin-bottom: 24px; text-transform: uppercase;">
+                L'équipe Aurélia &middot; Paris
+              </div>
+              <div style="margin-bottom: 20px;">
+                <a href="https://instagram.com/aureliaparis" style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 11px; letter-spacing: 2px; color: #FAF6F1; text-decoration: none; text-transform: uppercase; margin: 0 12px;">Instagram</a>
+                <span style="color: #C9A96E;">&middot;</span>
+                <a href="https://tiktok.com/@aureliaparis" style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 11px; letter-spacing: 2px; color: #FAF6F1; text-decoration: none; text-transform: uppercase; margin: 0 12px;">TikTok</a>
+              </div>
+              <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 10px; line-height: 1.7; color: #8A8580;">
+                AURÉLIA Paris &middot; 12 rue de Sévigné, 75004 Paris<br>
+                <a href="{{ shop.url }}" style="color: #8A8580; text-decoration: underline;">{{ shop.url | remove: 'https://' | remove: 'http://' }}</a>
+              </div>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

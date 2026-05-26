@@ -1,0 +1,283 @@
+{% comment %}
+  Bundle landing — Le Rituel Complet
+  Handle Shopify attendu : le-rituel-complet
+  Code de réduction à créer dans Shopify : RITUEL15 (15% off, applicable au panier
+  contenant les 3 produits ci-dessous)
+{% endcomment %}
+
+<style>
+  .rituel-hero {
+    padding: 6rem 2rem 4rem;
+    background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%);
+    text-align: center;
+  }
+  .rituel-hero-inner { max-width: 760px; margin: 0 auto; }
+  .rituel-hero .eyebrow { display: inline-block; margin-bottom: 1.4rem; }
+  .rituel-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.05;
+    font-weight: 400;
+    margin-bottom: 1.6rem;
+    color: var(--ink);
+  }
+  .rituel-hero h1 em { font-style: italic; color: var(--bordeaux); font-weight: 300; }
+  .rituel-hero .lead {
+    font-size: 1.15rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+  .rituel-price-banner {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 2rem;
+    text-align: center;
+  }
+  .rituel-price-banner-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  .rituel-price-banner .label {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .rituel-price-banner .price-strike {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    text-decoration: line-through;
+    color: var(--ink-faded);
+  }
+  .rituel-price-banner .price-final {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .rituel-price-banner .savings {
+    font-size: 0.86rem;
+    color: var(--gold);
+    margin-top: 0.4rem;
+  }
+  .rituel-price-banner .arrow-large {
+    font-size: 2rem;
+    color: var(--gold);
+  }
+  .rituel-products {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .rituel-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.4rem;
+  }
+  .rituel-card {
+    background: var(--pearl);
+    padding: 2rem;
+    border: 1px solid var(--line);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .rituel-card-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-style: italic;
+    margin-bottom: 0.4rem;
+  }
+  .rituel-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+  }
+  .rituel-card p {
+    font-size: 0.94rem;
+    color: var(--ink-2);
+    line-height: 1.6;
+    margin-bottom: 1.4rem;
+    flex-grow: 1;
+  }
+  .rituel-card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+  }
+  .rituel-cta-section {
+    padding: 4rem 2rem 6rem;
+    background: var(--cream);
+    text-align: center;
+  }
+  .rituel-cta-inner { max-width: 580px; margin: 0 auto; }
+  .rituel-cta-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+  }
+  .rituel-cta-section p {
+    color: var(--ink-2);
+    margin-bottom: 2.2rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .rituel-add-bundle {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--pearl);
+    padding: 1.3rem 3rem;
+    font-size: 0.84rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+    font-family: 'Inter', sans-serif;
+  }
+  .rituel-add-bundle:hover {
+    background: var(--bordeaux);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px -10px rgba(107, 35, 54, 0.4);
+  }
+  .rituel-add-bundle:disabled { opacity: 0.6; cursor: not-allowed; }
+  .rituel-trust {
+    margin-top: 2.4rem;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    color: var(--ink-3);
+  }
+  .rituel-trust span { display: flex; align-items: center; gap: 0.4rem; }
+
+  @media (max-width: 820px) {
+    .rituel-products-grid { grid-template-columns: 1fr; }
+    .rituel-price-banner-inner { grid-template-columns: 1fr; gap: 1rem; }
+    .rituel-price-banner .arrow-large { transform: rotate(90deg); }
+  }
+</style>
+
+<section class="rituel-hero">
+  <div class="rituel-hero-inner">
+    <span class="eyebrow">L'offre signature</span>
+    <h1>Le Rituel <em>Complet</em></h1>
+    <p class="lead">
+      Trois soins LED, une routine totale : visage, regard, décolleté. Conçus pour s'enchaîner — ou s'utiliser seuls. Réservé aux 100 premières clientes du mois, avec une remise immédiate de 15&nbsp;%.
+    </p>
+  </div>
+</section>
+
+<section class="rituel-price-banner">
+  <div class="rituel-price-banner-inner">
+    <div>
+      <span class="label">Prix individuel</span>
+      <span class="price-strike">607,00 €</span>
+    </div>
+    <div class="arrow-large">→</div>
+    <div>
+      <span class="label">Rituel Complet</span>
+      <div class="price-final">515,00 €</div>
+      <div class="savings">Vous économisez 92 € · livraison offerte</div>
+    </div>
+  </div>
+</section>
+
+<section class="rituel-products">
+  <div class="rituel-products-grid">
+    <div class="rituel-card">
+      <div class="rituel-card-number">I.</div>
+      <h3>AURÉLIA Signature</h3>
+      <p>Le masque LED visage complet. Trois longueurs d'onde médicales, cryothérapie sous les yeux à −7 °C, 8 minutes par séance.</p>
+      <div class="rituel-card-price">279 €</div>
+      <a href="/products/aurelia-signature" class="btn btn-ghost">Voir le produit</a>
+    </div>
+    <div class="rituel-card">
+      <div class="rituel-card-number">II.</div>
+      <h3>AURÉLIA Regard</h3>
+      <p>Le geste éclair anti-fatigue. Cryo −5 °C et lumière ambrée pour effacer poches et cernes en 5 minutes.</p>
+      <div class="rituel-card-price">129 €</div>
+      <a href="/products/aurelia-regard" class="btn btn-ghost">Voir le produit</a>
+    </div>
+    <div class="rituel-card">
+      <div class="rituel-card-number">III.</div>
+      <h3>AURÉLIA Décolleté</h3>
+      <p>La zone qu'on oublie. Lumière rouge 633 nm pour raffermir le cou et le décolleté en 6 semaines.</p>
+      <div class="rituel-card-price">199 €</div>
+      <a href="/products/aurelia-decollete" class="btn btn-ghost">Voir le produit</a>
+    </div>
+  </div>
+</section>
+
+<section class="rituel-cta-section">
+  <div class="rituel-cta-inner">
+    <h2>Le rituel <em>en un clic</em>.</h2>
+    <p>Les trois soins ajoutés à votre panier instantanément, avec le code de réduction <strong>RITUEL15</strong> déjà appliqué.</p>
+    <button type="button" class="rituel-add-bundle" id="addRitualBundle">
+      Ajouter le Rituel Complet — 515 €
+    </button>
+    <div class="rituel-trust">
+      <span>{% render 'icon', name: 'truck' %} Livraison offerte</span>
+      <span>{% render 'icon', name: 'shield' %} Garantie 2 ans</span>
+      <span>{% render 'icon', name: 'check-circle' %} Retour gratuit 30 j</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById('addRitualBundle')?.addEventListener('click', async function() {
+    const btn = this;
+    btn.disabled = true;
+    btn.textContent = 'Ajout en cours…';
+
+    try {
+      const handles = ['aurelia-signature', 'aurelia-regard', 'aurelia-decollete'];
+      const variantIds = [];
+
+      for (const handle of handles) {
+        const res = await fetch(`/products/${handle}.js`);
+        if (res.ok) {
+          const product = await res.json();
+          const available = product.variants.find(v => v.available);
+          if (available) variantIds.push(available.id);
+        }
+      }
+
+      if (variantIds.length === 0) {
+        throw new Error('Aucun produit du rituel disponible actuellement.');
+      }
+
+      const addRes = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ items: variantIds.map(id => ({ id: id, quantity: 1 })) })
+      });
+
+      if (!addRes.ok) {
+        const err = await addRes.json();
+        throw new Error(err.description || 'Erreur lors de l\'ajout au panier.');
+      }
+
+      window.location.href = '/discount/RITUEL15?redirect=/cart';
+    } catch (e) {
+      window.showToast?.(e.message);
+      btn.disabled = false;
+      btn.textContent = 'Ajouter le Rituel Complet — 515 €';
+    }
+  });
+</script>

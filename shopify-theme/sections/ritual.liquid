@@ -1,0 +1,52 @@
+<section class="rituel" id="{{ section.settings.anchor | default: 'rituel' }}">
+  <div class="section-narrow">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+    <div class="steps">
+      {%- for block in section.blocks -%}
+        <div class="step" {{ block.shopify_attributes }}>
+          <span class="step-num">{{ block.settings.number }}</span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.description }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rituel (étapes)",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "Le rituel" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>Dix minutes par jour, <em>vingt-huit jours.</em></p>" },
+    { "type": "text", "id": "subheading", "label": "Sous-titre", "default": "Un protocole simple, conçu pour s'intégrer naturellement à votre routine." },
+    { "type": "text", "id": "anchor", "label": "Ancre HTML", "default": "rituel" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Étape",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Numéro (chiffre romain)", "default": "I." },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Préparer" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Sur peau nettoyée, appliquez votre sérum." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Rituel",
+      "blocks": [
+        { "type": "step", "settings": { "number": "I.", "title": "Préparer", "description": "Sur peau nettoyée et démaquillée, appliquez votre sérum habituel pour préparer la peau à recevoir la lumière." } },
+        { "type": "step", "settings": { "number": "II.", "title": "Illuminer", "description": "Positionnez le masque, choisissez votre programme et profitez d'une séance de 10 minutes les yeux fermés." } },
+        { "type": "step", "settings": { "number": "III.", "title": "Sceller", "description": "Terminez par votre crème de jour ou de nuit pour sceller les bénéfices et nourrir la peau en profondeur." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

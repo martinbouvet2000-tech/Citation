@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_ink | default: '#1A1410' }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- comment -%}Robots: noindex sensitive templates, index everything else{%- endcomment -%}
+  {%- assign noindex_templates = 'cart,checkout,customers/account,customers/activate_account,customers/addresses,customers/login,customers/order,customers/register,customers/reset_password,gift_card,search' | split: ',' -%}
+  {%- assign current_template = template.name -%}
+  {%- if template.directory == 'customers' -%}{%- assign current_template = 'customers/' | append: template.name -%}{%- endif -%}
+  {%- if noindex_templates contains current_template -%}
+    <meta name="robots" content="noindex,nofollow">
+  {%- else -%}
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  {%- endif -%}
+
+  {%- comment -%}Hreflang for French locale{%- endcomment -%}
+  <link rel="alternate" hreflang="fr-fr" href="{{ canonical_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- else -%}
+    <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | asset_url }}">
+  {%- endif -%}
+
+  {%- comment -%}SEO-friendly title (~60 chars target){%- endcomment -%}
+  {%- capture seo_title -%}
+    {{- page_title -}}
+    {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+    {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- endcapture -%}
+  <title>{{ seo_title | strip | truncate: 65 }}</title>
+
+  {% render 'meta-tags' %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <style>
+    :root {
+      --ivory: {{ settings.color_ivory | default: '#FAF6F1' }};
+      --cream: {{ settings.color_cream | default: '#F5EDE4' }};
+      --pearl: {{ settings.color_pearl | default: '#FFFFFF' }};
+      --rose-pale: {{ settings.color_rose_pale | default: '#F0D8D8' }};
+      --rose: {{ settings.color_rose | default: '#E0B6B6' }};
+      --bordeaux: {{ settings.color_accent | default: '#6B2336' }};
+      --gold: {{ settings.color_gold | default: '#C9A96E' }};
+      --gold-light: #D9BC85;
+      --gold-pale: #EBDDB9;
+      --ink: {{ settings.color_ink | default: '#1A1410' }};
+      --ink-2: #44362C;
+      --ink-3: #7A6A5C;
+      --ink-faded: #B0A294;
+      --line: #E8DDD0;
+      --shadow-soft: 0 20px 60px -20px rgba(107, 35, 54, 0.18);
+      --shadow-card: 0 8px 32px -12px rgba(26, 20, 16, 0.12);
+    }
+  </style>
+
+  {% render 'json-ld' %}
+</head>
+<body class="template-{{ template.name }}">
+  <a class="visually-hidden skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  {% sections 'header-group' %}
+
+  <main id="MainContent" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  {% render 'cart-drawer' %}
+
+  <div class="toast" id="toast">
+    <span id="toast-msg"></span>
+  </div>
+
+  {{ 'theme.js' | asset_url | script_tag }}
+  {{ 'wishlist.js' | asset_url | script_tag }}
+
+  {% render 'popup-exit-intent' %}
+
+  {% render 'cookie-banner' %}
+</body>
+</html>

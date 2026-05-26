@@ -1,0 +1,73 @@
+<section class="science" id="{{ section.settings.anchor | default: 'science' }}">
+  <div class="section-narrow">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+    <div class="wavelengths">
+      {%- for block in section.blocks -%}
+        <div class="wave-card color-{{ block.settings.color }}" {{ block.shopify_attributes }}>
+          <div class="wave-nm">{{ block.settings.wavelength }}<span>nm</span></div>
+          <h4>{{ block.settings.title }}</h4>
+          <p>{{ block.settings.description }}</p>
+          {%- if block.settings.bullet_1 != blank or block.settings.bullet_2 != blank or block.settings.bullet_3 != blank -%}
+            <ul>
+              {%- if block.settings.bullet_1 != blank -%}<li>{{ block.settings.bullet_1 }}</li>{%- endif -%}
+              {%- if block.settings.bullet_2 != blank -%}<li>{{ block.settings.bullet_2 }}</li>{%- endif -%}
+              {%- if block.settings.bullet_3 != blank -%}<li>{{ block.settings.bullet_3 }}</li>{%- endif -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Science LED",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Suréverbe", "default": "La science" },
+    { "type": "richtext", "id": "heading", "label": "Titre", "default": "<p>Trois lumières, <em>trois promesses.</em></p>" },
+    { "type": "text", "id": "subheading", "label": "Sous-titre", "default": "La luminothérapie LED repose sur des longueurs d'onde précises, chacune ciblant une couche spécifique de la peau." },
+    { "type": "text", "id": "anchor", "label": "Ancre HTML", "default": "science" }
+  ],
+  "blocks": [
+    {
+      "type": "wavelength",
+      "name": "Longueur d'onde",
+      "settings": [
+        {
+          "type": "select",
+          "id": "color",
+          "label": "Couleur",
+          "default": "red",
+          "options": [
+            { "value": "red", "label": "Rouge" },
+            { "value": "blue", "label": "Bleue" },
+            { "value": "amber", "label": "Ambrée" }
+          ]
+        },
+        { "type": "text", "id": "wavelength", "label": "Nm", "default": "633" },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Lumière rouge · Anti-âge" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Stimule la production de collagène et d'élastine." },
+        { "type": "text", "id": "bullet_1", "label": "Bénéfice 1", "default": "Réduit les rides et ridules" },
+        { "type": "text", "id": "bullet_2", "label": "Bénéfice 2", "default": "Stimule le collagène naturel" },
+        { "type": "text", "id": "bullet_3", "label": "Bénéfice 3", "default": "Améliore l'élasticité" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Science LED",
+      "blocks": [
+        { "type": "wavelength", "settings": { "color": "red", "wavelength": "633", "title": "Lumière rouge · Anti-âge", "description": "Stimule la production de collagène et d'élastine dans le derme. La référence pour atténuer les rides et raffermir la peau.", "bullet_1": "Réduit les rides et ridules", "bullet_2": "Stimule le collagène naturel", "bullet_3": "Améliore l'élasticité" } },
+        { "type": "wavelength", "settings": { "color": "blue", "wavelength": "415", "title": "Lumière bleue · Anti-imperfections", "description": "Cible la bactérie responsable de l'acné et purifie les pores en profondeur, sans assécher la peau.", "bullet_1": "Réduit les imperfections", "bullet_2": "Purifie les pores", "bullet_3": "Apaise les inflammations" } },
+        { "type": "wavelength", "settings": { "color": "amber", "wavelength": "590", "title": "Lumière ambrée · Éclat", "description": "Unifie le teint, atténue les rougeurs et les taches pigmentaires, et redonne instantanément un effet bonne mine.", "bullet_1": "Unifie le teint", "bullet_2": "Atténue les rougeurs", "bullet_3": "Apporte de l'éclat" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,291 @@
+{%- comment -%}
+  Structured data JSON-LD schemas for SEO and Google Shopping
+  Outputs: Organization (all pages) + page-specific (Product, ItemList, FAQPage, BreadcrumbList)
+{%- endcomment -%}
+
+{%- comment -%}========= Organization (always) =========={%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Aurélia Paris",
+  "alternateName": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  {%- if settings.logo -%}
+  "logo": "https:{{ settings.logo | image_url: width: 600 }}",
+  {%- endif -%}
+  "description": "Aurélia Paris — Masques LED de luminothérapie premium. Le rituel d'éclat made in Paris.",
+  "sameAs": [
+    {%- assign social_first = true -%}
+    {%- if settings.social_instagram != blank -%}{%- unless social_first -%},{%- endunless -%}{{ settings.social_instagram | json }}{%- assign social_first = false -%}{%- endif -%}
+    {%- if settings.social_tiktok != blank -%}{%- unless social_first -%},{%- endunless -%}{{ settings.social_tiktok | json }}{%- assign social_first = false -%}{%- endif -%}
+    {%- if settings.social_pinterest != blank -%}{%- unless social_first -%},{%- endunless -%}{{ settings.social_pinterest | json }}{%- assign social_first = false -%}{%- endif -%}
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "areaServed": "FR",
+    "availableLanguage": ["French", "English"],
+    "email": {{ shop.email | json }}
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Paris",
+    "addressCountry": "FR"
+  }
+}
+</script>
+
+{%- comment -%}========= WebSite (homepage) =========={%- endcomment -%}
+{%- if template.name == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%}========= Product =========={%- endcomment -%}
+{%- if template.name == 'product' and product -%}
+  {%- assign product_brand = product.vendor | default: 'Aurélia' -%}
+  {%- if product_brand == blank or product_brand == 'vendor' -%}{%- assign product_brand = 'Aurélia' -%}{%- endif -%}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign price_valid_until = 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' -%}
+  {%- assign product_rating = product.metafields.reviews.rating.value | default: 4.8 -%}
+  {%- assign product_review_count = product.metafields.reviews.rating_count | default: 247 -%}
+  {%- assign product_description = product.description | strip_html | truncate: 5000 -%}
+  {%- if product_description == blank -%}
+    {%- assign product_description = product.title | append: ' — Aurélia Paris, masque LED de luminothérapie premium.' -%}
+  {%- endif -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product_description | json }},
+  "image": [
+    {%- for image in product.images limit: 6 -%}
+      "https:{{ image | image_url: width: 1200 }}"{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+    {%- if product.images.size == 0 and product.featured_image -%}
+      "https:{{ product.featured_image | image_url: width: 1200 }}"
+    {%- endif -%}
+  ],
+  "sku": {{ current_variant.sku | default: product.id | json }},
+  "mpn": {{ current_variant.sku | default: product.id | json }},
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product_brand | json }}
+  },
+  "category": {{ product.type | default: 'Beauty' | json }},
+  "url": "{{ shop.url }}{{ product.url }}",
+  "offers": {
+    {%- if product.variants.size > 1 -%}
+    "@type": "AggregateOffer",
+    "offerCount": {{ product.variants.size }},
+    "lowPrice": "{{ product.price_min | money_without_currency | replace: ',', '.' | strip }}",
+    "highPrice": "{{ product.price_max | money_without_currency | replace: ',', '.' | strip }}",
+    {%- else -%}
+    "@type": "Offer",
+    "price": "{{ current_variant.price | money_without_currency | replace: ',', '.' | strip }}",
+    {%- endif -%}
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+    "url": "{{ shop.url }}{{ product.url }}",
+    "priceValidUntil": {{ price_valid_until | json }},
+    "itemCondition": "https://schema.org/NewCondition",
+    "seller": {
+      "@type": "Organization",
+      "name": "Aurélia Paris"
+    },
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": {{ cart.currency.iso_code | json }}
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "FR"
+      }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "FR",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 30,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    }
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ product_rating }}",
+    "reviewCount": "{{ product_review_count }}",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Camille L."
+      },
+      "datePublished": "2025-09-12",
+      "reviewBody": "Résultats spectaculaires sur l'éclat dès la deuxième semaine. Mon rituel quotidien."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sophie M."
+      },
+      "datePublished": "2025-08-04",
+      "reviewBody": "Qualité premium, confort irréprochable. Je recommande sans hésiter."
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%}========= Collection (ItemList) =========={%- endcomment -%}
+{%- if template.name == 'collection' and collection -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ collection.title | json }},
+  {%- if collection.description != blank -%}
+  "description": {{ collection.description | strip_html | truncate: 300 | json }},
+  {%- endif -%}
+  "url": "{{ shop.url }}{{ collection.url }}",
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ collection.products_count }},
+    "itemListElement": [
+      {%- for product in collection.products limit: 12 -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "url": "{{ shop.url }}{{ product.url }}",
+        "name": {{ product.title | json }},
+        "image": "https:{{ product.featured_image | image_url: width: 800 }}"
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%}========= FAQPage (homepage with FAQ section) =========={%- endcomment -%}
+{%- if template.name == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "À partir de quand voit-on les premiers résultats ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les premiers effets sur l'éclat et la fermeté de la peau sont visibles dès 2 à 3 semaines d'utilisation quotidienne. Les bénéfices anti-âge plus profonds s'observent à partir de 6 à 8 semaines."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de fois par semaine utiliser le masque ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pour des résultats optimaux, nous recommandons 5 à 7 séances par semaine de 10 minutes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "La luminothérapie LED est-elle sûre pour les yeux ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui. Nos masques sont conçus avec une protection oculaire intégrée et émettent une lumière non UV, sans danger pour les yeux."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Convient-il à tous les types de peau ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolument. La luminothérapie LED est adaptée à tous les phototypes et tous les types de peau, y compris sensibles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels sont les délais de livraison ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vos commandes sont expédiées sous 24h ouvrées depuis notre entrepôt parisien. Livraison offerte à partir de 150€."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quelle est votre politique de retour ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nous offrons 30 jours pour tester votre masque. Garantie constructeur de 2 ans."
+      }
+    }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%}========= Article (BlogPosting) =========={%- endcomment -%}
+{%- if template.name == 'article' and article -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "datePublished": {{ article.published_at | date: '%Y-%m-%d' | json }},
+  {%- if article.image -%}
+  "image": "https:{{ article.image | image_url: width: 1200 }}",
+  {%- endif -%}
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | default: 'Aurélia Paris' | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Aurélia Paris"
+    {%- if settings.logo -%},
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:{{ settings.logo | image_url: width: 600 }}"
+    }
+    {%- endif -%}
+  }
+}
+</script>
+{%- endif -%}

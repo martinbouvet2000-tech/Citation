@@ -1,0 +1,128 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Aurélia",
+    "theme_version": "1.0.0",
+    "theme_author": "Aurélia Paris",
+    "theme_documentation_url": "https://shopify.dev",
+    "theme_support_url": "https://shopify.dev"
+  },
+  {
+    "name": "Logo & favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image (optionnel)",
+        "info": "Si vide, le nom textuel sera utilisé."
+      },
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Nom de la boutique",
+        "default": "AURÉLIA"
+      },
+      {
+        "type": "text",
+        "id": "logo_subtitle",
+        "label": "Sous-titre du logo",
+        "default": "Paris · Skincare"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Couleurs",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_ivory",
+        "label": "Fond ivoire",
+        "default": "#FAF6F1"
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "Crème",
+        "default": "#F5EDE4"
+      },
+      {
+        "type": "color",
+        "id": "color_pearl",
+        "label": "Perle (cartes)",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_rose_pale",
+        "label": "Rose pâle",
+        "default": "#F0D8D8"
+      },
+      {
+        "type": "color",
+        "id": "color_rose",
+        "label": "Rose",
+        "default": "#E0B6B6"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent bordeaux",
+        "default": "#6B2336"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Or",
+        "default": "#C9A96E"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Encre (texte/CTA)",
+        "default": "#1A1410"
+      }
+    ]
+  },
+  {
+    "name": "Réseaux sociaux",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest"
+      }
+    ]
+  },
+  {
+    "name": "Cartes produits",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Afficher le fournisseur",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_compare_at_price",
+        "label": "Afficher le prix barré",
+        "default": true
+      }
+    ]
+  }
+]

@@ -1,0 +1,86 @@
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="{{ routes.root_url }}" class="logo">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}">
+        {%- else -%}
+          {% render 'logo-svg' %}
+        {%- endif -%}
+      </a>
+      {%- if section.settings.tagline != blank -%}
+        <p>{{ section.settings.tagline }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'menu' -%}
+        <div class="footer-col" {{ block.shopify_attributes }}>
+          <h5>{{ block.settings.title }}</h5>
+          <ul>
+            {%- for link in linklists[block.settings.menu].links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  <div class="footer-bottom">
+    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. Tous droits réservés. <a href="#" class="footer-cookie-link" data-cookie-manage>Gérer mes cookies</a></span>
+    <div class="socials">
+      {%- if settings.social_instagram != blank -%}
+        <a href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">{% render 'icon', name: 'instagram' %}</a>
+      {%- endif -%}
+      {%- if settings.social_tiktok != blank -%}
+        <a href="{{ settings.social_tiktok }}" aria-label="TikTok" target="_blank" rel="noopener">{% render 'icon', name: 'tiktok' %}</a>
+      {%- endif -%}
+      {%- if settings.social_pinterest != blank -%}
+        <a href="{{ settings.social_pinterest }}" aria-label="Pinterest" target="_blank" rel="noopener">{% render 'icon', name: 'pinterest' %}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pied de page",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Phrase de présentation",
+      "default": "La maison française de la luminothérapie haute exigence. Conçu à Paris, fabriqué en Europe."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Boutique"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pied de page",
+      "blocks": [
+        { "type": "menu", "settings": { "title": "Boutique" } },
+        { "type": "menu", "settings": { "title": "Maison" } },
+        { "type": "menu", "settings": { "title": "Aide" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
