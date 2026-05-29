@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Environnement local (token Shopify, etc.)
+.env
+.env.local
+*.token
+credentials.json
+
+# Cache du script d'install
+_aurelia_temp/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
