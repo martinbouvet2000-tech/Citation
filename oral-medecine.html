@@ -566,19 +566,81 @@ body {
 .confidence--4 { background: var(--success-bg); color: var(--success); }
 .confidence--5 { background: linear-gradient(135deg, rgba(74,222,128,0.15), rgba(96,165,250,0.1)); color: var(--success); }
 
-/* Note input in questions */
-.note-input {
-  width: 100%;
-  margin-top: 0.5rem;
-  padding: 0.4rem 0.6rem;
+/* Accordion response */
+.resp-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.8rem;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  color: var(--text);
+  cursor: pointer;
   font-size: 0.8rem;
-  outline: none;
+  color: var(--accent-light);
+  font-weight: 500;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: left;
 }
-.note-input:focus { border-color: var(--accent); }
+.resp-toggle:hover { border-color: var(--accent-dim); background: var(--bg-card-hover); }
+.resp-toggle--open { border-color: var(--accent-dim); border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: none; }
+.resp-toggle__arrow { transition: transform 0.3s ease; display: inline-block; font-size: 0.65rem; }
+.resp-toggle--open .resp-toggle__arrow { transform: rotate(180deg); }
+.resp-toggle--edited { color: var(--success); }
+.resp-body {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  border: 0 solid var(--accent-dim);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  background: var(--bg-elevated);
+  transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.25s ease, border-width 0s 0.35s;
+}
+.resp-body--open {
+  max-height: 800px;
+  opacity: 1;
+  padding: 0.8rem;
+  border-width: 1px;
+  transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.25s ease, border-width 0s;
+}
+.resp-body textarea {
+  width: 100%;
+  min-height: 180px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  padding: 0.8rem;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.resp-body textarea:focus { border-color: var(--accent); }
+.resp-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+.resp-actions__hint { font-size: 0.7rem; color: var(--text-muted); }
+.resp-actions__btn {
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.resp-actions__btn:hover { border-color: var(--danger); color: var(--danger); }
 
 /* Empty state */
 .empty-state {
@@ -981,9 +1043,11 @@ function App() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
 
-  // Persisted: done questions & notes
+  // Persisted: done questions, notes & responses
   const [done, setDone] = useState(() => { try { const v = JSON.parse(localStorage.getItem('oral-pass-done')); return Array.isArray(v) ? v : []; } catch(e) { return []; } });
   const [notes, setNotes] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-notes')) || {}; } catch(e) { return {}; } });
+  const [responses, setResponses] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-responses')) || {}; } catch(e) { return {}; } });
+  const [openResp, setOpenResp] = useState(null);
 
   // Persisted: daily journal entries
   const [dailyLog, setDailyLog] = useState(() => { try { const v = JSON.parse(localStorage.getItem('oral-pass-daily')); return Array.isArray(v) ? v : []; } catch(e) { return []; } });
@@ -1010,6 +1074,7 @@ function App() {
   // Persist to localStorage
   useEffect(() => { localStorage.setItem('oral-pass-done', JSON.stringify(done)); }, [done]);
   useEffect(() => { localStorage.setItem('oral-pass-notes', JSON.stringify(notes)); }, [notes]);
+  useEffect(() => { localStorage.setItem('oral-pass-responses', JSON.stringify(responses)); }, [responses]);
   useEffect(() => { localStorage.setItem('oral-pass-daily', JSON.stringify(dailyLog)); }, [dailyLog]);
   useEffect(() => { localStorage.setItem('oral-pass-streak', JSON.stringify(streak)); }, [streak]);
 
@@ -1229,6 +1294,107 @@ function App() {
     );
   };
 
+  // Generate skeleton response based on question metadata
+  const generateSkeleton = useCallback((q, type) => {
+    const tagMap = {
+      'autonomie': 'Respect de l\'autonomie du patient (droit de decider pour soi-meme)',
+      'ethique': 'Enjeux ethiques : equilibre entre bienfaisance et non-malfaisance',
+      'empathie': 'Ecoute active et empathie : comprendre avant de juger',
+      'croyances': 'Respect des convictions personnelles vs imperatif medical',
+      'vie': 'Protection de la vie : principe fondamental de la medecine',
+      'verite': 'Droit a l\'information vs protection du patient (verite progressive)',
+      'bienveillance': 'Principe de bienfaisance : agir dans l\'interet du patient',
+      'secret-medical': 'Secret medical (art. L1110-4 CSP) : pilier de la confiance',
+      'securite': 'Securite publique vs droits individuels',
+      'dilemme': 'Conflit entre deux valeurs ou obligations',
+      'vaccination': 'Sante publique (immunite collective) vs liberte individuelle',
+      'liberte': 'Liberte individuelle et ses limites dans la societe',
+      'sante-publique': 'Enjeu de sante publique : interet collectif',
+      'fin-de-vie': 'Fin de vie : dignite, accompagnement, loi Claeys-Leonetti',
+      'legislation': 'Cadre legislatif francais et ses evolutions',
+      'dignite': 'Respect de la dignite humaine en toutes circonstances',
+      'bioethique': 'Bioethique : encadrement des avancees scientifiques',
+      'societe': 'Impact societal et responsabilite collective',
+      'droits': 'Droits fondamentaux et equilibre des libertes',
+      'clause-conscience': 'Clause de conscience vs continuite des soins',
+      'acces-soins': 'Acces universel aux soins (art. L1110-1 CSP)',
+      'integrite': 'Integrite professionnelle et responsabilite',
+      'recherche': 'Ethique de la recherche et progres scientifique',
+      'justice-sociale': 'Equite et lutte contre les inegalites de sante',
+      'inegalites': 'Determinants sociaux de la sante',
+      'psychiatrie': 'Soins psychiatriques : consentement et contrainte',
+      'protection': 'Protection des personnes vulnerables',
+      'deontologie': 'Code de deontologie medicale',
+      'numerique': 'Impact du numerique sur la sante et les relations',
+      'sante-mentale': 'Sante mentale : destigmatisation et acces aux soins',
+      'IA': 'Intelligence artificielle : promesses et limites dans le soin',
+      'technologie': 'Innovation technologique et humanite du soin',
+      'action': 'Passage a l\'action : que faire concretement ?',
+      'urgence': 'Situation d\'urgence : reagir avec sang-froid',
+      'responsabilite': 'Sens de la responsabilite individuelle et collective',
+      'communication': 'Communication bienveillante et assertive',
+      'solidarite': 'Solidarite et lien social',
+      'courage': 'Courage moral : agir malgre l\'inconfort',
+      'amitie': 'Amitie vs responsabilite : ou placer la limite ?',
+      'confrontation': 'Savoir confronter avec respect',
+      'inclusion': 'Inclusion et respect de la difference',
+      'discrimination': 'Lutte contre les discriminations',
+      'pression': 'Resister aux pressions sociales ou hierarchiques',
+      'confiance': 'Construire et maintenir la confiance',
+      'mineur': 'Droits du mineur et autorite parentale',
+      'environnement': 'Sante environnementale et prevention',
+      'prevention': 'Prevention : mieux vaut prevenir que guerir',
+      'precarite': 'Precarite et acces aux soins',
+      'addiction': 'Addiction : approche medicale non-jugeante',
+      'vieillissement': 'Vieillissement de la population et adaptation du systeme',
+      'handicap': 'Handicap : inclusion et accessibilite',
+    };
+
+    const axes = q.tags
+      .map(t => tagMap[t] || null)
+      .filter(Boolean)
+      .slice(0, 3);
+
+    const isARED = type === 'ared';
+    const isMotiv = type === 'motivation';
+
+    if (isMotiv) {
+      return '🎯 INTRODUCTION\n' +
+        'Reformuler la question avec tes propres mots. Montrer que tu as compris l\'enjeu.\n\n' +
+        '💡 DEVELOPPEMENT\n' +
+        (axes.length > 0 ? axes.map((a, i) => '• Axe ' + (i+1) + ' : ' + a).join('\n') : '• Axe 1 : [a completer]\n• Axe 2 : [a completer]') + '\n' +
+        '• Illustrer avec ton parcours personnel, tes experiences, tes motivations\n' +
+        '• Montrer ta connaissance du metier et du cursus\n\n' +
+        '✅ CONCLUSION\n' +
+        'Reaffirmer ta motivation avec sincerite. Ouverture vers ta vision du metier.';
+    }
+
+    if (isARED) {
+      return '📋 RESTITUTION DU DOCUMENT (1-1.5 min)\n' +
+        'Decrire le document de memoire : type (image/graphique/tableau/texte), donnees cles, chiffres importants.\n\n' +
+        '🔍 PROBLEMATIQUES (2 min)\n' +
+        (axes.length > 0 ? axes.map((a, i) => '• Problematique ' + (i+1) + ' : ' + a).join('\n') : '• Problematique 1 : [a completer]\n• Problematique 2 : [a completer]') + '\n\n' +
+        '⚖️ ESPRIT CRITIQUE (1 min)\n' +
+        '• Limites du document : biais possibles, ce qui n\'est pas montre\n' +
+        '• Nuancer : distinguer correlation et causalite\n' +
+        '• Sources et fiabilite des donnees\n\n' +
+        '✅ CONCLUSION (0.5 min)\n' +
+        'Synthese personnelle + ouverture vers une question plus large.';
+    }
+
+    // RPC
+    return '📋 INTRODUCTION (1 min)\n' +
+      'Reformuler la situation. Identifier les acteurs et le contexte. Formuler la problematique.\n\n' +
+      '🔍 ANALYSE (2 min)\n' +
+      (axes.length > 0 ? axes.map((a, i) => '• Axe ' + (i+1) + ' : ' + a).join('\n') : '• Axe 1 : [a completer]\n• Axe 2 : [a completer]') + '\n\n' +
+      '⚖️ DISCUSSION (1.5 min)\n' +
+      '• Arguments pour / contre\n' +
+      '• Nuances et complexite de la situation\n' +
+      '• Exemples concrets ou references\n\n' +
+      '✅ CONCLUSION (0.5 min)\n' +
+      'Position personnelle argumentee + ouverture.';
+  }, []);
+
   const renderQuestionList = (type) => {
     const questions = DATA.questions[type];
     const themes = getThemes(type);
@@ -1248,23 +1414,47 @@ function App() {
       ),
       h('div', { className: 'progress', style: { marginBottom: '0.5rem' } }, h('div', { className: 'progress__fill', style: { width: fPct + '%' } })),
       h('div', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1rem' } }, fDone + '/' + filtered.length + ' faites (' + fPct + '%)'),
-      filtered.map((q, i) =>
-        h('div', { key: i, className: 'question' + (done.includes(q.q) ? ' question--done' : ''), onClick: () => toggleDone(q.q) },
-          h('div', { className: 'question__text' }, q.q),
-          h('div', { className: 'question__meta' },
-            h('span', { className: 'question__diff question__diff--' + q.difficulte }, ['Facile','Moyen','Difficile'][q.difficulte-1]),
-            q.tags.map((t,j) => h('span', { key: j, className: 'question__tag' }, t))
+      filtered.map((q, i) => {
+        const isOpen = openResp === q.q;
+        const skeleton = generateSkeleton(q, type);
+        const userResp = responses[q.q];
+        const isEdited = userResp && userResp !== skeleton;
+        const currentText = userResp || skeleton;
+
+        return h('div', { key: i, className: 'question' + (done.includes(q.q) ? ' question--done' : '') },
+          // Clickable header for done toggle
+          h('div', { style: { cursor: 'pointer' }, onClick: () => toggleDone(q.q) },
+            h('div', { className: 'question__text' }, q.q),
+            h('div', { className: 'question__meta' },
+              h('span', { className: 'question__diff question__diff--' + q.difficulte }, ['Facile','Moyen','Difficile'][q.difficulte-1]),
+              q.tags.map((t,j) => h('span', { key: j, className: 'question__tag' }, t))
+            )
           ),
-          notes[q.q] ? h('div', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.4rem', fontStyle: 'italic' } }, notes[q.q]) : null,
-          h('input', {
-            className: 'note-input',
-            placeholder: 'Ajouter une note...',
-            value: notes[q.q] || '',
-            onClick: e => e.stopPropagation(),
-            onChange: e => { const v = e.target.value; setNotes(n => ({...n, [q.q]: v})); }
-          })
-        )
-      )
+          // Accordion toggle
+          h('button', {
+            className: 'resp-toggle' + (isOpen ? ' resp-toggle--open' : '') + (isEdited ? ' resp-toggle--edited' : ''),
+            onClick: e => { e.stopPropagation(); setOpenResp(isOpen ? null : q.q); }
+          },
+            h('span', { className: 'resp-toggle__arrow' }, '▼'),
+            isEdited ? 'Reponse (modifiee)' : 'Reponse'
+          ),
+          // Accordion body
+          h('div', { className: 'resp-body' + (isOpen ? ' resp-body--open' : '') },
+            h('textarea', {
+              value: currentText,
+              onClick: e => e.stopPropagation(),
+              onChange: e => { const v = e.target.value; setResponses(r => ({...r, [q.q]: v})); }
+            }),
+            h('div', { className: 'resp-actions' },
+              h('span', { className: 'resp-actions__hint' }, isEdited ? '✏️ Modifie par toi' : '🤖 Squelette genere'),
+              isEdited ? h('button', {
+                className: 'resp-actions__btn',
+                onClick: e => { e.stopPropagation(); setResponses(r => { const copy = {...r}; delete copy[q.q]; return copy; }); }
+              }, 'Reinitialiser') : null
+            )
+          )
+        );
+      })
     );
   };
 
