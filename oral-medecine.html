@@ -42,6 +42,45 @@
   --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
 }
 
+[data-theme="light"] {
+  --bg: #f5f5f7;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f0f5;
+  --bg-elevated: #eaeaf0;
+  --border: #d8d8e0;
+  --border-light: #c8c8d5;
+  --text: #1a1a2e;
+  --text-secondary: #4a4a60;
+  --text-muted: #8888a0;
+  --accent: #6355d8;
+  --accent-light: #7c6df0;
+  --accent-dim: #b0a8f0;
+  --accent-bg: rgba(99, 85, 216, 0.08);
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.1);
+  --warning: #ca8a04;
+  --warning-bg: rgba(202, 138, 4, 0.1);
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.08);
+  --info: #2563eb;
+  --info-bg: rgba(37, 99, 235, 0.08);
+  --gradient-1: linear-gradient(135deg, #6355d8, #2563eb);
+  --gradient-2: linear-gradient(135deg, #dc2626, #ca8a04);
+  --gradient-3: linear-gradient(135deg, #16a34a, #2563eb);
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  position: absolute; top: 1rem; right: 1rem;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 20px; padding: 0.35rem 0.7rem; cursor: pointer;
+  font-size: 0.82rem; color: var(--text-muted); transition: all 0.3s;
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.theme-toggle:hover { border-color: var(--accent-dim); color: var(--text); }
+
 html { font-size: 16px; scroll-behavior: smooth; }
 
 body {
@@ -50,6 +89,7 @@ body {
   color: var(--text);
   min-height: 100vh;
   line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 ::-webkit-scrollbar { width: 6px; }
@@ -64,6 +104,7 @@ body {
   text-align: center;
   border-bottom: 1px solid var(--border);
   margin-bottom: 2rem;
+  position: relative;
 }
 .header__badge {
   display: inline-block;
@@ -1263,6 +1304,14 @@ const baseAllQuestions = [...DATA.questions.rpc, ...DATA.questions.ared, ...DATA
 const baseTotalQ = baseAllQuestions.length;
 
 function App() {
+  // Theme state
+  const [theme, setTheme] = useState(() => localStorage.getItem('oral-pass-theme') || 'dark');
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('oral-pass-theme', theme);
+  }, [theme]);
+  const toggleTheme = useCallback(() => setTheme(t => t === 'dark' ? 'light' : 'dark'), []);
+
   // Core state
   const [view, setView] = useState('accueil');
   const [search, setSearch] = useState('');
@@ -1538,7 +1587,7 @@ function App() {
 
   // Countdown to exam
   const renderCountdown = () => {
-    const examDate = new Date('2026-06-02T08:00:00');
+    const examDate = new Date('2026-06-15T08:00:00');
     const now = new Date();
     const diff = examDate - now;
     if (diff <= 0) return h('div', { className: 'countdown-banner fade-in' },
@@ -1550,7 +1599,7 @@ function App() {
     return h('div', { className: 'countdown-banner fade-in' },
       h('div', { className: 'countdown__days' }, days === 0 ? 'Demain !' : 'J-' + days),
       h('div', { className: 'countdown__label' }, days === 0 ? 'L\'oral est demain. Derniere ligne droite.' : days === 1 ? 'Plus qu\'un jour. Tu es pret(e).' : days + ' jours avant l\'oral — ' + hours + 'h restantes'),
-      h('div', { className: 'countdown__sub' }, 'Epreuves orales : 2-3 Juin 2026 · Prep : chaque minute compte')
+      h('div', { className: 'countdown__sub' }, 'Epreuves orales : 15-18 Juin 2026 · Prep : chaque minute compte')
     );
   };
 
@@ -1586,7 +1635,7 @@ function App() {
       h('div', { className: 'card', style: { borderLeft: '4px solid var(--danger)' } },
         h('div', { style: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.8rem' } },
           h('div', { style: { fontSize: '0.82rem' } }, '📅 Garnison : ', h('strong', { style: { color: 'var(--danger)' } }, '28 Mai 2026')),
-          h('div', { style: { fontSize: '0.82rem' } }, '📅 Prep oraux : ', h('strong', { style: { color: 'var(--warning)' } }, '2-3 Juin 2026')),
+          h('div', { style: { fontSize: '0.82rem' } }, '📅 Epreuves orales : ', h('strong', { style: { color: 'var(--warning)' } }, '15-18 Juin 2026')),
           h('div', { style: { fontSize: '0.82rem' } }, '🎯 Places oral : ', h('strong', { style: { color: 'var(--success)' } }, '160'))
         )
       ),
@@ -2231,7 +2280,7 @@ function App() {
   // ===== EXPORT / IMPORT =====
   const exportData = useCallback(() => {
     const data = {};
-    ['oral-pass-done', 'oral-pass-notes', 'oral-pass-responses', 'oral-pass-daily', 'oral-pass-streak', 'oral-pass-custom-questions'].forEach(key => {
+    ['oral-pass-done', 'oral-pass-notes', 'oral-pass-responses', 'oral-pass-daily', 'oral-pass-streak', 'oral-pass-custom-questions', 'oral-pass-theme'].forEach(key => {
       const v = localStorage.getItem(key);
       if (v) data[key] = JSON.parse(v);
     });
@@ -2314,7 +2363,7 @@ function App() {
         h('h2', { className: 'section-title' }, '📅 Dates importantes'),
         h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.8rem' } },
           mkStat('Amphi de garnison', '28 Mai', 'var(--danger)'),
-          mkStat('Preparation oraux', '2-3 Juin', 'var(--warning)'),
+          mkStat('Epreuves orales', '15-18 Juin', 'var(--warning)'),
           mkStat('Epreuves orales', 'Apres ecrit', 'var(--accent)')
         )
       ),
@@ -2418,6 +2467,7 @@ function App() {
 
   return h('div', null,
     h('header', { className: 'header' },
+      h('button', { className: 'theme-toggle', onClick: toggleTheme, title: theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre' }, theme === 'dark' ? '☀️ Clair' : '🌙 Sombre'),
       h('div', { className: 'header__badge' }, 'PASS SORBONNE UNIVERSITE 2026'),
       h('h1', { className: 'header__title' }, 'Preparation Oral Medecine'),
       h('p', { className: 'header__subtitle' }, totalQ + ' questions · Fiches thematiques · 7 exemples corriges · 13 actualites · Suivi & progression · Entrainement + auto-eval')
