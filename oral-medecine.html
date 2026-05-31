@@ -215,7 +215,71 @@ body {
   cursor: pointer;
 }
 .question:hover { border-color: var(--accent-dim); background: var(--bg-card-hover); }
+/* 3-state question system */
+.question--todo { border-left: 3px solid var(--border-light); }
+.question--review { border-left: 3px solid var(--warning); background: rgba(251, 191, 36, 0.04); }
 .question--done { border-left: 3px solid var(--success); opacity: 0.7; }
+
+.status-icon {
+  width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; flex-shrink: 0; margin-top: 0.15rem; transition: all 0.2s;
+}
+.status-icon--todo { border: 2px solid var(--border-light); color: var(--text-muted); }
+.status-icon--review { border: 2px solid var(--warning); background: var(--warning-bg); color: var(--warning); }
+.status-icon--done { border: 2px solid var(--success); background: var(--success-bg); color: var(--success); }
+.status-icon:hover { transform: scale(1.15); }
+
+.status-badge {
+  display: inline-block; padding: 0.1rem 0.4rem; border-radius: 10px;
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin-left: 0.4rem;
+}
+.status-badge--review { background: var(--warning-bg); color: var(--warning); border: 1px solid rgba(251, 191, 36, 0.3); }
+.status-badge--done { background: var(--success-bg); color: var(--success); border: 1px solid rgba(74, 222, 128, 0.3); }
+
+/* Countdown */
+.countdown-banner {
+  text-align: center; padding: 1rem 1.5rem; margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(251,191,36,0.08));
+  border: 1px solid rgba(248,113,113,0.2); border-radius: var(--radius-lg);
+}
+.countdown__days { font-size: 2.5rem; font-weight: 800; background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.countdown__label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem; }
+.countdown__sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+/* Phrases toolkit */
+.phrases-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+.phrase-item {
+  display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 1rem;
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  cursor: pointer; transition: all 0.2s;
+}
+.phrase-item:hover { border-color: var(--accent-dim); background: var(--bg-card-hover); }
+.phrase-item--copied { border-color: var(--success); background: var(--success-bg); }
+.phrase-item__text { flex: 1; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+.phrase-item__copy { flex-shrink: 0; font-size: 0.7rem; color: var(--text-muted); padding: 0.2rem 0.5rem; border: 1px solid var(--border); border-radius: 4px; }
+.phrase-cat-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.phrase-cat-tab {
+  padding: 0.35rem 0.8rem; border-radius: 20px; border: 1px solid var(--border);
+  background: transparent; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; transition: all 0.2s;
+}
+.phrase-cat-tab--active { background: var(--accent-bg); border-color: var(--accent-dim); color: var(--accent-light); }
+
+/* Export/Import */
+.export-section { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1rem; }
+.export-btn {
+  padding: 0.6rem 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--bg-elevated); color: var(--text); font-size: 0.82rem; cursor: pointer; transition: all 0.2s; font-weight: 600;
+}
+.export-btn:hover { border-color: var(--accent); color: var(--accent-light); }
+.export-btn--primary { background: var(--accent); border-color: var(--accent); color: white; }
+.export-btn--primary:hover { background: var(--accent-light); }
+
+/* Motivational message */
+.motiv-banner {
+  text-align: center; padding: 1rem 1.5rem; margin-bottom: 1rem;
+  background: var(--accent-bg); border: 1px solid var(--accent-dim); border-radius: var(--radius);
+  font-size: 0.88rem; color: var(--text-secondary); font-style: italic; line-height: 1.5;
+}
 .question__text { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem; }
 .question__meta { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .question__tag {
@@ -650,6 +714,7 @@ body {
 /* Custom question badge & form */
 .question--custom { border-left: 3px solid var(--accent); }
 .question--custom.question--done { border-left: 3px solid var(--success); }
+.question--custom.question--review { border-left: 3px solid var(--warning); }
 .question__badge-custom {
   display: inline-block;
   padding: 0.15rem 0.45rem;
@@ -1123,10 +1188,76 @@ const { createElement: h, useState, useEffect, useCallback, useMemo, Fragment } 
 // Helpers
 const today = () => new Date().toISOString().split('T')[0];
 const formatDate = (d) => { const p = d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
-// Skeleton lookup objects — populated by background agents, empty fallback for now
-const RPC_SKELETONS = {};
-const ARED_SKELETONS = {};
-const MOTIV_SKELETONS = {};
+// Motivational messages
+const MOTIVATIONAL_MESSAGES = [
+  "Tu as deja survecu la PASS. L'oral, c'est ta victoire a aller chercher.",
+  "Chaque question travaillee, c'est un reflexe de plus le jour J.",
+  "Le jury ne cherche pas la perfection. Il cherche ta capacite a raisonner.",
+  "160 places a l'oral, et une est pour toi. Va la prendre.",
+  "Les meilleurs candidats ne savent pas tout. Ils structurent mieux que les autres.",
+  "5 minutes d'oral, ca se prepare. Et tu es en train de le faire.",
+  "Le stress est normal. Il prouve que ca compte pour toi.",
+  "Chaque jour de travail creuse l'ecart avec ceux qui n'y croient plus.",
+  "Le jury veut un futur medecin, pas une encyclopedie. Montre qui tu es.",
+  "Tu as deja le niveau. L'oral, c'est juste apprendre a le montrer.",
+  "Une reponse structuree vaut mieux que dix connaissances en vrac.",
+  "Les 4 minutes les plus importantes de ton annee. Et tu seras pret(e).",
+  "Personne n'attend de toi que tu sois parfait(e). On attend que tu sois lucide.",
+  "A force de t'entrainer, le jour J ressemblera a un entrainement de plus.",
+  "Tu ne revises pas pour survivre a l'oral. Tu te prepares pour le reussir."
+];
+
+// Phrases-cles toolkit
+const PHRASES_TOOLKIT = {
+  "Introduction": [
+    "Cette situation souleve un conflit entre...",
+    "Le probleme pose ici interroge la tension entre... et...",
+    "Il s'agit d'une situation ou s'opposent deux principes : ... et ...",
+    "Cette question nous place face a un dilemme entre... et...",
+    "Pour analyser cette situation, il faut d'abord identifier les acteurs concernes et les enjeux en presence.",
+    "Je reformulerais la problematique ainsi : comment concilier... tout en preservant... ?"
+  ],
+  "Argumentation": [
+    "Du point de vue ethique, on peut considerer que...",
+    "Sur le plan medical, cette situation implique que...",
+    "D'un point de vue deontologique, le medecin est tenu de...",
+    "L'argument principal en faveur de cette position est que...",
+    "En revanche, on peut objecter que...",
+    "Si l'on adopte la perspective du patient, il apparait que..."
+  ],
+  "References legales": [
+    "La loi Kouchner du 4 mars 2002 consacre le droit du patient a l'information et au consentement eclaire (art. L.1111-4 CSP).",
+    "La loi Leonetti du 22 avril 2005 interdit l'obstination deraisonnable et autorise l'arret des traitements en fin de vie.",
+    "La loi Claeys-Leonetti du 2 fevrier 2016 introduit le droit a la sedation profonde et continue et renforce les directives anticipees.",
+    "L'article 36 du Code de deontologie medicale rappelle que le consentement du patient doit etre recherche dans tous les cas.",
+    "L'article L.1110-5 du CSP garantit a toute personne le droit de recevoir les soins les plus appropries.",
+    "Le secret medical est un droit du patient, consacre par l'article L.1110-4 du CSP et l'article 4 du Code de deontologie."
+  ],
+  "Nuance": [
+    "Cependant, il convient de nuancer cette position en considerant que...",
+    "Cette analyse merite d'etre nuancee : dans certains cas...",
+    "Il serait reducteur de trancher sans considerer l'autre perspective, a savoir...",
+    "La realite clinique est souvent plus complexe que le cadre theorique : ici...",
+    "Neanmoins, cette position atteint ses limites lorsque...",
+    "On ne peut ignorer que, dans la pratique, la situation est rarement aussi tranchee."
+  ],
+  "Conclusion": [
+    "En definitive, je considere que la priorite doit etre donnee a...",
+    "Ma position est donc de privilegier... tout en restant attentif(ve) a...",
+    "Pour conclure, cette situation appelle une reponse mesuree qui concilie... et...",
+    "En tant que futur(e) medecin, je retiens de cette situation que...",
+    "Je me positionne en faveur de..., car cela respecte a la fois... et...",
+    "Cette reflexion ouvre sur une question plus large : celle de..."
+  ],
+  "Empathie": [
+    "Il est essentiel d'ecouter le patient dans sa globalite, au-dela de sa pathologie.",
+    "La souffrance du patient, qu'elle soit physique ou psychologique, doit etre reconnue et prise en charge.",
+    "Avant toute decision, il faut s'assurer que le patient a ete entendu et que ses inquietudes ont ete prises en compte.",
+    "L'accompagnement du patient passe par une communication claire, honnete et adaptee.",
+    "La relation de confiance entre le soignant et le patient est le socle de toute prise en charge therapeutique.",
+    "Respecter la dignite du patient, c'est aussi accepter ses choix, meme lorsqu'ils different de ce que la medecine recommande."
+  ]
+};
 
 const baseAllQuestions = [...DATA.questions.rpc, ...DATA.questions.ared, ...DATA.questions.motivation];
 const baseTotalQ = baseAllQuestions.length;
@@ -1137,8 +1268,21 @@ function App() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
 
-  // Persisted: done questions, notes & responses
-  const [done, setDone] = useState(() => { try { const v = JSON.parse(localStorage.getItem('oral-pass-done')); return Array.isArray(v) ? v : []; } catch(e) { return []; } });
+  // Persisted: question status (3 states: todo/review/done) — migrates from old array format
+  const [status, setStatus] = useState(() => {
+    try {
+      const raw = localStorage.getItem('oral-pass-done');
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        const migrated = {};
+        parsed.forEach(q => { migrated[q] = 'done'; });
+        localStorage.setItem('oral-pass-done', JSON.stringify(migrated));
+        return migrated;
+      }
+      return typeof parsed === 'object' && parsed !== null ? parsed : {};
+    } catch(e) { return {}; }
+  });
   const [notes, setNotes] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-notes')) || {}; } catch(e) { return {}; } });
   const [responses, setResponses] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-responses')) || {}; } catch(e) { return {}; } });
   const [openResp, setOpenResp] = useState(null);
@@ -1170,8 +1314,12 @@ function App() {
   const [journalQCount, setJournalQCount] = useState(1);
   const [suiviTab, setSuiviTab] = useState('journal');
 
+  // Phrases toolkit state
+  const [phraseCat, setPhraseCat] = useState(Object.keys(PHRASES_TOOLKIT)[0]);
+  const [copiedPhrase, setCopiedPhrase] = useState(null);
+
   // Persist to localStorage
-  useEffect(() => { localStorage.setItem('oral-pass-done', JSON.stringify(done)); }, [done]);
+  useEffect(() => { localStorage.setItem('oral-pass-done', JSON.stringify(status)); }, [status]);
   useEffect(() => { localStorage.setItem('oral-pass-notes', JSON.stringify(notes)); }, [notes]);
   useEffect(() => { localStorage.setItem('oral-pass-responses', JSON.stringify(responses)); }, [responses]);
   useEffect(() => { localStorage.setItem('oral-pass-daily', JSON.stringify(dailyLog)); }, [dailyLog]);
@@ -1228,8 +1376,20 @@ function App() {
     setCustomQuestions(cq => ({ ...cq, [type]: (cq[type] || []).filter(q => q._id !== id) }));
   }, []);
 
-  const toggleDone = useCallback((q) => {
-    setDone(d => d.includes(q) ? d.filter(x => x !== q) : [...d, q]);
+  const getStatus = useCallback((q) => status[q] || 'todo', [status]);
+  const STATUS_CYCLE = ['todo', 'review', 'done'];
+  const STATUS_LABELS = { todo: 'A faire', review: 'A revoir', done: 'Acquis' };
+  const STATUS_ICONS = { todo: '○', review: '⟳', done: '✓' };
+
+  const cycleStatus = useCallback((q) => {
+    setStatus(prev => {
+      const current = prev[q] || 'todo';
+      const nextIdx = (STATUS_CYCLE.indexOf(current) + 1) % STATUS_CYCLE.length;
+      const next = STATUS_CYCLE[nextIdx];
+      const updated = { ...prev };
+      if (next === 'todo') { delete updated[q]; } else { updated[q] = next; }
+      return updated;
+    });
   }, []);
 
   const startPractice = useCallback((type) => {
@@ -1286,9 +1446,14 @@ function App() {
     setJournalQCount(1);
   }, [journalRatings, journalConfidence, journalNotes, journalQCount]);
 
-  // Computed stats
-  const doneCount = done.length;
-  const progressPct = totalQ > 0 ? Math.round(doneCount / totalQ * 100) : 0;
+  // Computed stats (done=100%, review=50%)
+  const statusCounts = useMemo(() => {
+    const c = { todo: 0, review: 0, done: 0 };
+    allQuestions.forEach(q => { const s = status[q.q] || 'todo'; c[s]++; });
+    return c;
+  }, [allQuestions, status]);
+  const doneCount = statusCounts.done + statusCounts.review;
+  const progressPct = totalQ > 0 ? Math.round(((statusCounts.done + statusCounts.review * 0.5) / totalQ) * 100) : 0;
   const todayEntries = dailyLog.filter(e => e.date === today());
   const todayQDone = todayEntries.reduce((s, e) => s + e.questionsCount, 0);
   const dailyGoal = 5;
@@ -1312,6 +1477,7 @@ function App() {
       { id: 'exemples', label: 'Exemples corriges' },
       { id: 'actualites', label: 'Actualites 2026' },
       { id: 'chiffres', label: 'Chiffres cles', highlight: true },
+      { id: 'phrases', label: 'Phrases-cles', highlight: true },
       { id: 'jourj', label: 'Jour J' },
       { id: 'suivi', label: 'Suivi & Progression', highlight: true },
       { id: 'pratique', label: 'Entrainement' },
@@ -1354,21 +1520,47 @@ function App() {
 
   const renderStats = () => {
     const rpcAll = getQuestions('rpc'), aredAll = getQuestions('ared'), motAll = getQuestions('motivation');
-    const rpcDone = rpcAll.filter(q => done.includes(q.q)).length;
-    const aredDone = aredAll.filter(q => done.includes(q.q)).length;
-    const motDone = motAll.filter(q => done.includes(q.q)).length;
+    const countByStatus = (qs) => { const d = qs.filter(q => status[q.q] === 'done').length; const r = qs.filter(q => status[q.q] === 'review').length; return { done: d, review: r, total: d + r }; };
+    const rpcS = countByStatus(rpcAll), aredS = countByStatus(aredAll), motS = countByStatus(motAll);
     return h('div', { className: 'stats-bar fade-in' },
-      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--accent-light)' } }, doneCount + '/' + totalQ), h('div', { className: 'stat-card__label' }, 'Questions faites')),
+      h('div', { className: 'stat-card' },
+        h('div', { className: 'stat-card__value', style: { color: 'var(--accent-light)' } }, statusCounts.done + statusCounts.review + '/' + totalQ),
+        h('div', { className: 'stat-card__label' }, 'Questions travaillees'),
+        h('div', { style: { fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '0.2rem' } }, statusCounts.done + ' acquis · ' + statusCounts.review + ' a revoir')
+      ),
       h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--success)' } }, progressPct + '%'), h('div', { className: 'stat-card__label' }, 'Progression')),
-      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--info)' } }, rpcDone + '/' + rpcAll.length), h('div', { className: 'stat-card__label' }, 'RPC')),
-      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--warning)' } }, aredDone + '/' + aredAll.length), h('div', { className: 'stat-card__label' }, 'ARED')),
-      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: '#f472b6' } }, motDone + '/' + motAll.length), h('div', { className: 'stat-card__label' }, 'Motivation')),
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--info)' } }, rpcS.total + '/' + rpcAll.length), h('div', { className: 'stat-card__label' }, 'RPC')),
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--warning)' } }, aredS.total + '/' + aredAll.length), h('div', { className: 'stat-card__label' }, 'ARED')),
+      h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: '#f472b6' } }, motS.total + '/' + motAll.length), h('div', { className: 'stat-card__label' }, 'Motivation')),
       h('div', { className: 'stat-card' }, h('div', { className: 'stat-card__value', style: { color: 'var(--warning)' } }, dailyLog.length), h('div', { className: 'stat-card__label' }, 'Sessions journal'))
     );
   };
 
+  // Countdown to exam
+  const renderCountdown = () => {
+    const examDate = new Date('2026-06-02T08:00:00');
+    const now = new Date();
+    const diff = examDate - now;
+    if (diff <= 0) return h('div', { className: 'countdown-banner fade-in' },
+      h('div', { className: 'countdown__days' }, 'C\'est le jour J !'),
+      h('div', { className: 'countdown__label' }, 'Tu es pret(e). Va chercher ta place.')
+    );
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    return h('div', { className: 'countdown-banner fade-in' },
+      h('div', { className: 'countdown__days' }, days === 0 ? 'Demain !' : 'J-' + days),
+      h('div', { className: 'countdown__label' }, days === 0 ? 'L\'oral est demain. Derniere ligne droite.' : days === 1 ? 'Plus qu\'un jour. Tu es pret(e).' : days + ' jours avant l\'oral — ' + hours + 'h restantes'),
+      h('div', { className: 'countdown__sub' }, 'Epreuves orales : 2-3 Juin 2026 · Prep : chaque minute compte')
+    );
+  };
+
+  // Motivational message (random, stable per session)
+  const motivMsg = useMemo(() => MOTIVATIONAL_MESSAGES[Math.floor(Math.random() * MOTIVATIONAL_MESSAGES.length)], []);
+
   const renderAccueil = () => {
     return h('div', { className: 'slide-up' },
+      renderCountdown(),
+      h('div', { className: 'motiv-banner fade-in' }, '💬 ' + motivMsg),
       renderDailyGoal(),
       renderStats(),
       h('div', { className: 'progress' }, h('div', { className: 'progress__fill', style: { width: progressPct + '%' } })),
@@ -1425,11 +1617,6 @@ function App() {
     );
   };
 
-  // Generate skeleton response based on question metadata
-  const generateSkeleton = useCallback((q, type) => {
-    return '';
-  }, []);
-
   const renderQuestionList = (type) => {
     const questions = getQuestions(type);
     const themes = getThemes(type);
@@ -1445,8 +1632,8 @@ function App() {
       const bEdited = responses[b.q] ? 1 : 0;
       return bEdited - aEdited;
     });
-    const fDone = filtered.filter(q => done.includes(q.q)).length;
-    const fPct = filtered.length > 0 ? Math.round(fDone / filtered.length * 100) : 0;
+    const fWorked = filtered.filter(q => status[q.q] === 'done' || status[q.q] === 'review').length;
+    const fPct = filtered.length > 0 ? Math.round(fWorked / filtered.length * 100) : 0;
 
     // Add question form
     const renderAddForm = () => {
@@ -1520,7 +1707,7 @@ function App() {
         themes.map(t => h('button', { key: t, className: 'filter-btn' + (filter === t ? ' filter-btn--active' : ''), onClick: () => setFilter(t) }, t))
       ),
       h('div', { className: 'progress', style: { marginBottom: '0.5rem' } }, h('div', { className: 'progress__fill', style: { width: fPct + '%' } })),
-      h('div', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1rem' } }, fDone + '/' + filtered.length + ' faites (' + fPct + '%)'),
+      h('div', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1rem' } }, fWorked + '/' + filtered.length + ' travaillees (' + fPct + '%)'),
       // Add custom question button
       canAddCustom ? h('button', {
         className: 'add-question-btn',
@@ -1534,13 +1721,16 @@ function App() {
         const currentText = userResp || '';
         const isCustom = q._custom;
 
-        return h('div', { key: isCustom ? 'c-' + q._id : i, className: 'question' + (done.includes(q.q) ? ' question--done' : '') + (isCustom ? ' question--custom' : '') },
-          // Clickable header for done toggle
-          h('div', { style: { cursor: 'pointer', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }, onClick: () => toggleDone(q.q) },
+        const qStatus = getStatus(q.q);
+        return h('div', { key: isCustom ? 'c-' + q._id : i, className: 'question question--' + qStatus + (isCustom ? ' question--custom' : '') },
+          // Clickable header for status cycle
+          h('div', { style: { cursor: 'pointer', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }, onClick: () => cycleStatus(q.q) },
+            h('div', { className: 'status-icon status-icon--' + qStatus, title: STATUS_LABELS[qStatus] + ' (cliquer pour changer)' }, STATUS_ICONS[qStatus]),
             h('div', { style: { flex: 1 } },
               h('div', { className: 'question__text' },
                 q.q,
-                isCustom ? h('span', { className: 'question__badge-custom' }, 'Perso') : null
+                isCustom ? h('span', { className: 'question__badge-custom' }, 'Perso') : null,
+                qStatus !== 'todo' ? h('span', { className: 'status-badge status-badge--' + qStatus }, STATUS_LABELS[qStatus]) : null
               ),
               h('div', { className: 'question__meta' },
                 h('span', { className: 'question__diff question__diff--' + q.difficulte }, ['Facile','Moyen','Difficile'][q.difficulte-1]),
@@ -2004,6 +2194,87 @@ function App() {
     );
   };
 
+  // ===== PHRASES-CLES TOOLKIT =====
+  const renderPhrases = () => {
+    const categories = Object.keys(PHRASES_TOOLKIT);
+    const copyPhrase = (text) => {
+      navigator.clipboard.writeText(text).then(() => {
+        setCopiedPhrase(text);
+        setTimeout(() => setCopiedPhrase(null), 2000);
+      });
+    };
+    return h('div', { className: 'slide-up' },
+      h('h2', { className: 'section-title' }, '🗝️ Phrases-cles pour l\'oral'),
+      h('p', { style: { fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '1rem' } }, 'Clique sur une phrase pour la copier. Utilise-les comme tremplins dans tes reponses — adapte-les a chaque situation.'),
+      h('div', { className: 'phrase-cat-tabs' },
+        categories.map(cat => h('button', {
+          key: cat,
+          className: 'phrase-cat-tab' + (phraseCat === cat ? ' phrase-cat-tab--active' : ''),
+          onClick: () => setPhraseCat(cat)
+        }, cat))
+      ),
+      h('div', { className: 'phrases-grid' },
+        (PHRASES_TOOLKIT[phraseCat] || []).map((phrase, i) =>
+          h('div', {
+            key: i,
+            className: 'phrase-item' + (copiedPhrase === phrase ? ' phrase-item--copied' : ''),
+            onClick: () => copyPhrase(phrase)
+          },
+            h('div', { className: 'phrase-item__text' }, phrase),
+            h('div', { className: 'phrase-item__copy' }, copiedPhrase === phrase ? '✓ Copie !' : 'Copier')
+          )
+        )
+      )
+    );
+  };
+
+  // ===== EXPORT / IMPORT =====
+  const exportData = useCallback(() => {
+    const data = {};
+    ['oral-pass-done', 'oral-pass-notes', 'oral-pass-responses', 'oral-pass-daily', 'oral-pass-streak', 'oral-pass-custom-questions'].forEach(key => {
+      const v = localStorage.getItem(key);
+      if (v) data[key] = JSON.parse(v);
+    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'oral-medecine-backup-' + today() + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }, []);
+
+  const importData = useCallback(() => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          Object.entries(data).forEach(([key, value]) => {
+            localStorage.setItem(key, JSON.stringify(value));
+          });
+          // Reload state from localStorage
+          if (data['oral-pass-done']) setStatus(typeof data['oral-pass-done'] === 'object' ? data['oral-pass-done'] : {});
+          if (data['oral-pass-notes']) setNotes(data['oral-pass-notes']);
+          if (data['oral-pass-responses']) setResponses(data['oral-pass-responses']);
+          if (data['oral-pass-daily']) setDailyLog(data['oral-pass-daily']);
+          if (data['oral-pass-streak']) setStreak(data['oral-pass-streak']);
+          if (data['oral-pass-custom-questions']) setCustomQuestions(data['oral-pass-custom-questions']);
+          alert('Donnees importees avec succes !');
+        } catch(err) {
+          alert('Erreur : fichier invalide.');
+        }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  }, []);
+
   // ===== SUIVI (Journal + Evolution merged) =====
   const renderSuivi = () => {
     return h('div', { className: 'slide-up' },
@@ -2011,7 +2282,15 @@ function App() {
         h('button', { className: 'btn ' + (suiviTab === 'journal' ? 'btn--primary' : 'btn--ghost'), onClick: () => setSuiviTab('journal') }, '📓 Journal'),
         h('button', { className: 'btn ' + (suiviTab === 'evolution' ? 'btn--primary' : 'btn--ghost'), onClick: () => setSuiviTab('evolution') }, '📈 Evolution')
       ),
-      suiviTab === 'journal' ? renderJournal() : renderEvolution()
+      suiviTab === 'journal' ? renderJournal() : renderEvolution(),
+      h('div', { className: 'card', style: { marginTop: '1.5rem', borderLeft: '4px solid var(--info)' } },
+        h('h3', { style: { marginBottom: '0.5rem' } }, '💾 Sauvegarde des donnees'),
+        h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.8rem' } }, 'Exporte tes donnees pour les sauvegarder ou les transferer sur un autre appareil.'),
+        h('div', { className: 'export-section' },
+          h('button', { className: 'export-btn export-btn--primary', onClick: exportData }, '📥 Exporter mes donnees'),
+          h('button', { className: 'export-btn', onClick: importData }, '📤 Importer une sauvegarde')
+        )
+      )
     );
   };
 
@@ -2129,6 +2408,7 @@ function App() {
       case 'exemples': return renderExemples();
       case 'actualites': return renderActualites();
       case 'chiffres': return renderChiffres();
+      case 'phrases': return renderPhrases();
       case 'jourj': return renderJourJ();
       case 'suivi': return renderSuivi();
       case 'pratique': return renderPractice();
