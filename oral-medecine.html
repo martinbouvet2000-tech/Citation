@@ -934,9 +934,12 @@ try {
   }
 } catch(e) { console.warn('Firebase init failed:', e); }
 // Helper pour push vers Firebase — stocke en JSON string pour eviter les problemes de cles invalides
+// Utilise setTimeout pour decoupler du cycle React et eviter les crashes
 function syncToFirebase(key, value) {
   if (!SYNC_ENABLED || !firebaseRef) return;
-  try { firebaseRef.child(key).set(JSON.stringify(value)); } catch(e) { console.warn('Firebase sync error:', e.message); }
+  setTimeout(() => {
+    try { firebaseRef.child(key).set(JSON.stringify(value)); } catch(e) { console.warn('Firebase sync error:', e.message); }
+  }, 0);
 }
 </script>
 <script>
