@@ -779,6 +779,16 @@ body {
   margin-left: auto;
 }
 .question__delete:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+
+/* Champion button */
+.champion-btn {
+  background: transparent; border: 1px solid var(--border); border-radius: 50%;
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 0.85rem; opacity: 0.4; transition: all 0.2s; flex-shrink: 0;
+}
+.champion-btn:hover { opacity: 0.8; border-color: var(--warning); }
+.champion-btn--active { opacity: 1; border-color: var(--warning); background: var(--warning-bg); }
+.filter-btn--champion { border-color: rgba(251,191,36,0.3); }
 .add-question-btn {
   display: flex;
   align-items: center;
@@ -852,6 +862,59 @@ body {
 
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+// Firebase config — remplacer par tes valeurs depuis console.firebase.google.com
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyplaceholder",
+  authDomain: "oral-medecine.firebaseapp.com",
+  databaseURL: "https://oral-medecine-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "oral-medecine",
+  storageBucket: "oral-medecine.appspot.com",
+  messagingSenderId: "000000000000",
+  appId: "1:000000000000:web:placeholder"
+};
+let firebaseDB = null;
+let firebaseRef = null;
+let SYNC_ENABLED = false;
+const SYNC_KEYS = ['oral-pass-done','oral-pass-notes','oral-pass-responses','oral-pass-daily','oral-pass-streak','oral-pass-custom-questions','oral-pass-champions','oral-pass-theme'];
+try {
+  if (FIREBASE_CONFIG.apiKey !== 'AIzaSyplaceholder') {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    firebaseDB = firebase.database();
+    // Room code — tout le monde avec le meme code partage les donnees
+    const roomCode = new URLSearchParams(window.location.search).get('room') || 'default';
+    firebaseRef = firebaseDB.ref('rooms/' + roomCode);
+    SYNC_ENABLED = true;
+    // Ecouter les changements distants
+    firebaseRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
+      SYNC_KEYS.forEach(key => {
+        if (data[key] !== undefined) {
+          const remote = JSON.stringify(data[key]);
+          const local = localStorage.getItem(key);
+          if (remote !== local) {
+            localStorage.setItem(key, remote);
+            // Declencher un event custom pour que React se mette a jour
+            window.dispatchEvent(new CustomEvent('firebase-sync', { detail: { key, value: data[key] } }));
+          }
+        }
+      });
+    });
+    console.log('Firebase sync ON — room: ' + (new URLSearchParams(window.location.search).get('room') || 'default'));
+  }
+} catch(e) { console.warn('Firebase init failed:', e); }
+// Helper pour push vers Firebase
+function syncToFirebase(key, value) {
+  if (!SYNC_ENABLED || !firebaseRef) return;
+  const updates = {};
+  updates[key] = value;
+  firebaseRef.update(updates);
+}
+</script>
 <script>
 const DATA = {
   format: {
@@ -1363,17 +1426,46 @@ function App() {
   const [journalQCount, setJournalQCount] = useState(1);
   const [suiviTab, setSuiviTab] = useState('journal');
 
+  // Champions state (questions starred as "Question pour un champion")
+  const [champions, setChampions] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-champions')) || []; } catch(e) { return []; } });
+
+  const toggleChampion = useCallback((questionText) => {
+    setChampions(prev => {
+      if (prev.includes(questionText)) return prev.filter(q => q !== questionText);
+      return [...prev, questionText];
+    });
+  }, []);
+
+  const isChampion = useCallback((questionText) => champions.includes(questionText), [champions]);
+
   // Phrases toolkit state
   const [phraseCat, setPhraseCat] = useState(Object.keys(PHRASES_TOOLKIT)[0]);
   const [copiedPhrase, setCopiedPhrase] = useState(null);
 
-  // Persist to localStorage
-  useEffect(() => { localStorage.setItem('oral-pass-done', JSON.stringify(status)); }, [status]);
-  useEffect(() => { localStorage.setItem('oral-pass-notes', JSON.stringify(notes)); }, [notes]);
-  useEffect(() => { localStorage.setItem('oral-pass-responses', JSON.stringify(responses)); }, [responses]);
-  useEffect(() => { localStorage.setItem('oral-pass-daily', JSON.stringify(dailyLog)); }, [dailyLog]);
-  useEffect(() => { localStorage.setItem('oral-pass-streak', JSON.stringify(streak)); }, [streak]);
-  useEffect(() => { localStorage.setItem('oral-pass-custom-questions', JSON.stringify(customQuestions)); }, [customQuestions]);
+  // Persist to localStorage + sync to Firebase
+  useEffect(() => { localStorage.setItem('oral-pass-done', JSON.stringify(status)); syncToFirebase('oral-pass-done', status); }, [status]);
+  useEffect(() => { localStorage.setItem('oral-pass-notes', JSON.stringify(notes)); syncToFirebase('oral-pass-notes', notes); }, [notes]);
+  useEffect(() => { localStorage.setItem('oral-pass-responses', JSON.stringify(responses)); syncToFirebase('oral-pass-responses', responses); }, [responses]);
+  useEffect(() => { localStorage.setItem('oral-pass-daily', JSON.stringify(dailyLog)); syncToFirebase('oral-pass-daily', dailyLog); }, [dailyLog]);
+  useEffect(() => { localStorage.setItem('oral-pass-streak', JSON.stringify(streak)); syncToFirebase('oral-pass-streak', streak); }, [streak]);
+  useEffect(() => { localStorage.setItem('oral-pass-custom-questions', JSON.stringify(customQuestions)); syncToFirebase('oral-pass-custom-questions', customQuestions); }, [customQuestions]);
+  useEffect(() => { localStorage.setItem('oral-pass-champions', JSON.stringify(champions)); syncToFirebase('oral-pass-champions', champions); }, [champions]);
+
+  // Listen for Firebase remote sync events
+  useEffect(() => {
+    const handler = (e) => {
+      const { key, value } = e.detail;
+      if (key === 'oral-pass-done') setStatus(typeof value === 'object' && !Array.isArray(value) ? value : {});
+      if (key === 'oral-pass-notes') setNotes(value || {});
+      if (key === 'oral-pass-responses') setResponses(value || {});
+      if (key === 'oral-pass-daily') setDailyLog(Array.isArray(value) ? value : []);
+      if (key === 'oral-pass-streak') setStreak(value || { current: 0, best: 0, lastDate: '' });
+      if (key === 'oral-pass-custom-questions') setCustomQuestions(value || { rpc: [], ared: [] });
+      if (key === 'oral-pass-champions') setChampions(Array.isArray(value) ? value : []);
+    };
+    window.addEventListener('firebase-sync', handler);
+    return () => window.removeEventListener('firebase-sync', handler);
+  }, []);
 
   // Timer
   useEffect(() => {
@@ -1670,7 +1762,9 @@ function App() {
     const questions = getQuestions(type);
     const themes = getThemes(type);
     const canAddCustom = type === 'rpc' || type === 'ared';
+    const champCount = questions.filter(q => isChampion(q.q)).length;
     const filtered = questions.filter(q => {
+      if (filter === 'champion') return isChampion(q.q);
       if (filter !== 'all' && q.theme !== filter) return false;
       if (search && !q.q.toLowerCase().includes(search.toLowerCase()) && !q.tags.some(t => t.includes(search.toLowerCase()))) return false;
       return true;
@@ -1753,6 +1847,7 @@ function App() {
       h('div', { className: 'search-bar' },
         h('input', { className: 'search-input', placeholder: 'Rechercher une question ou un tag...', value: search, onChange: e => setSearch(e.target.value) }),
         h('button', { className: 'filter-btn' + (filter === 'all' ? ' filter-btn--active' : ''), onClick: () => setFilter('all') }, 'Tous'),
+        h('button', { className: 'filter-btn filter-btn--champion' + (filter === 'champion' ? ' filter-btn--active' : ''), onClick: () => setFilter('champion') }, '🏆 Champion (' + champCount + ')'),
         themes.map(t => h('button', { key: t, className: 'filter-btn' + (filter === t ? ' filter-btn--active' : ''), onClick: () => setFilter(t) }, t))
       ),
       h('div', { className: 'progress', style: { marginBottom: '0.5rem' } }, h('div', { className: 'progress__fill', style: { width: fPct + '%' } })),
@@ -1786,6 +1881,11 @@ function App() {
                 q.tags.map((t,j) => h('span', { key: j, className: 'question__tag' }, t))
               )
             ),
+            h('button', {
+              className: 'champion-btn' + (isChampion(q.q) ? ' champion-btn--active' : ''),
+              title: isChampion(q.q) ? 'Retirer de Question pour un champion' : 'Ajouter a Question pour un champion',
+              onClick: e => { e.stopPropagation(); toggleChampion(q.q); }
+            }, '🏆'),
             isCustom ? h('button', {
               className: 'question__delete',
               title: 'Supprimer cette question',
@@ -2280,7 +2380,7 @@ function App() {
   // ===== EXPORT / IMPORT =====
   const exportData = useCallback(() => {
     const data = {};
-    ['oral-pass-done', 'oral-pass-notes', 'oral-pass-responses', 'oral-pass-daily', 'oral-pass-streak', 'oral-pass-custom-questions', 'oral-pass-theme'].forEach(key => {
+    ['oral-pass-done', 'oral-pass-notes', 'oral-pass-responses', 'oral-pass-daily', 'oral-pass-streak', 'oral-pass-custom-questions', 'oral-pass-champions', 'oral-pass-theme'].forEach(key => {
       const v = localStorage.getItem(key);
       if (v) data[key] = JSON.parse(v);
     });
@@ -2314,6 +2414,7 @@ function App() {
           if (data['oral-pass-daily']) setDailyLog(data['oral-pass-daily']);
           if (data['oral-pass-streak']) setStreak(data['oral-pass-streak']);
           if (data['oral-pass-custom-questions']) setCustomQuestions(data['oral-pass-custom-questions']);
+          if (data['oral-pass-champions']) setChampions(data['oral-pass-champions']);
           alert('Donnees importees avec succes !');
         } catch(err) {
           alert('Erreur : fichier invalide.');
