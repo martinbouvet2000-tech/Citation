@@ -188,17 +188,31 @@ Si tout coche, mission accomplie pour aujourd'hui.
 
 ## 4. RÉFÉRENCES À CONSULTER (dans l'ordre de priorité)
 
+### Avant d'attaquer (5 min de lecture)
+
+| Doc | Pourquoi |
+|---|---|
+| [[20-PERSONA-MARTIN]] | Comprendre l'utilisateur pour communiquer efficace |
+| [[21-DECISIONS]] | Choix déjà faits — ne pas remettre en cause |
+| [[22-HISTORIQUE-ERREURS]] | Erreurs déjà rencontrées — ne pas refaire |
+| [[23-DO-NOT-DO]] | 25 interdictions absolues |
+| [[24-GLOSSAIRE-SHOPIFY]] | Termes techniques si pas expert Shopify |
+
+### Pour l'exécution (selon la phase en cours)
+
 | Doc | Quand le lire |
 |---|---|
 | [[01-CURRENT-STATE]] | AVANT toute action, pour savoir ce qui existe déjà |
 | [[02-NEXT-ACTIONS]] | Checklist priorisée P0→P3 |
-| [[05-PAGES-TO-CREATE]] | Quand tu lances la Phase B |
-| [[06-BLOG-TO-PUBLISH]] | Quand tu lances la Phase D |
-| [[07-EMAILS-TO-INSTALL]] | Quand tu lances la Phase E |
-| [[08-NAVIGATION-TODO]] | Quand tu lances la Phase C |
-| [[09-POLICIES-TODO]] | Quand tu lances la Phase F |
-| [[10-LAUNCH-CHECKLIST]] | Au moment du test final Phase H |
-| [[../BRAND-CARD]] | Pour vérifier la voix de marque sur tout texte que tu produis |
+| [[04-THEME-SECTIONS-TODO]] | Phase A et G |
+| [[05-PAGES-TO-CREATE]] | Phase B |
+| [[06-BLOG-TO-PUBLISH]] | Phase D |
+| [[07-EMAILS-TO-INSTALL]] | Phase E |
+| [[08-NAVIGATION-TODO]] | Phase C |
+| [[09-POLICIES-TODO]] | Phase F |
+| [[10-LAUNCH-CHECKLIST]] | Phase H (test final) |
+| [[03-CREDENTIALS-AND-ACCESS]] | Pour les URLs et accès |
+| [[../BRAND-CARD]] | Pour vérifier la voix de marque sur tout texte produit |
 | [[../PRODUCT-CATALOG]] | Pour les détails produits |
 
 Fichiers utiles dans le repo `martinbouvet2000-tech/Citation` :

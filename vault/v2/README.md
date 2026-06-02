@@ -24,36 +24,70 @@ avec autorité d'exécuter sans validation à chaque étape.
 
 ## 📚 Table des matières
 
+### 🚀 Entry points
+
 | Doc | Contenu | Quand le lire |
 |---|---|---|
 | ⭐ **[[MISSION-CLAUDE]]** | **Brief autonome ultra-complet pour IA** | **EN PREMIER si tu es Claude/ChatGPT/autre** |
 | [[00-START-HERE]] | Brief 5-min : où on en est, où il faut aller | EN PREMIER si humain |
-| [[01-CURRENT-STATE]] | État exact de la boutique Shopify | Pour savoir ce qui est déjà fait |
-| [[02-NEXT-ACTIONS]] | Checklist priorisée de ce qui reste | Pour planifier la session |
-| [[03-CREDENTIALS-AND-ACCESS]] | URLs, comptes, tokens | Pour se connecter |
-| [[04-THEME-SECTIONS-TODO]] | État des sections du thème | Pour customiser le Theme Editor |
-| [[05-PAGES-TO-CREATE]] | 14 pages à créer (titres, handles, templates) | Pour créer les pages |
-| [[06-BLOG-TO-PUBLISH]] | Blog Journal + 13 articles à publier | Pour publier le blog |
-| [[07-EMAILS-TO-INSTALL]] | 5 emails transactionnels | Pour installer les emails |
-| [[08-NAVIGATION-TODO]] | Menu header + footer | Pour configurer la nav |
-| [[09-POLICIES-TODO]] | Politiques boutique (CGV, RGPD, etc.) | Pour la conformité légale |
-| [[10-LAUNCH-CHECKLIST]] | Checklist finale avant lancement réel | À la fin avant de communiquer |
+| README (ce fichier) | Index et carte mentale | Pour naviguer |
+
+### 📊 État du projet
+
+| Doc | Contenu |
+|---|---|
+| [[01-CURRENT-STATE]] | État exact de la boutique Shopify |
+| [[02-NEXT-ACTIONS]] | Checklist priorisée (P0 → P3) |
+| [[10-LAUNCH-CHECKLIST]] | Checklist finale avant lancement |
+
+### 🛠 Actions à faire
+
+| Doc | Contenu |
+|---|---|
+| [[04-THEME-SECTIONS-TODO]] | Sections du thème à finir |
+| [[05-PAGES-TO-CREATE]] | 14 pages à créer |
+| [[06-BLOG-TO-PUBLISH]] | Blog + 13 articles à publier |
+| [[07-EMAILS-TO-INSTALL]] | 5 emails transactionnels |
+| [[08-NAVIGATION-TODO]] | Menu header + footer |
+| [[09-POLICIES-TODO]] | Politiques boutique |
+
+### 🧠 Contexte et règles
+
+| Doc | Contenu |
+|---|---|
+| [[03-CREDENTIALS-AND-ACCESS]] | URLs, comptes, tokens |
+| [[20-PERSONA-MARTIN]] | Qui est l'utilisateur, comment communiquer |
+| [[21-DECISIONS]] | Décisions déjà prises (ADR simplifiés) |
+| [[22-HISTORIQUE-ERREURS]] | Erreurs déjà rencontrées + résolutions |
+| [[23-DO-NOT-DO]] | 25 interdictions absolues |
+| [[24-GLOSSAIRE-SHOPIFY]] | Termes techniques expliqués |
 
 ## 🗺 Carte mentale de la mission
 
 ```mermaid
 graph TD
-    Start[📍 Vault v2] --> StartHere[[00-START-HERE]]
-    StartHere --> State[[01-CURRENT-STATE]]
+    Start[📍 Vault v2] --> Mission[[MISSION-CLAUDE]]
+    Start --> StartHere[[00-START-HERE]]
+
+    Mission --> Context[Lire le contexte]
+    Context --> Persona[[20-PERSONA-MARTIN]]
+    Context --> Decisions[[21-DECISIONS]]
+    Context --> Errors[[22-HISTORIQUE-ERREURS]]
+    Context --> DoNot[[23-DO-NOT-DO]]
+    Context --> Gloss[[24-GLOSSAIRE-SHOPIFY]]
+
+    Mission --> State[[01-CURRENT-STATE]]
     State --> Actions[[02-NEXT-ACTIONS]]
-    Actions --> Quick[🔴 Quick wins thème]
-    Actions --> Pages[[05-PAGES-TO-CREATE]]
-    Actions --> Blog[[06-BLOG-TO-PUBLISH]]
-    Actions --> Emails[[07-EMAILS-TO-INSTALL]]
-    Pages --> Nav[[08-NAVIGATION-TODO]]
-    Nav --> Policies[[09-POLICIES-TODO]]
-    Policies --> Launch[[10-LAUNCH-CHECKLIST]]
-    Launch --> Live[🚀 LIVE]
+
+    Actions --> PhaseA[Phase A: Quick wins]
+    Actions --> PhaseB[[05-PAGES-TO-CREATE]]
+    Actions --> PhaseC[[08-NAVIGATION-TODO]]
+    Actions --> PhaseD[[06-BLOG-TO-PUBLISH]]
+    Actions --> PhaseE[[07-EMAILS-TO-INSTALL]]
+    Actions --> PhaseF[[09-POLICIES-TODO]]
+    Actions --> PhaseG[[04-THEME-SECTIONS-TODO]]
+    PhaseG --> PhaseH[[10-LAUNCH-CHECKLIST]]
+    PhaseH --> Live[🚀 LIVE]
 ```
 
 ## 🎯 Objectif
