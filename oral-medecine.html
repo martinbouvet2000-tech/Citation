@@ -918,25 +918,25 @@ try {
       if (!data) return;
       SYNC_KEYS.forEach(key => {
         if (data[key] !== undefined) {
-          const remote = JSON.stringify(data[key]);
-          const local = localStorage.getItem(key);
-          if (remote !== local) {
-            localStorage.setItem(key, remote);
-            // Declencher un event custom pour que React se mette a jour
-            window.dispatchEvent(new CustomEvent('firebase-sync', { detail: { key, value: data[key] } }));
-          }
+          try {
+            const remote = typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key]);
+            const local = localStorage.getItem(key);
+            if (remote !== local) {
+              localStorage.setItem(key, remote);
+              const parsed = JSON.parse(remote);
+              window.dispatchEvent(new CustomEvent('firebase-sync', { detail: { key, value: parsed } }));
+            }
+          } catch(e) { console.warn('Firebase parse error for', key, e); }
         }
       });
     });
     console.log('Firebase sync ON — room: ' + (new URLSearchParams(window.location.search).get('room') || 'default'));
   }
 } catch(e) { console.warn('Firebase init failed:', e); }
-// Helper pour push vers Firebase
+// Helper pour push vers Firebase — stocke en JSON string pour eviter les problemes de cles invalides
 function syncToFirebase(key, value) {
   if (!SYNC_ENABLED || !firebaseRef) return;
-  const updates = {};
-  updates[key] = value;
-  firebaseRef.update(updates);
+  try { firebaseRef.child(key).set(JSON.stringify(value)); } catch(e) { console.warn('Firebase sync error:', e.message); }
 }
 </script>
 <script>
