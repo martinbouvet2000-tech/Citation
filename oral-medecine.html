@@ -789,6 +789,29 @@ body {
 .champion-btn:hover { opacity: 0.8; border-color: var(--warning); }
 .champion-btn--active { opacity: 1; border-color: var(--warning); background: var(--warning-bg); }
 .filter-btn--champion { border-color: rgba(251,191,36,0.3); }
+
+/* Question images */
+.question-image-zone { margin: 0.5rem 0; }
+.question-image-wrap { position: relative; display: inline-block; }
+.question-image {
+  max-width: 100%; max-height: 300px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); cursor: pointer; transition: transform 0.2s;
+}
+.question-image:hover { transform: scale(1.02); }
+.question-image-actions { display: flex; gap: 0.4rem; margin-top: 0.4rem; }
+.question-image-btn {
+  padding: 0.25rem 0.6rem; font-size: 0.72rem; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--bg-elevated);
+  color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+}
+.question-image-btn:hover { border-color: var(--accent-dim); color: var(--text); }
+.question-image-btn--danger:hover { border-color: var(--danger); color: var(--danger); }
+.question-image-upload {
+  display: block; width: 100%; padding: 0.8rem; border: 2px dashed var(--border);
+  border-radius: var(--radius-sm); background: transparent; color: var(--text-muted);
+  font-size: 0.82rem; cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.question-image-upload:hover { border-color: var(--accent-dim); color: var(--accent-light); background: var(--accent-bg); }
 .add-question-btn {
   display: flex;
   align-items: center;
@@ -879,7 +902,7 @@ const FIREBASE_CONFIG = {
 let firebaseDB = null;
 let firebaseRef = null;
 let SYNC_ENABLED = false;
-const SYNC_KEYS = ['oral-pass-done','oral-pass-notes','oral-pass-responses','oral-pass-daily','oral-pass-streak','oral-pass-custom-questions','oral-pass-champions','oral-pass-theme'];
+const SYNC_KEYS = ['oral-pass-done','oral-pass-notes','oral-pass-responses','oral-pass-daily','oral-pass-streak','oral-pass-custom-questions','oral-pass-champions','oral-pass-images','oral-pass-theme'];
 try {
   if (FIREBASE_CONFIG.apiKey !== 'AIzaSyplaceholder') {
     firebase.initializeApp(FIREBASE_CONFIG);
@@ -1418,6 +1441,7 @@ function App() {
   const [customQuestions, setCustomQuestions] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-custom-questions')) || { rpc: [], ared: [] }; } catch(e) { return { rpc: [], ared: [] }; } });
   const [showAddForm, setShowAddForm] = useState(null); // null or 'rpc'/'ared'
   const [newQ, setNewQ] = useState({ q: '', theme: '', difficulte: 2, tags: '' });
+  const [newQImage, setNewQImage] = useState(null);
 
   // Journal form state
   const [journalRatings, setJournalRatings] = useState({ structure: 0, contenu: 0, communication: 0, timing: 0, jury: 0 });
@@ -1425,6 +1449,30 @@ function App() {
   const [journalNotes, setJournalNotes] = useState('');
   const [journalQCount, setJournalQCount] = useState(1);
   const [suiviTab, setSuiviTab] = useState('journal');
+
+  // Question images (base64, keyed by question text)
+  const [questionImages, setQuestionImages] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-images')) || {}; } catch(e) { return {}; } });
+
+  const uploadQuestionImage = useCallback((questionText) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 2 * 1024 * 1024) { alert('Image trop lourde (max 2 Mo)'); return; }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setQuestionImages(prev => ({ ...prev, [questionText]: ev.target.result }));
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  }, []);
+
+  const removeQuestionImage = useCallback((questionText) => {
+    setQuestionImages(prev => { const copy = { ...prev }; delete copy[questionText]; return copy; });
+  }, []);
 
   // Champions state (questions starred as "Question pour un champion")
   const [champions, setChampions] = useState(() => { try { return JSON.parse(localStorage.getItem('oral-pass-champions')) || []; } catch(e) { return []; } });
@@ -1450,6 +1498,7 @@ function App() {
   useEffect(() => { localStorage.setItem('oral-pass-streak', JSON.stringify(streak)); syncToFirebase('oral-pass-streak', streak); }, [streak]);
   useEffect(() => { localStorage.setItem('oral-pass-custom-questions', JSON.stringify(customQuestions)); syncToFirebase('oral-pass-custom-questions', customQuestions); }, [customQuestions]);
   useEffect(() => { localStorage.setItem('oral-pass-champions', JSON.stringify(champions)); syncToFirebase('oral-pass-champions', champions); }, [champions]);
+  useEffect(() => { localStorage.setItem('oral-pass-images', JSON.stringify(questionImages)); syncToFirebase('oral-pass-images', questionImages); }, [questionImages]);
 
   // Listen for Firebase remote sync events
   useEffect(() => {
@@ -1462,6 +1511,7 @@ function App() {
       if (key === 'oral-pass-streak') setStreak(value || { current: 0, best: 0, lastDate: '' });
       if (key === 'oral-pass-custom-questions') setCustomQuestions(value || { rpc: [], ared: [] });
       if (key === 'oral-pass-champions') setChampions(Array.isArray(value) ? value : []);
+      if (key === 'oral-pass-images') setQuestionImages(typeof value === 'object' && value !== null ? value : {});
     };
     window.addEventListener('firebase-sync', handler);
     return () => window.removeEventListener('firebase-sync', handler);
@@ -1508,9 +1558,11 @@ function App() {
       _id: Date.now()
     };
     setCustomQuestions(cq => ({ ...cq, [type]: [...(cq[type] || []), question] }));
+    if (newQImage) { setQuestionImages(prev => ({ ...prev, [question.q]: newQImage })); }
     setNewQ({ q: '', theme: '', difficulte: 2, tags: '' });
+    setNewQImage(null);
     setShowAddForm(null);
-  }, [newQ]);
+  }, [newQ, newQImage]);
 
   // Delete custom question
   const deleteCustomQuestion = useCallback((type, id) => {
@@ -1828,6 +1880,19 @@ function App() {
             onChange: e => setNewQ(nq => ({ ...nq, tags: e.target.value }))
           })
         ),
+        type === 'ared' ? h('div', { className: 'add-form__field' },
+          h('label', { className: 'add-form__label' }, 'Image / Document ARED (optionnel, max 2 Mo)'),
+          newQImage
+            ? h('div', { style: { display: 'flex', alignItems: 'center', gap: '0.8rem' } },
+                h('img', { src: newQImage, style: { maxWidth: '120px', maxHeight: '80px', borderRadius: '6px', border: '1px solid var(--border)' } }),
+                h('button', { className: 'question-image-btn', onClick: () => setNewQImage(null) }, '✕ Retirer')
+              )
+            : h('button', { className: 'question-image-upload', onClick: () => {
+                const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
+                inp.onchange = (ev) => { const f = ev.target.files[0]; if (!f) return; if (f.size > 2*1024*1024) { alert('Max 2 Mo'); return; } const r = new FileReader(); r.onload = (re) => setNewQImage(re.target.result); r.readAsDataURL(f); };
+                inp.click();
+              } }, '📷 Ajouter une image')
+        ) : null,
         h('div', { className: 'add-form__actions' },
           h('button', {
             className: 'resp-actions__btn',
@@ -1837,7 +1902,7 @@ function App() {
           h('button', {
             className: 'resp-actions__btn',
             style: { padding: '0.5rem 1.2rem', cursor: 'pointer' },
-            onClick: () => { setShowAddForm(null); setNewQ({ q: '', theme: '', difficulte: 2, tags: '' }); }
+            onClick: () => { setShowAddForm(null); setNewQ({ q: '', theme: '', difficulte: 2, tags: '' }); setNewQImage(null); }
           }, 'Annuler')
         )
       );
@@ -1892,6 +1957,18 @@ function App() {
               onClick: e => { e.stopPropagation(); deleteCustomQuestion(type, q._id); }
             }, '✕') : null
           ),
+          // Question image (ARED)
+          type === 'ared' ? h('div', { className: 'question-image-zone' },
+            questionImages[q.q]
+              ? h('div', { className: 'question-image-wrap' },
+                  h('img', { src: questionImages[q.q], className: 'question-image', alt: 'Document ARED', onClick: e => { e.stopPropagation(); window.open(questionImages[q.q], '_blank'); } }),
+                  h('div', { className: 'question-image-actions' },
+                    h('button', { className: 'question-image-btn', onClick: e => { e.stopPropagation(); uploadQuestionImage(q.q); } }, '🔄 Changer'),
+                    h('button', { className: 'question-image-btn question-image-btn--danger', onClick: e => { e.stopPropagation(); removeQuestionImage(q.q); } }, '🗑 Supprimer')
+                  )
+                )
+              : h('button', { className: 'question-image-upload', onClick: e => { e.stopPropagation(); uploadQuestionImage(q.q); } }, '📷 Ajouter une image / document ARED')
+          ) : null,
           // Accordion toggle
           h('button', {
             className: 'resp-toggle' + (isOpen ? ' resp-toggle--open' : '') + (isEdited ? ' resp-toggle--edited' : ''),
@@ -2380,7 +2457,7 @@ function App() {
   // ===== EXPORT / IMPORT =====
   const exportData = useCallback(() => {
     const data = {};
-    ['oral-pass-done', 'oral-pass-notes', 'oral-pass-responses', 'oral-pass-daily', 'oral-pass-streak', 'oral-pass-custom-questions', 'oral-pass-champions', 'oral-pass-theme'].forEach(key => {
+    ['oral-pass-done', 'oral-pass-notes', 'oral-pass-responses', 'oral-pass-daily', 'oral-pass-streak', 'oral-pass-custom-questions', 'oral-pass-champions', 'oral-pass-images', 'oral-pass-theme'].forEach(key => {
       const v = localStorage.getItem(key);
       if (v) data[key] = JSON.parse(v);
     });
@@ -2415,6 +2492,7 @@ function App() {
           if (data['oral-pass-streak']) setStreak(data['oral-pass-streak']);
           if (data['oral-pass-custom-questions']) setCustomQuestions(data['oral-pass-custom-questions']);
           if (data['oral-pass-champions']) setChampions(data['oral-pass-champions']);
+          if (data['oral-pass-images']) setQuestionImages(data['oral-pass-images']);
           alert('Donnees importees avec succes !');
         } catch(err) {
           alert('Erreur : fichier invalide.');
