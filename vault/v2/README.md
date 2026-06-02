@@ -13,7 +13,12 @@ Snapshot après ~6 heures de travail d'installation, ~70 % du chemin parcouru.
 
 ## ⚡ Démarrage rapide
 
-**Si tu reprends le projet ailleurs (autre session Claude, autre développeur)** :
+**Si tu es une IA qui reprend le projet** :
+
+→ Lis directement [[MISSION-CLAUDE]] — c'est ton brief autonome complet
+avec autorité d'exécuter sans validation à chaque étape.
+
+**Si tu es un humain qui reprend le projet** :
 
 → Commence par [[00-START-HERE]]
 
@@ -21,7 +26,8 @@ Snapshot après ~6 heures de travail d'installation, ~70 % du chemin parcouru.
 
 | Doc | Contenu | Quand le lire |
 |---|---|---|
-| [[00-START-HERE]] | Brief 5-min : où on en est, où il faut aller | EN PREMIER |
+| ⭐ **[[MISSION-CLAUDE]]** | **Brief autonome ultra-complet pour IA** | **EN PREMIER si tu es Claude/ChatGPT/autre** |
+| [[00-START-HERE]] | Brief 5-min : où on en est, où il faut aller | EN PREMIER si humain |
 | [[01-CURRENT-STATE]] | État exact de la boutique Shopify | Pour savoir ce qui est déjà fait |
 | [[02-NEXT-ACTIONS]] | Checklist priorisée de ce qui reste | Pour planifier la session |
 | [[03-CREDENTIALS-AND-ACCESS]] | URLs, comptes, tokens | Pour se connecter |

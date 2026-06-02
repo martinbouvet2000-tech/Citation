@@ -13,6 +13,14 @@ Tu reprends la boutique **AURÉLIA Paris** (masques LED luminothérapie premium)
 en plein milieu de l'installation Shopify. Beaucoup est déjà fait — il reste
 ~1 h de travail pour finaliser.
 
+## 🎯 LIS D'ABORD CE DOC SI TU ES UNE IA
+
+→ **[[MISSION-CLAUDE]]** ← ton brief de mission ultra-complet, avec
+autorité pleine d'exécuter sans demander confirmation à chaque étape.
+Le user (Martin) compte sur toi pour **finir ce soir**.
+
+## Si tu es un humain qui reprend le projet
+
 **Avant de coder ou cliquer quoi que ce soit, lis dans cet ordre :**
 
 1. [[01-CURRENT-STATE]] — ce qui est **déjà fait** dans Shopify (ne pas refaire !)
