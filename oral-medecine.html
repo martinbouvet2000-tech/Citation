@@ -1006,16 +1006,15 @@ const DATA = {
     },
     epreuve2: {
       nom: "Analyse et Raisonnement devant un Ensemble de Donnees (ARED)",
-      description: "On te donne un DOCUMENT (texte, graphique, tableau, image) a analyser. ATTENTION : pendant la preparation, tu N'AS PAS acces au document ni a internet ! Tu dois le memoriser pendant les 10 premieres minutes, puis on te le retire.",
-      format_detail: "10 min de preparation SANS acces au document ni a internet → puis 10 min de passage devant le jury : 5 min d'expose maximum suivant les consignes, puis questions du jury.",
+      description: "On t'amene a analyser une INFOGRAPHIE (format type Visual Capitalist : donnees chiffrees, graphiques, design). Tu CHOISIS entre 2 sujets proposes : un sur la sante, un hors sante.",
+      format_detail: "10 min de preparation AVEC le document et un brouillon (pas d'internet) → puis 10 min d'oral devant le jury : ta presentation suivant les consignes, les questions du jury sont integrees dans ces 10 min. Le document N'EST PAS retire, MAIS tu dois decrire COMME SI le jury n'avait pas l'image sous les yeux.",
       objectifs: [
-        "Observer et restituer les informations contenues dans le document",
-        "Identifier les problematiques soulevees par le document",
-        "Avoir un esprit critique",
-        "Avoir un esprit d'ouverture",
-        "Synthetiser"
+        "Decrivez les informations contenues dans le document",
+        "Quel est le message de cette infographie ?",
+        "Discutez le choix de la forme",
+        "Quels sont les points forts et les points faibles de cette infographie et expliquez pourquoi"
       ],
-      conseil_cle: "MEMORISE le document pendant les 10 premieres minutes ! Tu ne l'auras plus ensuite. Note les chiffres cles, les tendances, les elements marquants."
+      conseil_cle: "Suis les 4 consignes DANS L'ORDRE. Soigne la description (consigne 1) : c'est l'etape la plus importante, transmets l'info comme si le jury ne voyait pas l'image. Pas d'accroche ni de mise en contexte, pas besoin de culture generale ni de connaissances medicales en plus."
     }
   },
   competences: [
@@ -1249,13 +1248,13 @@ const DATA = {
       }
     },
     {
-      question: "Document : image d'une personne sans abri dormant devant les urgences d'un hopital.",
+      question: "Infographie (type Visual Capitalist) intitulee 'Se soigner quand on est pauvre : la double peine'. Sous-titre : 'France, 2023'. Trois blocs de donnees. Bloc 1, un graphique en barres horizontales : 'Renoncement aux soins pour raisons financieres dans les 12 derniers mois' — 26% chez les 10% les plus pauvres, 4% chez les 10% les plus riches. Bloc 2, deux silhouettes humaines avec chiffres : 'Esperance de vie a la naissance selon le niveau de vie (hommes)' — 71,7 ans pour les 5% les plus pauvres contre 84,4 ans pour les 5% les plus riches, soit un ecart annonce de 13 ans. Bloc 3, un grand chiffre encadre : '203 000 places d'hebergement d'urgence' avec la mention 'mais environ 300 000 personnes sans domicile'. Palette rouge et gris fonce sur fond clair. Source en bas : 'DREES, INSEE, Fondation Abbe Pierre'. Logo et pictogrammes minimalistes. Public cible : grand public et decideurs.",
       type: "ARED",
       reponse: {
-        intro: "Cette photographie montre une personne sans domicile fixe allongee devant l'entree d'un service d'urgences hospitalier. Le contraste entre la precarite de cette personne et le batiment de soins cree une tension visuelle forte.",
-        developpement: ["Observation : on voit un individu couche sur des cartons, probablement en hiver (vetements epais). L'enseigne lumineuse 'Urgences' est visible. Le cadrage met en evidence la proximite paradoxale entre lieu de soins et precarite.", "Premiere problematique : l'acces aux soins des personnes precaires. Les urgences sont ouvertes a tous, mais les barrieres sont multiples (administrative, peur du jugement, meconnaissance des droits).", "Deuxieme problematique : l'hopital a-t-il un role social au-dela du soin ? Les PASS existent mais sont debordees.", "Esprit critique : cette photo a pu etre cadree pour accentuer le contraste. Elle ne montre pas les dispositifs existants (maraudes, SAMU social, lits halte soins sante)."],
-        conclusion: "Cette image revele les inegalites sociales de sante au coeur meme du systeme de soins. Soigner ne suffit pas si les determinants sociaux ne sont pas pris en compte.",
-        ouverture: "Cela rejoint le concept de 'medecine sociale' et les travaux sur les determinants sociaux de la sante."
+        intro: "1) Description des informations : Le document est une infographie verticale intitulee 'Se soigner quand on est pauvre : la double peine', sous-titree 'France, 2023'. Elle est organisee en trois blocs. Le premier bloc est un graphique en barres horizontales portant sur le renoncement aux soins pour raisons financieres au cours des douze derniers mois : une barre indique 26% pour les 10% des personnes les plus pauvres, une autre 4% pour les 10% les plus riches. Le deuxieme bloc represente l'esperance de vie a la naissance des hommes selon le niveau de vie, via deux silhouettes accompagnees de chiffres : 71,7 ans pour les 5% les plus pauvres et 84,4 ans pour les 5% les plus riches, soit un ecart affiche de 13 ans. Le troisieme bloc met en avant un grand chiffre encadre, 203 000 places d'hebergement d'urgence, assorti de la mention qu'environ 300 000 personnes sont sans domicile. La source citee en bas est 'DREES, INSEE, Fondation Abbe Pierre'.",
+        developpement: ["2) Message de l'infographie : En reliant ces trois blocs, le message est que la pauvrete cumule plusieurs desavantages face a la sante : les plus pauvres renoncent six fois plus souvent aux soins pour des raisons d'argent (bloc 1), vivent nettement moins longtemps que les plus aises (bloc 2, 13 ans d'ecart), et l'offre d'hebergement d'urgence reste inferieure aux besoins (bloc 3). Le titre 'la double peine' resume l'intention : etre pauvre, c'est a la fois etre plus expose et moins bien pris en charge. L'infographie cherche a faire prendre conscience de ces inegalites sociales de sante a un public large et aux decideurs.", "3) Choix de la forme : L'espace est decoupe verticalement en trois blocs lisibles l'un apres l'autre, ce qui guide la lecture du haut vers le bas comme une demonstration en trois temps. La palette se limite a deux teintes principales, le rouge et le gris fonce sur fond clair : le rouge attire l'oeil sur les chiffres alarmants et connote l'alerte, le contraste assure la lisibilite. Le choix des barres horizontales pour le bloc 1 facilite la comparaison directe entre les deux populations. Les silhouettes humaines du bloc 2 incarnent une statistique abstraite et la rendent concrete. Le grand chiffre encadre du bloc 3 maximise l'impact d'une donnee unique. Les pictogrammes minimalistes et la taille importante des chiffres servent une lecture rapide.", "4) Points forts et points faibles : Points forts : les donnees sont chiffrees, sourcees (DREES, INSEE, Fondation Abbe Pierre) et datees, ce qui renforce la credibilite ; la structure en trois blocs et le code couleur rendent le message immediatement comprehensible ; les comparaisons (pauvres contre riches) sont parlantes. Points faibles : le rouge et le titre 'double peine' orientent l'interpretation et dramatisent, ce qui releve d'un parti pris ; les categories choisies (10% ou 5% extremes) accentuent les ecarts en ignorant les situations intermediaires ; le bloc 2 ne concerne que les hommes, ce qui n'est pas mis en avant ; le rapprochement des 203 000 places et des 300 000 personnes sans domicile suggere une comparaison directe alors que ces deux chiffres ne mesurent pas exactement la meme chose."],
+        conclusion: "En synthese sur la forme et le fond : l'infographie est efficace et lisible car chaque bloc apporte un chiffre source et le code couleur hierarchise l'information, mais sa force de conviction repose en partie sur des choix de cadrage (couleurs, categories extremes, titre) qui orientent le lecteur.",
+        ouverture: "Sur ce que le document ne montre pas : il ne precise pas les marges d'incertitude des donnees, ni les dispositifs existants destines a reduire ces inegalites, ce qui constitue une limite a garder a l'esprit dans l'analyse critique."
       }
     },
     {
@@ -1279,13 +1278,13 @@ const DATA = {
       }
     },
     {
-      question: "Photo d'un ecran de telemedicine montrant un medecin et un patient age. Discutez.",
+      question: "Infographie (style Visual Capitalist), fond bleu nuit, intitulee 'L'essor de la telemedecine en France'. Source en bas : Assurance Maladie / DREES, 2024. Trois blocs de donnees. Bloc 1, un grand chiffre cle : '20 millions de teleconsultations remboursees en 2023' avec, a cote, une courbe ascendante montrant l'evolution de 2019 (0,4 million) a 2023 (20 millions). Bloc 2, un diagramme en barres horizontales : repartition des teleconsultations par tranche d'age (26-40 ans : 38%, 41-60 ans : 31%, 18-25 ans : 17%, 60-75 ans : 10%, plus de 75 ans : 4%). Bloc 3, une carte de France coloree par densite medicale, avec une statistique en surimpression : '87% du territoire est classe en desert medical, soit 6 millions de Francais sans medecin traitant'. Public cible : grand public et decideurs en sante.",
       type: "ARED",
       reponse: {
-        intro: "Cette image montre un ecran d'ordinateur ou de tablette sur lequel un medecin en blouse blanche echange avec un patient age. C'est une illustration concrete de la telemedicine, qui s'est imposee depuis la pandemie.",
-        developpement: ["Observation : l'ecran est divise en deux — le medecin a gauche, le patient a droite. Le patient semble age (cheveux blancs), possiblement a son domicile. Le medecin porte une blouse, signe de professionnalisme maintenu malgre la distance.", "Avantages : acces aux soins pour les personnes a mobilite reduite, les zones rurales sans medecin, reduction du temps d'attente. 10% des consultations se font en telemedicine en 2024.", "Limites : fracture numerique (25% des plus de 75 ans ne maitrisent pas les outils numeriques), impossibilite de l'examen clinique, perte du langage non-verbal subtil, risque de deshumanisation.", "Esprit critique : cette image montre un cas 'ideal' — patient connecte, a l'aise avec la technologie. Elle ne montre pas les echecs : connexion qui coupe, patient isole sans materiel, medecin fatigue par l'enchainement de teleconsultations."],
-        conclusion: "La telemedicine est un outil complementaire precieux mais ne peut pas se substituer au contact humain, surtout pour les personnes agees ou les situations complexes.",
-        ouverture: "Cela questionne plus largement la place du numerique dans le soin : comment innover sans exclure ?"
+        intro: "Consigne 1 — Decrire les informations (etape la plus importante, comme si le jury ne voyait pas l'image) : il s'agit d'une infographie sur fond bleu nuit intitulee 'L'essor de la telemedecine en France', sourcee Assurance Maladie / DREES 2024. Elle s'organise en trois blocs. Le premier affiche un chiffre cle isole, '20 millions de teleconsultations remboursees en 2023', accompagne d'une courbe qui monte fortement, passant de 0,4 million en 2019 a 20 millions en 2023. Le deuxieme bloc est un diagramme en barres horizontales donnant la repartition par tranche d'age : 26-40 ans 38%, 41-60 ans 31%, 18-25 ans 17%, 60-75 ans 10%, et plus de 75 ans seulement 4%. Le troisieme bloc est une carte de France coloree selon la densite medicale, avec une statistique en surimpression : 87% du territoire classe en desert medical, soit 6 millions de Francais sans medecin traitant.",
+        developpement: ["Consigne 2 — Le message de l'infographie : en reliant les trois blocs, l'intention est de montrer que la telemedecine connait un essor massif (la courbe et les 20 millions), mais que cet essor profite surtout aux actifs jeunes (38% pour les 26-40 ans) et beaucoup moins aux plus de 75 ans (4%), alors meme que la carte rappelle l'ampleur des deserts medicaux. Le message voulu : la telemedecine est une reponse en forte croissance a la penurie de medecins, mais elle laisse de cote les populations qui en auraient le plus besoin.", "Consigne 3 — Le choix de la forme et pourquoi : l'espace est decoupe en trois blocs distincts, ce qui hierarchise la lecture (un chiffre choc, une repartition, un territoire). Le fond bleu nuit evoque le numerique et la sante et fait ressortir les chiffres clairs. La courbe ascendante traduit visuellement la croissance, les barres horizontales permettent de comparer d'un coup d'oeil les tranches d'age, et la carte choroplethe ancre le propos dans une realite geographique. Le grand chiffre isole sert d'accroche pour capter l'attention.", "Consigne 4 — Points forts et points faibles, justifies : points forts, des donnees chiffrees, datees et sourcees (DREES), une progression spectaculaire facile a saisir, et un croisement pertinent entre usage, age et territoire. Points faibles : les pourcentages par age ne sont pas rapportes au poids de chaque tranche dans la population (un biais de lecture possible), la carte juxtapose deserts medicaux et telemedecine sans prouver de lien de cause a effet, et l'angle reste positif ('essor') en occultant les limites (fracture numerique, absence d'examen clinique)."],
+        conclusion: "En synthese : l'infographie est efficace car elle combine un chiffre choc, une repartition par age et un ancrage geographique, mais son angle resolument positif ('essor') et l'absence de mise en rapport des pourcentages par age avec le poids reel de chaque tranche dans la population constituent ses principales limites.",
+        ouverture: "Le document ne montre pas les limites de la telemedecine (fracture numerique chez les plus ages, impossibilite de l'examen clinique) ni si le faible usage apres 75 ans tient au manque d'equipement ou de besoin : une version plus complete preciserait ces points."
       }
     },
     {
@@ -1299,13 +1298,13 @@ const DATA = {
       }
     },
     {
-      question: "Document : image de militants ecologistes bloquant une autoroute. Analysez la situation.",
+      question: "Document : infographie type Visual Capitalist intitulee 'Climat et sante : le cout humain du rechauffement'. En haut a gauche, un grand chiffre cle : '489 000 deces par an lies aux vagues de chaleur dans le monde'. Au centre, un graphique en barres horizontales 'Deces annuels par facteur climatique' : pollution de l'air 7 millions, vagues de chaleur 489 000, maladies vectorielles (dengue, paludisme) 700 000. A droite, une carte du monde coloree en degrade du jaune au rouge fonce montrant l'expansion des zones a risque de dengue entre 1990 et 2024. En bas, une frise chronologique 'Population exposee a la dengue' : 1,5 milliard en 1990, 3,9 milliards en 2024. Palette dominante rouge / orange / gris. Source indiquee en bas : OMS et The Lancet Countdown 2023. Public cible : grand public et decideurs. Consigne : 1) Decrivez les informations contenues dans le document. 2) Quel est le message de cette infographie ? 3) Discutez le choix de la forme. 4) Quels sont les points forts et les points faibles de cette infographie et expliquez pourquoi.",
       type: "ARED",
       reponse: {
-        intro: "Cette photographie montre un groupe de personnes assises au milieu d'une autoroute, bloquant la circulation. Des banderoles sont visibles, indiquant une action militante ecologiste.",
-        developpement: ["Observation : des individus (probablement jeunes) sont assis sur le bitume. Derriere eux, des files de voitures a l'arret. Des forces de l'ordre sont presentes. Les banderoles evoquent l'urgence climatique.", "Premiere problematique : la desobeissance civile est-elle legitime quand les institutions ne repondent pas a l'urgence ? L'histoire montre que des droits ont ete conquis par la desobeissance (droits civiques, suffragettes).", "Deuxieme problematique : le blocage perturbe des personnes qui doivent aller au travail, a l'hopital, chercher leurs enfants. L'action fait aussi des 'victimes collerales' qui n'ont rien demande.", "Esprit critique : la photo est cadree pour montrer le contraste militants/automobilistes. Elle ne montre pas le contexte — est-ce une action isolee ou la enieme apres des annees d'inaction politique ?"],
-        conclusion: "La question n'est pas 'ont-ils le droit ?' mais 'la gravite de la cause justifie-t-elle ce moyen ?'. La reponse depend du rapport entre urgence climatique et liberte de circulation.",
-        ouverture: "Cela renvoie au concept de 'dilemme du bien commun' : comment agir pour la planete sans pieger le quotidien de ceux qu'on veut proteger ?"
+        intro: "1) DESCRIPTION. L'infographie est intitulee 'Climat et sante : le cout humain du rechauffement'. En haut a gauche figure un chiffre cle isole en grand : 489 000 deces par an lies aux vagues de chaleur dans le monde. La source, indiquee en bas, est l'OMS et The Lancet Countdown 2023.",
+        developpement: ["1) DESCRIPTION (suite). Au centre, un graphique en barres horizontales intitule 'Deces annuels par facteur climatique' compare trois categories : la pollution de l'air avec 7 millions de deces, les vagues de chaleur avec 489 000 deces, et les maladies vectorielles comme la dengue et le paludisme avec 700 000 deces. La barre de la pollution de l'air est de tres loin la plus longue.", "1) DESCRIPTION (suite). A droite, une carte du monde coloree en degrade allant du jaune au rouge fonce montre l'expansion des zones a risque de dengue entre 1990 et 2024 : les zones rouges, les plus a risque, s'etendent vers l'Europe du Sud et l'Amerique du Nord. En bas, une frise chronologique 'Population exposee a la dengue' donne deux reperes : 1,5 milliard de personnes en 1990 et 3,9 milliards en 2024.", "2) MESSAGE. En reliant ces elements, le message est que le changement climatique est deja une crise sanitaire majeure et mesurable, pas une menace lointaine : la pollution de l'air est de loin le premier tueur, mais les vagues de chaleur et les maladies vectorielles progressent et touchent des zones jusque-la epargnees. Le choix de juxtaposer un chiffre choc, une comparaison chiffree et une dynamique temporelle vise a convaincre le grand public et les decideurs d'agir.", "3) FORME. La forme combine trois registres : un chiffre cle isole en gros pour l'accroche, un graphique en barres horizontales pour comparer les facteurs entre eux, et un couple carte + frise chronologique pour montrer une evolution dans l'espace et dans le temps. La palette rouge / orange / gris associe directement le sujet a la chaleur, au danger et a l'urgence. Le chiffre cle occupe le haut a gauche, point d'entree naturel de la lecture, et les barres les plus longues attirent l'oeil vers le facteur dominant. Ces choix servent la hierarchie de l'information : on retient un chiffre, puis un classement, puis une tendance.", "4) POINTS FORTS / POINTS FAIBLES. Points forts : les sources sont citees et credibles (OMS, Lancet), les donnees sont chiffrees et datees, et la combinaison comparaison + carte + frise rend le propos a la fois lisible et complet. Points faibles : melanger des facteurs d'ampleur tres differente (7 millions contre 489 000) sur un meme graphique peut ecraser visuellement les barres les plus courtes et fausser la perception ; la carte ne precise pas si elle s'appuie sur des projections ou des donnees observees ; et l'absence d'echelle de temps unique entre les chiffres complique la comparaison directe."],
+        conclusion: "4) POINTS FORTS / POINTS FAIBLES (synthese). L'infographie est solide sur la source et la lisibilite, mais le choix de regrouper des ordres de grandeur tres ecartes sur une meme echelle reste son principal point faible, car il peut induire en erreur sur le poids relatif de chaque facteur.",
+        ouverture: "Une version amelioree pourrait separer la pollution de l'air des autres facteurs, ou utiliser une echelle logarithmique, afin de rendre visibles toutes les categories sans ecraser les plus faibles."
       }
     },
   ]
@@ -1927,6 +1926,18 @@ function App() {
         onClick: () => setShowAddForm(showAddForm === type ? null : type)
       }, '+ Ajouter une question personnalisee') : null,
       renderAddForm(),
+      // Bandeau rappel consignes officielles ARED (uniquement pour ARED)
+      type === 'ared' ? h('div', { className: 'method-card', style: { marginBottom: '1.2rem', borderColor: 'var(--accent)' } },
+        h('div', { className: 'method-card__title' }, '📋 Rappel officiel ARED — les 4 consignes dans l\'ordre'),
+        h('p', { style: { fontSize: '0.78rem', color: 'var(--accent-light)', marginBottom: '0.5rem', fontStyle: 'italic', fontWeight: 600 } }, '⏱ 2 phases : 10 min de preparation (AVEC le document + brouillon, sans internet) → puis 10 min d\'oral devant le jury (presentation + questions du jury comprises).'),
+        h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.6rem' } }, '🖼 Le support est une INFOGRAPHIE (chiffres, graphiques, design). Tu choisis entre 2 sujets : un sante, un hors sante.'),
+        h('ul', { className: 'method-card__list' },
+          ['1. Decrivez les informations contenues dans le document — l\'etape LA PLUS IMPORTANTE : decrire precisement, comme si le jury ne voyait pas l\'image.', '2. Quel est le message de cette infographie ? — relier les elements de la description pour reconstituer l\'intention voulue.', '3. Discutez le choix de la forme — occupation de l\'espace, design, couleurs, tailles, types de graphiques, et POURQUOI ces choix.', '4. Quels sont les points forts et les points faibles de cette infographie, et pourquoi ? — analyse critique justifiee.'].map((t,i) =>
+            h('li', { key: i }, h('span', { style: { color: 'var(--accent)', width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block', flexShrink: 0, marginTop: '0.5rem' } }), t)
+          )
+        ),
+        h('p', { style: { fontSize: '0.78rem', color: 'var(--warning)', marginTop: '0.6rem', marginBottom: 0, fontWeight: 600 } }, '⚠️ Decris COMME SI le jury ne voyait pas l\'infographie. Pas d\'accroche ni de mise en contexte, pas de culture generale ni de connaissances medicales : suis les consignes dans l\'ordre.')
+      ) : null,
       filtered.map((q, i) => {
         const isOpen = openResp === q.q;
         const userResp = responses[q.q];
@@ -2017,12 +2028,38 @@ function App() {
           )
         ),
         h('div', { className: 'method-card' },
-          h('div', { className: 'method-card__title' }, '📊 Methode ARED — Expose (5 min max) + Questions'),
-          h('p', { style: { fontSize: '0.78rem', color: 'var(--warning)', marginBottom: '0.5rem', fontStyle: 'italic', fontWeight: 600 } }, '⚠️ ATTENTION : Tu n\'auras PAS le document pendant ta preparation ! Memorise-le d\'abord.'),
-          h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem' } }, '⏱ 10 min avec le document (memoriser) → document retire → 10 min de preparation sans document ni internet → 10 min devant le jury'),
+          h('div', { className: 'method-card__title' }, '📊 Methode ARED — Les 4 consignes dans l\'ordre'),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--accent-light)', marginBottom: '0.4rem', fontStyle: 'italic' } }, '⏱ 10 min de preparation avec le document, puis 10 min d\'oral devant le jury (presentation + questions)'),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--warning)', marginBottom: '0.5rem', fontWeight: 600 } }, '⚠️ Pas d\'accroche ni de mise en contexte. Suivre les 4 consignes DANS L\'ORDRE. Inutile de rajouter de la culture G ou des connaissances medicales.'),
+          h('p', { style: { fontSize: '0.74rem', color: 'var(--text-muted)', marginBottom: '0.5rem' } }, 'Le document (une infographie) reste sous tes yeux, mais decris-le COMME SI le jury ne le voyait pas.'),
           h('ul', { className: 'method-card__list' },
-            ['MEMORISATION (10 min) : Note tous les chiffres, tendances, elements visuels cles du document', 'PREPARATION (10 min sans document) : Structure ton expose de memoire', 'Restitution (1.5 min) : Decrire le document et ses donnees de memoire', 'Problematiques (2 min) : 2-3 enjeux souleves par les donnees', 'Esprit critique (1 min) : Limites des donnees, biais possibles, ce qui manque', 'Conclusion (0.5 min) : Synthese + ouverture', 'Questions jury : Ecouter, nuancer, montrer esprit d\'ouverture'].map((t,i) =>
+            ['1. DECRIRE (l\'etape la plus importante) : transmets TOUTES les infos precisement comme si le jury ne voyait pas l\'infographie — chiffres, axes, categories, legendes, sources.', '2. MESSAGE : relie les elements decrits pour formuler le message / l\'intention de l\'infographie (que cherche-t-elle a faire comprendre ?).', '3. FORME : discute le choix de la forme — occupation de l\'espace, couleurs, tailles, types de graphiques, design — et explique POURQUOI ces choix.', '4. POINTS FORTS / POINTS FAIBLES : analyse critique justifiee, en expliquant pourquoi chaque point est un atout ou une limite.'].map((t,i) =>
               h('li', { key: i }, h('span', { style: { color: 'var(--warning)', width: 8, height: 8, borderRadius: '50%', background: 'var(--warning)', display: 'inline-block', flexShrink: 0, marginTop: '0.5rem' } }), t)
+            )
+          )
+        ),
+        h('div', { className: 'method-card' },
+          h('div', { className: 'method-card__title' }, '🔗 Sources pour s\'entrainer'),
+          h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem' } }, 'Entraine-toi a analyser de vraies infographies en leur appliquant les 4 consignes officielles : decrire, message, choix de la forme, points forts / points faibles. Visual Capitalist est le format de reference de l\'epreuve.'),
+          h('ul', { className: 'method-card__list' },
+            [
+              { nom: 'Visual Capitalist', href: 'https://www.visualcapitalist.com', desc: ' — infographies data, section Healthcare. LE format de reference de l\'epreuve.' },
+              { nom: 'Voronoi', href: 'https://www.voronoiapp.com', desc: ' — meme contenu, format mobile.' },
+              { nom: 'Our World in Data', href: 'https://ourworldindata.org', desc: ' — graphiques / cartes rigoureux (sante, climat, demographie).' },
+              { nom: 'Statista', href: 'https://www.statista.com', desc: ' — infographies quotidiennes, chiffres cles.' },
+              { nom: 'Pew Research', href: 'https://www.pewresearch.org', desc: ' — etudes sociologiques claires.' },
+              { nom: 'Information is Beautiful', href: 'https://informationisbeautiful.net', desc: ' — infographies au design epure.' },
+              { nom: 'The Pudding', href: 'https://pudding.cool', desc: ' — essais visuels narratifs.' },
+              { nom: 'Flowing Data', href: 'https://flowingdata.com', desc: ' — visualisations du quotidien.' },
+              { nom: 'World Bank', href: 'https://www.worldbank.org', desc: ' — donnees de developpement mondial.' },
+              { nom: 'IMF', href: 'https://www.imf.org', desc: ' — donnees economiques mondiales.' }
+            ].map((s, i) =>
+              h('li', { key: i }, h('span', { style: { color: 'var(--accent)', width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block', flexShrink: 0, marginTop: '0.5rem' } }),
+                h('span', null,
+                  h('a', { href: s.href, target: '_blank', rel: 'noopener', style: { color: 'var(--accent-light)', fontWeight: 600, textDecoration: 'none' } }, s.nom),
+                  s.desc
+                )
+              )
             )
           )
         ),
