@@ -904,6 +904,16 @@ let firebaseDB = null;
 let firebaseRef = null;
 let SYNC_ENABLED = false;
 const SYNC_KEYS = ['oral-pass-done','oral-pass-notes','oral-pass-responses','oral-pass-daily','oral-pass-streak','oral-pass-custom-questions','oral-pass-champions','oral-pass-images','oral-pass-theme'];
+// Protege contre l'ecrasement de donnees locales non-vides par un distant vide (anti perte de donnees)
+function ssEmpty(raw){
+  if(raw===null||raw===undefined||raw===''||raw==='null'||raw==='"null"') return true;
+  let v; try{ v=JSON.parse(raw); }catch(e){ return false; }
+  if(v===null) return true;
+  if(Array.isArray(v)) return v.length===0;
+  if(typeof v==='object'){ const ks=Object.keys(v); if(ks.length===0) return true; return ks.every(k=>Array.isArray(v[k])?v[k].length===0:(v[k]===''||v[k]===0||v[k]===null)); }
+  if(typeof v==='string') return v==='';
+  return false;
+}
 try {
   if (FIREBASE_CONFIG.apiKey !== 'AIzaSyplaceholder') {
     firebase.initializeApp(FIREBASE_CONFIG);
@@ -922,6 +932,7 @@ try {
             const remote = typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key]);
             const local = localStorage.getItem(key);
             if (remote !== local) {
+              if (ssEmpty(remote) && !ssEmpty(local)) { syncToFirebase(key, JSON.parse(local)); return; }
               localStorage.setItem(key, remote);
               const parsed = JSON.parse(remote);
               window.dispatchEvent(new CustomEvent('firebase-sync', { detail: { key, value: parsed } }));
