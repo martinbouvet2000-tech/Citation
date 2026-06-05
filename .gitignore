@@ -1,0 +1,26 @@
+# Anciennes versions / fichiers de travail (hors site officiel)
+Bundle-Site.html
+Index-Site.html
+Site-Citation-Clarisse.zip
+*.zip
+*.docx
+
+# Sauvegardes locales de données (ne jamais publier)
+firebase-backup-*.json
+oral-medecine-backup-*.json
+firebase-raw-*.json
+_ldbsnap/
+
+# Scripts d'édition temporaires + backups
+apply-*.mjs
+convert-*.mjs
+check-*.mjs
+*.bak
+*.bak2
+*.bak3
+*.bak4
+.__*.js
+
+# Worktrees / éditeur
+Oral 1er année de médecine/
+.vscode/
