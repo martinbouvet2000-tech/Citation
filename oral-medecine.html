@@ -922,6 +922,7 @@ try {
     const roomCode = new URLSearchParams(window.location.search).get('room') || 'default';
     firebaseRef = firebaseDB.ref('rooms/' + roomCode);
     SYNC_ENABLED = true;
+    setTimeout(function(){ try { autoBackupToFirebase(); } catch(e){} }, 12000);
     // Ecouter les changements distants
     firebaseRef.on('value', (snapshot) => {
       const data = snapshot.val();
@@ -951,6 +952,29 @@ function syncToFirebase(key, value) {
   setTimeout(() => {
     try { firebaseRef.child(key).set(JSON.stringify(value)); } catch(e) { console.warn('Firebase sync error:', e.message); }
   }, 0);
+  autoBackupToFirebase();
+}
+// Sauvegarde auto horodatee : historique quotidien (14 jours glissants) sous rooms/<room>/_backups. Survit a un clear et a la perte d'appareil.
+let _backupTimer = null;
+function autoBackupToFirebase() {
+  if (!SYNC_ENABLED || !firebaseRef) return;
+  if (_backupTimer) clearTimeout(_backupTimer);
+  _backupTimer = setTimeout(() => {
+    try {
+      const snap = {};
+      SYNC_KEYS.forEach(k => { const v = localStorage.getItem(k); if (v != null) snap[k] = v; });
+      snap._ts = Date.now();
+      const day = new Date().toISOString().slice(0, 10);
+      firebaseRef.child('_backups').child(day).set(snap);
+      firebaseRef.child('_backups').once('value', (s) => {
+        try {
+          const all = s.val() || {};
+          const days = Object.keys(all).filter(d => /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(d)).sort();
+          if (days.length > 14) days.slice(0, days.length - 14).forEach(d => firebaseRef.child('_backups').child(d).remove());
+        } catch (e) {}
+      });
+    } catch (e) { console.warn('autoBackup error:', e.message); }
+  }, 8000);
 }
 </script>
 <script>
@@ -1131,42 +1155,42 @@ const DATA = {
       { q: "Le droit a l'oubli pour les anciens malades : pourquoi est-ce important ?", theme: "droit", difficulte: 2, tags: ["discrimination", "assurance", "reinsertion"] },
     ],
     ared: [
-      { q: "Document : image d'une manifestation de soignants devant un hopital avec des pancartes revendiquant de meilleures conditions. Analysez.", theme: "sante-publique", difficulte: 2, tags: ["hopital", "conditions-travail", "revendication"], image: "https://images.unsplash.com/photo-1651789823238-fdcea40080da?w=800&h=450&fit=crop" },
-      { q: "Document : image d'un cabinet medical ferme dans un village rural avec un panneau 'A vendre'. Que vous inspire ce document ?", theme: "sante-publique", difficulte: 2, tags: ["deserts-medicaux", "territoires", "abandon"], image: "https://images.unsplash.com/photo-1546961060-009dfc12e603?w=800&h=450&fit=crop" },
-      { q: "Document : image d'une personne agee seule dans une chambre d'EHPAD, regardant par la fenetre. Analysez les enjeux.", theme: "societe", difficulte: 2, tags: ["vieillissement", "solitude", "dignite"], image: "https://images.unsplash.com/photo-1745832220621-371976550d42?w=800&h=450&fit=crop" },
-      { q: "Document : image d'un enfant travaillant dans une usine textile dans un pays en developpement. Que vous evoque ce document ?", theme: "international", difficulte: 2, tags: ["droits-humains", "travail-enfants", "mondialisation"], image: "https://images.unsplash.com/photo-1663841365334-06805f34af15?w=800&h=450&fit=crop" },
-      { q: "Document : tableau de donnees montrant les temps d'attente aux urgences (6h en moyenne) dans un hopital public. Identifiez les problematiques.", theme: "sante-publique", difficulte: 2, tags: ["urgences", "systeme-sante", "saturation"], image: "https://images.unsplash.com/photo-1755995083683-50d08cd83d09?w=800&h=450&fit=crop" },
-      { q: "Document : graphique montrant l'evolution de la pollution atmospherique dans les grandes villes francaises. Analysez les consequences sanitaires.", theme: "environnement", difficulte: 2, tags: ["pollution", "sante-respiratoire", "urbanisme"], image: "https://images.unsplash.com/photo-1754373218517-18c577811d0d?w=800&h=450&fit=crop" },
-      { q: "Document : image d'un medecin MSF soignant un enfant dans un camp de refugies. Que vous inspire ce document ?", theme: "international", difficulte: 2, tags: ["humanitaire", "engagement", "inegalites"], image: "https://images.unsplash.com/photo-1742202618461-31f6f3584247?w=800&h=450&fit=crop" },
-      { q: "Document : infographie sur les taux de couverture vaccinale dans differentes regions du monde. Analysez les enjeux.", theme: "international", difficulte: 2, tags: ["vaccination", "sante-mondiale", "acces"], image: "https://images.unsplash.com/photo-1623682687826-fe06bf64e6d8?w=800&h=450&fit=crop" },
-      { q: "Document : image d'un SDF dormant sur un carton devant les urgences d'un hopital. Quelles problematiques ?", theme: "societe", difficulte: 2, tags: ["precarite", "acces-soins", "exclusion"], image: "https://images.unsplash.com/photo-1633606849136-6e89a2ca22df?w=800&h=450&fit=crop" },
-      { q: "Document : graphique comparant le temps d'ecran moyen des 15-25 ans en 2019 vs 2025. Que vous evoque ce document ?", theme: "societe", difficulte: 1, tags: ["numerique", "lien-social", "dependance"], image: "https://images.unsplash.com/photo-1510717029971-27681a0e9da9?w=800&h=450&fit=crop" },
-      { q: "Document : image d'un robot chirurgical Da Vinci en salle d'operation accompagnee de statistiques d'utilisation. Analysez les implications.", theme: "technologie", difficulte: 2, tags: ["innovation", "avenir-medecine", "deshumanisation"], image: "https://images.unsplash.com/photo-1563233987-35f9d4b9a861?w=800&h=450&fit=crop" },
-      { q: "Document : tableau comparant les taux de mortalite maternelle entre l'Afrique subsaharienne et la France. Analysez.", theme: "international", difficulte: 2, tags: ["inegalites", "mortalite-maternelle", "moyens"], image: "https://images.unsplash.com/photo-1632053002434-b203dc8efb37?w=800&h=450&fit=crop" },
-      { q: "Document : texte d'un communique d'agriculteurs manifestant contre l'interdiction de pesticides. Discutez les enjeux.", theme: "environnement", difficulte: 2, tags: ["agriculture", "sante-publique", "economie"], image: "https://images.unsplash.com/photo-1699666397768-0126340e880a?w=800&h=450&fit=crop" },
-      { q: "Document : tableau nutritionnel comparant un plat prepare ultra-transforme et un plat cuisine maison. Analysez les enjeux de sante publique.", theme: "nutrition", difficulte: 2, tags: ["alimentation", "prevention", "marketing"], image: "https://images.unsplash.com/photo-1491449347753-6b0223fb6931?w=800&h=450&fit=crop" },
-      { q: "Document : image de militants ecologistes bloquant une autoroute, accompagnee d'un article de presse. Analysez la situation.", theme: "societe", difficulte: 2, tags: ["desobeissance-civile", "urgence-climatique", "liberte"], image: "https://images.unsplash.com/photo-1699451017819-a12db2d3abee?w=800&h=450&fit=crop" },
-      { q: "Document : graphique montrant l'evolution du port du masque en population generale depuis 2020. Que vous evoque ce document ?", theme: "sante-publique", difficulte: 1, tags: ["prevention", "anxiete", "normalite"], image: "https://images.unsplash.com/photo-1574353789332-24f54431557d?w=800&h=450&fit=crop" },
-      { q: "Document : image aerienne montrant un bidonville a cote d'un hopital moderne. Analysez le contraste.", theme: "societe", difficulte: 2, tags: ["inegalites", "acces-soins", "urbanisme"], image: "https://images.unsplash.com/photo-1768807843441-6d2cbcee2d82?w=800&h=450&fit=crop" },
-      { q: "Document : liste de medicaments en rupture de stock affichee en pharmacie. Discutez.", theme: "sante-publique", difficulte: 2, tags: ["penurie", "industrie-pharma", "souverainete"], image: "https://images.unsplash.com/photo-1696861286643-341a8d7a79e9?w=800&h=450&fit=crop" },
-      { q: "Document : rapport sanitaire sur les conditions de vie dans un camp de migrants aux portes de l'Europe. Problematiques sanitaires ?", theme: "international", difficulte: 2, tags: ["migrants", "conditions-sanitaires", "humanite"], image: "https://images.unsplash.com/photo-1556305896-c4bbbf66eb03?w=800&h=450&fit=crop" },
-      { q: "Document : graphique correlant le taux d'obesite infantile et le temps d'ecran quotidien. Analysez les enjeux.", theme: "nutrition", difficulte: 2, tags: ["obesite", "sedentarite", "education"], image: "https://images.unsplash.com/photo-1585577529540-a8095ea25427?w=800&h=450&fit=crop" },
-      { q: "Document : image d'un hopital psychiatrique desaffecte accompagnee d'un texte sur l'evolution de la psychiatrie en France. Que vous inspire ce document ?", theme: "sante-mentale", difficulte: 2, tags: ["psychiatrie", "histoire", "evolution"], image: "https://images.unsplash.com/photo-1543139981-839d3e5e6365?w=800&h=450&fit=crop" },
-      { q: "Document : deux tribunes opposees (pour et contre l'IVG) publiees dans un journal. Presentez les differents points de vue.", theme: "societe", difficulte: 3, tags: ["IVG", "droits", "croyances"], image: "https://images.unsplash.com/photo-1652594031250-ee301696bad4?w=800&h=450&fit=crop" },
-      { q: "Document : image d'une personne en fauteuil roulant face a un escalier sans rampe d'acces. Analysez.", theme: "societe", difficulte: 1, tags: ["handicap", "accessibilite", "inclusion"], image: "https://images.unsplash.com/photo-1646082275130-347d10885c5f?w=800&h=450&fit=crop" },
-      { q: "Document : carte montrant la deforestation en Amazonie et les foyers de maladies emergentes. Quels liens avec la sante humaine ?", theme: "environnement", difficulte: 2, tags: ["climat", "biodiversite", "maladies-emergentes"], image: "https://images.unsplash.com/photo-1743264038845-0d65f5d8688d?w=800&h=450&fit=crop" },
-      { q: "Document : temoignage ecrit d'un etudiant en medecine sur ses conditions de stage hospitalier. Analysez.", theme: "sante-publique", difficulte: 2, tags: ["formation", "bien-etre", "systeme"], image: "https://images.unsplash.com/photo-1676313496812-f8fc7c4304cf?w=800&h=450&fit=crop" },
-      { q: "Document : capture d'ecran d'une teleconsultation entre un medecin et un patient age. Discutez.", theme: "technologie", difficulte: 2, tags: ["telemedicine", "fracture-numerique", "innovation"], image: "https://images.unsplash.com/photo-1758691461932-d0aa0ebf6b31?w=800&h=450&fit=crop" },
-      { q: "Document : graphique montrant les niveaux de particules fines dans les cours d'ecole de grandes villes. Analysez.", theme: "environnement", difficulte: 2, tags: ["pollution", "enfants", "urbanisme"], image: "https://images.unsplash.com/36/STzPBJUsSza3mzUxiplj_DSC09775.JPG?w=800&h=450&fit=crop" },
-      { q: "Document : article de presse sur la vente de medicaments contrefaits dans les marches africains. Problematiques ?", theme: "international", difficulte: 3, tags: ["medicaments", "contrefacon", "regulation"], image: "https://images.unsplash.com/photo-1630094539386-280edfb5d46a?w=800&h=450&fit=crop" },
-      { q: "Document : image de deux personnes agees se tenant la main dans un EHPAD. Que vous inspire ce document ?", theme: "societe", difficulte: 1, tags: ["humanite", "lien", "vieillesse"], image: "https://images.unsplash.com/photo-1714640693995-43e8852ab6b5?w=800&h=450&fit=crop" },
-      { q: "Document : infographie comparant la frequentation des fast-foods et des espaces verts dans un quartier. Analysez.", theme: "nutrition", difficulte: 2, tags: ["alimentation", "sedentarite", "choix"], image: "https://images.unsplash.com/photo-1641232106103-35c63f58db6e?w=800&h=450&fit=crop" },
-      { q: "Document : capture d'ecran de ChatGPT affichant un diagnostic medical. Analysez les enjeux.", theme: "technologie", difficulte: 3, tags: ["IA", "autodiagnostic", "danger"], image: "https://images.unsplash.com/photo-1745674684468-b9fc392fda3f?w=800&h=450&fit=crop" },
-      { q: "Document : temoignage ecrit d'une sage-femme sur ses conditions de travail apres un accouchement difficile. Analysez.", theme: "sante-publique", difficulte: 2, tags: ["soignants", "epuisement", "reconnaissance"], image: "https://images.unsplash.com/photo-1632053002928-1919605ee6f7?w=800&h=450&fit=crop" },
-      { q: "Document : graphique montrant la stagnation de l'esperance de vie en France depuis 2019. Discutez.", theme: "sante-publique", difficulte: 2, tags: ["demographie", "systeme-sante", "inegalites"], image: "https://images.unsplash.com/photo-1655991654584-395994d4cb9a?w=800&h=450&fit=crop" },
-      { q: "Document : image d'un enfant recevant un vaccin avec un parent inquiet, accompagnee de statistiques sur l'hesitation vaccinale. Analysez.", theme: "sante-publique", difficulte: 2, tags: ["vaccination", "confiance", "peur"], image: "https://images.unsplash.com/photo-1576765608622-067973a79f53?w=800&h=450&fit=crop" },
+      { q: "Infographie Our World in Data : l'evolution de l'esperance de vie dans le monde.", theme: "sante-publique", difficulte: 1, tags: ["esperance-de-vie", "demographie", "sante-publique"], image: "https://ourworldindata.org/grapher/life-expectancy.png" },
+      { q: "Infographie Our World in Data : la mortalite infantile a travers le monde.", theme: "sante-publique", difficulte: 2, tags: ["mortalite-infantile", "inegalites", "sante-publique"], image: "https://ourworldindata.org/grapher/child-mortality.png" },
+      { q: "Infographie Our World in Data : l'evolution de la mortalite maternelle.", theme: "sante-publique", difficulte: 2, tags: ["mortalite-maternelle", "sante-des-femmes", "inegalites"], image: "https://ourworldindata.org/grapher/maternal-mortality.png" },
+      { q: "Infographie Our World in Data : la densite de medecins pour 1000 habitants.", theme: "sante-publique", difficulte: 2, tags: ["densite-medicale", "deserts-medicaux", "acces-soins"], image: "https://ourworldindata.org/grapher/physicians-per-1000-people.png" },
+      { q: "Infographie Our World in Data : le nombre de lits d'hopital pour 1000 habitants.", theme: "sante-publique", difficulte: 2, tags: ["lits-hopital", "capacite", "systeme-sante"], image: "https://ourworldindata.org/grapher/hospital-beds-per-1000-people.png" },
+      { q: "Infographie Our World in Data : les depenses de sante en part du PIB.", theme: "international", difficulte: 3, tags: ["depenses-sante", "economie", "comparaison"], image: "https://ourworldindata.org/grapher/total-healthcare-expenditure-gdp.png" },
+      { q: "Infographie Our World in Data : la couverture vaccinale mondiale.", theme: "sante-publique", difficulte: 2, tags: ["vaccination", "prevention", "sante-publique"], image: "https://ourworldindata.org/grapher/global-vaccination-coverage.png" },
+      { q: "Infographie Our World in Data : les taux de mortalite par cancer.", theme: "sante-publique", difficulte: 2, tags: ["cancer", "mortalite", "prevention"], image: "https://ourworldindata.org/grapher/cancer-death-rates.png" },
+      { q: "Infographie Our World in Data : la mortalite par maladies cardiovasculaires.", theme: "sante-publique", difficulte: 2, tags: ["cardiovasculaire", "mortalite", "prevention"], image: "https://ourworldindata.org/grapher/cardiovascular-disease-death-rates.png" },
+      { q: "Infographie Our World in Data : la mortalite par tuberculose dans le monde.", theme: "international", difficulte: 2, tags: ["tuberculose", "maladies-infectieuses", "inegalites"], image: "https://ourworldindata.org/grapher/tuberculosis-death-rates.png" },
+      { q: "Infographie Our World in Data : la part des deces selon le facteur de risque.", theme: "sante-publique", difficulte: 3, tags: ["facteurs-de-risque", "prevention", "mortalite"], image: "https://ourworldindata.org/grapher/share-of-deaths-by-risk-factor.png" },
+      { q: "Infographie Our World in Data : les deces lies aux accidents de la route.", theme: "societe", difficulte: 2, tags: ["securite-routiere", "mortalite", "prevention"], image: "https://ourworldindata.org/grapher/road-traffic-deaths-sdgs.png" },
+      { q: "Infographie Our World in Data : la prevalence de l'obesite chez les adultes.", theme: "nutrition", difficulte: 2, tags: ["obesite", "nutrition", "sante-publique"], image: "https://ourworldindata.org/grapher/share-of-adults-defined-as-obese.png" },
+      { q: "Infographie Our World in Data : la sous-nutrition dans le monde.", theme: "nutrition", difficulte: 2, tags: ["sous-nutrition", "faim", "inegalites"], image: "https://ourworldindata.org/grapher/prevalence-of-undernourishment.png" },
+      { q: "Infographie Our World in Data : l'apport calorique quotidien par personne.", theme: "nutrition", difficulte: 2, tags: ["apport-calorique", "alimentation", "inegalites"], image: "https://ourworldindata.org/grapher/daily-per-capita-caloric-supply.png" },
+      { q: "Infographie Our World in Data : la part d'adultes fumeurs dans le monde.", theme: "sante-publique", difficulte: 1, tags: ["tabac", "addiction", "prevention"], image: "https://ourworldindata.org/grapher/share-of-adults-who-smoke.png" },
+      { q: "Infographie Our World in Data : les deces attribues au tabac.", theme: "sante-publique", difficulte: 2, tags: ["tabac", "mortalite", "prevention"], image: "https://ourworldindata.org/grapher/share-deaths-smoking.png" },
+      { q: "Infographie Our World in Data : les taux de suicide dans le monde.", theme: "sante-mentale", difficulte: 3, tags: ["suicide", "sante-mentale", "prevention"], image: "https://ourworldindata.org/grapher/suicide-death-rates.png" },
+      { q: "Infographie Our World in Data : la prevalence des troubles mentaux et addictifs.", theme: "sante-mentale", difficulte: 2, tags: ["sante-mentale", "troubles", "prevalence"], image: "https://ourworldindata.org/grapher/share-with-mental-and-substance-disorders.png" },
+      { q: "Infographie Our World in Data : la depression chez les hommes et les femmes.", theme: "sante-mentale", difficulte: 2, tags: ["depression", "sante-mentale", "genre"], image: "https://ourworldindata.org/grapher/prevalence-of-depression-males-vs-females.png" },
+      { q: "Infographie Our World in Data : le niveau de satisfaction de vie declare.", theme: "sante-mentale", difficulte: 2, tags: ["bien-etre", "satisfaction", "societe"], image: "https://ourworldindata.org/grapher/happiness-cantril-ladder.png" },
+      { q: "Infographie Our World in Data : le nombre d'enfants par femme.", theme: "societe", difficulte: 2, tags: ["fecondite", "demographie", "societe"], image: "https://ourworldindata.org/grapher/children-per-woman.png" },
+      { q: "Infographie Our World in Data : l'evolution des populations urbaine et rurale.", theme: "societe", difficulte: 1, tags: ["urbanisation", "demographie", "territoires"], image: "https://ourworldindata.org/grapher/urban-and-rural-population.png" },
+      { q: "Infographie Our World in Data : les taux d'alphabetisation dans le monde.", theme: "societe", difficulte: 1, tags: ["alphabetisation", "education", "inegalites"], image: "https://ourworldindata.org/grapher/cross-country-literacy-rates.png" },
+      { q: "Infographie Our World in Data : l'indice de developpement humain (IDH).", theme: "international", difficulte: 2, tags: ["idh", "developpement", "inegalites"], image: "https://ourworldindata.org/grapher/human-development-index.png" },
+      { q: "Infographie Our World in Data : l'age median des populations.", theme: "societe", difficulte: 2, tags: ["vieillissement", "demographie", "societe"], image: "https://ourworldindata.org/grapher/median-age.png" },
+      { q: "Infographie Our World in Data : la part de la population utilisant Internet.", theme: "technologie", difficulte: 1, tags: ["internet", "fracture-numerique", "technologie"], image: "https://ourworldindata.org/grapher/share-of-individuals-using-the-internet.png" },
+      { q: "Infographie Our World in Data : le nombre d'internautes dans le monde.", theme: "technologie", difficulte: 1, tags: ["internet", "technologie", "societe"], image: "https://ourworldindata.org/grapher/number-of-internet-users.png" },
+      { q: "Infographie Our World in Data : les abonnements mobiles pour 100 habitants.", theme: "technologie", difficulte: 1, tags: ["mobile", "technologie", "acces"], image: "https://ourworldindata.org/grapher/mobile-cellular-subscriptions-per-100-people.png" },
+      { q: "Infographie Our World in Data : les emissions annuelles de CO2 par pays.", theme: "environnement", difficulte: 2, tags: ["co2", "climat", "environnement"], image: "https://ourworldindata.org/grapher/annual-co2-emissions-per-country.png" },
+      { q: "Infographie Our World in Data : la mortalite liee a la pollution de l'air.", theme: "environnement", difficulte: 2, tags: ["pollution", "sante-environnementale", "mortalite"], image: "https://ourworldindata.org/grapher/death-rates-from-air-pollution.png" },
+      { q: "Infographie Our World in Data : l'anomalie de temperature mondiale.", theme: "environnement", difficulte: 2, tags: ["rechauffement", "climat", "environnement"], image: "https://ourworldindata.org/grapher/temperature-anomaly.png" },
+      { q: "Infographie Our World in Data : les emissions de CO2 par habitant.", theme: "environnement", difficulte: 2, tags: ["co2", "climat", "inegalites"], image: "https://ourworldindata.org/grapher/co-emissions-per-capita.png" },
+      { q: "Infographie Our World in Data : le PIB par habitant dans le monde.", theme: "international", difficulte: 2, tags: ["pib", "economie", "inegalites"], image: "https://ourworldindata.org/grapher/gdp-per-capita-worldbank.png" },
     ],
-    motivation: [
+        motivation: [
       { q: "Pourquoi avez-vous choisi la medecine et pas une autre filiere de sante ?", theme: "projet", difficulte: 1, tags: ["motivation", "choix", "vocation"] },
       { q: "Quel type de medecin souhaitez-vous devenir et pourquoi ?", theme: "projet", difficulte: 1, tags: ["specialite", "projection", "ideal"] },
       { q: "Qu'est-ce qui vous a marque ou inspire dans le domaine de la sante ?", theme: "projet", difficulte: 1, tags: ["experience", "inspiration", "declencheur"] },
@@ -2522,6 +2546,31 @@ function App() {
     URL.revokeObjectURL(url);
   }, []);
 
+  const restoreFromCloud = useCallback(() => {
+    if (!SYNC_ENABLED || !firebaseRef) { alert('Sync cloud non disponible (aucune connexion Firebase).'); return; }
+    firebaseRef.child('_backups').once('value', (s) => {
+      try {
+        const all = s.val() || {};
+        const days = Object.keys(all).filter(d => /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(d)).sort();
+        if (!days.length) { alert('Aucune sauvegarde cloud trouvee pour le moment.'); return; }
+        const day = days[days.length - 1];
+        if (!window.confirm('Restaurer la sauvegarde cloud du ' + day + ' ? Tes donnees actuelles seront remplacees.')) return;
+        const snap = all[day] || {};
+        const parse = (k, def) => { try { return JSON.parse(snap[k]); } catch (e) { return def; } };
+        Object.keys(snap).forEach(k => { if (k.indexOf('oral-pass-') === 0 && typeof snap[k] === 'string') localStorage.setItem(k, snap[k]); });
+        if (snap['oral-pass-done']) setStatus(parse('oral-pass-done', {}));
+        if (snap['oral-pass-notes']) setNotes(parse('oral-pass-notes', {}));
+        if (snap['oral-pass-responses']) setResponses(parse('oral-pass-responses', {}));
+        if (snap['oral-pass-champions']) setChampions(parse('oral-pass-champions', []));
+        if (snap['oral-pass-custom-questions']) setCustomQuestions(parse('oral-pass-custom-questions', { rpc: [], ared: [] }));
+        if (snap['oral-pass-images']) setQuestionImages(parse('oral-pass-images', {}));
+        if (snap['oral-pass-streak']) setStreak(parse('oral-pass-streak', { current: 0, best: 0, lastDate: '' }));
+        if (snap['oral-pass-daily']) setDailyLog(parse('oral-pass-daily', []));
+        alert('Sauvegarde du ' + day + ' restauree avec succes !');
+      } catch (e) { alert('Erreur restauration : ' + e.message); }
+    });
+  }, []);
+
   const importData = useCallback(() => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -2565,10 +2614,11 @@ function App() {
       suiviTab === 'journal' ? renderJournal() : renderEvolution(),
       h('div', { className: 'card', style: { marginTop: '1.5rem', borderLeft: '4px solid var(--info)' } },
         h('h3', { style: { marginBottom: '0.5rem' } }, '💾 Sauvegarde des donnees'),
-        h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.8rem' } }, 'Exporte tes donnees pour les sauvegarder ou les transferer sur un autre appareil.'),
+        h('p', { style: { fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.8rem' } }, 'Sauvegarde cloud automatique active (historique 14 jours). Tu peux aussi exporter/importer un fichier, ou restaurer la derniere sauvegarde cloud.'),
         h('div', { className: 'export-section' },
           h('button', { className: 'export-btn export-btn--primary', onClick: exportData }, '📥 Exporter mes donnees'),
-          h('button', { className: 'export-btn', onClick: importData }, '📤 Importer une sauvegarde')
+          h('button', { className: 'export-btn', onClick: importData }, '📤 Importer une sauvegarde'),
+          h('button', { className: 'export-btn', onClick: restoreFromCloud }, '🛟 Restaurer (cloud)')
         )
       )
     );
