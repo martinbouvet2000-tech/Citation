@@ -8,7 +8,7 @@ Application web mono-page pour préparer les **épreuves orales du PASS** (Parco
 ## Fonctionnalités
 
 - **Banques de questions** : RPC (Réflexion sur une Problématique Complexe) et ARED (Analyse et Raisonnement devant un Ensemble de Données), conformes aux **4 consignes officielles** de la faculté.
-- **Vraies infographies** : les questions ARED s'appuient sur des infographies [Our World in Data](https://ourworldindata.org) (licence CC-BY) — santé, démographie, société, environnement.
+- **Vraies infographies en français** : les questions ARED s'appuient sur des infographies générées **en français** (données INSEE, OMS, DREES, FAO, ONU, Banque Mondiale) — santé, démographie, société, environnement.
 - **Suivi de progression** : système à 3 états (à faire / à revoir / acquis), tableau de bord, compte à rebours.
 - **« Question pour un champion »** : marquer les questions clés à maîtriser.
 - **Réponses & notes** personnelles par question.
@@ -36,5 +36,5 @@ Application web mono-page pour préparer les **épreuves orales du PASS** (Parco
 
 ## Sources
 
-- Infographies : [Our World in Data](https://ourworldindata.org) (CC-BY). En complément pour l'entraînement : Visual Capitalist, Statista, OMS, Banque Mondiale.
+- Infographies du site : générées en français à partir de données publiques (INSEE, OMS, DREES, FAO, ONU, Banque Mondiale). Sources d'entraînement complémentaires : [Our World in Data](https://ourworldindata.org), Visual Capitalist, Statista.
 - Format de l'épreuve : MCC Sorbonne Université 2025-2026.
