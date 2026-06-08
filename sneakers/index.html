@@ -157,7 +157,11 @@ header.scrolled{background:rgba(6,8,13,.82);backdrop-filter:blur(18px) saturate(
 .head p{color:var(--txt-dim);margin:14px 0 0;max-width:480px}
 
 /* ---------- Categories ---------- */
-.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.cat .ico svg{width:36px;height:36px;color:#fff;stroke-width:1.7}
+.feat .fico svg{width:26px;height:26px;color:var(--volt)}
+.contact-item .ci-ico svg{width:22px;height:22px;color:var(--volt)}
+.brand .mark svg{width:18px;height:18px}
 .cat{position:relative;border-radius:var(--radius);overflow:hidden;min-height:230px;padding:22px;
   display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--line);
   background:var(--surface);cursor:pointer;transition:transform .4s var(--ease),border-color .4s}
@@ -175,7 +179,7 @@ header.scrolled{background:rgba(6,8,13,.82);backdrop-filter:blur(18px) saturate(
 .cat.c-life::before{background:linear-gradient(160deg,rgba(160,120,255,.22),rgba(6,8,13,.2) 70%),radial-gradient(circle at 70% 20%,rgba(160,120,255,.42),transparent 60%)}
 
 /* ---------- Product cards ---------- */
-.grid-products{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.grid-products{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
   display:flex;flex-direction:column;transition:transform .35s var(--ease),border-color .35s,box-shadow .35s;position:relative}
 .card:hover{transform:translateY(-8px);border-color:var(--line-strong);box-shadow:var(--shadow)}
@@ -249,7 +253,7 @@ input[type=range]{width:100%;accent-color:var(--volt)}
 .band-track{display:flex;gap:40px;white-space:nowrap;animation:scrollx 22s linear infinite;width:max-content;font-weight:900;
   letter-spacing:.02em}
 .band-track span{display:flex;align-items:center;gap:40px;text-transform:uppercase;font-size:.95rem}
-.band-track span::after{content:"⚡"}
+.band-track span::after{content:"";width:6px;height:6px;border-radius:50%;background:#0a0d05;opacity:.55}
 
 /* ---------- Feature / innovation ---------- */
 .features{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
@@ -439,14 +443,19 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
 }
 @media(max-width:640px){
   .cats{grid-template-columns:repeat(2,1fr)}
-  .grid-products{grid-template-columns:1fr 1fr;gap:14px}
+  .grid-products{grid-template-columns:1fr 1fr;gap:16px}
   .guides{grid-template-columns:1fr}
   .features{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr}
   .hero-stats{gap:22px}
-  .card-body{padding:14px}
-  .price{font-size:1.1rem}
+  .card-body{padding:14px;gap:4px}
+  .price{font-size:1.12rem}
   .wrap{padding:0 18px}
+  /* cartes épurées sur mobile : visuel + nom + prix */
+  .card-body .brand-name,.card-body .rating,.card-body .swatches{display:none}
+  /* cibles tactiles confortables (>=44px) */
+  .mini-btn{width:44px;height:44px}
+  .fav{width:44px;height:44px}
 }
 .filters-close{display:none;position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;
   border:1px solid var(--line);align-items:center;justify-content:center;color:var(--txt)}
@@ -490,7 +499,7 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
 <!-- ============================= HEADER ============================= -->
 <header id="header">
   <div class="wrap nav">
-    <a href="#top" class="brand"><span class="mark">⚡</span><b>VÉLOCE</b></a>
+    <a href="#top" class="brand"><span class="mark"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 13h6l-1 9 9-12h-6z"/></svg></span><b>VÉLOCE</b></a>
     <nav class="nav-links">
       <a href="#categories">Catégories</a>
       <a href="#nouveautes">Nouveautés</a>
@@ -685,10 +694,10 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
       <p>Chaque paire est sélectionnée pour son confort, sa durabilité et son innovation. La qualité des plus grandes enseignes, au meilleur prix.</p>
     </div>
     <div class="features reveal">
-      <div class="feat"><div class="fico">🌬️</div><h3>Amorti réactif</h3><p>Des mousses nouvelle génération qui restituent l'énergie à chaque appui pour des foulées explosives.</p></div>
-      <div class="feat"><div class="fico">🪶</div><h3>Légèreté extrême</h3><p>Des tiges en mesh respirant et des semelles allégées pour ne jamais sentir le poids de l'effort.</p></div>
-      <div class="feat"><div class="fico">🛡️</div><h3>Stabilité & maintien</h3><p>Un châssis pensé pour les changements d'appui, le pivot et la course longue distance.</p></div>
-      <div class="feat"><div class="fico">♻️</div><h3>Matériaux durables</h3><p>Des modèles éco-conçus, recyclés et conçus pour durer, sans compromis sur la performance.</p></div>
+      <div class="feat"><div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6"/><path d="M6 19l6-6 6 6"/></svg></div><h3>Amorti réactif</h3><p>Des mousses nouvelle génération qui restituent l'énergie à chaque appui pour des foulées explosives.</p></div>
+      <div class="feat"><div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4C13 4 6 8 5 16l-1.5 4"/><path d="M19 8 8.5 18.5M15.5 5.5 6 15"/></svg></div><h3>Légèreté extrême</h3><p>Des tiges en mesh respirant et des semelles allégées pour ne jamais sentir le poids de l'effort.</p></div>
+      <div class="feat"><div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 7.8-7 9-4-1.2-7-4.4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Stabilité & maintien</h3><p>Un châssis pensé pour les changements d'appui, le pivot et la course longue distance.</p></div>
+      <div class="feat"><div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c-1-8 5-15 16-15 1 10-5 16-13 15"/><path d="M8 17c2-4 5-6 9-7"/></svg></div><h3>Matériaux durables</h3><p>Des modèles éco-conçus, recyclés et conçus pour durer, sans compromis sur la performance.</p></div>
     </div>
   </div>
 </section>
@@ -751,9 +760,9 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
         <span class="eyebrow">Une question ?</span>
         <h2>Parlons de votre prochaine paire</h2>
         <p>Notre équipe d'experts passionnés vous répond sous 24h. Conseil produit, suivi de commande, partenariat : nous sommes là.</p>
-        <div class="contact-item"><div class="ci-ico">📍</div><div><b>Showroom</b><span>42 avenue du Stade, 75000 Paris</span></div></div>
-        <div class="contact-item"><div class="ci-ico">✉️</div><div><b>Email</b><span>contact@veloce-sport.fr</span></div></div>
-        <div class="contact-item"><div class="ci-ico">📞</div><div><b>Téléphone</b><span>+33 1 23 45 67 89 — Lun-Sam 9h-19h</span></div></div>
+        <div class="contact-item"><div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><div><b>Showroom</b><span>42 avenue du Stade, 75000 Paris</span></div></div>
+        <div class="contact-item"><div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><div><b>Email</b><span>contact@veloce-sport.fr</span></div></div>
+        <div class="contact-item"><div class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2 1.5a11 11 0 0 0 5 5L17 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div><div><b>Téléphone</b><span>+33 1 23 45 67 89 — Lun-Sam 9h-19h</span></div></div>
         <h4 style="font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--txt-mute);margin:30px 0 14px">Suivez-nous</h4>
         <div class="socials">
           <a href="#" class="social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a>
@@ -787,7 +796,7 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a href="#top" class="brand"><span class="mark">⚡</span><b>VÉLOCE</b></a>
+        <a href="#top" class="brand"><span class="mark"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 13h6l-1 9 9-12h-6z"/></svg></span><b>VÉLOCE</b></a>
         <p>La plateforme premium des chaussures de sport. Performance, confort et innovation pour tous les athlètes.</p>
         <div class="socials">
           <a href="#" class="social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
@@ -891,13 +900,24 @@ const COLORS = {
   Rouge:'#ff3b3b', Orange:'#ff5a1f', Rose:'#ff2e93', Vert:'#19c37d', Gris:'#8a93a6'
 };
 
+/* ---- Icônes SVG (cohérence premium, indépendantes de l'OS) ---- */
+const _ic = p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const ICONS = {
+  run:_ic('<circle cx="12" cy="13" r="7.5"/><path d="M12 13l3-2.2"/><path d="M9 2.5h6"/><path d="M12 2.5v3"/>'),
+  fit:_ic('<path d="M6.5 7.5v9M3.5 9.5v5M17.5 7.5v9M20.5 9.5v5M6.5 12h11"/>'),
+  foot:_ic('<circle cx="12" cy="12" r="9"/><path d="M12 7.6l3.3 2.4-1.25 3.9h-4.1L8.7 10z"/><path d="M12 3v2.4M4.8 9.4l2.1 1.5M19.2 9.4l-2.1 1.5M7.6 19.2l1.1-2.4M16.4 19.2l-1.1-2.4"/>'),
+  bask:_ic('<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/><path d="M5.6 5.6c3 2.5 3 10.3 0 12.8M18.4 5.6c-3 2.5-3 10.3 0 12.8"/>'),
+  tennis:_ic('<circle cx="12" cy="12" r="9"/><path d="M5.2 6.2c3.4 2.6 3.4 9 0 11.6M18.8 6.2c-3.4 2.6-3.4 9 0 11.6"/>'),
+  life:_ic('<path d="M3 16.5V13l5.5-1.3 2.8 2 7.4 1c1.2.2 2.3 1 2.3 2.3v.5z"/><path d="M3 19.5h18"/><path d="M8.5 11.7l1.2 2.2"/>')
+};
+
 const CATEGORIES = [
-  {key:'Running',ico:'🏃',cls:'c-run',sub:'Route, trail & piste'},
-  {key:'Fitness',ico:'🏋️',cls:'c-fit',sub:'Cross-training & HIIT'},
-  {key:'Football',ico:'⚽',cls:'c-foot',sub:'Crampons & terrains'},
-  {key:'Basketball',ico:'🏀',cls:'c-bask',sub:'Maintien & explosivité'},
-  {key:'Tennis',ico:'🎾',cls:'c-tennis',sub:'Terre battue & dur'},
-  {key:'Lifestyle',ico:'👟',cls:'c-life',sub:'Le sport au quotidien'}
+  {key:'Running',ico:ICONS.run,cls:'c-run',sub:'Route, trail & piste'},
+  {key:'Fitness',ico:ICONS.fit,cls:'c-fit',sub:'Cross-training & HIIT'},
+  {key:'Football',ico:ICONS.foot,cls:'c-foot',sub:'Crampons & terrains'},
+  {key:'Basketball',ico:ICONS.bask,cls:'c-bask',sub:'Maintien & explosivité'},
+  {key:'Tennis',ico:ICONS.tennis,cls:'c-tennis',sub:'Terre battue & dur'},
+  {key:'Lifestyle',ico:ICONS.life,cls:'c-life',sub:'Le sport au quotidien'}
 ];
 
 const DEFAULT_SIZES=[38,39,40,41,42,43,44,45,46];
@@ -982,8 +1002,10 @@ function renderStatic(){
       <div class="ico">${c.ico}</div>
       <h3>${c.key}</h3><span>${c.sub}</span>
     </div>`).join('');
-  $('#newGrid').innerHTML = P.filter(p=>p.new).slice(0,4).map(card).join('');
-  $('#popGrid').innerHTML = [...P].sort((a,b)=>b.pop-a.pop).slice(0,4).map(card).join('');
+  const newOnes = P.filter(p=>p.new).slice(0,4);
+  $('#newGrid').innerHTML = newOnes.map(card).join('');
+  const newIds = new Set(newOnes.map(p=>p.id));
+  $('#popGrid').innerHTML = [...P].sort((a,b)=>b.pop-a.pop).filter(p=>!newIds.has(p.id)).slice(0,4).map(card).join('');
   $('#heroShoe').innerHTML = shoe('#c6ff00','#1c1f26','#e9edf4');
 }
 
