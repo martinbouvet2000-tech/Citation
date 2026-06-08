@@ -7,7 +7,8 @@ Vitrine **premium** mono-page dédiée à la vente de chaussures de sport (runni
 ## Fonctionnalités
 
 - **Hero plein écran** impactant avec animations, statistiques animées et visuel produit 3D-like.
-- **Catégories de sport** (Running, Fitness, Football, Basketball, Tennis, Lifestyle) cliquables vers le catalogue filtré.
+- **Sidebar Catégories** (panneau latéral) pour accéder aux sports (Running, Fitness, Football, Basketball, Tennis, Lifestyle) depuis n'importe quelle page, + accès rapide Nouveautés / Best-sellers / Catalogue / Guides / Contact.
+- **Panier complet** : ajout avec taille, quantités (+/−), retrait, sous-total, badge persistant dans le header (localStorage), tiroir latéral. Prêt à brancher sur un paiement en ligne.
 - **Nouveautés** et **best-sellers** mis en avant.
 - **Catalogue complet** avec **filtres avancés** : recherche, sport, marque, technologie, couleur, taille, prix, et tri (popularité, nouveautés, prix, note).
 - **Fiches produits détaillées** (modale) : galerie multi-photos avec **zoom plein écran**, description, caractéristiques techniques (poids, drop, techno), coloris, **lien guide des tailles**, tailles disponibles (gestion stock), **réassurance près du bouton d'achat**, avis clients avec **répartition des notes** et indicateur de **chaussant**, **bouton d'achat collant sur mobile**.
