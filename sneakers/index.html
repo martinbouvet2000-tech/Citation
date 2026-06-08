@@ -494,6 +494,54 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
 .adm-hint{font-size:.8rem;color:var(--txt-mute);margin:6px 0 0}
 @media(max-width:600px){.adm-row{grid-template-columns:1fr}}
 
+/* ---------- Drawers : panier (droite) + catégories (gauche) ---------- */
+.drawer-backdrop{position:fixed;inset:0;z-index:118;background:rgba(3,5,9,.62);backdrop-filter:blur(3px);
+  opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-backdrop.show{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;z-index:119;width:min(420px,90vw);background:var(--surface-2);
+  display:flex;flex-direction:column;transition:transform .38s var(--ease);box-shadow:var(--shadow)}
+.drawer.right{right:0;border-left:1px solid var(--line-strong);transform:translateX(105%)}
+.drawer.left{left:0;border-right:1px solid var(--line-strong);transform:translateX(-105%)}
+.drawer.open{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--line);flex-shrink:0}
+.drawer-head h3{font-size:1.2rem}
+.drawer-close{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--txt);transition:.2s}
+.drawer-close:hover{color:var(--flame);border-color:var(--flame);transform:rotate(90deg)}
+.drawer-body{flex:1;overflow-y:auto;padding:14px 22px}
+.drawer-foot{padding:18px 22px;border-top:1px solid var(--line);flex-shrink:0;background:var(--surface-2)}
+.cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.cart-item .ci-img{width:76px;height:76px;border-radius:12px;overflow:hidden;flex-shrink:0;
+  background:radial-gradient(120% 100% at 50% 0%,#1b2333,#0a0e16);display:grid;place-items:center}
+.cart-item .ci-img img{width:100%;height:100%;object-fit:cover}
+.cart-item .ci-img svg{width:92%}
+.cart-item .ci-info{flex:1;min-width:0}
+.cart-item .ci-info b{font-size:.96rem;display:block;line-height:1.2}
+.cart-item .ci-info small{color:var(--txt-mute);font-size:.8rem}
+.cart-item .ci-price{font-weight:800;margin-top:4px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:100px;margin-top:9px;overflow:hidden}
+.qty button{width:32px;height:32px;display:grid;place-items:center;color:var(--txt);font-size:1.05rem;transition:.15s}
+.qty button:hover{background:rgba(198,255,0,.1);color:var(--volt)}
+.qty span{min-width:30px;text-align:center;font-weight:700;font-size:.86rem}
+.ci-remove{margin-left:auto;color:var(--txt-mute);font-size:.78rem;font-weight:600;align-self:flex-start;padding:2px}
+.ci-remove:hover{color:var(--flame)}
+.cart-empty{text-align:center;color:var(--txt-mute);padding:54px 20px}
+.cart-empty span{font-size:2.6rem;display:block;margin-bottom:12px}
+.cart-sub{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.cart-sub b{font-size:1.5rem;font-weight:900}
+.cart-note{font-size:.78rem;color:var(--txt-mute);margin:0 0 14px}
+.sidenav-cat{display:flex;align-items:center;gap:14px;padding:13px;border-radius:14px;border:1px solid var(--line);
+  margin-bottom:10px;cursor:pointer;transition:.2s;width:100%;text-align:left;background:none}
+.sidenav-cat:hover{border-color:var(--volt);background:rgba(198,255,0,.05);transform:translateX(3px)}
+.sidenav-cat .sc-ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;
+  background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.sidenav-cat .sc-ic svg{width:24px;height:24px;color:var(--volt)}
+.sidenav-cat b{display:block;font-size:.98rem}
+.sidenav-cat small{color:var(--txt-mute);font-size:.8rem}
+.sidenav-links{margin-top:16px;border-top:1px solid var(--line);padding-top:10px}
+.sidenav-links a{display:block;padding:12px 6px;font-weight:600;color:var(--txt-dim);transition:.2s}
+.sidenav-links a:hover{color:var(--volt)}
+@media(max-width:900px){#compareToggle,.nav-explore{display:none}}
+
 /* ---------- A11y / Perf / PDP / PLP polish (recherche UX 2025-2026) ---------- */
 .skip-link{position:fixed;top:-60px;left:12px;z-index:200;background:var(--volt);color:#0a0d05;
   padding:10px 16px;border-radius:9px;font-weight:800;transition:top .2s}
@@ -559,24 +607,31 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
   <div class="wrap nav">
     <a href="#top" class="brand"><span class="mark"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 13h6l-1 9 9-12h-6z"/></svg></span><b>VÉLOCE</b></a>
     <nav class="nav-links">
-      <a href="#categories">Catégories</a>
+      <a href="#categories" id="navCatLink">Catégories</a>
       <a href="#nouveautes">Nouveautés</a>
       <a href="#catalogue">Catalogue</a>
       <a href="#guides">Guides</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-cta">
+      <button class="icon-btn" id="catToggle" aria-label="Catégories" title="Catégories">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </button>
       <button class="icon-btn" id="compareToggle" aria-label="Comparateur" title="Comparateur">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="7" cy="6" r="0"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
         <span class="compare-count" id="compareCount">0</span>
       </button>
-      <a href="#catalogue" class="btn btn-primary" style="padding:11px 22px">Explorer</a>
+      <button class="icon-btn" id="cartToggle" aria-label="Panier" title="Panier">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.4a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21.5 7H6"/></svg>
+        <span class="compare-count" id="cartCount">0</span>
+      </button>
+      <a href="#catalogue" class="btn btn-primary nav-explore" style="padding:11px 22px">Explorer</a>
       <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 <div class="mobile-nav" id="mobileNav">
-  <a href="#categories">Catégories</a>
+  <a href="#categories" id="navCatLinkM">Catégories</a>
   <a href="#nouveautes">Nouveautés</a>
   <a href="#catalogue">Catalogue</a>
   <a href="#guides">Guides</a>
@@ -901,6 +956,18 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
   <button class="btn btn-primary" id="adminExit">Quitter</button>
 </div>
 <div class="modal-overlay" id="adminModal"><div class="modal" id="adminModalContent" role="dialog" aria-modal="true" aria-label="Édition admin" tabindex="-1" style="max-width:680px"></div></div>
+
+<!-- ============================= DRAWERS (panier + catégories) ============================= -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer left" id="sideNav" role="dialog" aria-modal="true" aria-label="Catégories" aria-hidden="true">
+  <div class="drawer-head"><h3>Catégories</h3><button class="drawer-close" data-drawer-close aria-label="Fermer">✕</button></div>
+  <div class="drawer-body" id="sideNavBody"></div>
+</aside>
+<aside class="drawer right" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Panier" aria-hidden="true">
+  <div class="drawer-head"><h3>Mon panier</h3><button class="drawer-close" data-drawer-close aria-label="Fermer">✕</button></div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot"></div>
+</aside>
 
 <!-- ============================= TOAST ============================= -->
 <div class="toast" id="toast"><span class="dot"></span><span id="toastText">Ajouté</span></div>
@@ -1232,7 +1299,11 @@ function openProduct(id){
     s.classList.add('sel');
   });
   $('#productModalContent [data-addcart]').onclick=()=>{
-    if(!$('#productModalContent .size.sel')){toast('Sélectionnez une taille 👟');return;}
+    const sel=$('#productModalContent .size.sel');
+    if(!sel){toast('Sélectionnez une taille 👟');return;}
+    addToCart(p.id,+sel.dataset.size,1);
+    closeOverlay($('#productModal'));
+    openDrawer('#cartDrawer');
     toast('Ajouté au panier ✓');
   };
   $('#productModalContent [data-cmp]').onclick=e=>{toggleCompare(p.id);e.currentTarget.classList.toggle('added',compareList.includes(p.id));};
@@ -1414,7 +1485,7 @@ document.addEventListener('click',e=>{
   const rm=e.target.closest('[data-rm]');
   if(rm){toggleCompare(+rm.dataset.rm);return;}
   const cat=e.target.closest('[data-cat]');
-  if(cat){filters.sport=cat.dataset.cat;filters.maxPrice=250;$('#priceRange').value=250;$('#priceOut').textContent='250 €';syncChips();applyFilters();$('#catalogue').scrollIntoView({behavior:'smooth'});return;}
+  if(cat){filters.sport=cat.dataset.cat;filters.maxPrice=250;$('#priceRange').value=250;$('#priceOut').textContent='250 €';syncChips();applyFilters();closeDrawers();$('#catalogue').scrollIntoView({behavior:'smooth'});return;}
   const g=e.target.closest('[data-guide]');
   if(g){openGuide(g.dataset.guide);return;}
 });
@@ -1645,6 +1716,84 @@ $('#adminExport').addEventListener('click',exportCatalog);
 $('#adminReset').addEventListener('click',()=>{if(confirm('Annuler toutes vos modifications et revenir au catalogue publié ?')){localStorage.removeItem(STORE_KEY);location.reload();}});
 
 /* ===================================================================
+   Panier + tiroirs (panier à droite, catégories à gauche)
+   =================================================================== */
+let cart = JSON.parse(localStorage.getItem('veloce_cart')||'[]');
+function saveCart(){localStorage.setItem('veloce_cart',JSON.stringify(cart));}
+function cartCount(){return cart.reduce((n,i)=>n+i.qty,0);}
+function cartTotal(){return cart.reduce((s,it)=>{const p=P.find(x=>x.id===it.id);return s+(p?p.price*it.qty:0);},0);}
+function addToCart(id,size,qty=1){
+  const ex=cart.find(i=>i.id===id&&i.size===size);
+  if(ex)ex.qty+=qty; else cart.push({id,size,qty});
+  saveCart();renderCart();
+}
+function renderCart(){
+  const n=cartCount(), b=$('#cartCount');
+  b.textContent=n; b.classList.toggle('show',n>0);
+  const body=$('#cartBody'), foot=$('#cartFoot');
+  if(!cart.length){
+    body.innerHTML=`<div class="cart-empty"><span>🛒</span>Votre panier est vide.<br>Ajoutez vos paires préférées !</div>`;
+    foot.innerHTML=''; return;
+  }
+  body.innerHTML=cart.map((it,idx)=>{
+    const p=P.find(x=>x.id===it.id)||{name:'Article',price:0};
+    return `<div class="cart-item">
+      <div class="ci-img">${thumb(p,76,76)}</div>
+      <div class="ci-info">
+        <b>${p.name}</b>
+        <small>${[p.brand,'Taille '+it.size].filter(Boolean).join(' · ')}</small>
+        <div class="ci-price">${fmt(p.price)}</div>
+        <div class="qty"><button data-qty="${idx}" data-d="-1" aria-label="Diminuer">−</button><span>${it.qty}</span><button data-qty="${idx}" data-d="1" aria-label="Augmenter">+</button></div>
+      </div>
+      <button class="ci-remove" data-rmcart="${idx}">Retirer</button>
+    </div>`;
+  }).join('');
+  foot.innerHTML=`
+    <div class="cart-sub"><span class="muted">Sous-total (${n} article${n>1?'s':''})</span><b>${fmt(cartTotal())}</b></div>
+    <p class="cart-note">Livraison offerte dès 80 € · Retours gratuits 30 jours</p>
+    <button class="btn btn-primary btn-block" id="checkoutBtn">Commander — ${fmt(cartTotal())}</button>
+    <button class="btn btn-ghost btn-block" data-drawer-close style="margin-top:10px">Continuer mes achats</button>`;
+}
+
+function renderSideNav(){
+  $('#sideNavBody').innerHTML = CATEGORIES.map(c=>`
+    <button class="sidenav-cat" data-cat="${c.key}">
+      <span class="sc-ic">${c.ico}</span>
+      <span><b>${c.key}</b><small>${c.sub}</small></span>
+    </button>`).join('')
+    + `<div class="sidenav-links">
+        <a href="#nouveautes" data-drawer-close>Nouveautés</a>
+        <a href="#populaires" data-drawer-close>Best-sellers</a>
+        <a href="#catalogue" data-drawer-close>Tout le catalogue</a>
+        <a href="#guides" data-drawer-close>Guides d'achat</a>
+        <a href="#contact" data-drawer-close>Contact</a>
+      </div>`;
+}
+
+function openDrawer(sel){
+  const d=$(sel); d.classList.add('open'); d.setAttribute('aria-hidden','false');
+  $('#drawerBackdrop').classList.add('show'); document.body.classList.add('no-scroll');
+}
+function closeDrawers(){
+  $$('.drawer').forEach(d=>{d.classList.remove('open');d.setAttribute('aria-hidden','true');});
+  $('#drawerBackdrop').classList.remove('show');
+  if(!$$('.modal-overlay.open').length) document.body.classList.remove('no-scroll');
+}
+$('#drawerBackdrop').addEventListener('click',closeDrawers);
+$('#cartToggle').addEventListener('click',()=>{renderCart();openDrawer('#cartDrawer');});
+$('#catToggle').addEventListener('click',()=>openDrawer('#sideNav'));
+$('#navCatLink').addEventListener('click',e=>{e.preventDefault();openDrawer('#sideNav');});
+$('#navCatLinkM').addEventListener('click',e=>{e.preventDefault();$('#burger').classList.remove('open');$('#mobileNav').classList.remove('open');openDrawer('#sideNav');});
+document.addEventListener('click',e=>{
+  if(e.target.closest('[data-drawer-close]')){closeDrawers();return;}
+  const q=e.target.closest('[data-qty]'); if(q){const i=+q.dataset.qty;cart[i].qty+=+q.dataset.d;if(cart[i].qty<=0)cart.splice(i,1);saveCart();renderCart();return;}
+  const r=e.target.closest('[data-rmcart]'); if(r){cart.splice(+r.dataset.rmcart,1);saveCart();renderCart();return;}
+  if(e.target.closest('#checkoutBtn')){toast('Paiement en ligne bientôt disponible 🔒');return;}
+});
+// Échap ferme aussi les tiroirs
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$$('.drawer.open').length)closeDrawers();});
+
+/* ===================================================================
    Init
    =================================================================== */
 if(localStorage.getItem('veloce_admin')==='1'){ADMIN.on=true;$('#adminBar').classList.add('show');document.body.classList.add('admin-on');}
@@ -1653,6 +1802,8 @@ buildFilterChips();
 applyFilters();
 syncChips();
 refreshCompare();
+renderSideNav();
+renderCart();
 </script>
 </body>
 </html>
