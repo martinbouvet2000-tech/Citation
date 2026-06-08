@@ -10,7 +10,10 @@ Vitrine **premium** mono-page dédiée à la vente de chaussures de sport (runni
 - **Catégories de sport** (Running, Fitness, Football, Basketball, Tennis, Lifestyle) cliquables vers le catalogue filtré.
 - **Nouveautés** et **best-sellers** mis en avant.
 - **Catalogue complet** avec **filtres avancés** : recherche, sport, marque, technologie, couleur, taille, prix, et tri (popularité, nouveautés, prix, note).
-- **Fiches produits détaillées** (modale) : visuel HD, description, caractéristiques techniques (poids, drop, techno), coloris, tailles disponibles (gestion stock), avis clients et notes.
+- **Fiches produits détaillées** (modale) : galerie multi-photos avec **zoom plein écran**, description, caractéristiques techniques (poids, drop, techno), coloris, **lien guide des tailles**, tailles disponibles (gestion stock), **réassurance près du bouton d'achat**, avis clients avec **répartition des notes** et indicateur de **chaussant**, **bouton d'achat collant sur mobile**.
+- **Catalogue** : **filtres appliqués sous forme de chips** (retrait en un clic + « Tout effacer »), aperçu d'une 2ᵉ photo au survol (desktop).
+- **Accessibilité (WCAG 2.2 AA)** : lien d'évitement, focus visible au clavier, modales `role="dialog"` avec piège de tabulation et retour de focus, contrastes renforcés, champs ≥16px (anti-zoom iOS).
+- **Performance** : images en `loading="lazy"` + `decoding="async"`, conteneurs à ratio fixe (zéro décalage / CLS), zéro dépendance externe.
 - **Comparateur** de modèles (jusqu'à 3) avec tableau comparatif et mise en avant des meilleures valeurs.
 - **Favoris** persistants (localStorage).
 - **Guides d'achat** (running, pointure, entretien) en modale.

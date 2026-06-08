@@ -19,8 +19,8 @@
   --line:rgba(255,255,255,.08);
   --line-strong:rgba(255,255,255,.16);
   --txt:#f4f6fb;
-  --txt-dim:#a7b0c0;
-  --txt-mute:#6c7689;
+  --txt-dim:#aeb7c6;
+  --txt-mute:#8b95a7;
   --volt:#c6ff00;          /* signature electric lime */
   --volt-deep:#9fd400;
   --flame:#ff5a1f;         /* energy orange */
@@ -492,9 +492,65 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
 .adm-hint{font-size:.8rem;color:var(--txt-mute);margin:6px 0 0}
 @media(max-width:600px){.adm-row{grid-template-columns:1fr}}
 
+/* ---------- A11y / Perf / PDP / PLP polish (recherche UX 2025-2026) ---------- */
+.skip-link{position:fixed;top:-60px;left:12px;z-index:200;background:var(--volt);color:#0a0d05;
+  padding:10px 16px;border-radius:9px;font-weight:800;transition:top .2s}
+.skip-link:focus{top:12px}
+:focus-visible{outline:3px solid var(--volt);outline-offset:2px;border-radius:4px}
+@media(hover:hover) and (pointer:fine){
+  .card-media .alt-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;
+    transition:opacity .4s var(--ease);z-index:1}
+  .card:hover .card-media .alt-img{opacity:1}
+}
+.applied{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+.applied .ac{display:inline-flex;align-items:center;gap:8px;background:rgba(198,255,0,.12);
+  border:1px solid rgba(198,255,0,.4);color:var(--txt);padding:7px 12px;border-radius:100px;font-size:.82rem;font-weight:600}
+.applied .ac button{color:var(--txt-dim);font-weight:800;line-height:1;font-size:1rem}
+.applied .ac button:hover{color:var(--flame)}
+.applied .clear-all{font-size:.82rem;color:var(--txt-mute);text-decoration:underline;padding:7px 6px;font-weight:600}
+.applied .clear-all:hover{color:var(--flame)}
+.size-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.size-guide-link{font-size:.78rem;font-weight:700;color:var(--volt);text-decoration:underline;cursor:pointer}
+.atc-trust{display:flex;align-items:center;gap:8px;color:var(--txt-dim);font-size:.82rem;margin-top:12px}
+.atc-trust svg{width:15px;height:15px;color:var(--volt);flex-shrink:0}
+.rv-summary{display:flex;gap:22px;align-items:center;margin:4px 0 18px;flex-wrap:wrap}
+.rv-big{font-size:2.4rem;font-weight:900;line-height:1}
+.rv-big small{display:block;font-size:.72rem;color:var(--txt-mute);font-weight:600;letter-spacing:.04em}
+.rv-bars{flex:1;min-width:190px;display:flex;flex-direction:column;gap:5px}
+.rv-bar-row{display:flex;align-items:center;gap:9px;font-size:.74rem;color:var(--txt-mute)}
+.rv-bar-row span:first-child{width:10px;text-align:right}
+.rv-bar{flex:1;height:7px;border-radius:4px;background:var(--bg-2);overflow:hidden}
+.rv-bar i{display:block;height:100%;background:#ffc83d;border-radius:4px}
+.fit-block{margin:0 0 20px}
+.fit-track{height:8px;border-radius:5px;background:linear-gradient(90deg,var(--flame),var(--volt) 50%,var(--flame));position:relative}
+.fit-track .knob{position:absolute;top:-5px;width:18px;height:18px;border-radius:50%;background:#fff;
+  border:3px solid #0a0d05;box-shadow:0 2px 8px rgba(0,0,0,.5);transform:translateX(-50%)}
+.fit-labels{display:flex;justify-content:space-between;font-size:.72rem;color:var(--txt-mute);margin-top:8px}
+.modal-media img.real,.modal-media #mMain{cursor:zoom-in}
+.zoom-hint{position:absolute;top:14px;right:14px;z-index:4;background:rgba(6,8,13,.7);border:1px solid var(--line);
+  border-radius:100px;padding:6px 12px;font-size:.72rem;color:var(--txt-dim);pointer-events:none;display:flex;gap:6px;align-items:center}
+.zoom-hint svg{width:13px;height:13px}
+.zoom-overlay{position:fixed;inset:0;z-index:140;background:rgba(3,5,9,.93);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:20px}
+.zoom-overlay.open{display:flex}
+.zoom-overlay img{max-width:100%;max-height:100%;object-fit:contain;border-radius:14px}
+.zoom-overlay .zc{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:50%;
+  background:rgba(20,26,38,.85);border:1px solid var(--line-strong);display:grid;place-items:center;color:#fff;font-size:1.2rem}
+@media(max-width:900px){
+  .modal-actions.sticky-atc{position:sticky;bottom:0;background:var(--surface-2);z-index:5;
+    margin:18px -36px -20px;padding:14px 36px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+}
+@media(max-width:640px){
+  .field input,.field textarea,.field select,.filter-search input,.news-form input{font-size:16px}
+  .size{min-width:48px;height:48px}
+  .filters-apply{display:block;position:sticky;bottom:0;margin-top:18px;padding-top:14px;background:var(--surface);border-top:1px solid var(--line)}
+}
+
 </style>
 </head>
 <body>
+
+<a href="#catalogue" class="skip-link">Aller au catalogue</a>
 
 <!-- ============================= HEADER ============================= -->
 <header id="header">
@@ -639,7 +695,7 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
         <h4>Recherche</h4>
         <div class="filter-search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="text" id="searchInput" placeholder="Modèle, marque…">
+          <input type="text" id="searchInput" placeholder="Modèle, marque…" aria-label="Rechercher une chaussure">
         </div>
         <h4>Sport</h4>
         <div class="chips" id="filterSport"></div>
@@ -657,6 +713,7 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
           <input type="range" id="priceRange" min="40" max="250" value="250" step="5">
         </div>
         <button class="reset" id="resetFilters">↺ Réinitialiser les filtres</button>
+        <button class="btn btn-primary filters-apply" id="filtersApply">Voir les résultats</button>
       </aside>
 
       <!-- RESULTS -->
@@ -677,6 +734,7 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
             </select>
           </div>
         </div>
+        <div class="applied" id="appliedFilters"></div>
         <div class="grid-products" id="catalogueGrid"></div>
       </div>
     </div>
@@ -827,9 +885,10 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
 </div>
 
 <!-- ============================= MODALS ============================= -->
-<div class="modal-overlay" id="productModal"><div class="modal" id="productModalContent"></div></div>
-<div class="modal-overlay" id="compareModal"><div class="modal" id="compareModalContent" style="max-width:1100px"></div></div>
-<div class="modal-overlay" id="guideModal"><div class="modal" id="guideModalContent" style="max-width:720px"></div></div>
+<div class="modal-overlay" id="productModal"><div class="modal" id="productModalContent" role="dialog" aria-modal="true" aria-label="Fiche produit" tabindex="-1"></div></div>
+<div class="modal-overlay" id="compareModal"><div class="modal" id="compareModalContent" role="dialog" aria-modal="true" aria-label="Comparateur" tabindex="-1" style="max-width:1100px"></div></div>
+<div class="modal-overlay" id="guideModal"><div class="modal" id="guideModalContent" role="dialog" aria-modal="true" aria-label="Guide d'achat" tabindex="-1" style="max-width:720px"></div></div>
+<div class="zoom-overlay" id="zoomOverlay"><button class="zc" data-zoomclose aria-label="Fermer le zoom">✕</button><img id="zoomImg" src="" alt=""></div>
 
 <!-- ============================= ADMIN ============================= -->
 <div class="admin-bar" id="adminBar">
@@ -839,7 +898,7 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
   <button class="btn btn-ghost" id="adminReset">↺ Réinit.</button>
   <button class="btn btn-primary" id="adminExit">Quitter</button>
 </div>
-<div class="modal-overlay" id="adminModal"><div class="modal" id="adminModalContent" style="max-width:680px"></div></div>
+<div class="modal-overlay" id="adminModal"><div class="modal" id="adminModalContent" role="dialog" aria-modal="true" aria-label="Édition admin" tabindex="-1" style="max-width:680px"></div></div>
 
 <!-- ============================= TOAST ============================= -->
 <div class="toast" id="toast"><span class="dot"></span><span id="toastText">Ajouté</span></div>
@@ -957,7 +1016,8 @@ const fmt = n=>n+' €';
 const photoSrc = src=>(/^(data:|https?:)/.test(src)?src:'img/'+src);
 const photosOf = p=>(p.photos&&p.photos.length?p.photos:(p.img?[p.img]:[]));
 const heroPhoto = p=>{const a=photosOf(p);return a.length?photoSrc(a[0]):null;};
-const media = p=>{const s=heroPhoto(p);return s?`<img class="real" src="${s}" alt="${p.name} ${p.brand}" loading="lazy">`:shoe(p.c[0],p.c[1],p.c[2]);};
+const media = p=>{const s=heroPhoto(p);return s?`<img class="real" src="${s}" alt="${p.name} ${p.brand}" loading="lazy" decoding="async">`:shoe(p.c[0],p.c[1],p.c[2]);};
+const altMedia = p=>{const ph=photosOf(p);return ph.length>1?`<img class="alt-img" src="${photoSrc(ph[1])}" alt="" loading="lazy" decoding="async" aria-hidden="true">`:'';};
 const thumb = (p,w,h)=>{const s=heroPhoto(p);return s?`<img src="${s}" alt="${p.name}" style="width:${w}px;height:${h}px;object-fit:cover;border-radius:10px;flex-shrink:0">`:shoe(p.c[0],p.c[1],p.c[2]);};
 
 /* ---- Card template ---- */
@@ -968,7 +1028,7 @@ function card(p){
     <div class="card-media" data-open="${p.id}">
       ${p.new?'<span class="badge">Nouveau</span>':''}
       ${p.promo?`<span class="badge promo">-${Math.round((1-p.price/p.old)*100)}%</span>`:''}
-      ${media(p)}
+      ${media(p)}${altMedia(p)}
       <button class="fav ${fav}" data-fav="${p.id}" aria-label="Favori">
         <svg viewBox="0 0 24 24" fill="${fav?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg>
       </button>
@@ -1035,7 +1095,7 @@ function applyFilters(){
     if(filters.brand && p.brand!==filters.brand) return false;
     if(filters.tech && p.tech!==filters.tech) return false;
     if(filters.color && !p.colors.includes(filters.color)) return false;
-    if(filters.size && !SIZES.includes(+filters.size)) return false; // all carry full size run except out-of-stock handled in modal
+    if(filters.size){const ps=p.sizes&&p.sizes.length?p.sizes:DEFAULT_SIZES; if(!ps.includes(+filters.size)) return false;}
     if(p.price>filters.maxPrice) return false;
     return true;
   });
@@ -1048,9 +1108,25 @@ function applyFilters(){
     return b.pop-a.pop;
   });
   $('#resultNum').textContent = list.length;
+  const ap=$('#filtersApply'); if(ap) ap.textContent=`Voir ${list.length} résultat${list.length>1?'s':''}`;
+  renderApplied();
   $('#catalogueGrid').innerHTML = list.length
     ? list.map(card).join('')
     : `<div class="empty"><span>🔍</span>Aucun modèle ne correspond à vos critères.<br>Essayez d'élargir votre recherche.</div>`;
+}
+
+/* ---- Applied-filter chips (Baymard: removable, + clear all) ---- */
+function renderApplied(){
+  const el=$('#appliedFilters'); if(!el) return;
+  const chips=[];
+  const lab={sport:'Sport',brand:'Marque',tech:'Techno',color:'Couleur',size:'Taille'};
+  ['sport','brand','tech','color','size'].forEach(k=>{ if(filters[k]) chips.push([k,`${lab[k]} : ${filters[k]}`]); });
+  if(filters.search) chips.push(['search',`« ${filters.search} »`]);
+  if(filters.maxPrice<250) chips.push(['maxPrice',`≤ ${filters.maxPrice} €`]);
+  el.innerHTML = chips.length
+    ? chips.map(([k,t])=>`<span class="ac">${t}<button data-clear="${k}" aria-label="Retirer ${t}">✕</button></span>`).join('')
+      + `<button class="clear-all" id="clearAllFilters">Tout effacer</button>`
+    : '';
 }
 
 /* ---- Sync active chip states ---- */
@@ -1076,13 +1152,18 @@ function openProduct(id){
     p.tech?['Technologie',p.tech]:null,
     p.sport?['Usage',p.sport]:null
   ].filter(Boolean);
+  const distP=[62,26,8,3,1];                       // répartition % des notes (5→1)
+  const dist=[5,4,3,2,1].map((star,i)=>({star,pct:distP[i]}));
+  const fitPct=46+(p.id%5)*3;                       // position chaussant (déterministe)
+  const zoomIco='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>';
   $('#productModalContent').innerHTML = `
-    <button class="modal-close" data-close>✕</button>
+    <button class="modal-close" data-close aria-label="Fermer">✕</button>
     <div class="modal-grid">
       <div class="modal-media">
         ${p.new?'<span class="badge" style="top:18px;left:18px;z-index:3">Nouveau</span>':''}
-        ${gallery.length?`<img class="real" id="mMain" src="${gallery[0]}" alt="${p.name}">`:media(p)}
-        ${gallery.length>1?`<div class="gallery-strip">${gallery.map((g,i)=>`<button class="gthumb${i===0?' on':''}" data-g="${g}"><img src="${g}" alt=""></button>`).join('')}</div>`:''}
+        ${gallery.length?`<img class="real" id="mMain" src="${gallery[0]}" alt="${p.name}" data-zoom>`:media(p)}
+        ${gallery.length?`<div class="zoom-hint">${zoomIco} Zoom</div>`:''}
+        ${gallery.length>1?`<div class="gallery-strip">${gallery.map((g,i)=>`<button class="gthumb${i===0?' on':''}" data-g="${g}" aria-label="Photo ${i+1}"><img src="${g}" alt=""></button>`).join('')}</div>`:''}
       </div>
       <div class="modal-body">
         <span class="sport">${[p.sport,p.brand].filter(Boolean).join(' · ')}</span>
@@ -1097,10 +1178,14 @@ function openProduct(id){
         ${p.colors.length?`<div class="m-section-title">Coloris</div>
         <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="width:22px;height:22px;background:${COLORS[c]||c}" title="${c}"></span>`).join('')}</div>`:''}
 
-        <div class="m-section-title">Tailles disponibles (EU)</div>
-        <div class="sizes">${sizeList.map(s=>`<div class="size ${outSizes.includes(s)?'out':''}" data-size="${s}">${s}</div>`).join('')}</div>
+        <div class="size-head"><div class="m-section-title">Tailles disponibles (EU)</div><span class="size-guide-link" data-sizeguide>Guide des tailles</span></div>
+        <div class="sizes">${sizeList.map(s=>`<div class="size ${outSizes.includes(s)?'out':''}" data-size="${s}" ${outSizes.includes(s)?'title="Rupture de stock"':''}>${s}</div>`).join('')}</div>
+        <div class="atc-trust">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13v8H3zM16 10h4l1 3v2h-5z"/><circle cx="7" cy="17" r="1.6"/><circle cx="18" cy="17" r="1.6"/></svg>
+          Livraison 48h · Retours gratuits 30 jours · Paiement sécurisé
+        </div>
 
-        <div class="modal-actions">
+        <div class="modal-actions sticky-atc">
           <button class="btn btn-primary btn-block" data-addcart>Ajouter au panier — ${fmt(p.price)}</button>
           <button class="mini-btn ${compareList.includes(p.id)?'added':''}" data-cmp="${p.id}" style="width:52px;height:auto" aria-label="Comparer" title="Comparer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -1108,6 +1193,14 @@ function openProduct(id){
         </div>
 
         ${reviewsData.length?`<div class="m-section-title">Avis clients (${p.reviews})</div>
+        <div class="rv-summary">
+          <div class="rv-big">${p.rating}<small>★ ${p.reviews} avis</small></div>
+          <div class="rv-bars">${dist.map(d=>`<div class="rv-bar-row"><span>${d.star}</span><span class="rv-bar"><i style="width:${d.pct}%"></i></span><span>${d.pct}%</span></div>`).join('')}</div>
+        </div>
+        <div class="fit-block">
+          <div class="fit-track"><div class="knob" style="left:${fitPct}%"></div></div>
+          <div class="fit-labels"><span>Taille petit</span><span>Taille normale</span><span>Taille grand</span></div>
+        </div>
         <div class="reviews">
           ${reviewsData.map(r=>`
             <div class="review">
@@ -1127,6 +1220,10 @@ function openProduct(id){
     $$('#productModalContent .gthumb').forEach(x=>x.classList.remove('on'));
     t.classList.add('on');
   });
+  // click-to-zoom (Baymard : zoom indispensable sur fiche produit)
+  const mm=$('#mMain'); if(mm) mm.onclick=()=>openZoom(mm.src);
+  // size guide
+  const sg=$('#productModalContent [data-sizeguide]'); if(sg) sg.onclick=()=>openGuide('pointure');
   // size selection
   $$('#productModalContent .size:not(.out)').forEach(s=>s.onclick=()=>{
     $$('#productModalContent .size').forEach(x=>x.classList.remove('sel'));
@@ -1262,12 +1359,39 @@ function openGuide(key){
 }
 
 /* ===================================================================
-   Overlay helpers
+   Overlay helpers (accessibles : focus, piège de tabulation, retour focus)
    =================================================================== */
-function openOverlay(sel){document.body.classList.add('no-scroll');$(sel).classList.add('open');}
-function closeOverlay(el){el.classList.remove('open');if(!$$('.modal-overlay.open').length)document.body.classList.remove('no-scroll');}
+let lastFocused=null;
+const FOCUSABLE='a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
+function openOverlay(sel){
+  lastFocused=document.activeElement;
+  document.body.classList.add('no-scroll');
+  const o=$(sel); o.classList.add('open');
+  const dlg=o.querySelector('.modal')||o;
+  setTimeout(()=>{(dlg.querySelector(FOCUSABLE)||dlg).focus();},40);
+}
+function closeOverlay(el){
+  el.classList.remove('open');
+  if(!$$('.modal-overlay.open').length){document.body.classList.remove('no-scroll');}
+  if(lastFocused&&lastFocused.focus){lastFocused.focus();lastFocused=null;}
+}
 $$('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o||e.target.closest('[data-close]'))closeOverlay(o);}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal-overlay.open').forEach(closeOverlay);});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if($('#zoomOverlay').classList.contains('open')){closeZoom();return;}$$('.modal-overlay.open').forEach(closeOverlay);return;}
+  if(e.key==='Tab'){
+    const open=$$('.modal-overlay.open').pop(); if(!open) return;
+    const f=[...open.querySelectorAll(FOCUSABLE)].filter(el=>el.offsetParent!==null);
+    if(!f.length) return;
+    const first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
+
+/* ---- Image zoom (plein écran) ---- */
+function openZoom(src){const z=$('#zoomOverlay');$('#zoomImg').src=src;z.classList.add('open');document.body.classList.add('no-scroll');}
+function closeZoom(){$('#zoomOverlay').classList.remove('open');if(!$$('.modal-overlay.open').length)document.body.classList.remove('no-scroll');}
+$('#zoomOverlay').addEventListener('click',e=>{if(e.target===$('#zoomOverlay')||e.target.closest('[data-zoomclose]'))closeZoom();});
 
 /* ---- Toast ---- */
 let toastTimer;
@@ -1308,11 +1432,24 @@ document.addEventListener('click',e=>{
 $('#searchInput').addEventListener('input',e=>{filters.search=e.target.value;applyFilters();attachAfterRender();});
 $('#priceRange').addEventListener('input',e=>{filters.maxPrice=+e.target.value;$('#priceOut').textContent=e.target.value+' €';applyFilters();attachAfterRender();});
 $('#sortSelect').addEventListener('change',e=>{filters.sort=e.target.value;applyFilters();attachAfterRender();});
-$('#resetFilters').addEventListener('click',()=>{
+function resetAllFilters(){
   filters={search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:250,sort:'pop'};
   $('#searchInput').value='';$('#priceRange').value=250;$('#priceOut').textContent='250 €';$('#sortSelect').value='pop';
   syncChips();applyFilters();attachAfterRender();
+}
+$('#resetFilters').addEventListener('click',resetAllFilters);
+/* remove one applied filter / clear all (event delegation) */
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-clear]');
+  if(c){const k=c.dataset.clear;
+    if(k==='search'){filters.search='';$('#searchInput').value='';}
+    else if(k==='maxPrice'){filters.maxPrice=250;$('#priceRange').value=250;$('#priceOut').textContent='250 €';}
+    else filters[k]=null;
+    syncChips();applyFilters();attachAfterRender();return;}
+  if(e.target.closest('#clearAllFilters')){resetAllFilters();return;}
 });
+/* mobile: "Voir X résultats" closes the filter drawer */
+$('#filtersApply').addEventListener('click',()=>{$('#filters').classList.remove('open');document.body.classList.remove('no-scroll');$('#catalogue').scrollIntoView({behavior:'smooth'});});
 
 /* ---- Compare bar buttons ---- */
 $('#openCompare').addEventListener('click',openCompareModal);
