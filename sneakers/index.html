@@ -183,6 +183,8 @@ header.scrolled{background:rgba(6,8,13,.82);backdrop-filter:blur(18px) saturate(
   background:radial-gradient(120% 100% at 50% 0%,#1b2333,#0a0e16)}
 .card-media svg{width:88%;transition:transform .5s var(--ease)}
 .card:hover .card-media svg{transform:scale(1.08) rotate(-3deg)}
+.card-media img.real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.card:hover .card-media img.real{transform:scale(1.06)}
 .badge{position:absolute;top:12px;left:12px;z-index:2;font-size:.66rem;font-weight:800;text-transform:uppercase;
   letter-spacing:.08em;padding:5px 10px;border-radius:100px;background:var(--volt);color:#0a0d05}
 .badge.promo{background:var(--flame);color:#fff;left:auto;right:12px}
@@ -339,6 +341,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
 .modal-media{background:radial-gradient(120% 100% at 50% 0%,#1b2333,#0a0e16);display:grid;place-items:center;
   padding:40px;position:relative;min-height:380px}
 .modal-media svg{width:92%;filter:drop-shadow(0 30px 30px rgba(0,0,0,.5))}
+.modal-media img.real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .modal-body{padding:38px 36px}
 .modal-body .sport{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--volt)}
 .modal-body h2{font-size:1.9rem;margin:8px 0 4px}
@@ -847,7 +850,15 @@ const COLORS = {
 
 /* ---- Product catalogue ---- */
 const P = [
-  {id:1,name:'AeroStride Pro',brand:'Velocity',sport:'Running',tech:'Amorti AirFlux',price:159,old:189,rating:4.8,reviews:312,weight:198,drop:8,colors:['Volt','Noir'],c:['#c6ff00','#1c1f26','#e9edf4'],new:true,pop:97,promo:true,desc:"Conçue pour la vitesse pure, l'AeroStride Pro combine une mousse AirFlux ultra-réactive et une tige en mesh respirant. Idéale pour le fractionné et la compétition sur route."},
+  /* ===== Sélection réelle en stock (photos authentiques) ===== */
+  {id:101,name:'Nike Shox TL',brand:'Nike',sport:'Lifestyle',tech:'Amorti Shox',price:179,old:199,rating:4.9,reviews:208,weight:430,drop:10,colors:['Blanc'],c:['#e9edf4','#d8dde6','#cfd4dd'],img:'shox-tl-blanc.jpg',new:true,pop:99,promo:true,desc:"L'icône Nike Shox dans un coloris crème intemporel. Ses quatre colonnes Shox restituent l'énergie à chaque pas pour un amorti spectaculaire et un style streetwear inimitable. Pièce authentique en stock."},
+  {id:102,name:'Nike Air Max Dn',brand:'Nike',sport:'Lifestyle',tech:'Air Dynamic',price:169,old:null,rating:4.8,reviews:176,weight:360,drop:8,colors:['Noir','Orange'],c:['#1c1f26','#ff5a1f','#8a93a6'],img:'airmax-dn-noir.jpg',new:true,pop:98,desc:"La nouvelle génération Air Max Dn et son unité Dynamic Air à double chambre, pour une sensation de glisse réactive à chaque foulée. Coloris noir rehaussé d'accents orange. Pièce authentique en stock."},
+  {id:103,name:'Nike Air Max Dn',brand:'Nike',sport:'Lifestyle',tech:'Air Dynamic',price:169,old:null,rating:4.8,reviews:142,weight:360,drop:8,colors:['Bleu','Noir'],c:['#2e7bff','#1c1f26','#8a93a6'],img:'airmax-dn-bleu.jpg',new:true,pop:96,desc:"L'Air Max Dn en finition bleu nuit. Tubes Dynamic Air visibles, maintien moderne et look futuriste pour porter la performance Nike au quotidien. Pièce authentique en stock."},
+  {id:104,name:'Nike Shox TL',brand:'Nike',sport:'Lifestyle',tech:'Amorti Shox',price:179,old:199,rating:4.9,reviews:154,weight:430,drop:10,colors:['Orange','Rouge'],c:['#ff5a1f','#ff3b3b','#1c1f26'],img:'shox-tl-orange.jpg',new:true,pop:94,promo:true,desc:"La Nike Shox TL dans un dégradé orange-rouge feu qui ne passe pas inaperçu. Le système Shox emblématique pour un confort dynamique et une allure résolument sportive. Pièce authentique en stock."},
+  {id:105,name:'Nike Air Training',brand:'Nike',sport:'Fitness',tech:'Stabilité Training',price:109,old:129,rating:4.7,reviews:121,weight:330,drop:8,colors:['Gris','Blanc'],c:['#8a93a6','#e9edf4','#1c1f26'],img:'air-trainer-gris.jpg',new:true,pop:93,promo:true,desc:"Chaussure de training Nike Air, semelle blanche contrastée et unité Air au talon. Stable et polyvalente pour la salle, le cross-training et le quotidien. Pièce authentique en stock."},
+
+  /* ===== Sélection vitrine ===== */
+  {id:1,name:'AeroStride Pro',brand:'Velocity',sport:'Running',tech:'Amorti AirFlux',price:159,old:189,rating:4.8,reviews:312,weight:198,drop:8,colors:['Volt','Noir'],c:['#c6ff00','#1c1f26','#e9edf4'],new:true,pop:91,promo:true,desc:"Conçue pour la vitesse pure, l'AeroStride Pro combine une mousse AirFlux ultra-réactive et une tige en mesh respirant. Idéale pour le fractionné et la compétition sur route."},
   {id:2,name:'CloudRunner 4',brand:'Apex',sport:'Running',tech:'Mousse Réactive',price:139,old:null,rating:4.7,reviews:240,weight:236,drop:10,colors:['Bleu','Blanc'],c:['#2e7bff','#1c1f26','#e9edf4'],new:true,pop:92,desc:"Le confort longue distance par excellence. Un amorti moelleux qui absorbe les chocs kilomètre après kilomètre, pour les sorties longues et la récupération."},
   {id:3,name:'Tempo Elite Carbon',brand:'Velocity',sport:'Running',tech:'Plaque Carbone',price:229,old:null,rating:4.9,reviews:188,weight:205,drop:6,colors:['Orange','Noir'],c:['#ff5a1f','#1c1f26','#e9edf4'],new:true,pop:95,desc:"La plaque carbone propulse chaque foulée vers l'avant. Pensée pour les recordmen, elle transforme votre énergie en vitesse sur le marathon."},
   {id:4,name:'Forge Trainer X',brand:'Titan',sport:'Fitness',tech:'Stabilité Max',price:119,old:139,rating:4.6,reviews:276,weight:280,drop:4,colors:['Noir','Volt'],c:['#1c1f26','#c6ff00','#8a93a6'],new:false,pop:90,promo:true,desc:"La base stable parfaite pour le cross-training, l'haltérophilie et le HIIT. Un maintien latéral renforcé pour les mouvements explosifs en salle."},
@@ -889,6 +900,9 @@ const $ = s=>document.querySelector(s);
 const $$ = s=>[...document.querySelectorAll(s)];
 const stars = r=>'★★★★★'.slice(0,Math.round(r))+'☆☆☆☆☆'.slice(0,5-Math.round(r));
 const fmt = n=>n+' €';
+/* real photo when available, otherwise parametric SVG */
+const media = p=>p.img?`<img class="real" src="img/${p.img}" alt="${p.name} ${p.brand}" loading="lazy">`:shoe(p.c[0],p.c[1],p.c[2]);
+const thumb = (p,w,h)=>p.img?`<img src="img/${p.img}" alt="${p.name}" style="width:${w}px;height:${h}px;object-fit:cover;border-radius:10px;flex-shrink:0">`:shoe(p.c[0],p.c[1],p.c[2]);
 
 /* ---- Card template ---- */
 function card(p){
@@ -898,7 +912,7 @@ function card(p){
     <div class="card-media" data-open="${p.id}">
       ${p.new?'<span class="badge">Nouveau</span>':''}
       ${p.promo?`<span class="badge promo">-${Math.round((1-p.price/p.old)*100)}%</span>`:''}
-      ${shoe(p.c[0],p.c[1],p.c[2])}
+      ${media(p)}
       <button class="fav ${fav}" data-fav="${p.id}" aria-label="Favori">
         <svg viewBox="0 0 24 24" fill="${fav?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg>
       </button>
@@ -999,8 +1013,8 @@ function openProduct(id){
     <button class="modal-close" data-close>✕</button>
     <div class="modal-grid">
       <div class="modal-media">
-        ${p.new?'<span class="badge" style="top:18px;left:18px">Nouveau</span>':''}
-        ${shoe(p.c[0],p.c[1],p.c[2])}
+        ${p.new?'<span class="badge" style="top:18px;left:18px;z-index:3">Nouveau</span>':''}
+        ${media(p)}
       </div>
       <div class="modal-body">
         <span class="sport">${p.sport} · ${p.brand}</span>
@@ -1093,7 +1107,7 @@ function refreshCompare(){
     const id=compareList[k];
     if(id){
       const p=P.find(x=>x.id===id);
-      slots+=`<div class="compare-slot">${shoe(p.c[0],p.c[1],p.c[2])}<small>${p.name}<br><span class="muted">${fmt(p.price)}</span></small><span class="rm" data-rm="${id}">✕</span></div>`;
+      slots+=`<div class="compare-slot">${thumb(p,48,48)}<small>${p.name}<br><span class="muted">${fmt(p.price)}</span></small><span class="rm" data-rm="${id}">✕</span></div>`;
     } else {
       slots+=`<div class="compare-empty-slot">Emplacement libre</div>`;
     }
@@ -1116,7 +1130,7 @@ function openCompareModal(){
       <h2 style="font-size:1.8rem;margin:10px 0 22px">Comparez vos modèles</h2>
       <div style="overflow-x:auto">
       <table class="cmp-table">
-        <thead><tr><th></th>${items.map(p=>`<th><div class="cmp-shoe">${shoe(p.c[0],p.c[1],p.c[2])}<b>${p.name}</b><span class="muted" style="font-size:.82rem">${p.brand}</span></div></th>`).join('')}</tr></thead>
+        <thead><tr><th></th>${items.map(p=>`<th><div class="cmp-shoe">${thumb(p,130,98)}<b>${p.name}</b><span class="muted" style="font-size:.82rem">${p.brand}</span></div></th>`).join('')}</tr></thead>
         <tbody>
           ${row('Prix',p=>p.old?`<s class="muted">${fmt(p.old)}</s> ${fmt(p.price)}`:fmt(p.price),p=>p.price===minPrice)}
           ${row('Sport',p=>p.sport)}
