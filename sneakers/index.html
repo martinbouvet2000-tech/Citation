@@ -342,6 +342,12 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
   padding:40px;position:relative;min-height:380px}
 .modal-media svg{width:92%;filter:drop-shadow(0 30px 30px rgba(0,0,0,.5))}
 .modal-media img.real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gallery-strip{position:absolute;left:0;right:0;bottom:0;z-index:4;display:flex;gap:8px;padding:12px;
+  overflow-x:auto;background:linear-gradient(0deg,rgba(6,8,13,.7),transparent)}
+.gthumb{width:54px;height:54px;flex-shrink:0;border-radius:10px;overflow:hidden;border:2px solid transparent;
+  padding:0;background:none;transition:border-color .2s}
+.gthumb img{width:100%;height:100%;object-fit:cover}
+.gthumb.on{border-color:var(--volt)}
 .modal-body{padding:38px 36px}
 .modal-body .sport{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--volt)}
 .modal-body h2{font-size:1.9rem;margin:8px 0 4px}
@@ -793,6 +799,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
 <!-- ============================= TOAST ============================= -->
 <div class="toast" id="toast"><span class="dot"></span><span id="toastText">Ajouté</span></div>
 
+<script src="products.js"></script>
 <script>
 /* ===================================================================
    VÉLOCE — Data & logic
@@ -848,34 +855,6 @@ const COLORS = {
   Rouge:'#ff3b3b', Orange:'#ff5a1f', Rose:'#ff2e93', Vert:'#19c37d', Gris:'#8a93a6'
 };
 
-/* ---- Product catalogue ---- */
-const P = [
-  /* ===== Sélection réelle en stock (photos authentiques) ===== */
-  {id:101,name:'Nike Shox TL',brand:'Nike',sport:'Lifestyle',tech:'Amorti Shox',price:179,old:199,rating:4.9,reviews:208,weight:430,drop:10,colors:['Blanc'],c:['#e9edf4','#d8dde6','#cfd4dd'],img:'shox-tl-blanc.jpg',new:true,pop:99,promo:true,desc:"L'icône Nike Shox dans un coloris crème intemporel. Ses quatre colonnes Shox restituent l'énergie à chaque pas pour un amorti spectaculaire et un style streetwear inimitable. Pièce authentique en stock."},
-  {id:102,name:'Nike Air Max Dn',brand:'Nike',sport:'Lifestyle',tech:'Air Dynamic',price:169,old:null,rating:4.8,reviews:176,weight:360,drop:8,colors:['Noir','Orange'],c:['#1c1f26','#ff5a1f','#8a93a6'],img:'airmax-dn-noir.jpg',new:true,pop:98,desc:"La nouvelle génération Air Max Dn et son unité Dynamic Air à double chambre, pour une sensation de glisse réactive à chaque foulée. Coloris noir rehaussé d'accents orange. Pièce authentique en stock."},
-  {id:103,name:'Nike Air Max Dn',brand:'Nike',sport:'Lifestyle',tech:'Air Dynamic',price:169,old:null,rating:4.8,reviews:142,weight:360,drop:8,colors:['Bleu','Noir'],c:['#2e7bff','#1c1f26','#8a93a6'],img:'airmax-dn-bleu.jpg',new:true,pop:96,desc:"L'Air Max Dn en finition bleu nuit. Tubes Dynamic Air visibles, maintien moderne et look futuriste pour porter la performance Nike au quotidien. Pièce authentique en stock."},
-  {id:104,name:'Nike Shox TL',brand:'Nike',sport:'Lifestyle',tech:'Amorti Shox',price:179,old:199,rating:4.9,reviews:154,weight:430,drop:10,colors:['Orange','Rouge'],c:['#ff5a1f','#ff3b3b','#1c1f26'],img:'shox-tl-orange.jpg',new:true,pop:94,promo:true,desc:"La Nike Shox TL dans un dégradé orange-rouge feu qui ne passe pas inaperçu. Le système Shox emblématique pour un confort dynamique et une allure résolument sportive. Pièce authentique en stock."},
-  {id:105,name:'Nike Air Training',brand:'Nike',sport:'Fitness',tech:'Stabilité Training',price:109,old:129,rating:4.7,reviews:121,weight:330,drop:8,colors:['Gris','Blanc'],c:['#8a93a6','#e9edf4','#1c1f26'],img:'air-trainer-gris.jpg',new:true,pop:93,promo:true,desc:"Chaussure de training Nike Air, semelle blanche contrastée et unité Air au talon. Stable et polyvalente pour la salle, le cross-training et le quotidien. Pièce authentique en stock."},
-
-  /* ===== Sélection vitrine ===== */
-  {id:1,name:'AeroStride Pro',brand:'Velocity',sport:'Running',tech:'Amorti AirFlux',price:159,old:189,rating:4.8,reviews:312,weight:198,drop:8,colors:['Volt','Noir'],c:['#c6ff00','#1c1f26','#e9edf4'],new:true,pop:91,promo:true,desc:"Conçue pour la vitesse pure, l'AeroStride Pro combine une mousse AirFlux ultra-réactive et une tige en mesh respirant. Idéale pour le fractionné et la compétition sur route."},
-  {id:2,name:'CloudRunner 4',brand:'Apex',sport:'Running',tech:'Mousse Réactive',price:139,old:null,rating:4.7,reviews:240,weight:236,drop:10,colors:['Bleu','Blanc'],c:['#2e7bff','#1c1f26','#e9edf4'],new:true,pop:92,desc:"Le confort longue distance par excellence. Un amorti moelleux qui absorbe les chocs kilomètre après kilomètre, pour les sorties longues et la récupération."},
-  {id:3,name:'Tempo Elite Carbon',brand:'Velocity',sport:'Running',tech:'Plaque Carbone',price:229,old:null,rating:4.9,reviews:188,weight:205,drop:6,colors:['Orange','Noir'],c:['#ff5a1f','#1c1f26','#e9edf4'],new:true,pop:95,desc:"La plaque carbone propulse chaque foulée vers l'avant. Pensée pour les recordmen, elle transforme votre énergie en vitesse sur le marathon."},
-  {id:4,name:'Forge Trainer X',brand:'Titan',sport:'Fitness',tech:'Stabilité Max',price:119,old:139,rating:4.6,reviews:276,weight:280,drop:4,colors:['Noir','Volt'],c:['#1c1f26','#c6ff00','#8a93a6'],new:false,pop:90,promo:true,desc:"La base stable parfaite pour le cross-training, l'haltérophilie et le HIIT. Un maintien latéral renforcé pour les mouvements explosifs en salle."},
-  {id:5,name:'Pulse HIIT',brand:'Apex',sport:'Fitness',tech:'Grip Multi-surface',price:99,old:null,rating:4.5,reviews:198,weight:262,drop:6,colors:['Rose','Gris'],c:['#ff2e93','#1c1f26','#8a93a6'],new:false,pop:84,desc:"Légère et polyvalente, la Pulse HIIT vous suit du tapis au rack. Adhérence totale et flexibilité pour enchaîner les circuits sans temps mort."},
-  {id:6,name:'PhantomStrike FG',brand:'Striker',sport:'Football',tech:'Crampons FG',price:179,old:199,rating:4.7,reviews:154,weight:210,drop:0,colors:['Volt','Noir'],c:['#c6ff00','#1c1f26','#19c37d'],new:false,pop:88,promo:true,desc:"Pour les terrains secs, la PhantomStrike offre un toucher de balle précis et des crampons FG taillés pour les accélérations et les changements de direction."},
-  {id:7,name:'Velocità Mercurial',brand:'Striker',sport:'Football',tech:'Toucher de balle',price:209,old:null,rating:4.8,reviews:131,weight:196,drop:0,colors:['Rouge','Noir'],c:['#ff3b3b','#1c1f26','#e9edf4'],new:true,pop:91,desc:"La chaussure des ailiers rapides. Ultra-légère, seconde peau, elle libère votre explosivité sur les premiers mètres et dans les face-à-face."},
-  {id:8,name:'SkyDunk Hi',brand:'Titan',sport:'Basketball',tech:'Amorti Zoom',price:169,old:null,rating:4.7,reviews:203,weight:340,drop:10,colors:['Noir','Orange'],c:['#1c1f26','#ff5a1f','#e9edf4'],new:false,pop:89,desc:"Une tige montante pour un maintien maximal de la cheville et un amorti Zoom réactif sous l'avant-pied. Conçue pour exploser au rebond et au dunk."},
-  {id:9,name:'Crossover Elite',brand:'Apex',sport:'Basketball',tech:'Grip Pivot',price:149,old:179,rating:4.6,reviews:167,weight:325,drop:9,colors:['Bleu','Volt'],c:['#2e7bff','#c6ff00','#e9edf4'],new:false,pop:86,promo:true,desc:"Pensée pour les meneurs. Adhérence chirurgicale au pivot et stabilité dans les crossovers les plus serrés pour dribbler sans jamais glisser."},
-  {id:10,name:'Court Ace Pro',brand:'Velocity',sport:'Tennis',tech:'Semelle Durable',price:129,old:null,rating:4.6,reviews:142,weight:300,drop:8,colors:['Blanc','Vert'],c:['#e9edf4','#19c37d','#8a93a6'],new:false,pop:83,desc:"Construite pour la terre battue et le dur. Renforts latéraux pour les appuis agressifs et semelle ultra-durable qui résiste aux glissades."},
-  {id:11,name:'BaseLine Spin',brand:'Titan',sport:'Tennis',tech:'Stabilité Latérale',price:139,old:159,rating:4.5,reviews:118,weight:312,drop:8,colors:['Orange','Blanc'],c:['#ff5a1f','#e9edf4','#1c1f26'],new:true,pop:80,promo:true,desc:"Le compromis idéal entre confort et réactivité. Un maintien latéral rassurant pour défendre du fond de court et monter au filet en confiance."},
-  {id:12,name:'Metro Lifestyle',brand:'Apex',sport:'Lifestyle',tech:'Confort Urbain',price:109,old:null,rating:4.4,reviews:421,weight:290,drop:10,colors:['Blanc','Gris'],c:['#e9edf4','#8a93a6','#1c1f26'],new:false,pop:85,desc:"Le sport au quotidien. Un design épuré et un amorti moelleux pour porter la performance dans la rue, du matin au soir, sans compromis sur le style."},
-  {id:13,name:'Trail Blazer GTX',brand:'Velocity',sport:'Running',tech:'Grip Trail',price:169,old:189,rating:4.8,reviews:176,weight:295,drop:6,colors:['Vert','Noir'],c:['#19c37d','#1c1f26','#8a93a6'],new:true,pop:87,promo:true,desc:"Affrontez les sentiers les plus techniques. Une accroche redoutable et une protection imperméable pour la montagne et le trail par tous les temps."},
-  {id:14,name:'Recovery Glide',brand:'Apex',sport:'Lifestyle',tech:'Amorti Max',price:99,old:null,rating:4.5,reviews:264,weight:275,drop:11,colors:['Bleu','Blanc'],c:['#2e7bff','#e9edf4','#8a93a6'],new:false,pop:79,desc:"La chaussure de récupération ultime. Un amorti maximal pour soulager les jambes après l'effort et garder un confort nuage toute la journée."},
-  {id:15,name:'Sprint Spike 9',brand:'Striker',sport:'Running',tech:'Pointes Piste',price:149,old:null,rating:4.7,reviews:96,weight:165,drop:4,colors:['Rose','Noir'],c:['#ff2e93','#1c1f26','#c6ff00'],new:true,pop:82,desc:"La pointe de sprint pour la piste. Ultra-légère et agressive, elle est conçue pour les départs explosifs et les chronos sur 100 et 200 mètres."},
-  {id:16,name:'Guardian High',brand:'Titan',sport:'Basketball',tech:'Maintien Cheville',price:189,old:219,rating:4.8,reviews:148,weight:355,drop:9,colors:['Noir','Volt'],c:['#1c1f26','#c6ff00','#8a93a6'],new:false,pop:88,promo:true,desc:"Protection maximale pour les intérieurs. Un col haut renforcé et un amorti dense qui encaisse les contacts sous le panier match après match."}
-];
-
 const CATEGORIES = [
   {key:'Running',ico:'🏃',cls:'c-run',sub:'Route, trail & piste'},
   {key:'Fitness',ico:'🏋️',cls:'c-fit',sub:'Cross-training & HIIT'},
@@ -885,11 +864,22 @@ const CATEGORIES = [
   {key:'Lifestyle',ico:'👟',cls:'c-life',sub:'Le sport au quotidien'}
 ];
 
-const SPORTS = [...new Set(P.map(p=>p.sport))];
-const BRANDS = [...new Set(P.map(p=>p.brand))];
-const TECHS  = [...new Set(P.map(p=>p.tech))];
+const DEFAULT_SIZES=[38,39,40,41,42,43,44,45,46];
+/* Normalisation : une fiche minimale (nom, marque, sport, prix) reste valide */
+P.forEach((p,i)=>{
+  if(p.id==null) p.id=1000+i;
+  if(p.rating==null) p.rating=0;
+  if(p.reviews==null) p.reviews=0;
+  if(!Array.isArray(p.colors)) p.colors=[];
+  if(!Array.isArray(p.c)) p.c=['#c6ff00','#1c1f26','#e9edf4'];
+  if(p.pop==null) p.pop=50;
+  if(p.price==null) p.price=0;
+});
+const SPORTS = [...new Set(P.map(p=>p.sport).filter(Boolean))];
+const BRANDS = [...new Set(P.map(p=>p.brand).filter(Boolean))];
+const TECHS  = [...new Set(P.map(p=>p.tech).filter(Boolean))];
 const COLORSET = [...new Set(P.flatMap(p=>p.colors))];
-const SIZES = [38,39,40,41,42,43,44,45,46];
+const SIZES = DEFAULT_SIZES;
 
 /* ---- State ---- */
 let filters = {search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:250,sort:'pop'};
@@ -900,9 +890,12 @@ const $ = s=>document.querySelector(s);
 const $$ = s=>[...document.querySelectorAll(s)];
 const stars = r=>'★★★★★'.slice(0,Math.round(r))+'☆☆☆☆☆'.slice(0,5-Math.round(r));
 const fmt = n=>n+' €';
-/* real photo when available, otherwise parametric SVG */
-const media = p=>p.img?`<img class="real" src="img/${p.img}" alt="${p.name} ${p.brand}" loading="lazy">`:shoe(p.c[0],p.c[1],p.c[2]);
-const thumb = (p,w,h)=>p.img?`<img src="img/${p.img}" alt="${p.name}" style="width:${w}px;height:${h}px;object-fit:cover;border-radius:10px;flex-shrink:0">`:shoe(p.c[0],p.c[1],p.c[2]);
+/* photo refs: data:/http kept as-is, sinon cherché dans img/ ; supporte plusieurs photos */
+const photoSrc = src=>(/^(data:|https?:)/.test(src)?src:'img/'+src);
+const photosOf = p=>(p.photos&&p.photos.length?p.photos:(p.img?[p.img]:[]));
+const heroPhoto = p=>{const a=photosOf(p);return a.length?photoSrc(a[0]):null;};
+const media = p=>{const s=heroPhoto(p);return s?`<img class="real" src="${s}" alt="${p.name} ${p.brand}" loading="lazy">`:shoe(p.c[0],p.c[1],p.c[2]);};
+const thumb = (p,w,h)=>{const s=heroPhoto(p);return s?`<img src="${s}" alt="${p.name}" style="width:${w}px;height:${h}px;object-fit:cover;border-radius:10px;flex-shrink:0">`:shoe(p.c[0],p.c[1],p.c[2]);};
 
 /* ---- Card template ---- */
 function card(p){
@@ -918,11 +911,11 @@ function card(p){
       </button>
     </div>
     <div class="card-body">
-      <span class="sport">${p.sport} · ${p.tech}</span>
+      <span class="sport">${[p.sport,p.tech].filter(Boolean).join(' · ')}</span>
       <h3 data-open="${p.id}" style="cursor:pointer">${p.name}</h3>
-      <span class="brand-name">${p.brand}</span>
-      <div class="rating"><span class="stars">${stars(p.rating)}</span> ${p.rating} <span class="muted">(${p.reviews})</span></div>
-      <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="background:${COLORS[c]}" title="${c}"></span>`).join('')}</div>
+      <span class="brand-name">${p.brand||''}</span>
+      ${p.rating?`<div class="rating"><span class="stars">${stars(p.rating)}</span> ${p.rating} ${p.reviews?`<span class="muted">(${p.reviews})</span>`:''}</div>`:''}
+      <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="background:${COLORS[c]||c}" title="${c}"></span>`).join('')}</div>
       <div class="card-foot">
         <div class="price">${p.old?`<s>${fmt(p.old)}</s>`:''}${fmt(p.price)}</div>
         <div class="card-actions">
@@ -954,7 +947,7 @@ function renderStatic(){
 function buildFilterChips(){
   const mk = (arr,el,key,colorDots)=>{
     $(el).innerHTML = arr.map(v=>{
-      const dot = colorDots?`<span class="dot" style="background:${COLORS[v]}"></span>`:'';
+      const dot = colorDots?`<span class="dot" style="background:${COLORS[v]||v}"></span>`:'';
       return `<span class="chip ${colorDots?'color-chip':''}" data-filter="${key}" data-val="${v}">${dot}${v}</span>`;
     }).join('');
   };
@@ -1007,35 +1000,39 @@ function syncChips(){
    =================================================================== */
 function openProduct(id){
   const p = P.find(x=>x.id===id); if(!p) return;
-  const outSizes=[38,46]; // a couple sizes "out of stock" for realism
-  const reviewsData = sampleReviews(p);
+  const sizeList = p.sizes&&p.sizes.length?p.sizes:DEFAULT_SIZES;
+  const outSizes = p.outSizes||[];
+  const gallery = photosOf(p).map(photoSrc);
+  const reviewsData = p.reviews>0?sampleReviews(p):[];
+  const specs=[
+    p.weight!=null?['Poids',p.weight+' g']:null,
+    p.drop!=null?['Drop',p.drop+' mm']:null,
+    p.tech?['Technologie',p.tech]:null,
+    p.sport?['Usage',p.sport]:null
+  ].filter(Boolean);
   $('#productModalContent').innerHTML = `
     <button class="modal-close" data-close>✕</button>
     <div class="modal-grid">
       <div class="modal-media">
         ${p.new?'<span class="badge" style="top:18px;left:18px;z-index:3">Nouveau</span>':''}
-        ${media(p)}
+        ${gallery.length?`<img class="real" id="mMain" src="${gallery[0]}" alt="${p.name}">`:media(p)}
+        ${gallery.length>1?`<div class="gallery-strip">${gallery.map((g,i)=>`<button class="gthumb${i===0?' on':''}" data-g="${g}"><img src="${g}" alt=""></button>`).join('')}</div>`:''}
       </div>
       <div class="modal-body">
-        <span class="sport">${p.sport} · ${p.brand}</span>
+        <span class="sport">${[p.sport,p.brand].filter(Boolean).join(' · ')}</span>
         <h2>${p.name}</h2>
-        <div class="m-brand">${p.tech}</div>
-        <div class="rating"><span class="stars">${stars(p.rating)}</span> <b>${p.rating}</b> <span class="muted">· ${p.reviews} avis</span></div>
+        ${p.tech?`<div class="m-brand">${p.tech}</div>`:''}
+        ${p.rating?`<div class="rating"><span class="stars">${stars(p.rating)}</span> <b>${p.rating}</b> ${p.reviews?`<span class="muted">· ${p.reviews} avis</span>`:''}</div>`:''}
         <div class="m-price">${p.old?`<s>${fmt(p.old)}</s>`:''}${fmt(p.price)}</div>
-        <p class="desc">${p.desc}</p>
+        ${p.desc?`<p class="desc">${p.desc}</p>`:''}
 
-        <div class="spec-grid">
-          <div class="spec"><small>Poids</small><b>${p.weight} g</b></div>
-          <div class="spec"><small>Drop</small><b>${p.drop} mm</b></div>
-          <div class="spec"><small>Technologie</small><b>${p.tech}</b></div>
-          <div class="spec"><small>Usage</small><b>${p.sport}</b></div>
-        </div>
+        ${specs.length?`<div class="spec-grid">${specs.map(s=>`<div class="spec"><small>${s[0]}</small><b>${s[1]}</b></div>`).join('')}</div>`:''}
 
-        <div class="m-section-title">Coloris</div>
-        <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="width:22px;height:22px;background:${COLORS[c]}" title="${c}"></span>`).join('')}</div>
+        ${p.colors.length?`<div class="m-section-title">Coloris</div>
+        <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="width:22px;height:22px;background:${COLORS[c]||c}" title="${c}"></span>`).join('')}</div>`:''}
 
         <div class="m-section-title">Tailles disponibles (EU)</div>
-        <div class="sizes">${SIZES.map(s=>`<div class="size ${outSizes.includes(s)?'out':''}" data-size="${s}">${s}</div>`).join('')}</div>
+        <div class="sizes">${sizeList.map(s=>`<div class="size ${outSizes.includes(s)?'out':''}" data-size="${s}">${s}</div>`).join('')}</div>
 
         <div class="modal-actions">
           <button class="btn btn-primary btn-block" data-addcart>Ajouter au panier — ${fmt(p.price)}</button>
@@ -1044,7 +1041,7 @@ function openProduct(id){
           </button>
         </div>
 
-        <div class="m-section-title">Avis clients (${p.reviews})</div>
+        ${reviewsData.length?`<div class="m-section-title">Avis clients (${p.reviews})</div>
         <div class="reviews">
           ${reviewsData.map(r=>`
             <div class="review">
@@ -1054,10 +1051,16 @@ function openProduct(id){
                 <p>${r.text}</p>
               </div>
             </div>`).join('')}
-        </div>
+        </div>`:''}
       </div>
     </div>`;
   openOverlay('#productModal');
+  // gallery thumbnail switching
+  $$('#productModalContent .gthumb').forEach(t=>t.onclick=()=>{
+    $('#mMain').src=t.dataset.g;
+    $$('#productModalContent .gthumb').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+  });
   // size selection
   $$('#productModalContent .size:not(.out)').forEach(s=>s.onclick=()=>{
     $$('#productModalContent .size').forEach(x=>x.classList.remove('sel'));

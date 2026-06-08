@@ -24,6 +24,21 @@ Vitrine **premium** mono-page dédiée à la vente de chaussures de sport (runni
 - Illustrations produits en **SVG paramétrique** (générées à la volée selon les coloris) — aucun asset externe, chargement instantané.
 - Hébergement : **GitHub Pages**.
 
+## Gérer le catalogue (facile)
+
+Tout le catalogue vit dans **`sneakers/products.js`** — un fichier simple, un bloc par chaussure.
+
+**Ajouter une paire :**
+1. Déposez la/les photo(s) dans `sneakers/img/`.
+2. Copiez le modèle commenté en haut de `products.js`, collez-le dans la liste et remplissez les champs.
+
+Seuls `name`, `brand`, `sport` et `price` sont requis — tout le reste est optionnel :
+- `photos: ['a.jpg','b.jpg']` → **galerie** de plusieurs photos sur la fiche produit (pub).
+- `sizes: [40,41,42]` → tailles affichées au client ; `outSizes: [38]` → tailles barrées (rupture).
+- `old`, `promo`, `tech`, `colors`, `weight`, `drop`, `rating`, `reviews`, `new`, `pop`, `desc`.
+
+Les **filtres** (marque, sport, technologie, couleur) se mettent à jour **automatiquement** selon les produits présents.
+
 ## Évolution e-commerce
 
 L'architecture (catalogue en données structurées, panier, favoris, comparateur) est prête à être branchée sur un back-end e-commerce (paiement en ligne, gestion des stocks, suivi des commandes), par exemple via Shopify.
