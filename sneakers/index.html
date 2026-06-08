@@ -1025,8 +1025,34 @@ function shade(hex,p){
 /* ---- Colour palette ---- */
 const COLORS = {
   Noir:'#1c1f26', Blanc:'#e9edf4', Volt:'#c6ff00', Bleu:'#2e7bff',
-  Rouge:'#ff3b3b', Orange:'#ff5a1f', Rose:'#ff2e93', Vert:'#19c37d', Gris:'#8a93a6'
+  Rouge:'#ff3b3b', Orange:'#ff5a1f', Rose:'#ff2e93', Vert:'#19c37d', Gris:'#8a93a6',
+  Argent:'#aab2c0', Jaune:'#ffd23f', Violet:'#8a5cff', Marron:'#a9743f', Beige:'#d9c4a3'
 };
+/* Dérive les couleurs (pastilles + rendu SVG) depuis un coloris texte "cw" */
+const CW_MAP=[
+  [/noir|black/i,'Noir','#1c1f26'],
+  [/blanc|cr[eè]me|sail|voile|white|platinum|tint/i,'Blanc','#e9edf4'],
+  [/argent|silver|metallic|chrome|iris/i,'Argent','#aab2c0'],
+  [/gris|grey|gray|anthracite|wolf|cobblestone|stealth|smoke/i,'Gris','#8a93a6'],
+  [/orange|sunset/i,'Orange','#ff5a1f'],
+  [/jaune|gold|yellow|tiger/i,'Jaune','#ffd23f'],
+  [/rouge|\bred\b|fire|bordeaux|burgundy/i,'Rouge','#ff3b3b'],
+  [/bleu|blue|navy|royal|carolina|columbia|ciel|marine|\bsky\b/i,'Bleu','#2e7bff'],
+  [/vert|green|gorge|malachite|[eé]meraude|fluo|hulk/i,'Vert','#19c37d'],
+  [/rose|pink|glaze|whisper/i,'Rose','#ff2e93'],
+  [/violet|purple/i,'Violet','#8a5cff'],
+  [/marron|brown|khaki|caramel|taupe|beige|hemp|velvet|mauve/i,'Marron','#a9743f']
+];
+function deriveColor(cw){
+  const found=[];
+  cw.split(/[\/+&,()]| et /i).forEach(seg=>{
+    for(const [re,name,hex] of CW_MAP){ if(re.test(seg)){ if(!found.find(f=>f.name===name)) found.push({name,hex}); break; } }
+  });
+  if(!found.length) found.push({name:'Gris',hex:'#8a93a6'});
+  const c1=found[0].hex, c2=(found[1]||found[0]).hex;
+  const c3 = c1==='#e9edf4' ? '#cfd4dd' : '#e9edf4';
+  return {c:[c1,c2,c3], colors:found.map(x=>x.name)};
+}
 
 /* ---- Icônes SVG (cohérence premium, indépendantes de l'OS) ---- */
 const _ic = p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
@@ -1055,25 +1081,30 @@ const STORE_KEY='veloce_catalog';
 /* Normalisation : une fiche minimale (nom, marque, sport, prix) reste valide */
 function normalize(){P.forEach((p,i)=>{
   if(p.id==null) p.id=Date.now()+i;
+  if(p.cw){const d=deriveColor(p.cw); if(!Array.isArray(p.c))p.c=d.c; if(!Array.isArray(p.colors)||!p.colors.length)p.colors=d.colors;}
   if(p.rating==null) p.rating=0;
   if(p.reviews==null) p.reviews=0;
   if(!Array.isArray(p.colors)) p.colors=[];
   if(!Array.isArray(p.c)) p.c=['#c6ff00','#1c1f26','#e9edf4'];
   if(p.pop==null) p.pop=50;
-  if(p.price==null) p.price=0;
 });}
-let SPORTS,BRANDS,TECHS,COLORSET;
+let SPORTS,BRANDS,TECHS,COLORSET,ALLSIZES;
 const SIZES = DEFAULT_SIZES;
 function deriveFacets(){
   SPORTS=[...new Set(P.map(p=>p.sport).filter(Boolean))];
   BRANDS=[...new Set(P.map(p=>p.brand).filter(Boolean))];
   TECHS=[...new Set(P.map(p=>p.tech).filter(Boolean))];
   COLORSET=[...new Set(P.flatMap(p=>p.colors))];
+  ALLSIZES=[...new Set(P.flatMap(p=>p.sizes&&p.sizes.length?p.sizes:DEFAULT_SIZES))].sort((a,b)=>a-b);
 }
-normalize();deriveFacets();
+let PMIN=0,PMAX=250;
+function derivePrice(){const pr=P.map(p=>p.price).filter(Boolean);
+  PMIN=pr.length?Math.max(0,Math.floor(Math.min(...pr)/5)*5):0;
+  PMAX=pr.length?Math.ceil(Math.max(...pr)/5)*5:250;}
+normalize();deriveFacets();derivePrice();
 
 /* ---- State ---- */
-let filters = {search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:250,sort:'pop'};
+let filters = {search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:PMAX,sort:'pop'};
 let compareList = JSON.parse(localStorage.getItem('veloce_compare')||'[]');
 let favs = JSON.parse(localStorage.getItem('veloce_favs')||'[]');
 
@@ -1081,6 +1112,7 @@ const $ = s=>document.querySelector(s);
 const $$ = s=>[...document.querySelectorAll(s)];
 const stars = r=>'★★★★★'.slice(0,Math.round(r))+'☆☆☆☆☆'.slice(0,5-Math.round(r));
 const fmt = n=>n+' €';
+const priceLabel = p=>p.price?fmt(p.price):'Sur demande';
 /* photo refs: data:/http kept as-is, sinon cherché dans img/ ; supporte plusieurs photos */
 const photoSrc = src=>(/^(data:|https?:)/.test(src)?src:'img/'+src);
 const photosOf = p=>(p.photos&&p.photos.length?p.photos:(p.img?[p.img]:[]));
@@ -1109,7 +1141,7 @@ function card(p){
       ${p.rating?`<div class="rating"><span class="stars">${stars(p.rating)}</span> ${p.rating} ${p.reviews?`<span class="muted">(${p.reviews})</span>`:''}</div>`:''}
       <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="background:${COLORS[c]||c}" title="${c}"></span>`).join('')}</div>
       <div class="card-foot">
-        <div class="price">${p.old?`<s>${fmt(p.old)}</s>`:''}${fmt(p.price)}</div>
+        <div class="price">${p.old?`<s>${fmt(p.old)}</s>`:''}${priceLabel(p)}</div>
         <div class="card-actions">
           <button class="mini-btn ${inCmp}" data-cmp="${p.id}" aria-label="Comparer" title="Ajouter au comparateur">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -1126,7 +1158,7 @@ function card(p){
 
 /* ---- Render category, new, popular ---- */
 function renderStatic(){
-  $('#catGrid').innerHTML = CATEGORIES.map(c=>`
+  $('#catGrid').innerHTML = CATEGORIES.filter(c=>SPORTS.includes(c.key)).map(c=>`
     <div class="cat ${c.cls}" data-cat="${c.key}">
       <div class="ico">${c.ico}</div>
       <h3>${c.key}</h3><span>${c.sub}</span>
@@ -1150,7 +1182,16 @@ function buildFilterChips(){
   mk(BRANDS,'#filterBrand','brand');
   mk(TECHS,'#filterTech','tech');
   mk(COLORSET,'#filterColor','color',true);
-  mk(SIZES,'#filterSize','size');
+  mk(ALLSIZES,'#filterSize','size');
+}
+/* Adapte le curseur de prix aux prix réels du catalogue */
+function applyPriceUI(){
+  const r=$('#priceRange'); if(!r) return;
+  r.min=PMIN; r.max=PMAX; r.step=5;
+  if(filters.maxPrice>PMAX||filters.maxPrice<PMIN) filters.maxPrice=PMAX;
+  r.value=filters.maxPrice;
+  $('#priceOut').textContent=filters.maxPrice+' €';
+  const lbl=r.closest('.range-row'); if(lbl&&lbl.querySelector('span')) lbl.querySelector('span').textContent=PMIN+' €';
 }
 
 /* ---- Apply filters & render catalogue ---- */
@@ -1191,7 +1232,7 @@ function renderApplied(){
   const lab={sport:'Sport',brand:'Marque',tech:'Techno',color:'Couleur',size:'Taille'};
   ['sport','brand','tech','color','size'].forEach(k=>{ if(filters[k]) chips.push([k,`${lab[k]} : ${filters[k]}`]); });
   if(filters.search) chips.push(['search',`« ${filters.search} »`]);
-  if(filters.maxPrice<250) chips.push(['maxPrice',`≤ ${filters.maxPrice} €`]);
+  if(filters.maxPrice<PMAX) chips.push(['maxPrice',`≤ ${filters.maxPrice} €`]);
   el.innerHTML = chips.length
     ? chips.map(([k,t])=>`<span class="ac">${t}<button data-clear="${k}" aria-label="Retirer ${t}">✕</button></span>`).join('')
       + `<button class="clear-all" id="clearAllFilters">Tout effacer</button>`
@@ -1239,7 +1280,7 @@ function openProduct(id){
         <h2>${p.name}</h2>
         ${p.tech?`<div class="m-brand">${p.tech}</div>`:''}
         ${p.rating?`<div class="rating"><span class="stars">${stars(p.rating)}</span> <b>${p.rating}</b> ${p.reviews?`<span class="muted">· ${p.reviews} avis</span>`:''}</div>`:''}
-        <div class="m-price">${p.old?`<s>${fmt(p.old)}</s>`:''}${fmt(p.price)}</div>
+        <div class="m-price">${p.old?`<s>${fmt(p.old)}</s>`:''}${priceLabel(p)}</div>
         ${p.desc?`<p class="desc">${p.desc}</p>`:''}
 
         ${specs.length?`<div class="spec-grid">${specs.map(s=>`<div class="spec"><small>${s[0]}</small><b>${s[1]}</b></div>`).join('')}</div>`:''}
@@ -1255,7 +1296,7 @@ function openProduct(id){
         </div>
 
         <div class="modal-actions sticky-atc">
-          <button class="btn btn-primary btn-block" data-addcart>Ajouter au panier — ${fmt(p.price)}</button>
+          <button class="btn btn-primary btn-block" data-addcart>Ajouter au panier — ${priceLabel(p)}</button>
           <button class="mini-btn ${compareList.includes(p.id)?'added':''}" data-cmp="${p.id}" style="width:52px;height:auto" aria-label="Comparer" title="Comparer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
           </button>
@@ -1485,7 +1526,7 @@ document.addEventListener('click',e=>{
   const rm=e.target.closest('[data-rm]');
   if(rm){toggleCompare(+rm.dataset.rm);return;}
   const cat=e.target.closest('[data-cat]');
-  if(cat){filters.sport=cat.dataset.cat;filters.maxPrice=250;$('#priceRange').value=250;$('#priceOut').textContent='250 €';syncChips();applyFilters();closeDrawers();$('#catalogue').scrollIntoView({behavior:'smooth'});return;}
+  if(cat){filters.sport=cat.dataset.cat;filters.maxPrice=PMAX;applyPriceUI();syncChips();applyFilters();closeDrawers();$('#catalogue').scrollIntoView({behavior:'smooth'});return;}
   const g=e.target.closest('[data-guide]');
   if(g){openGuide(g.dataset.guide);return;}
 });
@@ -1506,8 +1547,8 @@ $('#searchInput').addEventListener('input',e=>{filters.search=e.target.value;app
 $('#priceRange').addEventListener('input',e=>{filters.maxPrice=+e.target.value;$('#priceOut').textContent=e.target.value+' €';applyFilters();attachAfterRender();});
 $('#sortSelect').addEventListener('change',e=>{filters.sort=e.target.value;applyFilters();attachAfterRender();});
 function resetAllFilters(){
-  filters={search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:250,sort:'pop'};
-  $('#searchInput').value='';$('#priceRange').value=250;$('#priceOut').textContent='250 €';$('#sortSelect').value='pop';
+  filters={search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:PMAX,sort:'pop'};
+  $('#searchInput').value='';$('#sortSelect').value='pop';applyPriceUI();
   syncChips();applyFilters();attachAfterRender();
 }
 $('#resetFilters').addEventListener('click',resetAllFilters);
@@ -1516,7 +1557,7 @@ document.addEventListener('click',e=>{
   const c=e.target.closest('[data-clear]');
   if(c){const k=c.dataset.clear;
     if(k==='search'){filters.search='';$('#searchInput').value='';}
-    else if(k==='maxPrice'){filters.maxPrice=250;$('#priceRange').value=250;$('#priceOut').textContent='250 €';}
+    else if(k==='maxPrice'){filters.maxPrice=PMAX;applyPriceUI();}
     else filters[k]=null;
     syncChips();applyFilters();attachAfterRender();return;}
   if(e.target.closest('#clearAllFilters')){resetAllFilters();return;}
@@ -1576,7 +1617,7 @@ $('#filtersClose').addEventListener('click',()=>{$('#filters').classList.remove(
 const ADMIN={on:false,pass:'veloce2026',edit:null};
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 
-function rerenderAll(){normalize();deriveFacets();renderStatic();buildFilterChips();syncChips();applyFilters();refreshCompare();}
+function rerenderAll(){normalize();deriveFacets();derivePrice();renderStatic();buildFilterChips();applyPriceUI();syncChips();applyFilters();refreshCompare();}
 function saveCatalog(){try{localStorage.setItem(STORE_KEY,JSON.stringify(P));}catch(e){toast('Stockage plein — exportez puis publiez');}}
 
 function enterAdmin(){
@@ -1742,7 +1783,7 @@ function renderCart(){
       <div class="ci-info">
         <b>${p.name}</b>
         <small>${[p.brand,'Taille '+it.size].filter(Boolean).join(' · ')}</small>
-        <div class="ci-price">${fmt(p.price)}</div>
+        <div class="ci-price">${priceLabel(p)}</div>
         <div class="qty"><button data-qty="${idx}" data-d="-1" aria-label="Diminuer">−</button><span>${it.qty}</span><button data-qty="${idx}" data-d="1" aria-label="Augmenter">+</button></div>
       </div>
       <button class="ci-remove" data-rmcart="${idx}">Retirer</button>
@@ -1756,7 +1797,7 @@ function renderCart(){
 }
 
 function renderSideNav(){
-  $('#sideNavBody').innerHTML = CATEGORIES.map(c=>`
+  $('#sideNavBody').innerHTML = CATEGORIES.filter(c=>SPORTS.includes(c.key)).map(c=>`
     <button class="sidenav-cat" data-cat="${c.key}">
       <span class="sc-ic">${c.ico}</span>
       <span><b>${c.key}</b><small>${c.sub}</small></span>
@@ -1799,6 +1840,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$$('.drawer.open').
 if(localStorage.getItem('veloce_admin')==='1'){ADMIN.on=true;$('#adminBar').classList.add('show');document.body.classList.add('admin-on');}
 renderStatic();
 buildFilterChips();
+applyPriceUI();
 applyFilters();
 syncChips();
 refreshCompare();

@@ -30,7 +30,9 @@ Vitrine **premium** mono-page dédiée à la vente de chaussures de sport (runni
 
 ## Gérer le catalogue (facile)
 
-Tout le catalogue vit dans **`sneakers/products.js`** — un fichier simple, un bloc par chaussure.
+Tout le catalogue vit dans **`sneakers/products.js`** — un fichier simple, un bloc par chaussure. Il contient **60 modèles Nike réels** (Shox TL/R4, Air Max DN/1/95/TN, Air Force 1, Dunk, Cortez, Vomero, Jordan…) issus du catalogue.
+
+**Couleur automatique** : le champ `cw` (coloris en toutes lettres, ex. `"Blanc / Bleu Royal"`) génère automatiquement les pastilles de couleur **et** le rendu SVG du modèle — pas besoin de coder les couleurs à la main. `price: null` affiche « Sur demande ».
 
 **Ajouter une paire :**
 1. Déposez la/les photo(s) dans `sneakers/img/`.
