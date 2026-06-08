@@ -39,6 +39,22 @@ Seuls `name`, `brand`, `sport` et `price` sont requis — tout le reste est opti
 
 Les **filtres** (marque, sport, technologie, couleur) se mettent à jour **automatiquement** selon les produits présents.
 
+## Mode admin (édition sur le site)
+
+Un **mode admin** permet de modifier le catalogue directement depuis le site, sans toucher au code :
+
+1. En bas de page, cliquez sur **« Admin »** et entrez le code (par défaut `veloce2026`, modifiable dans `index.html` → `ADMIN.pass`).
+2. Une barre admin apparaît. Chaque paire affiche un bouton **✏️ Éditer** pour modifier :
+   - **Nom**, **marque**, **sport**, **prix** (et ancien prix pour une promo),
+   - **Photos** : en ajouter plusieurs (redimensionnées automatiquement) ; la 1ʳᵉ est la principale,
+   - **Tailles disponibles** et **tailles en rupture** (barrées côté client),
+   - technologie et description.
+3. **➕ Ajouter** crée une nouvelle paire. **↺ Réinit.** revient au catalogue publié.
+
+**Persistance :** les modifications sont enregistrées **sur votre appareil** (aperçu immédiat). Pour les rendre visibles par **tous les visiteurs**, cliquez sur **⬇️ Exporter** : un fichier `products.js` est téléchargé — il suffit de remplacer `sneakers/products.js` par ce fichier et de republier (ou de l'envoyer pour mise en ligne).
+
+> Pour gérer **beaucoup** de paires avec **plusieurs photos chacune**, une base cloud (photos hébergées + édition connectée, visible par tous sans republier) est plus adaptée — évolution possible.
+
 ## Évolution e-commerce
 
 L'architecture (catalogue en données structurées, panier, favoris, comparateur) est prête à être branchée sur un back-end e-commerce (paiement en ligne, gestion des stocks, suivi des commandes), par exemple via Shopify.

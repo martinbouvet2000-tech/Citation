@@ -457,6 +457,32 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
 .mobile-nav.open{transform:none}
 .mobile-nav a{padding:16px;font-size:1.2rem;font-weight:700;border-bottom:1px solid var(--line)}
 @media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+
+/* ---------- Admin mode ---------- */
+.admin-bar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(160%);z-index:115;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;
+  background:rgba(11,15,23,.95);backdrop-filter:blur(16px);border:1px solid var(--volt);
+  border-radius:100px;padding:10px 14px;box-shadow:var(--shadow);transition:transform .4s var(--ease);max-width:94vw}
+.admin-bar.show{transform:translateX(-50%) translateY(0)}
+.admin-bar .ab-tag{font-weight:800;font-size:.78rem;letter-spacing:.1em;color:var(--volt);padding:0 6px;display:flex;align-items:center;gap:7px}
+.admin-bar .ab-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 10px var(--volt)}
+.admin-bar .btn{padding:9px 15px;font-size:.84rem}
+.admin-edit{position:absolute;top:10px;right:10px;z-index:6;background:var(--volt);color:#0a0d05;font-weight:800;
+  font-size:.74rem;padding:7px 12px;border-radius:100px;box-shadow:0 6px 16px -6px rgba(0,0,0,.6)}
+.admin-edit:hover{transform:scale(1.06)}
+body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
+#adminLogin{cursor:pointer}
+.adm-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.adm-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:24px}
+.adm-photos{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.adm-photo{position:relative;width:84px;height:84px;border-radius:12px;overflow:hidden;border:1px solid var(--line-strong)}
+.adm-photo img{width:100%;height:100%;object-fit:cover}
+.adm-photo .adm-main{position:absolute;top:0;left:0;right:0;background:var(--volt);color:#0a0d05;font-size:.6rem;font-weight:800;text-align:center;padding:2px}
+.adm-photo-act{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:4px;background:rgba(6,8,13,.7);padding:3px}
+.adm-photo-act button{font-size:.8rem;line-height:1}
+.adm-hint{font-size:.8rem;color:var(--txt-mute);margin:6px 0 0}
+@media(max-width:600px){.adm-row{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -775,7 +801,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
     </div>
     <div class="foot-bottom">
       <span>© 2026 VÉLOCE — Plateforme vitrine. Bientôt en boutique e-commerce complète.</span>
-      <span>Mentions légales · Confidentialité · CGV</span>
+      <span>Mentions légales · Confidentialité · CGV · <a id="adminLogin">Admin</a></span>
     </div>
   </div>
 </footer>
@@ -795,6 +821,16 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
 <div class="modal-overlay" id="productModal"><div class="modal" id="productModalContent"></div></div>
 <div class="modal-overlay" id="compareModal"><div class="modal" id="compareModalContent" style="max-width:1100px"></div></div>
 <div class="modal-overlay" id="guideModal"><div class="modal" id="guideModalContent" style="max-width:720px"></div></div>
+
+<!-- ============================= ADMIN ============================= -->
+<div class="admin-bar" id="adminBar">
+  <span class="ab-tag">MODE ADMIN</span>
+  <button class="btn btn-ghost" id="adminAdd">➕ Ajouter</button>
+  <button class="btn btn-ghost" id="adminExport">⬇️ Exporter</button>
+  <button class="btn btn-ghost" id="adminReset">↺ Réinit.</button>
+  <button class="btn btn-primary" id="adminExit">Quitter</button>
+</div>
+<div class="modal-overlay" id="adminModal"><div class="modal" id="adminModalContent" style="max-width:680px"></div></div>
 
 <!-- ============================= TOAST ============================= -->
 <div class="toast" id="toast"><span class="dot"></span><span id="toastText">Ajouté</span></div>
@@ -865,21 +901,28 @@ const CATEGORIES = [
 ];
 
 const DEFAULT_SIZES=[38,39,40,41,42,43,44,45,46];
+const STORE_KEY='veloce_catalog';
+/* Si l'admin a enregistré des modifications sur cet appareil, on les charge */
+(function(){try{const s=JSON.parse(localStorage.getItem(STORE_KEY));if(Array.isArray(s)&&s.length){P.length=0;s.forEach(x=>P.push(x));}}catch(e){}})();
 /* Normalisation : une fiche minimale (nom, marque, sport, prix) reste valide */
-P.forEach((p,i)=>{
-  if(p.id==null) p.id=1000+i;
+function normalize(){P.forEach((p,i)=>{
+  if(p.id==null) p.id=Date.now()+i;
   if(p.rating==null) p.rating=0;
   if(p.reviews==null) p.reviews=0;
   if(!Array.isArray(p.colors)) p.colors=[];
   if(!Array.isArray(p.c)) p.c=['#c6ff00','#1c1f26','#e9edf4'];
   if(p.pop==null) p.pop=50;
   if(p.price==null) p.price=0;
-});
-const SPORTS = [...new Set(P.map(p=>p.sport).filter(Boolean))];
-const BRANDS = [...new Set(P.map(p=>p.brand).filter(Boolean))];
-const TECHS  = [...new Set(P.map(p=>p.tech).filter(Boolean))];
-const COLORSET = [...new Set(P.flatMap(p=>p.colors))];
+});}
+let SPORTS,BRANDS,TECHS,COLORSET;
 const SIZES = DEFAULT_SIZES;
+function deriveFacets(){
+  SPORTS=[...new Set(P.map(p=>p.sport).filter(Boolean))];
+  BRANDS=[...new Set(P.map(p=>p.brand).filter(Boolean))];
+  TECHS=[...new Set(P.map(p=>p.tech).filter(Boolean))];
+  COLORSET=[...new Set(P.flatMap(p=>p.colors))];
+}
+normalize();deriveFacets();
 
 /* ---- State ---- */
 let filters = {search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:250,sort:'pop'};
@@ -928,6 +971,7 @@ function card(p){
         </div>
       </div>
     </div>
+    ${ADMIN.on?`<button class="admin-edit" data-edit="${p.id}">✏️ Éditer</button>`:''}
   </article>`;
 }
 
@@ -1211,12 +1255,14 @@ function toast(msg){const t=$('#toast');$('#toastText').textContent=msg;t.classL
    Global event delegation
    =================================================================== */
 document.addEventListener('click',e=>{
+  const ed=e.target.closest('[data-edit]');
+  if(ed){e.stopPropagation();openEditor(+ed.dataset.edit);return;}
+  const fav=e.target.closest('[data-fav]');
+  if(fav){const id=+fav.dataset.fav;const i=favs.indexOf(id);i>-1?favs.splice(i,1):favs.push(id);localStorage.setItem('veloce_favs',JSON.stringify(favs));applyFilters();renderStatic();attachAfterRender();toast(i>-1?'Retiré des favoris':'Ajouté aux favoris ❤️');return;}
   const open=e.target.closest('[data-open]');
   if(open){openProduct(+open.dataset.open);return;}
   const cmp=e.target.closest('[data-cmp]');
   if(cmp){toggleCompare(+cmp.dataset.cmp);return;}
-  const fav=e.target.closest('[data-fav]');
-  if(fav){const id=+fav.dataset.fav;const i=favs.indexOf(id);i>-1?favs.splice(i,1):favs.push(id);localStorage.setItem('veloce_favs',JSON.stringify(favs));applyFilters();renderStatic();attachAfterRender();toast(i>-1?'Retiré des favoris':'Ajouté aux favoris ❤️');return;}
   const rm=e.target.closest('[data-rm]');
   if(rm){toggleCompare(+rm.dataset.rm);return;}
   const cat=e.target.closest('[data-cat]');
@@ -1293,8 +1339,154 @@ $('#filterToggle').addEventListener('click',()=>{$('#filters').classList.add('op
 $('#filtersClose').addEventListener('click',()=>{$('#filters').classList.remove('open');document.body.classList.remove('no-scroll');});
 
 /* ===================================================================
+   ADMIN (édition sur le site — sauvegarde sur cet appareil + export)
+   =================================================================== */
+const ADMIN={on:false,pass:'veloce2026',edit:null};
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+
+function rerenderAll(){normalize();deriveFacets();renderStatic();buildFilterChips();syncChips();applyFilters();refreshCompare();}
+function saveCatalog(){try{localStorage.setItem(STORE_KEY,JSON.stringify(P));}catch(e){toast('Stockage plein — exportez puis publiez');}}
+
+function enterAdmin(){
+  if(ADMIN.on)return;
+  const code=prompt('Code admin :');
+  if(code===null)return;
+  if(code!==ADMIN.pass){toast('Code incorrect');return;}
+  ADMIN.on=true;localStorage.setItem('veloce_admin','1');
+  $('#adminBar').classList.add('show');document.body.classList.add('admin-on');
+  rerenderAll();toast('Mode admin activé ✏️');
+}
+function exitAdmin(){ADMIN.on=false;localStorage.removeItem('veloce_admin');
+  $('#adminBar').classList.remove('show');document.body.classList.remove('admin-on');rerenderAll();}
+
+/* downscale les photos pour rester léger (max ~1100px, JPEG) */
+function resizeImage(file){return new Promise(res=>{
+  const r=new FileReader();
+  r.onload=()=>{const img=new Image();img.onload=()=>{
+    const max=1100;let w=img.width,h=img.height;
+    if(w>max){h=Math.round(h*max/w);w=max;}
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+    cv.getContext('2d').drawImage(img,0,0,w,h);
+    res(cv.toDataURL('image/jpeg',.82));
+  };img.src=r.result;};
+  r.readAsDataURL(file);
+});}
+
+function openEditor(id){
+  const exist=P.find(x=>x.id===id);
+  const p=exist?JSON.parse(JSON.stringify(exist))
+    :{id:Date.now(),name:'',brand:'',sport:'Lifestyle',price:0,colors:[],photos:[],sizes:[...DEFAULT_SIZES],outSizes:[],new:true,pop:80};
+  if(!Array.isArray(p.photos)) p.photos=p.img?[p.img]:[];
+  if(!Array.isArray(p.sizes)||!p.sizes.length) p.sizes=[...DEFAULT_SIZES];
+  if(!Array.isArray(p.outSizes)) p.outSizes=[];
+  ADMIN.edit=p;renderEditor();openOverlay('#adminModal');
+}
+function syncEditorFields(){
+  const p=ADMIN.edit;if(!p||!$('#eName'))return;
+  p.name=$('#eName').value.trim();p.brand=$('#eBrand').value.trim();p.sport=$('#eSport').value.trim();
+  p.price=+$('#ePrice').value||0;p.old=$('#eOld').value?+$('#eOld').value:null;
+  p.tech=$('#eTech').value.trim();p.desc=$('#eDesc').value.trim();
+}
+function renderEditor(){
+  const p=ADMIN.edit, exist=!!P.find(x=>x.id===p.id);
+  const allSizes=[...new Set([...DEFAULT_SIZES,...p.sizes])].sort((a,b)=>a-b);
+  $('#adminModalContent').innerHTML=`
+    <button class="modal-close" data-close>✕</button>
+    <div style="padding:28px 26px">
+      <span class="eyebrow">Mode admin</span>
+      <h2 style="font-size:1.5rem;margin:8px 0 18px">${p.name?'Éditer · '+esc(p.name):'Nouvelle paire'}</h2>
+      <div class="field"><label>Nom de la paire</label><input id="eName" value="${esc(p.name)}" placeholder="Nike Air Max 90"></div>
+      <div class="adm-row">
+        <div class="field"><label>Marque</label><input id="eBrand" value="${esc(p.brand)}" placeholder="Nike"></div>
+        <div class="field"><label>Sport</label><input id="eSport" value="${esc(p.sport)}" placeholder="Lifestyle"></div>
+      </div>
+      <div class="adm-row">
+        <div class="field"><label>Prix (€)</label><input id="ePrice" type="number" inputmode="decimal" value="${p.price||''}"></div>
+        <div class="field"><label>Ancien prix (€) — option promo</label><input id="eOld" type="number" inputmode="decimal" value="${p.old||''}"></div>
+      </div>
+      <div class="field"><label>Technologie — option</label><input id="eTech" value="${esc(p.tech||'')}" placeholder="Amorti Air"></div>
+      <div class="field"><label>Description — option</label><textarea id="eDesc" placeholder="Quelques mots de pub…">${esc(p.desc||'')}</textarea></div>
+
+      <div class="field"><label>Photos — la 1ʳᵉ est la principale</label>
+        <div class="adm-photos">${p.photos.map((ph,i)=>`
+          <div class="adm-photo">
+            <img src="${photoSrc(ph)}" alt="">
+            ${i===0?'<span class="adm-main">Principale</span>':''}
+            <div class="adm-photo-act">
+              ${i>0?`<button data-pup="${i}" title="Mettre en principale">⬆️</button>`:''}
+              <button data-prm="${i}" title="Supprimer">🗑️</button>
+            </div>
+          </div>`).join('')||'<span class="muted" style="font-size:.85rem">Aucune photo pour le moment.</span>'}
+        </div>
+        <label class="btn btn-ghost" style="padding:10px 16px;cursor:pointer;display:inline-flex">📷 Ajouter des photos
+          <input type="file" id="ePhotoFile" accept="image/*" multiple hidden></label>
+        <p class="adm-hint">Astuce : ajoutez plusieurs angles pour une vraie présentation produit.</p>
+      </div>
+
+      <div class="field"><label>Tailles disponibles (clic pour activer/désactiver)</label>
+        <div class="chips" id="eSizes">${allSizes.map(s=>`<span class="chip ${p.sizes.includes(s)?'active':''}" data-size="${s}">${s}</span>`).join('')}</div>
+      </div>
+      <div class="field"><label>Tailles en rupture (barrées côté client)</label>
+        <div class="chips" id="eOut">${p.sizes.slice().sort((a,b)=>a-b).map(s=>`<span class="chip ${p.outSizes.includes(s)?'active':''}" data-out="${s}">${s}</span>`).join('')||'<span class="muted" style="font-size:.85rem">—</span>'}</div>
+      </div>
+
+      <div class="adm-actions">
+        ${exist?`<button class="btn btn-ghost" id="eDelete" style="color:var(--flame);border-color:var(--flame)">Supprimer</button>`:'<span></span>'}
+        <button class="btn btn-primary" id="eSave">Enregistrer</button>
+      </div>
+    </div>`;
+  // photos
+  $('#ePhotoFile').onchange=async e=>{
+    syncEditorFields();
+    for(const f of e.target.files){p.photos.push(await resizeImage(f));}
+    renderEditor();
+  };
+  $$('#adminModalContent [data-pup]').forEach(b=>b.onclick=()=>{syncEditorFields();const i=+b.dataset.pup;p.photos.unshift(p.photos.splice(i,1)[0]);renderEditor();});
+  $$('#adminModalContent [data-prm]').forEach(b=>b.onclick=()=>{syncEditorFields();p.photos.splice(+b.dataset.prm,1);renderEditor();});
+  // sizes
+  $$('#eSizes .chip').forEach(c=>c.onclick=()=>{syncEditorFields();const s=+c.dataset.size;
+    const i=p.sizes.indexOf(s);if(i>-1){p.sizes.splice(i,1);p.outSizes=p.outSizes.filter(x=>x!==s);}else p.sizes.push(s);
+    p.sizes.sort((a,b)=>a-b);renderEditor();});
+  $$('#eOut .chip').forEach(c=>c.onclick=()=>{syncEditorFields();const s=+c.dataset.out;
+    const i=p.outSizes.indexOf(s);i>-1?p.outSizes.splice(i,1):p.outSizes.push(s);renderEditor();});
+  // save / delete
+  $('#eSave').onclick=()=>{
+    syncEditorFields();
+    if(!p.name||!p.brand||!p.sport){toast('Nom, marque et sport sont requis');return;}
+    if(p.photos.length) delete p.img;
+    const idx=P.findIndex(x=>x.id===p.id);
+    if(idx>-1)P[idx]=p;else P.unshift(p);
+    saveCatalog();rerenderAll();closeOverlay($('#adminModal'));toast('Enregistré ✓');
+  };
+  const del=$('#eDelete');
+  if(del)del.onclick=()=>{if(!confirm('Supprimer cette paire ?'))return;
+    const idx=P.findIndex(x=>x.id===p.id);if(idx>-1)P.splice(idx,1);
+    saveCatalog();rerenderAll();closeOverlay($('#adminModal'));toast('Supprimé');};
+}
+
+const EXPORT_HEADER=`/* VÉLOCE — catalogue exporté depuis le mode admin.
+   Pour publier : remplacez le contenu de sneakers/products.js par ce fichier
+   (ou envoyez-le pour mise en ligne). */
+`;
+function exportCatalog(){
+  syncEditorFields();
+  const txt=EXPORT_HEADER+'const P = '+JSON.stringify(P,null,2)+';\n';
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/javascript'}));
+  a.download='products.js';document.body.appendChild(a);a.click();a.remove();
+  toast('products.js exporté ⬇️');
+}
+
+$('#adminLogin').addEventListener('click',enterAdmin);
+$('#adminExit').addEventListener('click',exitAdmin);
+$('#adminAdd').addEventListener('click',()=>openEditor(null));
+$('#adminExport').addEventListener('click',exportCatalog);
+$('#adminReset').addEventListener('click',()=>{if(confirm('Annuler toutes vos modifications et revenir au catalogue publié ?')){localStorage.removeItem(STORE_KEY);location.reload();}});
+
+/* ===================================================================
    Init
    =================================================================== */
+if(localStorage.getItem('veloce_admin')==='1'){ADMIN.on=true;$('#adminBar').classList.add('show');document.body.classList.add('admin-on');}
 renderStatic();
 buildFilterChips();
 applyFilters();
