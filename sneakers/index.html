@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VÉLOCE — Chaussures de sport premium · Running, Fitness, Football, Basket, Tennis</title>
+<meta name="description" content="VÉLOCE, la plateforme premium de chaussures de sport. Découvrez une sélection de modèles pour la course, le fitness, le football, le basketball et le tennis. Performance, confort et innovation.">
+<meta name="theme-color" content="#06080d">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>👟</text></svg>">
+<style>
+/* ===================================================================
+   VÉLOCE — Design system
+   =================================================================== */
+:root{
+  --bg:#06080d;
+  --bg-2:#0b0f17;
+  --surface:#11161f;
+  --surface-2:#161c27;
+  --line:rgba(255,255,255,.08);
+  --line-strong:rgba(255,255,255,.16);
+  --txt:#f4f6fb;
+  --txt-dim:#a7b0c0;
+  --txt-mute:#6c7689;
+  --volt:#c6ff00;          /* signature electric lime */
+  --volt-deep:#9fd400;
+  --flame:#ff5a1f;         /* energy orange */
+  --azure:#2e7bff;
+  --magenta:#ff2e93;
+  --radius:18px;
+  --radius-sm:12px;
+  --shadow:0 24px 60px -20px rgba(0,0,0,.7);
+  --max:1240px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:var(--font);background:var(--bg);color:var(--txt);
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.no-scroll{overflow:hidden}
+h1,h2,h3,h4{line-height:1.05;margin:0;font-weight:800;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.74rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--volt)}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--volt);border-radius:2px}
+section{position:relative}
+.section-pad{padding:clamp(64px,9vw,128px) 0}
+.muted{color:var(--txt-dim)}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-weight:700;font-size:.95rem;padding:15px 28px;border-radius:100px;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s,color .25s;
+  white-space:nowrap;letter-spacing:.01em}
+.btn-primary{background:var(--volt);color:#0a0d05;box-shadow:0 12px 30px -10px rgba(198,255,0,.6)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 40px -10px rgba(198,255,0,.8)}
+.btn-ghost{border:1.5px solid var(--line-strong);color:var(--txt)}
+.btn-ghost:hover{border-color:var(--volt);color:var(--volt);transform:translateY(-3px)}
+.btn-block{width:100%}
+.btn svg{width:18px;height:18px}
+
+/* ---------- Header ---------- */
+header{position:fixed;inset:0 0 auto 0;z-index:80;transition:background .35s,border-color .35s,backdrop-filter .35s;
+  border-bottom:1px solid transparent}
+header.scrolled{background:rgba(6,8,13,.82);backdrop-filter:blur(18px) saturate(150%);
+  border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:1.35rem;letter-spacing:.04em}
+.brand .mark{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+  background:linear-gradient(135deg,var(--volt),var(--volt-deep));color:#0a0d05;font-size:1.1rem;
+  box-shadow:0 8px 20px -8px rgba(198,255,0,.7)}
+.brand b{background:linear-gradient(90deg,#fff,#cfd6e4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a{padding:10px 16px;font-size:.92rem;font-weight:600;color:var(--txt-dim);border-radius:100px;
+  transition:color .2s,background .2s}
+.nav-links a:hover{color:var(--txt);background:rgba(255,255,255,.05)}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.icon-btn{position:relative;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--line);color:var(--txt-dim);transition:.2s}
+.icon-btn:hover{color:var(--volt);border-color:var(--volt)}
+.icon-btn svg{width:20px;height:20px}
+.compare-count{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;
+  background:var(--flame);color:#fff;font-size:.7rem;font-weight:800;display:grid;place-items:center;
+  transform:scale(0);transition:transform .25s var(--ease)}
+.compare-count.show{transform:scale(1)}
+.burger{display:none;flex-direction:column;gap:5px;width:42px;height:42px;border-radius:10px;border:1px solid var(--line);
+  align-items:center;justify-content:center}
+.burger span{width:20px;height:2px;background:var(--txt);border-radius:2px;transition:.3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ---------- Hero ---------- */
+.hero{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;
+  padding-top:90px}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg::before{content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(60% 80% at 78% 30%,rgba(198,255,0,.16),transparent 60%),
+    radial-gradient(50% 60% at 15% 80%,rgba(46,123,255,.18),transparent 60%),
+    radial-gradient(40% 50% at 60% 90%,rgba(255,90,31,.12),transparent 60%);}
+.hero-bg .grid-lines{position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:60px 60px;mask-image:radial-gradient(circle at 50% 40%,#000,transparent 78%)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:float 14s ease-in-out infinite}
+.blob.b1{width:420px;height:420px;background:rgba(198,255,0,.35);top:-80px;right:6%}
+.blob.b2{width:360px;height:360px;background:rgba(46,123,255,.3);bottom:-60px;left:-40px;animation-delay:-5s}
+@keyframes float{50%{transform:translateY(-34px) translateX(18px)}}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%}
+.hero-copy{max-width:600px}
+.hero h1{font-size:clamp(2.7rem,6.6vw,5.2rem);font-weight:900;letter-spacing:-.03em;margin:22px 0 0}
+.hero h1 .grad{background:linear-gradient(100deg,var(--volt),#eaff8a 40%,var(--flame));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:1.15rem;color:var(--txt-dim);margin:24px 0 34px;max-width:520px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:34px;margin-top:48px;flex-wrap:wrap}
+.hero-stats .s b{display:block;font-size:2rem;font-weight:900;letter-spacing:-.02em}
+.hero-stats .s span{font-size:.82rem;color:var(--txt-mute);text-transform:uppercase;letter-spacing:.1em}
+/* hero visual */
+.hero-visual{position:relative;height:520px}
+.hero-card{position:absolute;inset:0;border-radius:30px;overflow:hidden;
+  background:radial-gradient(120% 90% at 70% 10%,#1a2230,#0a0e16);
+  border:1px solid var(--line-strong);box-shadow:var(--shadow)}
+.hero-card .ring{position:absolute;width:120%;aspect-ratio:1;border-radius:50%;
+  border:1px dashed rgba(198,255,0,.25);top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:spin 30s linear infinite}
+.hero-card .ring.r2{width:78%;border-color:rgba(46,123,255,.25);animation-duration:20s;animation-direction:reverse}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.hero-shoe{position:absolute;inset:0;display:grid;place-items:center;padding:34px;
+  animation:hover 5s ease-in-out infinite}
+.hero-shoe svg{filter:drop-shadow(0 40px 40px rgba(0,0,0,.6))}
+@keyframes hover{50%{transform:translateY(-16px) rotate(-1deg)}}
+.hero-tag{position:absolute;z-index:3;background:rgba(11,15,23,.86);backdrop-filter:blur(8px);
+  border:1px solid var(--line-strong);border-radius:14px;padding:11px 15px;display:flex;gap:11px;align-items:center;
+  box-shadow:var(--shadow)}
+.hero-tag .dot{width:10px;height:10px;border-radius:50%;background:var(--volt);box-shadow:0 0 12px var(--volt)}
+.hero-tag small{display:block;color:var(--txt-mute);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}
+.hero-tag b{font-size:.95rem}
+.hero-tag.t1{top:34px;left:-14px}
+.hero-tag.t2{bottom:54px;right:-10px}
+.marquee{position:relative;z-index:2;margin-top:30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;padding:16px 0;background:rgba(255,255,255,.015)}
+.marquee-track{display:flex;gap:48px;white-space:nowrap;animation:scrollx 26s linear infinite;width:max-content}
+.marquee span{font-weight:800;font-size:1.05rem;color:var(--txt-mute);letter-spacing:.04em;display:flex;align-items:center;gap:48px}
+.marquee span::after{content:"●";color:var(--volt);font-size:.6rem}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ---------- Section headers ---------- */
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:46px;flex-wrap:wrap}
+.head h2{font-size:clamp(1.9rem,3.8vw,3rem)}
+.head p{color:var(--txt-dim);margin:14px 0 0;max-width:480px}
+
+/* ---------- Categories ---------- */
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.cat{position:relative;border-radius:var(--radius);overflow:hidden;min-height:230px;padding:22px;
+  display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--line);
+  background:var(--surface);cursor:pointer;transition:transform .4s var(--ease),border-color .4s}
+.cat::before{content:"";position:absolute;inset:0;opacity:.85;transition:opacity .4s,transform .6s var(--ease);z-index:0}
+.cat:hover{transform:translateY(-8px);border-color:var(--line-strong)}
+.cat:hover::before{transform:scale(1.08)}
+.cat .ico{position:relative;z-index:1;font-size:2rem;margin-bottom:auto;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+.cat h3{position:relative;z-index:1;font-size:1.1rem}
+.cat span{position:relative;z-index:1;font-size:.8rem;color:rgba(255,255,255,.7);margin-top:3px}
+.cat.c-run::before{background:linear-gradient(160deg,rgba(198,255,0,.22),rgba(6,8,13,.2) 70%),radial-gradient(circle at 70% 20%,rgba(198,255,0,.4),transparent 60%)}
+.cat.c-fit::before{background:linear-gradient(160deg,rgba(255,46,147,.22),rgba(6,8,13,.2) 70%),radial-gradient(circle at 70% 20%,rgba(255,46,147,.4),transparent 60%)}
+.cat.c-foot::before{background:linear-gradient(160deg,rgba(46,123,255,.24),rgba(6,8,13,.2) 70%),radial-gradient(circle at 70% 20%,rgba(46,123,255,.45),transparent 60%)}
+.cat.c-bask::before{background:linear-gradient(160deg,rgba(255,90,31,.24),rgba(6,8,13,.2) 70%),radial-gradient(circle at 70% 20%,rgba(255,90,31,.45),transparent 60%)}
+.cat.c-tennis::before{background:linear-gradient(160deg,rgba(0,210,180,.22),rgba(6,8,13,.2) 70%),radial-gradient(circle at 70% 20%,rgba(0,210,180,.42),transparent 60%)}
+.cat.c-life::before{background:linear-gradient(160deg,rgba(160,120,255,.22),rgba(6,8,13,.2) 70%),radial-gradient(circle at 70% 20%,rgba(160,120,255,.42),transparent 60%)}
+
+/* ---------- Product cards ---------- */
+.grid-products{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .35s var(--ease),border-color .35s,box-shadow .35s;position:relative}
+.card:hover{transform:translateY(-8px);border-color:var(--line-strong);box-shadow:var(--shadow)}
+.card-media{position:relative;aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden;
+  background:radial-gradient(120% 100% at 50% 0%,#1b2333,#0a0e16)}
+.card-media svg{width:88%;transition:transform .5s var(--ease)}
+.card:hover .card-media svg{transform:scale(1.08) rotate(-3deg)}
+.badge{position:absolute;top:12px;left:12px;z-index:2;font-size:.66rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.08em;padding:5px 10px;border-radius:100px;background:var(--volt);color:#0a0d05}
+.badge.promo{background:var(--flame);color:#fff;left:auto;right:12px}
+.fav{position:absolute;bottom:12px;right:12px;z-index:2;width:38px;height:38px;border-radius:50%;
+  background:rgba(6,8,13,.6);backdrop-filter:blur(6px);border:1px solid var(--line);display:grid;place-items:center;
+  color:var(--txt-dim);transition:.2s}
+.fav:hover,.fav.on{color:var(--magenta);border-color:var(--magenta)}
+.fav svg{width:18px;height:18px}
+.card-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card-body .sport{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--volt)}
+.card-body h3{font-size:1.12rem}
+.card-body .brand-name{font-size:.84rem;color:var(--txt-mute)}
+.rating{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--txt-dim);margin-top:2px}
+.stars{color:#ffc83d;letter-spacing:1px}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px}
+.price{font-size:1.3rem;font-weight:900}
+.price s{font-size:.85rem;color:var(--txt-mute);font-weight:500;margin-right:7px}
+.card-actions{display:flex;gap:8px}
+.mini-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);display:grid;place-items:center;
+  color:var(--txt-dim);transition:.2s}
+.mini-btn:hover{color:var(--volt);border-color:var(--volt);background:rgba(198,255,0,.07)}
+.mini-btn.added{color:var(--volt);border-color:var(--volt)}
+.mini-btn svg{width:18px;height:18px}
+.swatches{display:flex;gap:6px;margin-top:4px}
+.swatch{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--line-strong)}
+
+/* ---------- Catalogue / Filters ---------- */
+.catalogue-layout{display:grid;grid-template-columns:268px 1fr;gap:30px;align-items:start}
+.filters{position:sticky;top:96px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px}
+.filters h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--txt-mute);margin:22px 0 12px}
+.filters h4:first-child{margin-top:0}
+.filter-search{display:flex;align-items:center;gap:9px;background:var(--bg-2);border:1px solid var(--line);
+  border-radius:11px;padding:10px 13px;margin-bottom:6px}
+.filter-search input{background:none;border:0;color:var(--txt);width:100%;outline:none;font-size:.9rem}
+.filter-search svg{width:17px;height:17px;color:var(--txt-mute);flex-shrink:0}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-size:.82rem;font-weight:600;padding:7px 13px;border-radius:100px;border:1px solid var(--line);
+  color:var(--txt-dim);transition:.2s;cursor:pointer;user-select:none}
+.chip:hover{border-color:var(--line-strong);color:var(--txt)}
+.chip.active{background:var(--volt);color:#0a0d05;border-color:var(--volt)}
+.chip.color-chip{display:flex;align-items:center;gap:7px}
+.chip.color-chip .dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
+.range-row{display:flex;align-items:center;gap:10px;color:var(--txt-dim);font-size:.85rem}
+input[type=range]{width:100%;accent-color:var(--volt)}
+.price-out{font-weight:700;color:var(--txt)}
+.filters .reset{margin-top:22px;width:100%;font-size:.85rem;color:var(--txt-mute);padding:10px;border:1px dashed var(--line);
+  border-radius:11px;transition:.2s}
+.filters .reset:hover{color:var(--flame);border-color:var(--flame)}
+.catalogue-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:14px;flex-wrap:wrap}
+.result-count{color:var(--txt-dim);font-size:.92rem}
+.result-count b{color:var(--txt)}
+.sort{display:flex;align-items:center;gap:10px}
+.sort select{background:var(--surface);border:1px solid var(--line);color:var(--txt);padding:10px 14px;border-radius:11px;
+  font-family:inherit;font-size:.88rem;outline:none}
+.filter-toggle{display:none}
+.empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--txt-mute)}
+.empty span{font-size:2.4rem;display:block;margin-bottom:10px}
+
+/* ---------- Marquee/strip band ---------- */
+.band{background:linear-gradient(90deg,var(--volt),var(--volt-deep));color:#0a0d05;overflow:hidden;padding:14px 0}
+.band-track{display:flex;gap:40px;white-space:nowrap;animation:scrollx 22s linear infinite;width:max-content;font-weight:900;
+  letter-spacing:.02em}
+.band-track span{display:flex;align-items:center;gap:40px;text-transform:uppercase;font-size:.95rem}
+.band-track span::after{content:"⚡"}
+
+/* ---------- Feature / innovation ---------- */
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:.35s var(--ease)}
+.feat:hover{transform:translateY(-6px);border-color:var(--line-strong)}
+.feat .fico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px;
+  background:rgba(198,255,0,.1);border:1px solid rgba(198,255,0,.25)}
+.feat h3{font-size:1.15rem;margin-bottom:8px}
+.feat p{color:var(--txt-dim);font-size:.92rem;margin:0}
+
+/* ---------- Guides ---------- */
+.guides{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.guide{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);min-height:300px;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:26px;cursor:pointer;transition:.4s var(--ease)}
+.guide::before{content:"";position:absolute;inset:0;z-index:0;transition:transform .6s var(--ease)}
+.guide:hover{transform:translateY(-8px);border-color:var(--line-strong)}
+.guide:hover::before{transform:scale(1.07)}
+.guide>*{position:relative;z-index:1}
+.guide .gtag{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--volt);margin-bottom:10px}
+.guide h3{font-size:1.35rem;margin-bottom:8px}
+.guide p{color:var(--txt-dim);font-size:.9rem;margin:0 0 14px}
+.guide .read{font-weight:700;font-size:.88rem;color:var(--volt);display:inline-flex;gap:6px;align-items:center}
+.g1::before{background:linear-gradient(180deg,rgba(6,8,13,.2),rgba(6,8,13,.92)),radial-gradient(circle at 30% 20%,rgba(198,255,0,.45),transparent 60%),#0d1119}
+.g2::before{background:linear-gradient(180deg,rgba(6,8,13,.2),rgba(6,8,13,.92)),radial-gradient(circle at 30% 20%,rgba(46,123,255,.5),transparent 60%),#0d1119}
+.g3::before{background:linear-gradient(180deg,rgba(6,8,13,.2),rgba(6,8,13,.92)),radial-gradient(circle at 30% 20%,rgba(255,90,31,.5),transparent 60%),#0d1119}
+
+/* ---------- Newsletter ---------- */
+.news{position:relative;border-radius:28px;overflow:hidden;border:1px solid var(--line-strong);
+  background:radial-gradient(120% 140% at 80% 0%,rgba(198,255,0,.16),transparent 55%),
+    radial-gradient(100% 120% at 0% 100%,rgba(46,123,255,.16),transparent 55%),var(--surface);
+  padding:clamp(36px,6vw,72px);text-align:center}
+.news h2{font-size:clamp(1.9rem,4vw,2.9rem)}
+.news p{color:var(--txt-dim);max-width:520px;margin:16px auto 30px}
+.news-form{display:flex;gap:12px;max-width:480px;margin:0 auto;flex-wrap:wrap}
+.news-form input{flex:1;min-width:220px;background:var(--bg-2);border:1px solid var(--line-strong);border-radius:100px;
+  padding:16px 22px;color:var(--txt);font-size:.95rem;outline:none;transition:border-color .2s}
+.news-form input:focus{border-color:var(--volt)}
+.form-msg{font-size:.9rem;margin-top:14px;min-height:20px;font-weight:600}
+.form-msg.ok{color:var(--volt)}
+.form-msg.err{color:var(--flame)}
+.news small{display:block;margin-top:14px;color:var(--txt-mute);font-size:.8rem}
+
+/* ---------- Contact ---------- */
+.contact-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start}
+.contact-info h2{font-size:clamp(1.9rem,3.8vw,2.8rem);margin-bottom:18px}
+.contact-info p{color:var(--txt-dim);margin-bottom:30px}
+.contact-item{display:flex;gap:15px;align-items:flex-start;margin-bottom:22px}
+.contact-item .ci-ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;flex-shrink:0;
+  background:rgba(198,255,0,.1);border:1px solid rgba(198,255,0,.25);font-size:1.2rem}
+.contact-item b{display:block;font-size:.95rem}
+.contact-item span{color:var(--txt-dim);font-size:.9rem}
+.contact-form{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:.82rem;font-weight:600;color:var(--txt-dim);margin-bottom:8px}
+.field input,.field textarea,.field select{width:100%;background:var(--bg-2);border:1px solid var(--line-strong);
+  border-radius:11px;padding:13px 15px;color:var(--txt);font-family:inherit;font-size:.92rem;outline:none;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--volt)}
+.field textarea{resize:vertical;min-height:120px}
+.field.invalid input,.field.invalid textarea{border-color:var(--flame)}
+
+/* ---------- Social ---------- */
+.socials{display:flex;gap:12px;flex-wrap:wrap}
+.social{display:flex;align-items:center;gap:10px;padding:11px 18px;border-radius:100px;border:1px solid var(--line);
+  font-weight:600;font-size:.9rem;color:var(--txt-dim);transition:.25s}
+.social:hover{color:var(--txt);border-color:var(--line-strong);transform:translateY(-3px)}
+.social svg{width:18px;height:18px}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-2)}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px}
+.foot-brand p{color:var(--txt-dim);font-size:.92rem;max-width:300px;margin:18px 0}
+.foot-col h5{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--txt-mute);margin:0 0 16px}
+.foot-col a{display:block;color:var(--txt-dim);font-size:.92rem;padding:6px 0;transition:color .2s}
+.foot-col a:hover{color:var(--volt)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid var(--line);
+  color:var(--txt-mute);font-size:.85rem;gap:16px;flex-wrap:wrap}
+
+/* ---------- Modal (product detail) ---------- */
+.modal-overlay{position:fixed;inset:0;z-index:120;background:rgba(3,5,9,.78);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{background:var(--surface-2);border:1px solid var(--line-strong);border-radius:24px;max-width:1000px;width:100%;
+  max-height:90vh;overflow-y:auto;transform:translateY(24px) scale(.98);transition:transform .35s var(--ease);position:relative}
+.modal-overlay.open .modal{transform:none}
+.modal-close{position:absolute;top:16px;right:16px;z-index:5;width:42px;height:42px;border-radius:50%;
+  background:rgba(6,8,13,.7);border:1px solid var(--line);display:grid;place-items:center;color:var(--txt);transition:.2s}
+.modal-close:hover{color:var(--flame);border-color:var(--flame);transform:rotate(90deg)}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr}
+.modal-media{background:radial-gradient(120% 100% at 50% 0%,#1b2333,#0a0e16);display:grid;place-items:center;
+  padding:40px;position:relative;min-height:380px}
+.modal-media svg{width:92%;filter:drop-shadow(0 30px 30px rgba(0,0,0,.5))}
+.modal-body{padding:38px 36px}
+.modal-body .sport{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--volt)}
+.modal-body h2{font-size:1.9rem;margin:8px 0 4px}
+.modal-body .m-brand{color:var(--txt-mute);font-size:.95rem;margin-bottom:14px}
+.modal-body .m-price{font-size:1.9rem;font-weight:900;margin:16px 0}
+.modal-body .m-price s{font-size:1rem;color:var(--txt-mute);font-weight:500;margin-right:10px}
+.modal-body p.desc{color:var(--txt-dim);font-size:.95rem;margin:8px 0 22px}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.spec{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.spec small{color:var(--txt-mute);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;display:block}
+.spec b{font-size:.95rem}
+.m-section-title{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--txt-mute);margin:22px 0 12px}
+.sizes{display:flex;flex-wrap:wrap;gap:8px}
+.size{min-width:46px;height:42px;padding:0 8px;border-radius:11px;border:1px solid var(--line-strong);display:grid;place-items:center;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:.18s;color:var(--txt-dim)}
+.size:hover{border-color:var(--volt);color:var(--volt)}
+.size.sel{background:var(--volt);color:#0a0d05;border-color:var(--volt)}
+.size.out{opacity:.3;text-decoration:line-through;cursor:not-allowed}
+.modal-actions{display:flex;gap:12px;margin-top:26px}
+.reviews{margin-top:8px}
+.review{border-top:1px solid var(--line);padding:16px 0;display:flex;gap:14px}
+.review .rv-av{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-weight:800;
+  background:linear-gradient(135deg,var(--azure),var(--magenta));color:#fff;font-size:.9rem}
+.review .rv-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.review .rv-head b{font-size:.92rem}
+.review .rv-head .stars{font-size:.8rem}
+.review p{color:var(--txt-dim);font-size:.9rem;margin:0}
+.review .rv-date{color:var(--txt-mute);font-size:.78rem;margin-left:auto}
+
+/* ---------- Comparator drawer ---------- */
+.compare-bar{position:fixed;left:0;right:0;bottom:0;z-index:90;background:rgba(11,15,23,.92);backdrop-filter:blur(16px);
+  border-top:1px solid var(--line-strong);transform:translateY(120%);transition:transform .4s var(--ease);box-shadow:0 -20px 50px -20px rgba(0,0,0,.7)}
+.compare-bar.show{transform:none}
+.compare-bar-inner{display:flex;align-items:center;gap:16px;padding:14px 0}
+.compare-slots{display:flex;gap:12px;flex:1;overflow-x:auto}
+.compare-slot{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:8px 10px;min-width:170px}
+.compare-slot svg{width:48px;flex-shrink:0}
+.compare-slot small{font-size:.78rem;font-weight:700;line-height:1.2}
+.compare-slot .rm{margin-left:auto;color:var(--txt-mute);font-size:1.1rem;width:22px;height:22px;display:grid;place-items:center;border-radius:50%}
+.compare-slot .rm:hover{color:var(--flame);background:rgba(255,90,31,.1)}
+.compare-empty-slot{min-width:170px;border:1px dashed var(--line);border-radius:12px;display:grid;place-items:center;
+  color:var(--txt-mute);font-size:.82rem;padding:14px}
+.compare-actions{display:flex;gap:10px;flex-shrink:0}
+
+/* comparator table modal */
+.cmp-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.cmp-table th,.cmp-table td{padding:14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+.cmp-table thead th{position:sticky;top:0;background:var(--surface-2)}
+.cmp-table .cmp-shoe{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.cmp-table .cmp-shoe svg{width:120px}
+.cmp-table .cmp-shoe b{font-size:1rem}
+.cmp-table .row-label{color:var(--txt-mute);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}
+.cmp-table .best{color:var(--volt);font-weight:800}
+
+/* ---------- Toast ---------- */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120%);z-index:200;
+  background:var(--surface-2);border:1px solid var(--volt);color:var(--txt);padding:13px 22px;border-radius:100px;
+  font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);transition:transform .4s var(--ease)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast .dot{width:9px;height:9px;border-radius:50%;background:var(--volt);box-shadow:0 0 10px var(--volt)}
+
+/* ---------- Reveal animation ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1080px){
+  .cats{grid-template-columns:repeat(3,1fr)}
+  .grid-products{grid-template-columns:repeat(3,1fr)}
+  .features{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .hero-visual{height:380px;order:-1;max-width:460px}
+  .nav-links{display:none}
+  .burger{display:flex}
+  .contact-layout{grid-template-columns:1fr;gap:32px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .modal-grid{grid-template-columns:1fr}
+  .modal-media{min-height:260px}
+  .catalogue-layout{grid-template-columns:1fr}
+  .filters{position:fixed;inset:0;z-index:110;border-radius:0;overflow-y:auto;transform:translateX(-100%);
+    transition:transform .35s var(--ease);top:0}
+  .filters.open{transform:none}
+  .filter-toggle{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border:1px solid var(--line-strong);
+    border-radius:100px;font-weight:700;font-size:.88rem}
+  .filters-close{display:flex !important}
+}
+@media(max-width:640px){
+  .cats{grid-template-columns:repeat(2,1fr)}
+  .grid-products{grid-template-columns:1fr 1fr;gap:14px}
+  .guides{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .hero-stats{gap:22px}
+  .card-body{padding:14px}
+  .price{font-size:1.1rem}
+  .wrap{padding:0 18px}
+}
+.filters-close{display:none;position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--line);align-items:center;justify-content:center;color:var(--txt)}
+
+/* Mobile nav overlay */
+.mobile-nav{position:fixed;inset:74px 0 0 0;z-index:79;background:rgba(6,8,13,.97);backdrop-filter:blur(12px);
+  transform:translateX(100%);transition:transform .35s var(--ease);padding:30px 24px;display:flex;flex-direction:column;gap:6px}
+.mobile-nav.open{transform:none}
+.mobile-nav a{padding:16px;font-size:1.2rem;font-weight:700;border-bottom:1px solid var(--line)}
+@media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+
+<!-- ============================= HEADER ============================= -->
+<header id="header">
+  <div class="wrap nav">
+    <a href="#top" class="brand"><span class="mark">⚡</span><b>VÉLOCE</b></a>
+    <nav class="nav-links">
+      <a href="#categories">Catégories</a>
+      <a href="#nouveautes">Nouveautés</a>
+      <a href="#catalogue">Catalogue</a>
+      <a href="#guides">Guides</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="icon-btn" id="compareToggle" aria-label="Comparateur" title="Comparateur">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="7" cy="6" r="0"/></svg>
+        <span class="compare-count" id="compareCount">0</span>
+      </button>
+      <a href="#catalogue" class="btn btn-primary" style="padding:11px 22px">Explorer</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#categories">Catégories</a>
+  <a href="#nouveautes">Nouveautés</a>
+  <a href="#catalogue">Catalogue</a>
+  <a href="#guides">Guides</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<span id="top"></span>
+
+<!-- ============================= HERO ============================= -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="grid-lines"></div>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+  </div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">Performance · Innovation · Dépassement</span>
+      <h1>Repoussez chaque<br><span class="grad">limite</span> à chaque foulée.</h1>
+      <p class="lead">VÉLOCE rassemble les chaussures de sport les plus performantes pour la course, le fitness, le football, le basketball et le tennis. Conçues pour la vitesse, le confort et l'énergie pure.</p>
+      <div class="hero-actions">
+        <a href="#catalogue" class="btn btn-primary">Découvrir le catalogue
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#nouveautes" class="btn btn-ghost">Voir les nouveautés</a>
+      </div>
+      <div class="hero-stats">
+        <div class="s"><b id="stat1">0</b><span>Modèles premium</span></div>
+        <div class="s"><b id="stat2">0</b><span>Sports couverts</span></div>
+        <div class="s"><b id="stat3">0</b><span>Clients satisfaits</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="ring"></div>
+        <div class="ring r2"></div>
+        <div class="hero-shoe" id="heroShoe"></div>
+      </div>
+      <div class="hero-tag t1"><span class="dot"></span><div><small>Technologie</small><b>Amorti AirFlux™</b></div></div>
+      <div class="hero-tag t2"><span class="dot" style="background:var(--flame);box-shadow:0 0 12px var(--flame)"></span><div><small>Légèreté</small><b>198 g seulement</b></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= MARQUEE ============================= -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>RUNNING&nbsp;&nbsp;FITNESS&nbsp;&nbsp;FOOTBALL&nbsp;&nbsp;BASKETBALL&nbsp;&nbsp;TENNIS&nbsp;&nbsp;LIFESTYLE</span>
+    <span>RUNNING&nbsp;&nbsp;FITNESS&nbsp;&nbsp;FOOTBALL&nbsp;&nbsp;BASKETBALL&nbsp;&nbsp;TENNIS&nbsp;&nbsp;LIFESTYLE</span>
+  </div>
+</div>
+
+<!-- ============================= CATEGORIES ============================= -->
+<section class="section-pad" id="categories">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">Trouvez votre terrain</span>
+        <h2>Une discipline,<br>une chaussure d'exception.</h2>
+      </div>
+      <p>Chaque sport a ses exigences. Explorez nos univers et laissez-vous guider vers le modèle taillé pour vos performances.</p>
+    </div>
+    <div class="cats reveal" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- ============================= NOUVEAUTÉS ============================= -->
+<section class="section-pad" id="nouveautes" style="padding-top:0">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">Just dropped</span>
+        <h2>Les nouveautés à ne pas manquer</h2>
+      </div>
+      <p>Les dernières innovations sélectionnées par nos experts. Édition limitée, technologies de pointe.</p>
+    </div>
+    <div class="grid-products reveal" id="newGrid"></div>
+  </div>
+</section>
+
+<!-- ============================= BAND ============================= -->
+<div class="band">
+  <div class="band-track">
+    <span>LIVRAISON 48H&nbsp;&nbsp;RETOURS GRATUITS 30 JOURS&nbsp;&nbsp;PAIEMENT SÉCURISÉ&nbsp;&nbsp;GARANTIE PERFORMANCE&nbsp;&nbsp;CONSEILS D'EXPERTS</span>
+    <span>LIVRAISON 48H&nbsp;&nbsp;RETOURS GRATUITS 30 JOURS&nbsp;&nbsp;PAIEMENT SÉCURISÉ&nbsp;&nbsp;GARANTIE PERFORMANCE&nbsp;&nbsp;CONSEILS D'EXPERTS</span>
+  </div>
+</div>
+
+<!-- ============================= POPULAIRES ============================= -->
+<section class="section-pad" id="populaires">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">Best-sellers</span>
+        <h2>Les modèles les plus populaires</h2>
+      </div>
+      <p>Plébiscités par notre communauté d'athlètes. Les valeurs sûres qui ne déçoivent jamais.</p>
+    </div>
+    <div class="grid-products reveal" id="popGrid"></div>
+  </div>
+</section>
+
+<!-- ============================= CATALOGUE ============================= -->
+<section class="section-pad" id="catalogue" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">Le catalogue complet</span>
+        <h2>Filtrez. Comparez. Trouvez.</h2>
+      </div>
+      <p>Affinez votre recherche par sport, marque, taille, couleur, prix et technologie pour dénicher la paire parfaite.</p>
+    </div>
+
+    <div class="catalogue-layout">
+      <!-- FILTERS -->
+      <aside class="filters" id="filters">
+        <button class="filters-close" id="filtersClose" aria-label="Fermer">✕</button>
+        <h4>Recherche</h4>
+        <div class="filter-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="searchInput" placeholder="Modèle, marque…">
+        </div>
+        <h4>Sport</h4>
+        <div class="chips" id="filterSport"></div>
+        <h4>Marque</h4>
+        <div class="chips" id="filterBrand"></div>
+        <h4>Technologie</h4>
+        <div class="chips" id="filterTech"></div>
+        <h4>Couleur</h4>
+        <div class="chips" id="filterColor"></div>
+        <h4>Taille (EU)</h4>
+        <div class="chips" id="filterSize"></div>
+        <h4>Prix maximum : <span class="price-out" id="priceOut">250 €</span></h4>
+        <div class="range-row">
+          <span>40 €</span>
+          <input type="range" id="priceRange" min="40" max="250" value="250" step="5">
+        </div>
+        <button class="reset" id="resetFilters">↺ Réinitialiser les filtres</button>
+      </aside>
+
+      <!-- RESULTS -->
+      <div>
+        <div class="catalogue-top">
+          <button class="filter-toggle" id="filterToggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+            Filtres
+          </button>
+          <div class="result-count"><b id="resultNum">0</b> modèles trouvés</div>
+          <div class="sort">
+            <select id="sortSelect" aria-label="Trier">
+              <option value="pop">Tri : Popularité</option>
+              <option value="new">Nouveautés</option>
+              <option value="price-asc">Prix croissant</option>
+              <option value="price-desc">Prix décroissant</option>
+              <option value="rating">Mieux notés</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-products" id="catalogueGrid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= INNOVATION / FEATURES ============================= -->
+<section class="section-pad" id="innovation">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">Pourquoi VÉLOCE</span>
+        <h2>La technologie au service<br>de votre performance</h2>
+      </div>
+      <p>Chaque paire est sélectionnée pour son confort, sa durabilité et son innovation. La qualité des plus grandes enseignes, au meilleur prix.</p>
+    </div>
+    <div class="features reveal">
+      <div class="feat"><div class="fico">🌬️</div><h3>Amorti réactif</h3><p>Des mousses nouvelle génération qui restituent l'énergie à chaque appui pour des foulées explosives.</p></div>
+      <div class="feat"><div class="fico">🪶</div><h3>Légèreté extrême</h3><p>Des tiges en mesh respirant et des semelles allégées pour ne jamais sentir le poids de l'effort.</p></div>
+      <div class="feat"><div class="fico">🛡️</div><h3>Stabilité & maintien</h3><p>Un châssis pensé pour les changements d'appui, le pivot et la course longue distance.</p></div>
+      <div class="feat"><div class="fico">♻️</div><h3>Matériaux durables</h3><p>Des modèles éco-conçus, recyclés et conçus pour durer, sans compromis sur la performance.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= GUIDES ============================= -->
+<section class="section-pad" id="guides" style="padding-top:0">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">Conseils & guides d'achat</span>
+        <h2>Choisissez en connaissance de cause</h2>
+      </div>
+      <p>Nos experts vous accompagnent pour faire le bon choix selon votre pratique, votre morphologie et vos objectifs.</p>
+    </div>
+    <div class="guides reveal">
+      <article class="guide g1" data-guide="running">
+        <span class="gtag">Running · 6 min</span>
+        <h3>Bien choisir sa chaussure de running</h3>
+        <p>Drop, amorti, pronation, type de foulée… Le guide complet pour trouver la chaussure adaptée à votre course.</p>
+        <span class="read">Lire le guide →</span>
+      </article>
+      <article class="guide g2" data-guide="pointure">
+        <span class="gtag">Guide tailles · 4 min</span>
+        <h3>Trouver sa pointure idéale</h3>
+        <p>Comment mesurer son pied, comprendre les correspondances EU/UK/US et éviter les erreurs de taille.</p>
+        <span class="read">Lire le guide →</span>
+      </article>
+      <article class="guide g3" data-guide="entretien">
+        <span class="gtag">Entretien · 5 min</span>
+        <h3>Faire durer vos chaussures de sport</h3>
+        <p>Nettoyage, séchage, rotation des paires : nos astuces pour préserver l'amorti et prolonger leur vie.</p>
+        <span class="read">Lire le guide →</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= NEWSLETTER ============================= -->
+<section class="section-pad" id="newsletter" style="padding-top:0">
+  <div class="wrap">
+    <div class="news reveal">
+      <span class="eyebrow" style="justify-content:center">Rejoignez le mouvement</span>
+      <h2>-10% sur votre première commande</h2>
+      <p>Inscrivez-vous à la newsletter VÉLOCE et recevez en avant-première les nouveautés, les éditions limitées et les conseils de nos coachs.</p>
+      <form class="news-form" id="newsForm" novalidate>
+        <input type="email" id="newsEmail" placeholder="votre@email.com" aria-label="Email">
+        <button type="submit" class="btn btn-primary">Je m'inscris</button>
+      </form>
+      <div class="form-msg" id="newsMsg"></div>
+      <small>Pas de spam. Désinscription en un clic.</small>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= CONTACT ============================= -->
+<section class="section-pad" id="contact" style="background:var(--bg-2);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="contact-layout">
+      <div class="contact-info reveal">
+        <span class="eyebrow">Une question ?</span>
+        <h2>Parlons de votre prochaine paire</h2>
+        <p>Notre équipe d'experts passionnés vous répond sous 24h. Conseil produit, suivi de commande, partenariat : nous sommes là.</p>
+        <div class="contact-item"><div class="ci-ico">📍</div><div><b>Showroom</b><span>42 avenue du Stade, 75000 Paris</span></div></div>
+        <div class="contact-item"><div class="ci-ico">✉️</div><div><b>Email</b><span>contact@veloce-sport.fr</span></div></div>
+        <div class="contact-item"><div class="ci-ico">📞</div><div><b>Téléphone</b><span>+33 1 23 45 67 89 — Lun-Sam 9h-19h</span></div></div>
+        <h4 style="font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--txt-mute);margin:30px 0 14px">Suivez-nous</h4>
+        <div class="socials">
+          <a href="#" class="social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a>
+          <a href="#" class="social" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3v3.5a5.5 5.5 0 0 0 4 1.9V12a8.6 8.6 0 0 1-4-1v5.5A5.5 5.5 0 1 1 10.5 11v3.2A2.3 2.3 0 1 0 13 16.5V3z"/></svg>TikTok</a>
+          <a href="#" class="social" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>YouTube</a>
+          <a href="#" class="social" aria-label="Strava"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 3l5 10h-3l-2-4-2 4H4zm6 11h3l-2.5 5L13 14z"/></svg>Strava</a>
+        </div>
+      </div>
+      <form class="contact-form reveal" id="contactForm" novalidate>
+        <div class="field"><label for="cName">Nom complet</label><input type="text" id="cName" placeholder="Votre nom"></div>
+        <div class="field"><label for="cEmail">Email</label><input type="email" id="cEmail" placeholder="votre@email.com"></div>
+        <div class="field"><label for="cSubject">Sujet</label>
+          <select id="cSubject">
+            <option>Conseil produit</option>
+            <option>Suivi de commande</option>
+            <option>Retour / SAV</option>
+            <option>Partenariat</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" placeholder="Comment pouvons-nous vous aider ?"></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block">Envoyer le message</button>
+        <div class="form-msg" id="contactMsg" style="text-align:center"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= FOOTER ============================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><span class="mark">⚡</span><b>VÉLOCE</b></a>
+        <p>La plateforme premium des chaussures de sport. Performance, confort et innovation pour tous les athlètes.</p>
+        <div class="socials">
+          <a href="#" class="social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" class="social" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3v3.5a5.5 5.5 0 0 0 4 1.9V12a8.6 8.6 0 0 1-4-1v5.5A5.5 5.5 0 1 1 10.5 11v3.2A2.3 2.3 0 1 0 13 16.5V3z"/></svg></a>
+          <a href="#" class="social" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col"><h5>Sports</h5><a href="#catalogue">Running</a><a href="#catalogue">Fitness</a><a href="#catalogue">Football</a><a href="#catalogue">Basketball</a><a href="#catalogue">Tennis</a></div>
+      <div class="foot-col"><h5>Aide</h5><a href="#guides">Guides d'achat</a><a href="#guides">Guide des tailles</a><a href="#contact">Livraison & retours</a><a href="#contact">Nous contacter</a></div>
+      <div class="foot-col"><h5>VÉLOCE</h5><a href="#innovation">Notre technologie</a><a href="#newsletter">Newsletter</a><a href="#">Boutique e-commerce</a><a href="#">Carrières</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 VÉLOCE — Plateforme vitrine. Bientôt en boutique e-commerce complète.</span>
+      <span>Mentions légales · Confidentialité · CGV</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================= COMPARE BAR ============================= -->
+<div class="compare-bar" id="compareBar">
+  <div class="wrap compare-bar-inner">
+    <div class="compare-slots" id="compareSlots"></div>
+    <div class="compare-actions">
+      <button class="btn btn-ghost" id="clearCompare" style="padding:12px 18px">Vider</button>
+      <button class="btn btn-primary" id="openCompare" style="padding:12px 22px">Comparer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= MODALS ============================= -->
+<div class="modal-overlay" id="productModal"><div class="modal" id="productModalContent"></div></div>
+<div class="modal-overlay" id="compareModal"><div class="modal" id="compareModalContent" style="max-width:1100px"></div></div>
+<div class="modal-overlay" id="guideModal"><div class="modal" id="guideModalContent" style="max-width:720px"></div></div>
+
+<!-- ============================= TOAST ============================= -->
+<div class="toast" id="toast"><span class="dot"></span><span id="toastText">Ajouté</span></div>
+
+<script>
+/* ===================================================================
+   VÉLOCE — Data & logic
+   =================================================================== */
+
+/* ---- SVG sneaker generator (parametric colours) ---- */
+function shoe(c1,c2,c3,lace){
+  lace = lace || '#0a0d05';
+  return `<svg viewBox="0 0 420 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chaussure de sport">
+    <defs>
+      <linearGradient id="g${c1.replace('#','')}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${shade(c1,-22)}"/>
+      </linearGradient>
+    </defs>
+    <ellipse cx="210" cy="228" rx="180" ry="13" fill="rgba(0,0,0,.4)"/>
+    <!-- outsole -->
+    <path d="M34 200 q-10 16 12 18 l318 0 q24 -2 22 -20 l-2 -10 q-14 8 -44 7 l-262 0 q-30 1 -44 -7 z" fill="${shade(c3,-30)}"/>
+    <!-- midsole -->
+    <path d="M30 192 q8 -26 60 -28 l210 0 q60 0 92 28 q-16 10 -50 9 l-262 0 q-34 1 -50 -9 z" fill="${c3}"/>
+    <path d="M30 192 q8 -26 60 -28 l210 0 q60 0 92 28" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+    <!-- upper -->
+    <path d="M74 168 q-16 -58 52 -82 q70 -24 150 -10 q66 12 96 58 q10 18 6 34 z" fill="url(#g${c1.replace('#','')})"/>
+    <!-- toe cap -->
+    <path d="M300 168 q58 -6 74 -32 q14 22 4 32 z" fill="${shade(c1,-18)}"/>
+    <!-- heel counter -->
+    <path d="M74 168 q-16 -50 46 -76 q-26 28 -14 76 z" fill="${c2}"/>
+    <!-- swoosh accent -->
+    <path d="M120 150 q90 -44 230 -14 q-30 -2 -60 8 q-90 6 -170 14 z" fill="${c2}"/>
+    <!-- collar -->
+    <path d="M110 96 q22 -10 40 -4 l8 30 q-22 -8 -42 2 z" fill="${shade(c2,-12)}"/>
+    <!-- laces -->
+    <g stroke="${lace}" stroke-width="6" stroke-linecap="round" opacity=".9">
+      <line x1="160" y1="104" x2="196" y2="120"/>
+      <line x1="172" y1="98" x2="210" y2="116"/>
+      <line x1="186" y1="94" x2="224" y2="114"/>
+      <line x1="200" y1="92" x2="238" y2="113"/>
+    </g>
+    <!-- eyelets row -->
+    <path d="M158 110 l92 6" stroke="${shade(c1,-25)}" stroke-width="3" fill="none"/>
+    <!-- brand tick -->
+    <circle cx="120" cy="150" r="6" fill="${shade(c2,-20)}"/>
+  </svg>`;
+}
+function shade(hex,p){
+  let n=parseInt(hex.slice(1),16),r=(n>>16)+p,g=(n>>8&255)+p,b=(n&255)+p;
+  r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));
+  return '#'+(0x1000000+(r<<16)+(g<<8)+b).toString(16).slice(1);
+}
+
+/* ---- Colour palette ---- */
+const COLORS = {
+  Noir:'#1c1f26', Blanc:'#e9edf4', Volt:'#c6ff00', Bleu:'#2e7bff',
+  Rouge:'#ff3b3b', Orange:'#ff5a1f', Rose:'#ff2e93', Vert:'#19c37d', Gris:'#8a93a6'
+};
+
+/* ---- Product catalogue ---- */
+const P = [
+  {id:1,name:'AeroStride Pro',brand:'Velocity',sport:'Running',tech:'Amorti AirFlux',price:159,old:189,rating:4.8,reviews:312,weight:198,drop:8,colors:['Volt','Noir'],c:['#c6ff00','#1c1f26','#e9edf4'],new:true,pop:97,promo:true,desc:"Conçue pour la vitesse pure, l'AeroStride Pro combine une mousse AirFlux ultra-réactive et une tige en mesh respirant. Idéale pour le fractionné et la compétition sur route."},
+  {id:2,name:'CloudRunner 4',brand:'Apex',sport:'Running',tech:'Mousse Réactive',price:139,old:null,rating:4.7,reviews:240,weight:236,drop:10,colors:['Bleu','Blanc'],c:['#2e7bff','#1c1f26','#e9edf4'],new:true,pop:92,desc:"Le confort longue distance par excellence. Un amorti moelleux qui absorbe les chocs kilomètre après kilomètre, pour les sorties longues et la récupération."},
+  {id:3,name:'Tempo Elite Carbon',brand:'Velocity',sport:'Running',tech:'Plaque Carbone',price:229,old:null,rating:4.9,reviews:188,weight:205,drop:6,colors:['Orange','Noir'],c:['#ff5a1f','#1c1f26','#e9edf4'],new:true,pop:95,desc:"La plaque carbone propulse chaque foulée vers l'avant. Pensée pour les recordmen, elle transforme votre énergie en vitesse sur le marathon."},
+  {id:4,name:'Forge Trainer X',brand:'Titan',sport:'Fitness',tech:'Stabilité Max',price:119,old:139,rating:4.6,reviews:276,weight:280,drop:4,colors:['Noir','Volt'],c:['#1c1f26','#c6ff00','#8a93a6'],new:false,pop:90,promo:true,desc:"La base stable parfaite pour le cross-training, l'haltérophilie et le HIIT. Un maintien latéral renforcé pour les mouvements explosifs en salle."},
+  {id:5,name:'Pulse HIIT',brand:'Apex',sport:'Fitness',tech:'Grip Multi-surface',price:99,old:null,rating:4.5,reviews:198,weight:262,drop:6,colors:['Rose','Gris'],c:['#ff2e93','#1c1f26','#8a93a6'],new:false,pop:84,desc:"Légère et polyvalente, la Pulse HIIT vous suit du tapis au rack. Adhérence totale et flexibilité pour enchaîner les circuits sans temps mort."},
+  {id:6,name:'PhantomStrike FG',brand:'Striker',sport:'Football',tech:'Crampons FG',price:179,old:199,rating:4.7,reviews:154,weight:210,drop:0,colors:['Volt','Noir'],c:['#c6ff00','#1c1f26','#19c37d'],new:false,pop:88,promo:true,desc:"Pour les terrains secs, la PhantomStrike offre un toucher de balle précis et des crampons FG taillés pour les accélérations et les changements de direction."},
+  {id:7,name:'Velocità Mercurial',brand:'Striker',sport:'Football',tech:'Toucher de balle',price:209,old:null,rating:4.8,reviews:131,weight:196,drop:0,colors:['Rouge','Noir'],c:['#ff3b3b','#1c1f26','#e9edf4'],new:true,pop:91,desc:"La chaussure des ailiers rapides. Ultra-légère, seconde peau, elle libère votre explosivité sur les premiers mètres et dans les face-à-face."},
+  {id:8,name:'SkyDunk Hi',brand:'Titan',sport:'Basketball',tech:'Amorti Zoom',price:169,old:null,rating:4.7,reviews:203,weight:340,drop:10,colors:['Noir','Orange'],c:['#1c1f26','#ff5a1f','#e9edf4'],new:false,pop:89,desc:"Une tige montante pour un maintien maximal de la cheville et un amorti Zoom réactif sous l'avant-pied. Conçue pour exploser au rebond et au dunk."},
+  {id:9,name:'Crossover Elite',brand:'Apex',sport:'Basketball',tech:'Grip Pivot',price:149,old:179,rating:4.6,reviews:167,weight:325,drop:9,colors:['Bleu','Volt'],c:['#2e7bff','#c6ff00','#e9edf4'],new:false,pop:86,promo:true,desc:"Pensée pour les meneurs. Adhérence chirurgicale au pivot et stabilité dans les crossovers les plus serrés pour dribbler sans jamais glisser."},
+  {id:10,name:'Court Ace Pro',brand:'Velocity',sport:'Tennis',tech:'Semelle Durable',price:129,old:null,rating:4.6,reviews:142,weight:300,drop:8,colors:['Blanc','Vert'],c:['#e9edf4','#19c37d','#8a93a6'],new:false,pop:83,desc:"Construite pour la terre battue et le dur. Renforts latéraux pour les appuis agressifs et semelle ultra-durable qui résiste aux glissades."},
+  {id:11,name:'BaseLine Spin',brand:'Titan',sport:'Tennis',tech:'Stabilité Latérale',price:139,old:159,rating:4.5,reviews:118,weight:312,drop:8,colors:['Orange','Blanc'],c:['#ff5a1f','#e9edf4','#1c1f26'],new:true,pop:80,promo:true,desc:"Le compromis idéal entre confort et réactivité. Un maintien latéral rassurant pour défendre du fond de court et monter au filet en confiance."},
+  {id:12,name:'Metro Lifestyle',brand:'Apex',sport:'Lifestyle',tech:'Confort Urbain',price:109,old:null,rating:4.4,reviews:421,weight:290,drop:10,colors:['Blanc','Gris'],c:['#e9edf4','#8a93a6','#1c1f26'],new:false,pop:85,desc:"Le sport au quotidien. Un design épuré et un amorti moelleux pour porter la performance dans la rue, du matin au soir, sans compromis sur le style."},
+  {id:13,name:'Trail Blazer GTX',brand:'Velocity',sport:'Running',tech:'Grip Trail',price:169,old:189,rating:4.8,reviews:176,weight:295,drop:6,colors:['Vert','Noir'],c:['#19c37d','#1c1f26','#8a93a6'],new:true,pop:87,promo:true,desc:"Affrontez les sentiers les plus techniques. Une accroche redoutable et une protection imperméable pour la montagne et le trail par tous les temps."},
+  {id:14,name:'Recovery Glide',brand:'Apex',sport:'Lifestyle',tech:'Amorti Max',price:99,old:null,rating:4.5,reviews:264,weight:275,drop:11,colors:['Bleu','Blanc'],c:['#2e7bff','#e9edf4','#8a93a6'],new:false,pop:79,desc:"La chaussure de récupération ultime. Un amorti maximal pour soulager les jambes après l'effort et garder un confort nuage toute la journée."},
+  {id:15,name:'Sprint Spike 9',brand:'Striker',sport:'Running',tech:'Pointes Piste',price:149,old:null,rating:4.7,reviews:96,weight:165,drop:4,colors:['Rose','Noir'],c:['#ff2e93','#1c1f26','#c6ff00'],new:true,pop:82,desc:"La pointe de sprint pour la piste. Ultra-légère et agressive, elle est conçue pour les départs explosifs et les chronos sur 100 et 200 mètres."},
+  {id:16,name:'Guardian High',brand:'Titan',sport:'Basketball',tech:'Maintien Cheville',price:189,old:219,rating:4.8,reviews:148,weight:355,drop:9,colors:['Noir','Volt'],c:['#1c1f26','#c6ff00','#8a93a6'],new:false,pop:88,promo:true,desc:"Protection maximale pour les intérieurs. Un col haut renforcé et un amorti dense qui encaisse les contacts sous le panier match après match."}
+];
+
+const CATEGORIES = [
+  {key:'Running',ico:'🏃',cls:'c-run',sub:'Route, trail & piste'},
+  {key:'Fitness',ico:'🏋️',cls:'c-fit',sub:'Cross-training & HIIT'},
+  {key:'Football',ico:'⚽',cls:'c-foot',sub:'Crampons & terrains'},
+  {key:'Basketball',ico:'🏀',cls:'c-bask',sub:'Maintien & explosivité'},
+  {key:'Tennis',ico:'🎾',cls:'c-tennis',sub:'Terre battue & dur'},
+  {key:'Lifestyle',ico:'👟',cls:'c-life',sub:'Le sport au quotidien'}
+];
+
+const SPORTS = [...new Set(P.map(p=>p.sport))];
+const BRANDS = [...new Set(P.map(p=>p.brand))];
+const TECHS  = [...new Set(P.map(p=>p.tech))];
+const COLORSET = [...new Set(P.flatMap(p=>p.colors))];
+const SIZES = [38,39,40,41,42,43,44,45,46];
+
+/* ---- State ---- */
+let filters = {search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:250,sort:'pop'};
+let compareList = JSON.parse(localStorage.getItem('veloce_compare')||'[]');
+let favs = JSON.parse(localStorage.getItem('veloce_favs')||'[]');
+
+const $ = s=>document.querySelector(s);
+const $$ = s=>[...document.querySelectorAll(s)];
+const stars = r=>'★★★★★'.slice(0,Math.round(r))+'☆☆☆☆☆'.slice(0,5-Math.round(r));
+const fmt = n=>n+' €';
+
+/* ---- Card template ---- */
+function card(p){
+  const fav = favs.includes(p.id)?'on':'';
+  const inCmp = compareList.includes(p.id)?'added':'';
+  return `<article class="card" data-id="${p.id}">
+    <div class="card-media" data-open="${p.id}">
+      ${p.new?'<span class="badge">Nouveau</span>':''}
+      ${p.promo?`<span class="badge promo">-${Math.round((1-p.price/p.old)*100)}%</span>`:''}
+      ${shoe(p.c[0],p.c[1],p.c[2])}
+      <button class="fav ${fav}" data-fav="${p.id}" aria-label="Favori">
+        <svg viewBox="0 0 24 24" fill="${fav?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg>
+      </button>
+    </div>
+    <div class="card-body">
+      <span class="sport">${p.sport} · ${p.tech}</span>
+      <h3 data-open="${p.id}" style="cursor:pointer">${p.name}</h3>
+      <span class="brand-name">${p.brand}</span>
+      <div class="rating"><span class="stars">${stars(p.rating)}</span> ${p.rating} <span class="muted">(${p.reviews})</span></div>
+      <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="background:${COLORS[c]}" title="${c}"></span>`).join('')}</div>
+      <div class="card-foot">
+        <div class="price">${p.old?`<s>${fmt(p.old)}</s>`:''}${fmt(p.price)}</div>
+        <div class="card-actions">
+          <button class="mini-btn ${inCmp}" data-cmp="${p.id}" aria-label="Comparer" title="Ajouter au comparateur">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+          <button class="mini-btn" data-open="${p.id}" aria-label="Voir" title="Voir le détail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+
+/* ---- Render category, new, popular ---- */
+function renderStatic(){
+  $('#catGrid').innerHTML = CATEGORIES.map(c=>`
+    <div class="cat ${c.cls}" data-cat="${c.key}">
+      <div class="ico">${c.ico}</div>
+      <h3>${c.key}</h3><span>${c.sub}</span>
+    </div>`).join('');
+  $('#newGrid').innerHTML = P.filter(p=>p.new).slice(0,4).map(card).join('');
+  $('#popGrid').innerHTML = [...P].sort((a,b)=>b.pop-a.pop).slice(0,4).map(card).join('');
+  $('#heroShoe').innerHTML = shoe('#c6ff00','#1c1f26','#e9edf4');
+}
+
+/* ---- Filters UI ---- */
+function buildFilterChips(){
+  const mk = (arr,el,key,colorDots)=>{
+    $(el).innerHTML = arr.map(v=>{
+      const dot = colorDots?`<span class="dot" style="background:${COLORS[v]}"></span>`:'';
+      return `<span class="chip ${colorDots?'color-chip':''}" data-filter="${key}" data-val="${v}">${dot}${v}</span>`;
+    }).join('');
+  };
+  mk(SPORTS,'#filterSport','sport');
+  mk(BRANDS,'#filterBrand','brand');
+  mk(TECHS,'#filterTech','tech');
+  mk(COLORSET,'#filterColor','color',true);
+  mk(SIZES,'#filterSize','size');
+}
+
+/* ---- Apply filters & render catalogue ---- */
+function applyFilters(){
+  let list = P.filter(p=>{
+    if(filters.search){
+      const q=filters.search.toLowerCase();
+      if(!(p.name+' '+p.brand+' '+p.sport+' '+p.tech).toLowerCase().includes(q)) return false;
+    }
+    if(filters.sport && p.sport!==filters.sport) return false;
+    if(filters.brand && p.brand!==filters.brand) return false;
+    if(filters.tech && p.tech!==filters.tech) return false;
+    if(filters.color && !p.colors.includes(filters.color)) return false;
+    if(filters.size && !SIZES.includes(+filters.size)) return false; // all carry full size run except out-of-stock handled in modal
+    if(p.price>filters.maxPrice) return false;
+    return true;
+  });
+  const s=filters.sort;
+  list.sort((a,b)=>{
+    if(s==='price-asc')return a.price-b.price;
+    if(s==='price-desc')return b.price-a.price;
+    if(s==='rating')return b.rating-a.rating;
+    if(s==='new')return (b.new?1:0)-(a.new?1:0)||b.pop-a.pop;
+    return b.pop-a.pop;
+  });
+  $('#resultNum').textContent = list.length;
+  $('#catalogueGrid').innerHTML = list.length
+    ? list.map(card).join('')
+    : `<div class="empty"><span>🔍</span>Aucun modèle ne correspond à vos critères.<br>Essayez d'élargir votre recherche.</div>`;
+}
+
+/* ---- Sync active chip states ---- */
+function syncChips(){
+  $$('.chip[data-filter]').forEach(c=>{
+    const k=c.dataset.filter, v=c.dataset.val;
+    c.classList.toggle('active', String(filters[k])===String(v));
+  });
+}
+
+/* ===================================================================
+   Product modal
+   =================================================================== */
+function openProduct(id){
+  const p = P.find(x=>x.id===id); if(!p) return;
+  const outSizes=[38,46]; // a couple sizes "out of stock" for realism
+  const reviewsData = sampleReviews(p);
+  $('#productModalContent').innerHTML = `
+    <button class="modal-close" data-close>✕</button>
+    <div class="modal-grid">
+      <div class="modal-media">
+        ${p.new?'<span class="badge" style="top:18px;left:18px">Nouveau</span>':''}
+        ${shoe(p.c[0],p.c[1],p.c[2])}
+      </div>
+      <div class="modal-body">
+        <span class="sport">${p.sport} · ${p.brand}</span>
+        <h2>${p.name}</h2>
+        <div class="m-brand">${p.tech}</div>
+        <div class="rating"><span class="stars">${stars(p.rating)}</span> <b>${p.rating}</b> <span class="muted">· ${p.reviews} avis</span></div>
+        <div class="m-price">${p.old?`<s>${fmt(p.old)}</s>`:''}${fmt(p.price)}</div>
+        <p class="desc">${p.desc}</p>
+
+        <div class="spec-grid">
+          <div class="spec"><small>Poids</small><b>${p.weight} g</b></div>
+          <div class="spec"><small>Drop</small><b>${p.drop} mm</b></div>
+          <div class="spec"><small>Technologie</small><b>${p.tech}</b></div>
+          <div class="spec"><small>Usage</small><b>${p.sport}</b></div>
+        </div>
+
+        <div class="m-section-title">Coloris</div>
+        <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="width:22px;height:22px;background:${COLORS[c]}" title="${c}"></span>`).join('')}</div>
+
+        <div class="m-section-title">Tailles disponibles (EU)</div>
+        <div class="sizes">${SIZES.map(s=>`<div class="size ${outSizes.includes(s)?'out':''}" data-size="${s}">${s}</div>`).join('')}</div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary btn-block" data-addcart>Ajouter au panier — ${fmt(p.price)}</button>
+          <button class="mini-btn ${compareList.includes(p.id)?'added':''}" data-cmp="${p.id}" style="width:52px;height:auto" aria-label="Comparer" title="Comparer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+        </div>
+
+        <div class="m-section-title">Avis clients (${p.reviews})</div>
+        <div class="reviews">
+          ${reviewsData.map(r=>`
+            <div class="review">
+              <div class="rv-av">${r.name[0]}</div>
+              <div style="flex:1">
+                <div class="rv-head"><b>${r.name}</b><span class="stars">${stars(r.rating)}</span><span class="rv-date">${r.date}</span></div>
+                <p>${r.text}</p>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  openOverlay('#productModal');
+  // size selection
+  $$('#productModalContent .size:not(.out)').forEach(s=>s.onclick=()=>{
+    $$('#productModalContent .size').forEach(x=>x.classList.remove('sel'));
+    s.classList.add('sel');
+  });
+  $('#productModalContent [data-addcart]').onclick=()=>{
+    if(!$('#productModalContent .size.sel')){toast('Sélectionnez une taille 👟');return;}
+    toast('Ajouté au panier ✓');
+  };
+  $('#productModalContent [data-cmp]').onclick=e=>{toggleCompare(p.id);e.currentTarget.classList.toggle('added',compareList.includes(p.id));};
+}
+
+function sampleReviews(p){
+  const pool=[
+    {name:'Thomas',rating:5,date:'12 mai',text:"Confort incroyable dès la première sortie. L'amorti est juste parfait, je recommande à 100%."},
+    {name:'Léa',rating:5,date:'3 mai',text:"Très légère et stable. Je l'utilise en compétition, aucun point de pression. Le top."},
+    {name:'Karim',rating:4,date:'28 avr',text:"Excellente accroche et finitions premium. Je retire une étoile car taille un peu petit, prenez une demi-pointure au-dessus."},
+    {name:'Sophie',rating:5,date:'19 avr',text:"Design magnifique et performances au rendez-vous. Livraison rapide en plus."},
+    {name:'Maxime',rating:4,date:'10 avr',text:"Très bon rapport qualité-prix. Réactive sur les changements d'appui, parfaite pour mon usage."}
+  ];
+  // deterministic subset based on id
+  return pool.slice(0,3+ (p.id%2));
+}
+
+/* ===================================================================
+   Comparator
+   =================================================================== */
+function toggleCompare(id){
+  const i=compareList.indexOf(id);
+  if(i>-1) compareList.splice(i,1);
+  else{
+    if(compareList.length>=3){toast('Maximum 3 modèles à comparer');return;}
+    compareList.push(id);
+    toast('Ajouté au comparateur ⚖️');
+  }
+  localStorage.setItem('veloce_compare',JSON.stringify(compareList));
+  refreshCompare();
+}
+function refreshCompare(){
+  const n=compareList.length;
+  $('#compareCount').textContent=n;
+  $('#compareCount').classList.toggle('show',n>0);
+  $('#compareBar').classList.toggle('show',n>0);
+  // slots
+  let slots='';
+  for(let k=0;k<3;k++){
+    const id=compareList[k];
+    if(id){
+      const p=P.find(x=>x.id===id);
+      slots+=`<div class="compare-slot">${shoe(p.c[0],p.c[1],p.c[2])}<small>${p.name}<br><span class="muted">${fmt(p.price)}</span></small><span class="rm" data-rm="${id}">✕</span></div>`;
+    } else {
+      slots+=`<div class="compare-empty-slot">Emplacement libre</div>`;
+    }
+  }
+  $('#compareSlots').innerHTML=slots;
+  // reflect on cards
+  $$('[data-cmp]').forEach(b=>b.classList.toggle('added',compareList.includes(+b.dataset.cmp)));
+}
+function openCompareModal(){
+  if(compareList.length<2){toast('Ajoutez au moins 2 modèles');return;}
+  const items=compareList.map(id=>P.find(p=>p.id===id));
+  const minPrice=Math.min(...items.map(p=>p.price));
+  const minWeight=Math.min(...items.map(p=>p.weight));
+  const maxRating=Math.max(...items.map(p=>p.rating));
+  const row=(label,fn,bestFn)=>`<tr><td class="row-label">${label}</td>${items.map(p=>`<td class="${bestFn&&bestFn(p)?'best':''}">${fn(p)}</td>`).join('')}</tr>`;
+  $('#compareModalContent').innerHTML=`
+    <button class="modal-close" data-close>✕</button>
+    <div style="padding:32px 30px">
+      <span class="eyebrow">Comparateur</span>
+      <h2 style="font-size:1.8rem;margin:10px 0 22px">Comparez vos modèles</h2>
+      <div style="overflow-x:auto">
+      <table class="cmp-table">
+        <thead><tr><th></th>${items.map(p=>`<th><div class="cmp-shoe">${shoe(p.c[0],p.c[1],p.c[2])}<b>${p.name}</b><span class="muted" style="font-size:.82rem">${p.brand}</span></div></th>`).join('')}</tr></thead>
+        <tbody>
+          ${row('Prix',p=>p.old?`<s class="muted">${fmt(p.old)}</s> ${fmt(p.price)}`:fmt(p.price),p=>p.price===minPrice)}
+          ${row('Sport',p=>p.sport)}
+          ${row('Technologie',p=>p.tech)}
+          ${row('Poids',p=>p.weight+' g',p=>p.weight===minWeight)}
+          ${row('Drop',p=>p.drop+' mm')}
+          ${row('Note',p=>`<span class="stars">${stars(p.rating)}</span> ${p.rating}`,p=>p.rating===maxRating)}
+          ${row('Avis',p=>p.reviews)}
+          ${row('Coloris',p=>p.colors.join(', '))}
+          ${row('',p=>`<button class="btn btn-primary" style="padding:9px 16px;font-size:.85rem" data-open="${p.id}">Voir</button>`)}
+        </tbody>
+      </table>
+      </div>
+      <p class="muted" style="font-size:.82rem;margin-top:16px">⚡ En vert : la meilleure valeur pour chaque critère (prix, poids, note).</p>
+    </div>`;
+  openOverlay('#compareModal');
+}
+
+/* ===================================================================
+   Guides modal
+   =================================================================== */
+const GUIDES={
+  running:{t:'Bien choisir sa chaussure de running',body:`
+    <p>Le choix d'une chaussure de running dépend de plusieurs facteurs clés :</p>
+    <ul>
+      <li><b>Le type de foulée</b> : universelle, pronatrice ou supinatrice. La majorité des coureurs ont une foulée universelle.</li>
+      <li><b>Le drop</b> : la différence de hauteur talon-avant-pied. Un drop élevé (8-12mm) protège le tendon d'Achille ; un drop faible (0-6mm) favorise une foulée naturelle.</li>
+      <li><b>L'amorti</b> : maximal pour les longues distances et la récupération, plus minimaliste pour la vitesse.</li>
+      <li><b>Le terrain</b> : route, piste ou trail nécessitent des semelles différentes.</li>
+    </ul>
+    <p><b>Notre conseil :</b> alternez deux paires pour préserver l'amorti et limiter les blessures.</p>`},
+  pointure:{t:'Trouver sa pointure idéale',body:`
+    <p>Une bonne pointure laisse environ <b>1 cm</b> entre votre orteil le plus long et le bout de la chaussure.</p>
+    <ul>
+      <li>Mesurez vos pieds en fin de journée (ils gonflent à l'effort).</li>
+      <li>En running, prenez souvent une demi à une pointure au-dessus de votre taille ville.</li>
+      <li>Vérifiez les correspondances EU / UK / US sur chaque fiche produit.</li>
+    </ul>
+    <table class="cmp-table" style="margin-top:14px"><thead><tr><th>EU</th><th>UK</th><th>US</th></tr></thead>
+    <tbody><tr><td>42</td><td>8</td><td>8.5</td></tr><tr><td>43</td><td>9</td><td>9.5</td></tr><tr><td>44</td><td>9.5</td><td>10</td></tr></tbody></table>`},
+  entretien:{t:'Faire durer vos chaussures de sport',body:`
+    <p>Quelques gestes simples prolongent considérablement la durée de vie de vos chaussures :</p>
+    <ul>
+      <li><b>Nettoyage</b> : brosse douce, eau tiède et savon. Jamais de machine à laver, qui détruit l'amorti et les colles.</li>
+      <li><b>Séchage</b> : à l'air libre, loin d'une source de chaleur. Bourrez-les de papier journal pour absorber l'humidité.</li>
+      <li><b>Rotation</b> : alternez plusieurs paires pour laisser la mousse se régénérer entre deux sorties.</li>
+      <li><b>Remplacement</b> : changez vos runnings tous les 600 à 800 km environ.</li>
+    </ul>`}
+};
+function openGuide(key){
+  const g=GUIDES[key];if(!g)return;
+  $('#guideModalContent').innerHTML=`
+    <button class="modal-close" data-close>✕</button>
+    <div style="padding:38px 36px">
+      <span class="eyebrow">Guide d'achat</span>
+      <h2 style="font-size:1.7rem;margin:12px 0 18px">${g.t}</h2>
+      <div class="muted" style="line-height:1.8">${g.body}</div>
+    </div>`;
+  openOverlay('#guideModal');
+}
+
+/* ===================================================================
+   Overlay helpers
+   =================================================================== */
+function openOverlay(sel){document.body.classList.add('no-scroll');$(sel).classList.add('open');}
+function closeOverlay(el){el.classList.remove('open');if(!$$('.modal-overlay.open').length)document.body.classList.remove('no-scroll');}
+$$('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o||e.target.closest('[data-close]'))closeOverlay(o);}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal-overlay.open').forEach(closeOverlay);});
+
+/* ---- Toast ---- */
+let toastTimer;
+function toast(msg){const t=$('#toast');$('#toastText').textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ===================================================================
+   Global event delegation
+   =================================================================== */
+document.addEventListener('click',e=>{
+  const open=e.target.closest('[data-open]');
+  if(open){openProduct(+open.dataset.open);return;}
+  const cmp=e.target.closest('[data-cmp]');
+  if(cmp){toggleCompare(+cmp.dataset.cmp);return;}
+  const fav=e.target.closest('[data-fav]');
+  if(fav){const id=+fav.dataset.fav;const i=favs.indexOf(id);i>-1?favs.splice(i,1):favs.push(id);localStorage.setItem('veloce_favs',JSON.stringify(favs));applyFilters();renderStatic();attachAfterRender();toast(i>-1?'Retiré des favoris':'Ajouté aux favoris ❤️');return;}
+  const rm=e.target.closest('[data-rm]');
+  if(rm){toggleCompare(+rm.dataset.rm);return;}
+  const cat=e.target.closest('[data-cat]');
+  if(cat){filters.sport=cat.dataset.cat;filters.maxPrice=250;$('#priceRange').value=250;$('#priceOut').textContent='250 €';syncChips();applyFilters();$('#catalogue').scrollIntoView({behavior:'smooth'});return;}
+  const g=e.target.closest('[data-guide]');
+  if(g){openGuide(g.dataset.guide);return;}
+});
+
+function attachAfterRender(){refreshCompare();}
+
+/* ---- Filter chips ---- */
+document.addEventListener('click',e=>{
+  const chip=e.target.closest('.chip[data-filter]');
+  if(!chip)return;
+  const k=chip.dataset.filter, v=chip.dataset.val;
+  filters[k] = String(filters[k])===String(v) ? null : v;
+  syncChips();applyFilters();attachAfterRender();
+});
+
+/* ---- Search / range / sort / reset ---- */
+$('#searchInput').addEventListener('input',e=>{filters.search=e.target.value;applyFilters();attachAfterRender();});
+$('#priceRange').addEventListener('input',e=>{filters.maxPrice=+e.target.value;$('#priceOut').textContent=e.target.value+' €';applyFilters();attachAfterRender();});
+$('#sortSelect').addEventListener('change',e=>{filters.sort=e.target.value;applyFilters();attachAfterRender();});
+$('#resetFilters').addEventListener('click',()=>{
+  filters={search:'',sport:null,brand:null,tech:null,color:null,size:null,maxPrice:250,sort:'pop'};
+  $('#searchInput').value='';$('#priceRange').value=250;$('#priceOut').textContent='250 €';$('#sortSelect').value='pop';
+  syncChips();applyFilters();attachAfterRender();
+});
+
+/* ---- Compare bar buttons ---- */
+$('#openCompare').addEventListener('click',openCompareModal);
+$('#compareToggle').addEventListener('click',openCompareModal);
+$('#clearCompare').addEventListener('click',()=>{compareList=[];localStorage.setItem('veloce_compare','[]');refreshCompare();applyFilters();});
+
+/* ===================================================================
+   Forms
+   =================================================================== */
+$('#newsForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const v=$('#newsEmail').value.trim();const msg=$('#newsMsg');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){msg.className='form-msg err';msg.textContent='Veuillez entrer un email valide.';return;}
+  msg.className='form-msg ok';msg.textContent='🎉 Bienvenue ! Votre code -10% arrive dans votre boîte mail.';
+  $('#newsEmail').value='';
+});
+$('#contactForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=$('#cName'),email=$('#cEmail'),m=$('#cMsg'),msg=$('#contactMsg');
+  let ok=true;
+  [name,email,m].forEach(f=>{const fld=f.closest('.field');const bad=!f.value.trim()||(f===email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value));fld.classList.toggle('invalid',bad);if(bad)ok=false;});
+  if(!ok){msg.className='form-msg err';msg.textContent='Merci de remplir correctement les champs requis.';return;}
+  msg.className='form-msg ok';msg.textContent='✅ Message envoyé ! Notre équipe vous répond sous 24h.';
+  $('#contactForm').reset();
+});
+
+/* ===================================================================
+   Scroll behaviours
+   =================================================================== */
+const header=$('#header');
+addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>20));
+
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}}),{threshold:.12});
+$$('.reveal').forEach(el=>io.observe(el));
+
+// stat counters
+function countUp(el,target,suffix){let n=0;const step=target/60;const t=setInterval(()=>{n+=step;if(n>=target){n=target;clearInterval(t);}el.textContent=Math.round(n)+suffix;},20);}
+const heroIO=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){countUp($('#stat1'),16,'+');countUp($('#stat2'),6,'');countUp($('#stat3'),24,'k+');heroIO.disconnect();}}),{threshold:.4});
+heroIO.observe($('.hero-stats'));
+
+/* ---- Mobile nav & filters drawer ---- */
+$('#burger').addEventListener('click',()=>{$('#burger').classList.toggle('open');$('#mobileNav').classList.toggle('open');});
+$$('#mobileNav a').forEach(a=>a.addEventListener('click',()=>{$('#burger').classList.remove('open');$('#mobileNav').classList.remove('open');}));
+$('#filterToggle').addEventListener('click',()=>{$('#filters').classList.add('open');document.body.classList.add('no-scroll');});
+$('#filtersClose').addEventListener('click',()=>{$('#filters').classList.remove('open');document.body.classList.remove('no-scroll');});
+
+/* ===================================================================
+   Init
+   =================================================================== */
+renderStatic();
+buildFilterChips();
+applyFilters();
+syncChips();
+refreshCompare();
+</script>
+</body>
+</html>
