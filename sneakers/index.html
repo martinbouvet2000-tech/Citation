@@ -114,6 +114,22 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.92);backdro
 .edit-box{display:none;margin-top:8px;background:var(--white);border:1px solid var(--line);border-radius:10px;padding:10px;gap:7px;flex-direction:column}
 body.editing .edit-box{display:flex}
 .edit-box input{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:16px;width:100%}
+.edit-photos{display:flex;flex-wrap:wrap;gap:7px}
+.ephoto{position:relative;width:58px;height:66px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.ephoto.main{border-color:var(--ink)}
+.ephoto img{width:100%;height:100%;object-fit:cover}
+.ephoto .ep-badge{position:absolute;left:0;right:0;bottom:0;background:var(--ink);color:var(--bg);font-size:.55rem;text-align:center;padding:1px}
+.ephoto .ep-star{position:absolute;left:0;right:0;bottom:0;background:rgba(20,20,20,.65);color:#fff;font-size:.7rem;border-radius:0}
+.ephoto .ep-rm{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(20,20,20,.7);color:#fff;font-size:.7rem;display:grid;place-items:center;line-height:1}
+.ep-add{width:58px;height:66px;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;
+  font-size:.74rem;color:var(--ink-2);cursor:pointer;text-align:center}
+.ep-add:hover{border-color:var(--ink-2);color:var(--ink)}
+.pdp-thumbs{position:absolute;left:0;right:0;bottom:0;display:flex;gap:7px;padding:10px;overflow-x:auto;
+  background:linear-gradient(0deg,rgba(20,20,20,.35),transparent)}
+.pthumb{width:48px;height:54px;border-radius:8px;overflow:hidden;border:2px solid transparent;padding:0;flex-shrink:0}
+.pthumb.on{border-color:#fff}
+.pthumb img{width:100%;height:100%;object-fit:cover}
+.pdp-img{position:relative}
 .edit-row{display:flex;gap:7px}
 .edit-row input{min-width:0}
 .edit-sold{display:flex;align-items:center;gap:7px;font-size:.84rem;color:var(--ink-2)}
@@ -371,7 +387,10 @@ let filters={model:'',size:'',sort:''};
 let editing=false;
 
 /* ---- helpers ---- */
-const photoUrl=p=>'img/'+p.photo;
+const resolveImg=s=>(/^(data:|https?:)/.test(s)?s:'img/'+s);
+const imgsOf=p=>(Array.isArray(p.photos)&&p.photos.length?p.photos:(p.photo?[p.photo]:[]));
+const mainUrl=p=>{const a=imgsOf(p);return a.length?resolveImg(a[0]):'';};
+const photoUrl=mainUrl;
 const priceTxt=p=>p.price?eur(p.price):'Sur demande';
 const byId=id=>stock.find(p=>p.id===id);
 
@@ -411,6 +430,14 @@ function tile(p){
       <div class="tile-price">${p.price?eur(p.price):'<span class="tbd">Sur demande</span>'}</div>
     </div>
     <div class="edit-box" data-stop>
+      <div class="edit-photos">
+        ${imgsOf(p).map((src,i)=>`<div class="ephoto ${i===0?'main':''}">
+          <img src="${resolveImg(src)}" alt="">
+          ${i!==0?`<button class="ep-star" data-main="${p.id}" data-i="${i}" title="Photo principale">★</button>`:'<span class="ep-badge">Principale</span>'}
+          ${imgsOf(p).length>1?`<button class="ep-rm" data-photorm="${p.id}" data-i="${i}" title="Supprimer">✕</button>`:''}
+        </div>`).join('')}
+        <label class="ep-add">+ Photo<input type="file" accept="image/*" multiple data-photoadd="${p.id}" hidden></label>
+      </div>
       <input data-f="name" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Modèle">
       <input data-f="cw" value="${(p.cw||'').replace(/"/g,'&quot;')}" placeholder="Coloris">
       <div class="edit-row">
@@ -436,8 +463,12 @@ function render(){
 function openPdp(id){
   const p=byId(id); if(!p) return;
   const inCart=cart.includes(id);
+  const imgs=imgsOf(p).map(resolveImg);
   $('#pdpContent').innerHTML=`
-    <div class="pdp-img"><img src="${photoUrl(p)}" alt="${p.name}" id="pdpImg"></div>
+    <div class="pdp-img">
+      <img src="${imgs[0]||''}" alt="${p.name}" id="pdpImg">
+      ${imgs.length>1?`<div class="pdp-thumbs">${imgs.map((s,i)=>`<button class="pthumb ${i===0?'on':''}" data-src="${s}"><img src="${s}" alt=""></button>`).join('')}</div>`:''}
+    </div>
     <div class="pdp-body">
       <div class="pdp-kicker">Pièce unique · Photo réelle</div>
       <h2>${p.name}</h2>
@@ -454,7 +485,11 @@ function openPdp(id){
       <div class="pdp-trust">100% authentique · Réponse sous 24h · Paiement à l'expédition ou en main propre</div>
     </div>`;
   openOv('#pdpOverlay');
-  $('#pdpImg').onclick=()=>{$('#zoomImg').src=photoUrl(p);$('#zoom').classList.add('open');};
+  $('#pdpImg').onclick=()=>{$('#zoomImg').src=$('#pdpImg').src;$('#zoom').classList.add('open');};
+  $$('#pdpContent .pthumb').forEach(t=>t.onclick=()=>{
+    $('#pdpImg').src=t.dataset.src;
+    $$('#pdpContent .pthumb').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+  });
   const add=$('#pdpAdd');
   if(add)add.onclick=()=>{
     if(!cart.includes(id)){cart.push(id);saveCart();}
@@ -542,7 +577,24 @@ let tt;function toast(m){$('#toast').textContent=m;$('#toast').classList.add('sh
 /* =====================================================================
    MODE GESTION (étiquetage rapide)
    ===================================================================== */
-function saveLocal(){localStorage.setItem(KEY,JSON.stringify(stock));localEdits=true;}
+function saveLocal(){
+  localEdits=true;
+  try{localStorage.setItem(KEY,JSON.stringify(stock));}
+  catch(e){toast('Stockage plein — pensez à Exporter puis publier');}
+}
+/* redimensionne une image (téléphone) en data URL légère */
+function resizeImage(file){return new Promise(res=>{
+  const r=new FileReader();
+  r.onload=()=>{const img=new Image();img.onload=()=>{
+    const max=1000;let w=img.width,h=img.height;
+    if(w>max){h=Math.round(h*max/w);w=max;}
+    if(h>max){w=Math.round(w*max/h);h=max;}
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+    cv.getContext('2d').drawImage(img,0,0,w,h);
+    res(cv.toDataURL('image/jpeg',.82));
+  };img.src=r.result;};
+  r.readAsDataURL(file);
+});}
 function enterManage(){
   const c=prompt('Code de gestion :');
   if(c===null)return;
@@ -563,6 +615,24 @@ document.addEventListener('input',e=>{
   else if(k==='price')p.price=f.value?Math.round(+f.value):null;
   else p[k]=f.value.trim();
   saveLocal();
+});
+/* ---- gestion des photos (remplacer / ajouter / principale / supprimer) ---- */
+document.addEventListener('change',async e=>{
+  const add=e.target.closest('[data-photoadd]');if(!add||!editing)return;
+  const p=byId(+add.dataset.photoadd);if(!p)return;
+  if(!Array.isArray(p.photos)) p.photos=imgsOf(p).slice();
+  toast('Traitement des photos…');
+  for(const file of add.files){ p.photos.push(await resizeImage(file)); }
+  saveLocal();render();toast('Photo(s) ajoutée(s) ✓');
+});
+document.addEventListener('click',e=>{
+  if(!editing)return;
+  const mk=e.target.closest('[data-main]');
+  if(mk){const p=byId(+mk.dataset.main);if(!Array.isArray(p.photos))p.photos=imgsOf(p).slice();
+    const i=+mk.dataset.i;p.photos.unshift(p.photos.splice(i,1)[0]);saveLocal();render();return;}
+  const rm=e.target.closest('[data-photorm]');
+  if(rm){const p=byId(+rm.dataset.photorm);if(!Array.isArray(p.photos))p.photos=imgsOf(p).slice();
+    if(p.photos.length>1){p.photos.splice(+rm.dataset.i,1);saveLocal();render();}return;}
 });
 function exportStock(){
   const hdr=`/* VÉLOCE v2 — STOCK exporté depuis le mode gestion.\n   Publier : remplacer sneakers/products.js par ce fichier. */\n`;
