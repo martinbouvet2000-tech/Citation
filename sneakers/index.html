@@ -3,8 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VÉLOCE — Chaussures de sport premium · Running, Fitness, Football, Basket, Tennis</title>
-<meta name="description" content="VÉLOCE, la plateforme premium de chaussures de sport. Découvrez une sélection de modèles pour la course, le fitness, le football, le basketball et le tennis. Performance, confort et innovation.">
+<title>VÉLOCE — Sneakers Nike & Jordan authentiques · Pièces uniques dès 25 €</title>
+<meta name="description" content="60+ paires Nike & Jordan 100% authentiques en pièces uniques : Shox TL, Air Max DN, Air Force 1, Dunk, Jordan… De 25 à 70 €. Chaque paire est photographiée réellement. Commandez en ligne, réponse sous 24h.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VÉLOCE — Sneakers Nike & Jordan authentiques · Pièces uniques">
+<meta property="og:description" content="60+ paires Nike & Jordan authentiques, 25–70 €. Shox TL, Air Max DN, AF-1, Dunk, Jordan. Pièces uniques — premier arrivé, premier servi.">
+<meta property="og:image" content="https://martinbouvet2000-tech.github.io/Citation/sneakers/img/shox-tl-blanc.jpg">
+<meta property="og:url" content="https://martinbouvet2000-tech.github.io/Citation/sneakers/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#06080d">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>👟</text></svg>">
 <style>
@@ -32,6 +41,7 @@
   --max:1240px;
   --ease:cubic-bezier(.22,.61,.36,1);
   --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --font-display:'Space Grotesk','Inter',-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -40,7 +50,7 @@ body{
   line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 body.no-scroll{overflow:hidden}
-h1,h2,h3,h4{line-height:1.05;margin:0;font-weight:800;letter-spacing:-.02em}
+h1,h2,h3,h4{line-height:1.05;margin:0;font-weight:700;letter-spacing:-.02em;font-family:var(--font-display)}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
@@ -70,7 +80,7 @@ header{position:fixed;inset:0 0 auto 0;z-index:80;transition:background .35s,bor
 header.scrolled{background:rgba(6,8,13,.82);backdrop-filter:blur(18px) saturate(150%);
   border-bottom-color:var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
-.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:1.35rem;letter-spacing:.04em}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:1.35rem;letter-spacing:.06em;font-family:var(--font-display)}
 .brand .mark{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
   background:linear-gradient(135deg,var(--volt),var(--volt-deep));color:#0a0d05;font-size:1.1rem;
   box-shadow:0 8px 20px -8px rgba(198,255,0,.7)}
@@ -204,7 +214,7 @@ header.scrolled{background:rgba(6,8,13,.82);backdrop-filter:blur(18px) saturate(
 .rating{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--txt-dim);margin-top:2px}
 .stars{color:#ffc83d;letter-spacing:1px}
 .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px}
-.price{font-size:1.3rem;font-weight:900}
+.price{font-size:1.3rem;font-weight:700;font-family:var(--font-display)}
 .price s{font-size:.85rem;color:var(--txt-mute);font-weight:500;margin-right:7px}
 .card-actions{display:flex;gap:8px}
 .mini-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);display:grid;place-items:center;
@@ -452,7 +462,8 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
   .price{font-size:1.12rem}
   .wrap{padding:0 18px}
   /* cartes épurées sur mobile : visuel + nom + prix (Baymard : hit-area large, infos clés) */
-  .card-body .brand-name,.card-body .rating,.card-body .swatches,.card-actions{display:none}
+  .card-body .rating,.card-body .swatches,.card-actions{display:none}
+  .card-body .brand-name{font-size:.76rem}
   .card-foot{padding-top:10px}
   .price{white-space:nowrap}
   /* cibles tactiles confortables (>=44px) */
@@ -650,8 +661,8 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
   <div class="wrap">
     <div class="hero-copy">
       <span class="eyebrow">Performance · Innovation · Dépassement</span>
-      <h1>Repoussez chaque<br><span class="grad">limite</span> à chaque foulée.</h1>
-      <p class="lead">VÉLOCE rassemble les chaussures de sport les plus performantes pour la course, le fitness, le football, le basketball et le tennis. Conçues pour la vitesse, le confort et l'énergie pure.</p>
+      <h1>Des paires <span class="grad">authentiques</span>.<br>Des pièces uniques.</h1>
+      <p class="lead">Nike Shox, Air Max, Air Force 1, Dunk, Jordan… Plus de 60 paires 100% authentiques, photographiées réellement, de 25 à 70 €. Chaque référence est une pièce unique : premier arrivé, premier servi.</p>
       <div class="hero-actions">
         <a href="#catalogue" class="btn btn-primary">Découvrir le catalogue
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -659,9 +670,9 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
         <a href="#nouveautes" class="btn btn-ghost">Voir les nouveautés</a>
       </div>
       <div class="hero-stats">
-        <div class="s"><b id="stat1">0</b><span>Modèles premium</span></div>
-        <div class="s"><b id="stat2">0</b><span>Sports couverts</span></div>
-        <div class="s"><b id="stat3">0</b><span>Clients satisfaits</span></div>
+        <div class="s"><b id="stat1">0</b><span>Paires en stock</span></div>
+        <div class="s"><b id="stat2">0</b><span>% authentiques</span></div>
+        <div class="s"><b id="stat3">0</b><span>€ — prix max</span></div>
       </div>
     </div>
     <div class="hero-visual">
@@ -715,8 +726,8 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
 <!-- ============================= BAND ============================= -->
 <div class="band">
   <div class="band-track">
-    <span>LIVRAISON 48H&nbsp;&nbsp;RETOURS GRATUITS 30 JOURS&nbsp;&nbsp;PAIEMENT SÉCURISÉ&nbsp;&nbsp;GARANTIE PERFORMANCE&nbsp;&nbsp;CONSEILS D'EXPERTS</span>
-    <span>LIVRAISON 48H&nbsp;&nbsp;RETOURS GRATUITS 30 JOURS&nbsp;&nbsp;PAIEMENT SÉCURISÉ&nbsp;&nbsp;GARANTIE PERFORMANCE&nbsp;&nbsp;CONSEILS D'EXPERTS</span>
+    <span>100% AUTHENTIQUES&nbsp;&nbsp;PIÈCES UNIQUES&nbsp;&nbsp;PHOTOS RÉELLES&nbsp;&nbsp;25–70 €&nbsp;&nbsp;RÉPONSE SOUS 24H</span>
+    <span>100% AUTHENTIQUES&nbsp;&nbsp;PIÈCES UNIQUES&nbsp;&nbsp;PHOTOS RÉELLES&nbsp;&nbsp;25–70 €&nbsp;&nbsp;RÉPONSE SOUS 24H</span>
   </div>
 </div>
 
@@ -920,12 +931,12 @@ body.admin-on .card{outline:1px dashed rgba(198,255,0,.35);outline-offset:3px}
         </div>
       </div>
       <div class="foot-col"><h5>Sports</h5><a href="#catalogue">Running</a><a href="#catalogue">Fitness</a><a href="#catalogue">Football</a><a href="#catalogue">Basketball</a><a href="#catalogue">Tennis</a></div>
-      <div class="foot-col"><h5>Aide</h5><a href="#guides">Guides d'achat</a><a href="#guides">Guide des tailles</a><a href="#contact">Livraison & retours</a><a href="#contact">Nous contacter</a></div>
+      <div class="foot-col"><h5>Aide</h5><a href="#guides">Guides d'achat</a><a data-guide="retours" style="cursor:pointer">Livraison & retours</a><a data-guide="cgv" style="cursor:pointer">CGV</a><a href="#contact">Nous contacter</a></div>
       <div class="foot-col"><h5>VÉLOCE</h5><a href="#innovation">Notre technologie</a><a href="#newsletter">Newsletter</a><a href="#">Boutique e-commerce</a><a href="#">Carrières</a></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 VÉLOCE — Plateforme vitrine. Bientôt en boutique e-commerce complète.</span>
-      <span>Mentions légales · Confidentialité · CGV · <a id="adminLogin">Admin</a></span>
+      <span><a data-guide="mentions" style="cursor:pointer">Mentions légales</a> · <a data-guide="confidentialite" style="cursor:pointer">Confidentialité</a> · <a data-guide="cgv" style="cursor:pointer">CGV</a> · <a data-guide="retours" style="cursor:pointer">Retours</a> · <a id="adminLogin">Admin</a></span>
     </div>
   </div>
 </footer>
@@ -1127,7 +1138,7 @@ function card(p){
   const inCmp = compareList.includes(p.id)?'added':'';
   return `<article class="card" data-id="${p.id}">
     <div class="card-media" data-open="${p.id}">
-      ${p.new?'<span class="badge">Nouveau</span>':''}
+      ${p.sizes&&p.sizes.length===1?'<span class="badge" style="background:var(--flame);color:#fff">Pièce unique</span>':(p.new?'<span class="badge">Nouveau</span>':'')}
       ${p.promo?`<span class="badge promo">-${Math.round((1-p.price/p.old)*100)}%</span>`:''}
       ${media(p)}${altMedia(p)}
       <button class="fav ${fav}" data-fav="${p.id}" aria-label="Favori">
@@ -1137,7 +1148,7 @@ function card(p){
     <div class="card-body">
       <span class="sport">${[p.sport,p.tech].filter(Boolean).join(' · ')}</span>
       <h3 data-open="${p.id}" style="cursor:pointer">${p.name}</h3>
-      <span class="brand-name">${p.brand||''}</span>
+      <span class="brand-name">${p.brand||''}${p.sizes&&p.sizes.length?` · T. ${p.sizes.join(' / ')}`:''}</span>
       ${p.rating?`<div class="rating"><span class="stars">${stars(p.rating)}</span> ${p.rating} ${p.reviews?`<span class="muted">(${p.reviews})</span>`:''}</div>`:''}
       <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="background:${COLORS[c]||c}" title="${c}"></span>`).join('')}</div>
       <div class="card-foot">
@@ -1288,11 +1299,11 @@ function openProduct(id){
         ${p.colors.length?`<div class="m-section-title">Coloris</div>
         <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="width:22px;height:22px;background:${COLORS[c]||c}" title="${c}"></span>`).join('')}</div>`:''}
 
-        <div class="size-head"><div class="m-section-title">Tailles disponibles (EU)</div><span class="size-guide-link" data-sizeguide>Guide des tailles</span></div>
+        <div class="size-head"><div class="m-section-title">${sizeList.length===1?'Taille disponible (EU) — pièce unique':'Tailles disponibles (EU)'}</div><span class="size-guide-link" data-sizeguide>Guide des tailles</span></div>
         <div class="sizes">${sizeList.map(s=>`<div class="size ${outSizes.includes(s)?'out':''}" data-size="${s}" ${outSizes.includes(s)?'title="Rupture de stock"':''}>${s}</div>`).join('')}</div>
         <div class="atc-trust">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13v8H3zM16 10h4l1 3v2h-5z"/><circle cx="7" cy="17" r="1.6"/><circle cx="18" cy="17" r="1.6"/></svg>
-          Livraison 48h · Retours gratuits 30 jours · Paiement sécurisé
+          100% authentique · Photos réelles de la paire · Réponse sous 24h
         </div>
 
         <div class="modal-actions sticky-atc">
@@ -1339,6 +1350,9 @@ function openProduct(id){
     $$('#productModalContent .size').forEach(x=>x.classList.remove('sel'));
     s.classList.add('sel');
   });
+  // pièce unique : une seule taille -> pré-sélectionnée
+  const avail=$$('#productModalContent .size:not(.out)');
+  if(avail.length===1) avail[0].classList.add('sel');
   $('#productModalContent [data-addcart]').onclick=()=>{
     const sel=$('#productModalContent .size.sel');
     if(!sel){toast('Sélectionnez une taille 👟');return;}
@@ -1460,6 +1474,28 @@ const GUIDES={
       <li><b>Remplacement</b> : changez vos runnings tous les 600 à 800 km environ.</li>
     </ul>`}
 };
+GUIDES.mentions={t:'Mentions légales',body:`
+    <p><b>VÉLOCE</b> — boutique de revente de sneakers authentiques.</p>
+    <p><b>Éditeur :</b> Martin B. · Contact : <a href="mailto:martinbouvet2000@gmail.com" style="color:var(--volt)">martinbouvet2000@gmail.com</a></p>
+    <p><b>Hébergement :</b> GitHub Pages (GitHub, Inc., 88 Colin P. Kelly Jr. St, San Francisco, CA 94107, USA).</p>
+    <p><b>Propriété intellectuelle :</b> les marques citées (Nike, Jordan…) appartiennent à leurs propriétaires respectifs. VÉLOCE est un revendeur indépendant, non affilié à ces marques. Les photos des produits sont la propriété de VÉLOCE.</p>`};
+GUIDES.cgv={t:'Conditions générales de vente',body:`
+    <p><b>1. Produits.</b> Paires authentiques, neuves ou comme neuves, vendues en pièce unique dans la taille indiquée sur chaque fiche. Photos réelles de la paire vendue.</p>
+    <p><b>2. Commande.</b> La commande s'effectue par email depuis le panier. Elle est confirmée après réponse de notre part (sous 24h) et confirmation de la disponibilité.</p>
+    <p><b>3. Prix & paiement.</b> Prix en euros TTC. Le paiement s'effectue selon les modalités convenues lors de la confirmation (virement, espèces en main propre, ou plateforme sécurisée).</p>
+    <p><b>4. Livraison.</b> Expédition sous 48h après paiement, ou remise en main propre. Frais de livraison communiqués avant confirmation.</p>
+    <p><b>5. Rétractation.</b> Conformément au Code de la consommation, vous disposez de 14 jours après réception pour vous rétracter (article L221-18), produit non porté et dans son état d'origine.</p>
+    <p><b>6. Authenticité.</b> Chaque paire est vérifiée. En cas de doute prouvé sur l'authenticité, remboursement intégral.</p>`};
+GUIDES.confidentialite={t:'Politique de confidentialité',body:`
+    <p><b>Données collectées :</b> ce site ne collecte aucune donnée personnelle automatiquement. Pas de cookies de suivi, pas de traceurs publicitaires.</p>
+    <p><b>Stockage local :</b> votre panier et vos favoris sont enregistrés uniquement dans votre navigateur (localStorage) et ne sont jamais transmis.</p>
+    <p><b>Commande :</b> les informations communiquées par email (nom, adresse) servent uniquement au traitement de votre commande et ne sont jamais partagées.</p>
+    <p><b>Droits :</b> conformément au RGPD, vous pouvez demander l'accès, la rectification ou la suppression de vos données : <a href="mailto:martinbouvet2000@gmail.com" style="color:var(--volt)">martinbouvet2000@gmail.com</a>.</p>`};
+GUIDES.retours={t:'Livraison & retours',body:`
+    <p><b>Expédition :</b> sous 48h après confirmation et paiement, avec numéro de suivi. Remise en main propre possible (région parisienne).</p>
+    <p><b>Retours :</b> 14 jours après réception (rétractation légale). La paire doit être non portée, dans son état d'origine avec sa boîte.</p>
+    <p><b>Remboursement :</b> sous 14 jours après réception du retour, par le même moyen de paiement.</p>
+    <p><b>Question ?</b> <a href="mailto:martinbouvet2000@gmail.com" style="color:var(--volt)">martinbouvet2000@gmail.com</a> — réponse sous 24h.</p>`};
 function openGuide(key){
   const g=GUIDES[key];if(!g)return;
   $('#guideModalContent').innerHTML=`
@@ -1602,7 +1638,7 @@ $$('.reveal').forEach(el=>io.observe(el));
 
 // stat counters
 function countUp(el,target,suffix){let n=0;const step=target/60;const t=setInterval(()=>{n+=step;if(n>=target){n=target;clearInterval(t);}el.textContent=Math.round(n)+suffix;},20);}
-const heroIO=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){countUp($('#stat1'),16,'+');countUp($('#stat2'),6,'');countUp($('#stat3'),24,'k+');heroIO.disconnect();}}),{threshold:.4});
+const heroIO=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){countUp($('#stat1'),60,'+');countUp($('#stat2'),100,'');countUp($('#stat3'),70,'');heroIO.disconnect();}}),{threshold:.4});
 heroIO.observe($('.hero-stats'));
 
 /* ---- Mobile nav & filters drawer ---- */
@@ -1759,6 +1795,21 @@ $('#adminReset').addEventListener('click',()=>{if(confirm('Annuler toutes vos mo
 /* ===================================================================
    Panier + tiroirs (panier à droite, catégories à gauche)
    =================================================================== */
+const ORDER_EMAIL='martinbouvet2000@gmail.com';
+function orderText(){
+  const lines=cart.map(it=>{const p=P.find(x=>x.id===it.id)||{};return `• ${p.name||'Article'} — Taille ${it.size} — x${it.qty} — ${p.price?p.price+' €':'Sur demande'}`;});
+  return `Bonjour,%0D%0A%0D%0AJe souhaite commander :%0D%0A${encodeURIComponent(lines.join('\n')).replace(/%0A/g,'%0D%0A')}%0D%0A%0D%0ATotal indicatif : ${cartTotal()} €%0D%0A%0D%0AMon nom :%0D%0AMon adresse :%0D%0AMon téléphone :%0D%0A%0D%0AMerci !`;
+}
+function orderByEmail(){
+  if(!cart.length){toast('Votre panier est vide');return;}
+  location.href=`mailto:${ORDER_EMAIL}?subject=${encodeURIComponent('Commande VÉLOCE — '+cartCount()+' article(s)')}&body=${orderText()}`;
+  toast('Votre messagerie s\'ouvre — envoyez l\'email pour confirmer ✉️');
+}
+function copyOrder(){
+  const lines=cart.map(it=>{const p=P.find(x=>x.id===it.id)||{};return `• ${p.name||'Article'} — Taille ${it.size} — x${it.qty} — ${p.price?p.price+' €':'Sur demande'}`;});
+  const txt=`Commande VÉLOCE\n${lines.join('\n')}\nTotal : ${cartTotal()} €\nContact : ${ORDER_EMAIL}`;
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('Récapitulatif copié 📋')).catch(()=>toast('Copie impossible — utilisez l\'email'));
+}
 let cart = JSON.parse(localStorage.getItem('veloce_cart')||'[]');
 function saveCart(){localStorage.setItem('veloce_cart',JSON.stringify(cart));}
 function cartCount(){return cart.reduce((n,i)=>n+i.qty,0);}
@@ -1791,8 +1842,9 @@ function renderCart(){
   }).join('');
   foot.innerHTML=`
     <div class="cart-sub"><span class="muted">Sous-total (${n} article${n>1?'s':''})</span><b>${fmt(cartTotal())}</b></div>
-    <p class="cart-note">Livraison offerte dès 80 € · Retours gratuits 30 jours</p>
-    <button class="btn btn-primary btn-block" id="checkoutBtn">Commander — ${fmt(cartTotal())}</button>
+    <p class="cart-note">Commande par email — réponse sous 24h · Paiement à l'expédition · 100% authentique</p>
+    <button class="btn btn-primary btn-block" id="checkoutBtn">Commander par email — ${fmt(cartTotal())}</button>
+    <button class="btn btn-ghost btn-block" id="copyOrder" style="margin-top:10px">Copier le récapitulatif</button>
     <button class="btn btn-ghost btn-block" data-drawer-close style="margin-top:10px">Continuer mes achats</button>`;
 }
 
@@ -1829,7 +1881,8 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-drawer-close]')){closeDrawers();return;}
   const q=e.target.closest('[data-qty]'); if(q){const i=+q.dataset.qty;cart[i].qty+=+q.dataset.d;if(cart[i].qty<=0)cart.splice(i,1);saveCart();renderCart();return;}
   const r=e.target.closest('[data-rmcart]'); if(r){cart.splice(+r.dataset.rmcart,1);saveCart();renderCart();return;}
-  if(e.target.closest('#checkoutBtn')){toast('Paiement en ligne bientôt disponible 🔒');return;}
+  if(e.target.closest('#checkoutBtn')){orderByEmail();return;}
+  if(e.target.closest('#copyOrder')){copyOrder();return;}
 });
 // Échap ferme aussi les tiroirs
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$$('.drawer.open').length)closeDrawers();});
