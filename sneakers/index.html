@@ -478,6 +478,69 @@ footer{border-top:1px solid var(--line);padding:70px 0 36px;background:var(--bg-
   transform:translateX(100%);transition:transform .35s var(--ease);padding:30px 24px;display:flex;flex-direction:column;gap:6px}
 .mobile-nav.open{transform:none}
 .mobile-nav a{padding:16px;font-size:1.2rem;font-weight:700;border-bottom:1px solid var(--line)}
+/* =====================================================================
+   DESIGN DIET — plus léger, moins de néon, plus d'air (override final)
+   ===================================================================== */
+:root{ --line:rgba(255,255,255,.06); --line-strong:rgba(255,255,255,.12); }
+
+/* Cartes éditoriales : l'image mène, texte sobre dessous, pas de boîte */
+.card{background:transparent;border:0;border-radius:0;overflow:visible}
+.card:hover{transform:none;box-shadow:none;border:0}
+.card-media{border-radius:16px;background:#0e131c;border:1px solid var(--line);transition:border-color .3s var(--ease)}
+.card:hover .card-media{border-color:var(--line-strong)}
+.card:hover .card-media svg{transform:none}
+.card:hover .card-media img.real{transform:scale(1.03)}
+.card-body{padding:14px 2px 4px;gap:2px}
+.c-brand{font-size:.7rem;color:var(--txt-mute);letter-spacing:.06em;text-transform:uppercase}
+.card-body h3{font-size:1rem;font-weight:600;letter-spacing:-.01em;margin-top:2px}
+.card .price{font-size:1.05rem;font-weight:600;margin-top:7px}
+.card .price s{font-size:.78rem}
+
+/* Badges discrets (verre dépoli), un seul par carte */
+.badge{background:rgba(8,11,16,.62);backdrop-filter:blur(8px);color:#fff;border:1px solid rgba(255,255,255,.16);
+  font-weight:600;letter-spacing:.04em;text-transform:none}
+.badge.unique{background:rgba(8,11,16,.62);color:#fff}
+.badge.promo{background:rgba(255,90,31,.9);border-color:transparent;color:#fff}
+.fav{background:rgba(8,11,16,.45);border-color:transparent;color:#fff;opacity:.85}
+.fav:hover,.fav.on{opacity:1;background:rgba(8,11,16,.6)}
+
+/* Néon : réservé au CTA. On calme les accents répétés */
+.eyebrow{color:var(--txt-dim)}
+.eyebrow::before{background:var(--txt-mute);opacity:.6}
+.cat:hover{transform:translateY(-4px)}
+.btn-ghost:hover{border-color:var(--line-strong);color:var(--txt)}
+
+/* Bandeau de réassurance : sobre (au lieu du fluo plein écran) */
+.band{background:var(--bg-2);color:var(--txt-dim);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band-track{font-weight:600;letter-spacing:.06em;color:var(--txt-dim)}
+.band-track span::after{background:var(--volt);opacity:.55}
+
+/* Hero apaisé */
+.blob{opacity:.28;filter:blur(95px)}
+.hero-bg .grid-lines{opacity:.18}
+.hero-card{background:radial-gradient(120% 90% at 70% 10%,#141a25,#0a0e16)}
+.hero-card .ring{opacity:.45}
+
+/* Filtres allégés : moins de cadres, plus d'air */
+.filters{background:transparent;border:0;padding:4px}
+.filters h4{color:var(--txt-mute);font-size:.72rem;margin-top:24px}
+.chip{background:transparent;border-color:var(--line);font-weight:500;color:var(--txt-dim)}
+.chip:hover{border-color:var(--line-strong);color:var(--txt)}
+.filter-search{background:rgba(255,255,255,.03)}
+
+/* Respiration générale */
+.grid-products{gap:34px 24px}
+.section-pad{padding:clamp(72px,10vw,140px) 0}
+.head{margin-bottom:54px}
+
+/* Comparateur retiré des cartes : la fiche s'ouvre au clic sur toute la carte */
+.card,.card *{cursor:pointer}
+.fav{cursor:pointer}
+
+@media(max-width:640px){
+  .grid-products{gap:22px 14px}
+  .card-body h3{font-size:.92rem}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 
 /* ---------- Admin mode ---------- */
@@ -1132,36 +1195,25 @@ const media = p=>{const s=heroPhoto(p);return s?`<img class="real" src="${s}" al
 const altMedia = p=>{const ph=photosOf(p);return ph.length>1?`<img class="alt-img" src="${photoSrc(ph[1])}" alt="" loading="lazy" decoding="async" aria-hidden="true">`:'';};
 const thumb = (p,w,h)=>{const s=heroPhoto(p);return s?`<img src="${s}" alt="${p.name}" style="width:${w}px;height:${h}px;object-fit:cover;border-radius:10px;flex-shrink:0">`:shoe(p.c[0],p.c[1],p.c[2]);};
 
-/* ---- Card template ---- */
+/* ---- Card template (épuré : image -> marque·taille -> nom -> prix) ---- */
 function card(p){
   const fav = favs.includes(p.id)?'on':'';
-  const inCmp = compareList.includes(p.id)?'added':'';
-  return `<article class="card" data-id="${p.id}">
-    <div class="card-media" data-open="${p.id}">
-      ${p.sizes&&p.sizes.length===1?'<span class="badge" style="background:var(--flame);color:#fff">Pièce unique</span>':(p.new?'<span class="badge">Nouveau</span>':'')}
-      ${p.promo?`<span class="badge promo">-${Math.round((1-p.price/p.old)*100)}%</span>`:''}
+  const unique = p.sizes && p.sizes.length===1;
+  const badge = unique ? '<span class="badge unique">Pièce unique</span>'
+              : p.promo ? `<span class="badge promo">-${Math.round((1-p.price/p.old)*100)}%</span>`
+              : p.new ? '<span class="badge">Nouveau</span>' : '';
+  return `<article class="card" data-id="${p.id}" data-open="${p.id}">
+    <div class="card-media">
+      ${badge}
       ${media(p)}${altMedia(p)}
-      <button class="fav ${fav}" data-fav="${p.id}" aria-label="Favori">
+      <button class="fav ${fav}" data-fav="${p.id}" aria-label="Ajouter aux favoris">
         <svg viewBox="0 0 24 24" fill="${fav?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg>
       </button>
     </div>
     <div class="card-body">
-      <span class="sport">${[p.sport,p.tech].filter(Boolean).join(' · ')}</span>
-      <h3 data-open="${p.id}" style="cursor:pointer">${p.name}</h3>
-      <span class="brand-name">${p.brand||''}${p.sizes&&p.sizes.length?` · T. ${p.sizes.join(' / ')}`:''}</span>
-      ${p.rating?`<div class="rating"><span class="stars">${stars(p.rating)}</span> ${p.rating} ${p.reviews?`<span class="muted">(${p.reviews})</span>`:''}</div>`:''}
-      <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="background:${COLORS[c]||c}" title="${c}"></span>`).join('')}</div>
-      <div class="card-foot">
-        <div class="price">${p.old?`<s>${fmt(p.old)}</s>`:''}${priceLabel(p)}</div>
-        <div class="card-actions">
-          <button class="mini-btn ${inCmp}" data-cmp="${p.id}" aria-label="Comparer" title="Ajouter au comparateur">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-          </button>
-          <button class="mini-btn" data-open="${p.id}" aria-label="Voir" title="Voir le détail">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-      </div>
+      <span class="c-brand">${p.brand||''}${p.sizes&&p.sizes.length?` · T. ${p.sizes.join(' / ')}`:''}</span>
+      <h3>${p.name}</h3>
+      <div class="price">${p.old?`<s>${fmt(p.old)}</s>`:''}${priceLabel(p)}</div>
     </div>
     ${ADMIN.on?`<button class="admin-edit" data-edit="${p.id}">✏️ Éditer</button>`:''}
   </article>`;
