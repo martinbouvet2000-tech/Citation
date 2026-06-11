@@ -1,1092 +1,642 @@
 /* =============================================================================
-   VÉLOCE — CATALOGUE (généré depuis le catalogue PDF, 60 modèles Nike réels)
+   VÉLOCE v2 — STOCK (photo-first : 1 photo = 1 paire = 1 fiche)
    -----------------------------------------------------------------------------
-   POUR MODIFIER : éditez un bloc, ou utilisez le mode admin sur le site.
-   Champs : name, brand, sport, tech, price (null = "Sur demande"),
-            sizes:[...], cw:"coloris texte" (-> couleur auto), photos:['x.jpg'].
+   • name  : modèle (pré-identifié depuis la photo — corrigez si besoin)
+   • cw    : coloris en toutes lettres
+   • size  : pointure EU de LA paire (ex. 42.5) — null = à renseigner
+   • price : prix en € — null = "Sur demande"
+   • sold  : true quand la paire est vendue
+   Étiquetage rapide : ouvrir le site → pied de page "Gérer" → code admin.
 ============================================================================= */
-const P = [
+const STOCK = [
  {
-  "name": "Nike Shox TL Tiger Fire",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Noir / Orange-Jaune (Tiger/Fire)",
-  "price": 55,
-  "sizes": [
-   40
-  ],
-  "rating": 4.8,
-  "reviews": 41,
-  "pop": 96,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-tiger-fire.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Sunset",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Noir / Jaune-Rouge (Sunset)",
-  "price": 65,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.6,
-  "reviews": 58,
-  "pop": 99,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "new": true,
-  "photos": [
-   "nike-shox-tl-sunset.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Wolf Grey",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Gris total (Wolf Grey)",
-  "price": 55,
-  "sizes": [
-   40
-  ],
-  "rating": 4.9,
-  "reviews": 75,
-  "pop": 98,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-wolf-grey.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Sail",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Blanc / Crème total (Sail)",
-  "price": 55,
-  "sizes": [
-   43
-  ],
-  "rating": 4.7,
-  "reviews": 92,
-  "pop": 99,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "new": true,
-  "photos": [
-   "nike-shox-tl-sail.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Metallic Silver",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Blanc / Argent total (Metallic Silver)",
-  "price": 55,
-  "sizes": [
-   43
-  ],
-  "rating": 4.5,
-  "reviews": 109,
-  "pop": 99,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-metallic-silver.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Gorge Green",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Blanc / Gris / Vert (Gorge Green)",
-  "price": 50,
-  "sizes": [
-   43
-  ],
-  "rating": 4.8,
-  "reviews": 126,
-  "pop": 96,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-gorge-green.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Gorge Green",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Blanc / Gris / Vert (Gorge Green)",
-  "price": 50,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.6,
-  "reviews": 143,
-  "pop": 90,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-gorge-green-1.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Gorge Green",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Blanc / Gris / Vert (Gorge Green)",
-  "price": 50,
-  "sizes": [
-   44
-  ],
-  "rating": 4.9,
-  "reviews": 160,
-  "pop": 91,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-gorge-green-2.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Platinum Tint",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Blanc / Gris (Platinum Tint)",
-  "price": 50,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.7,
-  "reviews": 177,
-  "pop": 92,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-platinum-tint.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Noir / Vert Fluo",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Noir / Vert Fluo",
-  "price": 50,
-  "sizes": [
-   43
-  ],
-  "rating": 4.5,
-  "reviews": 194,
-  "pop": 93,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-noir-vert-fluo.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Velvet Brown",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Marron / Reflets irisés (Velvet Brown)",
-  "price": 50,
-  "sizes": [
-   43
-  ],
-  "rating": 4.8,
-  "reviews": 211,
-  "pop": 94,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-velvet-brown.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL Total Orange",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Orange / Rouge / Noir (Total Orange)",
+  "id": 1,
+  "photo": "pair-01.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Blanc",
+  "size": null,
   "price": null,
-  "sizes": [
-   43
-  ],
-  "rating": 4.6,
-  "reviews": 28,
-  "pop": 99,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "new": true,
-  "photos": [
-   "nike-shox-tl-total-orange.jpg"
-  ]
+  "sold": false
  },
  {
-  "name": "Nike Shox TL Metallic",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Argent / Gris (Metallic)",
-  "price": 55,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.9,
-  "reviews": 45,
-  "pop": 99,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-metallic.jpg"
-  ]
- },
- {
-  "name": "Nike Shox TL 2 paires",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Beige / Blanc (2 paires)",
-  "price": 45,
-  "sizes": [
-   42,
-   43
-  ],
-  "rating": 4.7,
-  "reviews": 62,
-  "pop": 85,
-  "desc": "L'iconique amorti à colonnes Shox — confort dynamique et signature streetwear indémodable.",
-  "photos": [
-   "nike-shox-tl-2-paires.jpg"
-  ]
- },
- {
-  "name": "Nike Shox R4 Argent / Noir",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Argent / Noir / Bleu ciel",
-  "price": 55,
-  "sizes": [
-   40
-  ],
-  "rating": 4.5,
-  "reviews": 79,
-  "pop": 96,
-  "desc": "Le Shox R4, silhouette rétro-running culte et amorti à colonnes."
- },
- {
-  "name": "Nike Shox R4 Blanc / Bleu Royal",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Blanc / Bleu Royal / Argent",
-  "price": 55,
-  "sizes": [
-   44
-  ],
-  "rating": 4.8,
-  "reviews": 96,
-  "pop": 97,
-  "desc": "Le Shox R4, silhouette rétro-running culte et amorti à colonnes."
- },
- {
-  "name": "Nike Shox R4 Gris foncé / Anthracite Suède",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Gris foncé / Anthracite Suède",
-  "price": 50,
-  "sizes": [
-   42
-  ],
-  "rating": 4.6,
-  "reviews": 113,
-  "pop": 93,
-  "desc": "Le Shox R4, silhouette rétro-running culte et amorti à colonnes.",
-  "photos": [
-   "nike-shox-r4-gris-fonc-anthracite-su-de.jpg"
-  ]
- },
- {
-  "name": "Nike Shox R4 Khaki",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Amorti Shox",
-  "cw": "Beige / Marron / Noir (Khaki)",
-  "price": 50,
-  "sizes": [
-   43
-  ],
-  "rating": 4.9,
-  "reviews": 130,
-  "pop": 94,
-  "desc": "Le Shox R4, silhouette rétro-running culte et amorti à colonnes.",
-  "photos": [
-   "nike-shox-r4-khaki.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max Dn Dark Navy Blue",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Dynamic",
-  "cw": "Noir / Bleu (Dark Navy/Blue)",
-  "price": 50,
-  "sizes": [
-   42
-  ],
-  "rating": 4.7,
-  "reviews": 147,
-  "pop": 99,
-  "desc": "L'unité Dynamic Air double chambre, pour une sensation de glisse réactive à chaque pas.",
-  "new": true,
-  "photos": [
-   "nike-air-max-dn-dark-navy-blue-a.jpg",
-   "nike-air-max-dn-dark-navy-blue-b.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max Dn Dark Smoke",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Dynamic",
-  "cw": "Noir / Bleu (Dark Smoke)",
-  "price": 50,
-  "sizes": [
-   43,
-   45
-  ],
-  "rating": 4.5,
-  "reviews": 164,
-  "pop": 96,
-  "desc": "L'unité Dynamic Air double chambre, pour une sensation de glisse réactive à chaque pas.",
-  "photos": [
-   "nike-air-max-dn-dark-smoke-a.jpg",
-   "nike-air-max-dn-dark-smoke-b.jpg",
-   "nike-air-max-dn-dark-smoke-c.jpg",
-   "nike-air-max-dn-dark-smoke-d.jpg",
-   "nike-air-max-dn-dark-smoke-e.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max Dn Dark Smoke Orange",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Dynamic",
-  "cw": "Noir / Orange (Dark Smoke/Orange)",
-  "price": 50,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.8,
-  "reviews": 181,
-  "pop": 99,
-  "desc": "L'unité Dynamic Air double chambre, pour une sensation de glisse réactive à chaque pas.",
-  "new": true,
-  "photos": [
-   "nike-air-max-dn-dark-smoke-orange-a.jpg",
-   "nike-air-max-dn-dark-smoke-orange-b.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max Dn Dark Iris",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Dynamic",
-  "cw": "Noir / Violet / Orange (Dark Iris)",
-  "price": 50,
-  "sizes": [
-   42
-  ],
-  "rating": 4.6,
-  "reviews": 198,
-  "pop": 91,
-  "desc": "L'unité Dynamic Air double chambre, pour une sensation de glisse réactive à chaque pas.",
-  "photos": [
-   "nike-air-max-dn-dark-iris.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max Dn Tie-Dye Sunset",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Dynamic",
-  "cw": "Noir / Rose-Jaune (Tie-Dye Sunset)",
-  "price": 50,
-  "sizes": [
-   42
-  ],
-  "rating": 4.9,
-  "reviews": 215,
-  "pop": 92,
-  "desc": "L'unité Dynamic Air double chambre, pour une sensation de glisse réactive à chaque pas.",
-  "photos": [
-   "nike-air-max-dn-tie-dye-sunset-a.jpg",
-   "nike-air-max-dn-tie-dye-sunset-b.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max Dn Blanc / Violet",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Dynamic",
-  "cw": "Blanc / Violet / Bordeaux",
-  "price": 50,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.7,
-  "reviews": 32,
-  "pop": 93,
-  "desc": "L'unité Dynamic Air double chambre, pour une sensation de glisse réactive à chaque pas.",
-  "photos": [
-   "nike-air-max-dn-blanc-violet.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max Dn Blanc / Gris clair",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Dynamic",
-  "cw": "Blanc / Gris clair",
-  "price": 50,
-  "sizes": [
-   42.5,
-   44.5
-  ],
-  "rating": 4.5,
-  "reviews": 49,
-  "pop": 94,
-  "desc": "L'unité Dynamic Air double chambre, pour une sensation de glisse réactive à chaque pas.",
-  "photos": [
-   "nike-air-max-dn-blanc-gris-clair.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max Dn Total Orange",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Dynamic",
-  "cw": "Orange / Gris (Total Orange)",
-  "price": 40,
-  "sizes": [
-   39
-  ],
-  "rating": 4.8,
-  "reviews": 66,
-  "pop": 85,
-  "desc": "L'unité Dynamic Air double chambre, pour une sensation de glisse réactive à chaque pas.",
-  "photos": [
-   "nike-air-max-dn-total-orange.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max 1 Anniversary",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Max",
-  "cw": "Blanc / Bleu Royal (Anniversary)",
-  "price": 60,
-  "sizes": [
-   44.5
-  ],
-  "rating": 4.6,
-  "reviews": 83,
-  "pop": 99,
-  "desc": "L'originale Air Max de 1987 — la première fenêtre d'air visible de l'histoire.",
-  "new": true,
-  "photos": [
-   "nike-air-max-1-anniversary-a.jpg",
-   "nike-air-max-1-anniversary-b.jpg",
-   "nike-air-max-1-anniversary-c.jpg",
-   "nike-air-max-1-anniversary-d.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max 1 Michigan",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Max",
-  "cw": "Jaune / Bleu Marine (Michigan)",
-  "price": 50,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.9,
-  "reviews": 100,
-  "pop": 90,
-  "desc": "L'originale Air Max de 1987 — la première fenêtre d'air visible de l'histoire.",
-  "photos": [
-   "nike-air-max-1-michigan.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max 1 UNC Carolina Blue",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Max",
-  "cw": "Blanc / Bleu ciel (UNC Carolina Blue)",
-  "price": 60,
-  "sizes": [
-   44.5
-  ],
-  "rating": 4.7,
-  "reviews": 117,
-  "pop": 99,
-  "desc": "L'originale Air Max de 1987 — la première fenêtre d'air visible de l'histoire.",
-  "new": true,
-  "photos": [
-   "nike-air-max-1-unc-carolina-blue.jpg"
-  ]
- },
- {
-  "name": "Nike Air Tuned Max vue semelle",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Tuned",
-  "cw": "Blanc / Noir (vue semelle)",
+  "id": 2,
+  "photo": "pair-02.jpg",
+  "name": "Nike Shox R4",
+  "cw": "Beige / Marron",
+  "size": null,
   "price": null,
-  "sizes": [],
-  "rating": 4.5,
-  "reviews": 134,
-  "pop": 82,
-  "desc": "L'Air Tuned Max, techwear Y2K et amorti Tuned Air enveloppant."
+  "sold": false
  },
  {
-  "name": "Nike Air Tuned Max Columbia Blue",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Tuned",
-  "cw": "Blanc / Bleu ciel / Marine (Columbia Blue)",
-  "price": 50,
-  "sizes": [
-   41
-  ],
-  "rating": 4.8,
-  "reviews": 151,
-  "pop": 93,
-  "desc": "L'Air Tuned Max, techwear Y2K et amorti Tuned Air enveloppant."
+  "id": 3,
+  "photo": "pair-03.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Gris",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Max Plus TN TN3",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Max Plus",
-  "cw": "Blanc / Violet / Orange (TN3)",
-  "price": 70,
-  "sizes": [
-   47.5
-  ],
-  "rating": 4.6,
-  "reviews": 168,
-  "pop": 99,
-  "desc": "La TN et son dégradé emblématique — amorti Tuned Air, allure agressive.",
-  "new": true,
-  "photos": [
-   "nike-air-max-plus-tn-tn3.jpg"
-  ]
+  "id": 4,
+  "photo": "pair-04.jpg",
+  "name": "Nike Air Max 1",
+  "cw": "Jaune / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Max Plus TN Speed Yellow",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Max Plus",
-  "cw": "Noir / Jaune / Vert (Speed Yellow)",
-  "price": 70,
-  "sizes": [
-   48.5
-  ],
-  "rating": 4.9,
-  "reviews": 185,
-  "pop": 99,
-  "desc": "La TN et son dégradé emblématique — amorti Tuned Air, allure agressive.",
-  "new": true,
-  "photos": [
-   "nike-air-max-plus-tn-speed-yellow-a.jpg",
-   "nike-air-max-plus-tn-speed-yellow-b.jpg",
-   "nike-air-max-plus-tn-speed-yellow-c.jpg"
-  ]
+  "id": 5,
+  "photo": "pair-05.jpg",
+  "name": "Nike Training",
+  "cw": "Gris / Jaune",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Force 1 Low Noir total",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Cuir AF-1",
-  "cw": "Noir total",
-  "price": 48,
-  "sizes": [
-   40.5
-  ],
-  "rating": 4.7,
-  "reviews": 202,
-  "pop": 94,
-  "desc": "L'AF-1, la sneaker la plus iconique au monde — cuir premium, lignes intemporelles.",
-  "photos": [
-   "nike-air-force-1-low-noir-total.jpg"
-  ]
+  "id": 6,
+  "photo": "pair-06.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Force 1 Low Blanc / Crème",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Cuir AF-1",
-  "cw": "Blanc / Crème / Bleu ciel / Gum",
-  "price": 30,
-  "sizes": [
-   47.5
-  ],
-  "rating": 4.5,
-  "reviews": 219,
-  "pop": 70,
-  "desc": "L'AF-1, la sneaker la plus iconique au monde — cuir premium, lignes intemporelles.",
-  "photos": [
-   "nike-air-force-1-low-blanc-cr-me-a.jpg",
-   "nike-air-force-1-low-blanc-cr-me-b.jpg"
-  ]
+  "id": 7,
+  "photo": "pair-07.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Rose / Jaune",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Force 1 Low Wolf Grey Patent",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Cuir AF-1",
-  "cw": "Gris / Blanc (Wolf Grey Patent)",
-  "price": 50,
-  "sizes": [
-   48.5
-  ],
-  "rating": 4.8,
-  "reviews": 36,
-  "pop": 91,
-  "desc": "L'AF-1, la sneaker la plus iconique au monde — cuir premium, lignes intemporelles.",
-  "photos": [
-   "nike-air-force-1-low-wolf-grey-patent.jpg"
-  ]
+  "id": 8,
+  "photo": "pair-08.jpg",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Force 1 Low Pink Glaze",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Cuir AF-1",
-  "cw": "Blanc / Rose (Pink Glaze)",
-  "price": 50,
-  "sizes": [
-   42
-  ],
-  "rating": 4.6,
-  "reviews": 53,
-  "pop": 92,
-  "desc": "L'AF-1, la sneaker la plus iconique au monde — cuir premium, lignes intemporelles.",
-  "photos": [
-   "nike-air-force-1-low-pink-glaze.jpg"
-  ]
+  "id": 9,
+  "photo": "pair-09.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Blanc / Noir",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Force 1 Low Blanc total / Irisé",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Cuir AF-1",
-  "cw": "Blanc total / Irisé",
-  "price": 50,
-  "sizes": [
-   42
-  ],
-  "rating": 4.9,
-  "reviews": 70,
-  "pop": 93,
-  "desc": "L'AF-1, la sneaker la plus iconique au monde — cuir premium, lignes intemporelles.",
-  "photos": [
-   "nike-air-force-1-low-blanc-total-iris.jpg"
-  ]
+  "id": 10,
+  "photo": "pair-10.jpg",
+  "name": "Nike Air Max 1",
+  "cw": "Bleu / Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Force 1 Low Malachite",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Cuir AF-1",
-  "cw": "Blanc / Vert Émeraude (Malachite)",
-  "price": 50,
-  "sizes": [
-   42
-  ],
-  "rating": 4.7,
-  "reviews": 87,
-  "pop": 94,
-  "desc": "L'AF-1, la sneaker la plus iconique au monde — cuir premium, lignes intemporelles.",
-  "photos": [
-   "nike-air-force-1-low-malachite.jpg"
-  ]
+  "id": 11,
+  "photo": "pair-11.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Noir / Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Force 1 Low By You",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Cuir AF-1",
-  "cw": "Gris / Rouge / Blanc (By You)",
-  "price": 50,
-  "sizes": [
-   46
-  ],
-  "rating": 4.5,
-  "reviews": 104,
-  "pop": 95,
-  "desc": "L'AF-1, la sneaker la plus iconique au monde — cuir premium, lignes intemporelles.",
-  "photos": [
-   "nike-air-force-1-low-by-you.jpg"
-  ]
+  "id": 12,
+  "photo": "pair-12.jpg",
+  "name": "Nike P-6000",
+  "cw": "Blanc / Rouge",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Dunk Low Hemp Rose Whisper",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Rétro Dunk",
-  "cw": "Blanc / Beige (Hemp / Rose Whisper)",
-  "price": 35,
-  "sizes": [
-   44.5
-  ],
-  "rating": 4.8,
-  "reviews": 121,
-  "pop": 81,
-  "desc": "La Dunk Low, retour gagnant du basket des années 80 sur le bitume.",
-  "photos": [
-   "nike-dunk-low-hemp-rose-whisper.jpg"
-  ]
+  "id": 13,
+  "photo": "pair-13.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Orange / Rouge",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Dunk Low Panda",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Rétro Dunk",
-  "cw": "Blanc / Noir (Panda)",
-  "price": 45,
-  "sizes": [
-   44
-  ],
-  "rating": 4.6,
-  "reviews": 138,
-  "pop": 85,
-  "desc": "La Dunk Low, retour gagnant du basket des années 80 sur le bitume.",
-  "photos": [
-   "nike-dunk-low-panda.jpg"
-  ]
+  "id": 14,
+  "photo": "pair-14.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Gris",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Dunk Low Hulk",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Rétro Dunk",
-  "cw": "Blanc / Violet / Vert (Hulk)",
-  "price": 35,
-  "sizes": [
-   44
-  ],
-  "rating": 4.9,
-  "reviews": 155,
-  "pop": 76,
-  "desc": "La Dunk Low, retour gagnant du basket des années 80 sur le bitume.",
-  "photos": [
-   "nike-dunk-low-hulk-a.jpg",
-   "nike-dunk-low-hulk-b.jpg"
-  ]
+  "id": 15,
+  "photo": "pair-15.jpg",
+  "name": "Nike Cortez",
+  "cw": "Beige",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Cortez University Gold",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Rétro Cortez",
-  "cw": "Jaune / Noir (University Gold)",
-  "price": 30,
-  "sizes": [
-   42
-  ],
-  "rating": 4.7,
-  "reviews": 172,
-  "pop": 72,
-  "desc": "La Cortez, la première running Nike — silhouette fine et héritage légendaire.",
-  "photos": [
-   "nike-cortez-university-gold.jpg"
-  ]
+  "id": 16,
+  "photo": "pair-16.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Noir / Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Cortez Blanc / Bleu ciel",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Rétro Cortez",
-  "cw": "Blanc / Bleu ciel",
-  "price": 30,
-  "sizes": [
-   47.5
-  ],
-  "rating": 4.5,
-  "reviews": 189,
-  "pop": 73,
-  "desc": "La Cortez, la première running Nike — silhouette fine et héritage légendaire.",
-  "photos": [
-   "nike-cortez-blanc-bleu-ciel.jpg"
-  ]
+  "id": 17,
+  "photo": "pair-17.jpg",
+  "name": "Nike ACG Wildwood",
+  "cw": "Marron",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Cortez Smokey Mauve",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Rétro Cortez",
-  "cw": "Marron / Taupe (Smokey Mauve)",
-  "price": 30,
-  "sizes": [
-   43
-  ],
-  "rating": 4.8,
-  "reviews": 206,
-  "pop": 74,
-  "desc": "La Cortez, la première running Nike — silhouette fine et héritage légendaire."
+  "id": 18,
+  "photo": "pair-18.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Violet / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Zoom Vomero 5 Cobblestone",
-  "brand": "Nike",
-  "sport": "Running",
-  "tech": "Amorti Zoom",
-  "cw": "Blanc / Gris / Marron (Cobblestone)",
-  "price": 50,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.6,
-  "reviews": 223,
-  "pop": 95,
-  "desc": "La Vomero 5, amorti Zoom Air et look running rétro très tendance.",
-  "photos": [
-   "nike-zoom-vomero-5-cobblestone-a.jpg",
-   "nike-zoom-vomero-5-cobblestone-b.jpg"
-  ]
+  "id": 19,
+  "photo": "pair-19.jpg",
+  "name": "Nike Zoom Vomero 5",
+  "cw": "Blanc / Gris",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Zoom Vomero 5 Blanc / Argent",
-  "brand": "Nike",
-  "sport": "Running",
-  "tech": "Amorti Zoom",
-  "cw": "Blanc / Argent / Rose pâle",
-  "price": 50,
-  "sizes": [
-   44
-  ],
-  "rating": 4.9,
-  "reviews": 40,
-  "pop": 96,
-  "desc": "La Vomero 5, amorti Zoom Air et look running rétro très tendance.",
-  "photos": [
-   "nike-zoom-vomero-5-blanc-argent.jpg"
-  ]
+  "id": 20,
+  "photo": "pair-20.jpg",
+  "name": "Nike Air Max 1",
+  "cw": "Blanc / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike V2K Run Blanc / Jaune",
-  "brand": "Nike",
-  "sport": "Running",
-  "tech": "Y2K Running",
-  "cw": "Blanc / Jaune / Bleu ciel",
-  "price": 35,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.7,
-  "reviews": 57,
-  "pop": 75,
-  "desc": "La V2K Run, esthétique métallique des années 2000 et confort moderne."
+  "id": 21,
+  "photo": "pair-21.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Blanc / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike P-6000 Blanc / Bordeaux",
-  "brand": "Nike",
-  "sport": "Running",
-  "tech": "Running rétro",
-  "cw": "Blanc / Bordeaux / Gris",
-  "price": 50,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.5,
-  "reviews": 74,
-  "pop": 91,
-  "desc": "La P-6000, dad-shoe métallisée inspirée des runnings Pegasus des années 2000.",
-  "photos": [
-   "nike-p-6000-blanc-bordeaux-a.jpg",
-   "nike-p-6000-blanc-bordeaux-b.jpg"
-  ]
+  "id": 22,
+  "photo": "pair-22.jpg",
+  "name": "Nike Air Max 95",
+  "cw": "Blanc / Gris",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Nike Air Max SC Blanc / Gris",
-  "brand": "Nike",
-  "sport": "Running",
-  "tech": "Air Max",
+  "id": 23,
+  "photo": "pair-23.jpg",
+  "name": "Nike Cortez",
+  "cw": "Orange / Jaune",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 24,
+  "photo": "pair-24.jpg",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 25,
+  "photo": "pair-25.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Argent / Gris",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 26,
+  "photo": "pair-26.jpg",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc / Rose",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 27,
+  "photo": "pair-27.jpg",
+  "name": "Nike Air Max Plus TN",
+  "cw": "Orange / Jaune",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 28,
+  "photo": "pair-28.jpg",
+  "name": "Nike Boot montante",
+  "cw": "Noir",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 29,
+  "photo": "pair-29.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Gris / Noir",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 30,
+  "photo": "pair-30.jpg",
+  "name": "Nike Boot montante",
+  "cw": "Noir",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 31,
+  "photo": "pair-31.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Blanc / Violet",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 32,
+  "photo": "pair-32.jpg",
+  "name": "Nike Air Max Plus TN",
+  "cw": "Orange",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 33,
+  "photo": "pair-33.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Gris",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 34,
+  "photo": "pair-34.jpg",
+  "name": "Nike Air Max 95",
+  "cw": "Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 35,
+  "photo": "pair-35.jpg",
+  "name": "Nike Air Max 1",
+  "cw": "Blanc / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 36,
+  "photo": "pair-36.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Noir / Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 37,
+  "photo": "pair-37.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Gris / Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 38,
+  "photo": "pair-38.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Rouge / Jaune",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 39,
+  "photo": "pair-39.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Blanc / Violet",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 40,
+  "photo": "pair-40.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Noir / Orange",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 41,
+  "photo": "pair-41.jpg",
+  "name": "Nike Air Max Plus TN",
+  "cw": "Noir / Jaune",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 42,
+  "photo": "pair-42.jpg",
+  "name": "Nike Boot montante",
+  "cw": "Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 43,
+  "photo": "pair-43.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Bleu / Violet",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 44,
+  "photo": "pair-44.jpg",
+  "name": "Nike Dunk Low",
+  "cw": "Blanc / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 45,
+  "photo": "pair-45.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Blanc / Jaune",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 46,
+  "photo": "pair-46.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Blanc / Argent",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 47,
+  "photo": "pair-47.jpg",
+  "name": "Nike Air Max 1",
+  "cw": "Blanc / Gris",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 48,
+  "photo": "pair-48.jpg",
+  "name": "Nike Zoom Vomero 5",
+  "cw": "Gris / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 49,
+  "photo": "pair-49.jpg",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc / Rouge",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 50,
+  "photo": "pair-50.jpg",
+  "name": "Jordan",
+  "cw": "Jaune / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 51,
+  "photo": "pair-51.jpg",
+  "name": "Nike Zoom Vomero 5",
+  "cw": "Blanc / Marron",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 52,
+  "photo": "pair-52.jpg",
+  "name": "Nike Air Max SC",
   "cw": "Blanc / Gris / Jaune",
-  "price": 25,
-  "sizes": [
-   49.5
-  ],
-  "rating": 4.8,
-  "reviews": 91,
-  "pop": 67,
-  "desc": "L'Air Max SC, amorti Air visible au talon pour un confort quotidien accessible.",
-  "photos": [
-   "nike-air-max-sc-blanc-gris.jpg"
-  ]
- },
- {
-  "name": "Nike Air Max 95 Blanc total",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Air Max",
-  "cw": "Blanc total",
-  "price": 45,
-  "sizes": [
-   48.5
-  ],
-  "rating": 4.6,
-  "reviews": 108,
-  "pop": 88,
-  "desc": "L'Air Max 95, design en couches inspiré de l'anatomie humaine — un classique.",
-  "photos": [
-   "nike-air-max-95-blanc-total-a.jpg",
-   "nike-air-max-95-blanc-total-b.jpg",
-   "nike-air-max-95-blanc-total-c.jpg"
-  ]
- },
- {
-  "name": "Nike Zoom Metcon Noir / Violet-Bleu",
-  "brand": "Nike",
-  "sport": "Fitness",
-  "tech": "Zoom / Metcon",
-  "cw": "Noir / Violet-Bleu",
-  "price": 30,
-  "sizes": [
-   42,
-   42.5
-  ],
-  "rating": 4.9,
-  "reviews": 125,
-  "pop": 74,
-  "desc": "Polyvalente salle & running — stable pour le cross-training, réactive à la course."
- },
- {
-  "name": "Nike Zoom Metcon Gris clair / Blanc",
-  "brand": "Nike",
-  "sport": "Fitness",
-  "tech": "Zoom / Metcon",
-  "cw": "Gris clair / Blanc / Gris foncé",
-  "price": 35,
-  "sizes": [
-   48.5
-  ],
-  "rating": 4.7,
-  "reviews": 142,
-  "pop": 95,
-  "desc": "Polyvalente salle & running — stable pour le cross-training, réactive à la course.",
-  "new": true,
-  "photos": [
-   "nike-zoom-metcon-gris-clair-blanc.jpg"
-  ]
- },
- {
-  "name": "Nike Manoa Boot Blanc total",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Outdoor",
-  "cw": "Blanc total",
+  "size": null,
   "price": null,
-  "sizes": [
-   44
-  ],
-  "rating": 4.5,
-  "reviews": 159,
-  "pop": 86,
-  "desc": "La Manoa, boot montante outdoor — maintien et style robuste.",
-  "photos": [
-   "nike-manoa-boot-blanc-total-a.jpg",
-   "nike-manoa-boot-blanc-total-b.jpg"
-  ]
+  "sold": false
  },
  {
-  "name": "Nike Manoa Boot Noir total",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "Outdoor",
-  "cw": "Noir total",
+  "id": 53,
+  "photo": "pair-53.jpg",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc / Vert",
+  "size": null,
   "price": null,
-  "sizes": [
-   46
-  ],
-  "rating": 4.8,
-  "reviews": 176,
-  "pop": 80,
-  "desc": "La Manoa, boot montante outdoor — maintien et style robuste.",
-  "photos": [
-   "nike-manoa-boot-noir-total.jpg"
-  ]
+  "sold": false
  },
  {
-  "name": "Nike ACG Wildwood Marron / Caramel",
-  "brand": "Nike",
-  "sport": "Lifestyle",
-  "tech": "ACG Outdoor",
-  "cw": "Marron / Caramel / Noir",
-  "price": 50,
-  "sizes": [
-   42.5
-  ],
-  "rating": 4.6,
-  "reviews": 193,
-  "pop": 91,
-  "desc": "La gamme ACG, conçue pour le terrain — accroche et protection tout-temps.",
-  "photos": [
-   "nike-acg-wildwood-marron-caramel.jpg"
-  ]
+  "id": 54,
+  "photo": "pair-54.jpg",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Jordan Tatum 2 Blanc / Noir",
-  "brand": "Jordan",
-  "sport": "Basketball",
-  "tech": "Signature NBA",
-  "cw": "Blanc / Noir / Rouge",
-  "price": 30,
-  "sizes": [],
-  "rating": 4.9,
-  "reviews": 210,
-  "pop": 72,
-  "desc": "La signature de Jayson Tatum — légère et réactive pour le jeu rapide."
+  "id": 55,
+  "photo": "pair-55.jpg",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc / Rose",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Jordan Tatum 2 Stealth",
-  "brand": "Jordan",
-  "sport": "Basketball",
-  "tech": "Signature NBA",
-  "cw": "Gris / Blanc (Stealth)",
-  "price": 30,
-  "sizes": [
-   45.5,
-   47.5
-  ],
-  "rating": 4.7,
-  "reviews": 27,
-  "pop": 73,
-  "desc": "La signature de Jayson Tatum — légère et réactive pour le jeu rapide."
+  "id": 56,
+  "photo": "pair-56.jpg",
+  "name": "Nike Air Max 1",
+  "cw": "Blanc / Bleu",
+  "size": null,
+  "price": null,
+  "sold": false
  },
  {
-  "name": "Jordan Luka 2 Jaune / Bleu ciel",
-  "brand": "Jordan",
-  "sport": "Basketball",
-  "tech": "Signature NBA",
-  "cw": "Jaune / Bleu ciel / Rose",
-  "price": 35,
-  "sizes": [
-   44.5
-  ],
-  "rating": 4.5,
-  "reviews": 44,
-  "pop": 79,
-  "desc": "La signature de Luka Doncic — stabilité et amorti pour les changements d'appui.",
-  "photos": [
-   "jordan-luka-2-jaune-bleu-ciel.jpg"
-  ]
+  "id": 57,
+  "photo": "pair-57.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Blanc / Gris",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 58,
+  "photo": "pair-58.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Noir / Gris",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 59,
+  "photo": "pair-59.jpg",
+  "name": "Nike Dunk Low",
+  "cw": "Noir / Vert",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 60,
+  "photo": "pair-60.jpg",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 61,
+  "photo": "pair-61.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Gris / Rose",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 62,
+  "photo": "pair-62.jpg",
+  "name": "Nike Air Max 95",
+  "cw": "Blanc",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 63,
+  "photo": "pair-63.jpg",
+  "name": "Nike Dunk Low",
+  "cw": "Blanc / Vert / Jaune",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 64,
+  "photo": "pair-64.jpg",
+  "name": "Nike Shox R4",
+  "cw": "Gris",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 65,
+  "photo": "pair-65.jpg",
+  "name": "Nike Dunk Low",
+  "cw": "Blanc / Violet / Vert",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 66,
+  "photo": "pair-66.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Gris / Noir",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 67,
+  "photo": "pair-67.jpg",
+  "name": "Nike Air Max Dn",
+  "cw": "Gris",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 68,
+  "photo": "pair-68.jpg",
+  "name": "Nike P-6000",
+  "cw": "Blanc / Gris",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 69,
+  "photo": "pair-69.jpg",
+  "name": "Nike Air Max Plus TN",
+  "cw": "Jaune / Vert",
+  "size": null,
+  "price": null,
+  "sold": false
+ },
+ {
+  "id": 70,
+  "photo": "pair-70.jpg",
+  "name": "Nike Shox TL",
+  "cw": "Blanc / Gris",
+  "size": null,
+  "price": null,
+  "sold": false
  }
 ];

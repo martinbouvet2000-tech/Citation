@@ -1,66 +1,30 @@
-# VÉLOCE — Plateforme vitrine chaussures de sport
+# VÉLOCE v2 — Sneakers authentiques, pièces uniques
 
-Vitrine **premium** mono-page dédiée à la vente de chaussures de sport (running, fitness, football, basketball, tennis, lifestyle). Design dynamique et immersif inspiré des grandes enseignes sportives, pensé pour évoluer vers une boutique e-commerce complète.
+Boutique vitrine **photo-first** : chaque paire du stock = **1 photo réelle = 1 fiche**. DA claire et épurée (galerie), pensée pour la revente de pièces uniques Nike & Jordan.
 
-> 🔗 En ligne : https://martinbouvet2000-tech.github.io/Citation/sneakers/
+> 🔗 https://martinbouvet2000-tech.github.io/Citation/sneakers/
 
-## Fonctionnalités
+## Principes (leçons de la v1)
 
-- **Hero plein écran** impactant avec animations, statistiques animées et visuel produit 3D-like.
-- **Sidebar Catégories** (panneau latéral) pour accéder aux sports (Running, Fitness, Football, Basketball, Tennis, Lifestyle) depuis n'importe quelle page, + accès rapide Nouveautés / Best-sellers / Catalogue / Guides / Contact.
-- **Panier complet** : ajout avec taille, quantités (+/−), retrait, sous-total, badge persistant dans le header (localStorage), tiroir latéral. Prêt à brancher sur un paiement en ligne.
-- **Nouveautés** et **best-sellers** mis en avant.
-- **Catalogue complet** avec **filtres avancés** : recherche, sport, marque, technologie, couleur, taille, prix, et tri (popularité, nouveautés, prix, note).
-- **Fiches produits détaillées** (modale) : galerie multi-photos avec **zoom plein écran**, description, caractéristiques techniques (poids, drop, techno), coloris, **lien guide des tailles**, tailles disponibles (gestion stock), **réassurance près du bouton d'achat**, avis clients avec **répartition des notes** et indicateur de **chaussant**, **bouton d'achat collant sur mobile**.
-- **Catalogue** : **filtres appliqués sous forme de chips** (retrait en un clic + « Tout effacer »), aperçu d'une 2ᵉ photo au survol (desktop).
-- **Accessibilité (WCAG 2.2 AA)** : lien d'évitement, focus visible au clavier, modales `role="dialog"` avec piège de tabulation et retour de focus, contrastes renforcés, champs ≥16px (anti-zoom iOS).
-- **Performance** : images en `loading="lazy"` + `decoding="async"`, conteneurs à ratio fixe (zéro décalage / CLS), zéro dépendance externe.
-- **Comparateur** de modèles (jusqu'à 3) avec tableau comparatif et mise en avant des meilleures valeurs.
-- **Favoris** persistants (localStorage).
-- **Guides d'achat** (running, pointure, entretien) en modale.
-- **Newsletter** et **formulaire de contact** avec validation.
-- **Réseaux sociaux** intégrés.
-- **100% responsive** (mobile / tablette / ordinateur), animations fluides, mode `prefers-reduced-motion` respecté.
+- **1 photo = 1 paire = 1 fiche.** Le catalogue naît des photos du stock réel — aucune association automatique photo↔texte, donc aucune erreur de paire possible.
+- **Rien à sélectionner** sur une fiche : une paire est unique, sa taille est affichée comme un fait.
+- **Stockage local versionné** (`veloce2_*`) + nettoyage des anciennes clés : plus de bugs de cache fantôme. `?reset` dans l'URL purge les modifications locales.
+- **Zéro dépendance** (hors Google Fonts), un fichier HTML + un fichier de données.
 
-## Pile technique
+## Pour le client
 
-- HTML / CSS / JavaScript **vanilla**, **zéro dépendance**, **un seul fichier** (`index.html`).
-- Illustrations produits en **SVG paramétrique** (générées à la volée selon les coloris) — aucun asset externe, chargement instantané.
-- Hébergement : **GitHub Pages**.
+Catalogue filtrable (modèle, taille, tri prix) → fiche (photo zoomable, taille, prix) → panier → **commande par email** pré-remplie (réponse 24h, paiement à l'expédition ou main propre). Pages légales (mentions, CGV, confidentialité, retours) incluses.
 
-## Gérer le catalogue (facile)
+## Pour l'admin — étiqueter le stock (~10 min)
 
-Tout le catalogue vit dans **`sneakers/products.js`** — un fichier simple, un bloc par chaussure. Il contient **60 modèles Nike réels** (Shox TL/R4, Air Max DN/1/95/TN, Air Force 1, Dunk, Cortez, Vomero, Jordan…) issus du catalogue.
+1. Pied de page → **« Gérer »** → code (`veloce2026`, modifiable via `PASS` dans `index.html`).
+2. Chaque photo affiche des champs : **modèle** (pré-identifié), **coloris**, **taille**, **prix**, case **Vendue**.
+3. Tout est sauvegardé localement en direct (aperçu immédiat, bannière « modifications locales »).
+4. **⬇ Exporter** télécharge `products.js` → le publier (remplacer `sneakers/products.js` dans le repo, ou l'envoyer pour mise en ligne).
 
-**Couleur automatique** : le champ `cw` (coloris en toutes lettres, ex. `"Blanc / Bleu Royal"`) génère automatiquement les pastilles de couleur **et** le rendu SVG du modèle — pas besoin de coder les couleurs à la main. `price: null` affiche « Sur demande ».
+## Données (`products.js`)
 
-**Ajouter une paire :**
-1. Déposez la/les photo(s) dans `sneakers/img/`.
-2. Copiez le modèle commenté en haut de `products.js`, collez-le dans la liste et remplissez les champs.
-
-Seuls `name`, `brand`, `sport` et `price` sont requis — tout le reste est optionnel :
-- `photos: ['a.jpg','b.jpg']` → **galerie** de plusieurs photos sur la fiche produit (pub).
-- `sizes: [40,41,42]` → tailles affichées au client ; `outSizes: [38]` → tailles barrées (rupture).
-- `old`, `promo`, `tech`, `colors`, `weight`, `drop`, `rating`, `reviews`, `new`, `pop`, `desc`.
-
-Les **filtres** (marque, sport, technologie, couleur) se mettent à jour **automatiquement** selon les produits présents.
-
-## Mode admin (édition sur le site)
-
-Un **mode admin** permet de modifier le catalogue directement depuis le site, sans toucher au code :
-
-1. En bas de page, cliquez sur **« Admin »** et entrez le code (par défaut `veloce2026`, modifiable dans `index.html` → `ADMIN.pass`).
-2. Une barre admin apparaît. Chaque paire affiche un bouton **✏️ Éditer** pour modifier :
-   - **Nom**, **marque**, **sport**, **prix** (et ancien prix pour une promo),
-   - **Photos** : en ajouter plusieurs (redimensionnées automatiquement) ; la 1ʳᵉ est la principale,
-   - **Tailles disponibles** et **tailles en rupture** (barrées côté client),
-   - technologie et description.
-3. **➕ Ajouter** crée une nouvelle paire. **↺ Réinit.** revient au catalogue publié.
-
-**Persistance :** les modifications sont enregistrées **sur votre appareil** (aperçu immédiat). Pour les rendre visibles par **tous les visiteurs**, cliquez sur **⬇️ Exporter** : un fichier `products.js` est téléchargé — il suffit de remplacer `sneakers/products.js` par ce fichier et de republier (ou de l'envoyer pour mise en ligne).
-
-> Pour gérer **beaucoup** de paires avec **plusieurs photos chacune**, une base cloud (photos hébergées + édition connectée, visible par tous sans republier) est plus adaptée — évolution possible.
-
-## Évolution e-commerce
-
-L'architecture (catalogue en données structurées, panier, favoris, comparateur) est prête à être branchée sur un back-end e-commerce (paiement en ligne, gestion des stocks, suivi des commandes), par exemple via Shopify.
+```js
+{ id:1, photo:'pair-01.jpg', name:'Nike Shox TL', cw:'Blanc', size:42.5, price:55, sold:false }
+```
+`size`/`price` à `null` → « À confirmer » / « Sur demande ». `sold:true` → paire grisée, non commandable.
