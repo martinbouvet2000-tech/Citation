@@ -1,13 +1,4 @@
-/* =============================================================================
-   VÉLOCE v2 — STOCK (photo-first : 1 photo = 1 paire = 1 fiche)
-   -----------------------------------------------------------------------------
-   • name  : modèle (pré-identifié depuis la photo — corrigez si besoin)
-   • cw    : coloris en toutes lettres
-   • size  : pointure EU de LA paire (ex. 42.5) — null = à renseigner
-   • price : prix en € — null = "Sur demande"
-   • sold  : true quand la paire est vendue
-   Étiquetage rapide : ouvrir le site → pied de page "Gérer" → code admin.
-============================================================================= */
+/* VÉLOCE v2 — STOCK (publié). Étiquetage via le mode gestion du site. */
 const STOCK = [
  {
   "id": 1,
@@ -349,7 +340,11 @@ const STOCK = [
   "cw": "Rouge / Jaune",
   "size": null,
   "price": null,
-  "sold": false
+  "sold": false,
+  "photos": [
+   "pair-38-b.jpg",
+   "pair-38.jpg"
+  ]
  },
  {
   "id": 39,
