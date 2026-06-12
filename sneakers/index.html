@@ -247,6 +247,9 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 </head>
 <body>
 
+<datalist id="modelList"></datalist>
+<datalist id="colorList"></datalist>
+
 <div class="local-banner" id="localBanner">
   ✏️ Modifications locales non publiées —
   <button id="lbExport">Exporter</button> · <button id="lbDiscard">Annuler</button>
@@ -438,8 +441,8 @@ function tile(p){
         </div>`).join('')}
         <label class="ep-add">+ Photo<input type="file" accept="image/*" multiple data-photoadd="${p.id}" hidden></label>
       </div>
-      <input data-f="name" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Modèle">
-      <input data-f="cw" value="${(p.cw||'').replace(/"/g,'&quot;')}" placeholder="Coloris">
+      <input data-f="name" list="modelList" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Modèle (taper ou choisir)">
+      <input data-f="cw" list="colorList" value="${(p.cw||'').replace(/"/g,'&quot;')}" placeholder="Coloris">
       <div class="edit-row">
         <input data-f="size" type="number" inputmode="decimal" step="0.5" value="${p.size??''}" placeholder="Taille">
         <input data-f="price" type="number" inputmode="numeric" value="${p.price??''}" placeholder="Prix €">
@@ -649,6 +652,14 @@ $('#lbDiscard').addEventListener('click',()=>{if(confirm('Annuler toutes les mod
 $('#mQuit').addEventListener('click',quitManage);
 
 /* ---- init ---- */
+const MODELS=['Nike Shox TL','Nike Shox R4','Nike Air Max Dn','Nike Air Max 1','Nike Air Max 95',
+ 'Nike Air Max 90','Nike Air Max Plus TN','Nike Air Max SC','Nike Air Max 97','Nike Air Force 1',
+ 'Nike Dunk Low','Nike Cortez','Nike Zoom Vomero 5','Nike P-6000','Nike V2K Run','Nike Air Tuned Max',
+ 'Nike ACG','Nike Manoa Boot','Jordan Tatum 2','Jordan Luka 2','Jordan 1'];
+const COLS=['Blanc','Noir','Gris','Bleu','Rouge','Orange','Jaune','Vert','Rose','Violet','Beige','Marron','Argent',
+ 'Blanc / Noir','Blanc / Bleu','Blanc / Gris','Noir / Orange','Blanc / Rouge','Blanc / Vert'];
+$('#modelList').innerHTML=MODELS.map(m=>`<option value="${m}">`).join('');
+$('#colorList').innerHTML=COLS.map(m=>`<option value="${m}">`).join('');
 render();
 </script>
 </body>
