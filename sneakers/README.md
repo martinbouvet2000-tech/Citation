@@ -34,3 +34,7 @@ Catalogue filtrable (modèle, taille, tri prix) → fiche (photo zoomable, taill
 Dans le mode gestion, chaque paire propose :
 - **Tailles** : saisir une ou plusieurs tailles séparées par des virgules (ex. `42, 42.5, 44`).
 - **Prix barré € (promo)** : renseigner l'ancien prix → il s'affiche **barré en rouge** + badge `-X%`.
+
+## Retirer une annonce
+
+Mode gestion → sous chaque paire, bouton **« 🗑 Retirer l'annonce »** (avec confirmation) : la fiche est supprimée du catalogue. Penser à **Exporter** pour publier la suppression.
