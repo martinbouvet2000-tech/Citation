@@ -136,6 +136,9 @@ body.editing .edit-box{display:flex}
 .ephoto .ep-badge{position:absolute;left:0;right:0;bottom:0;background:var(--ink);color:var(--bg);font-size:.55rem;text-align:center;padding:1px}
 .ephoto .ep-star{position:absolute;left:0;right:0;bottom:0;background:rgba(20,20,20,.65);color:#fff;font-size:.7rem;border-radius:0}
 .ephoto .ep-rm{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(20,20,20,.7);color:#fff;font-size:.7rem;display:grid;place-items:center;line-height:1}
+.del-listing{margin-top:8px;padding:9px;border:1px solid #f0c5c0;background:#fdecea;color:var(--danger);
+  border-radius:9px;font-weight:600;font-size:.85rem;width:100%}
+.del-listing:hover{background:var(--danger);color:#fff;border-color:var(--danger)}
 .ep-add{width:58px;height:66px;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;
   font-size:.74rem;color:var(--ink-2);cursor:pointer;text-align:center}
 .ep-add:hover{border-color:var(--ink-2);color:var(--ink)}
@@ -478,6 +481,7 @@ function tile(p){
         <input data-f="oldPrice" type="number" inputmode="numeric" value="${p.oldPrice??''}" placeholder="Prix barré € (promo)">
       </div>
       <label class="edit-sold"><input type="checkbox" data-f="sold" ${p.sold?'checked':''}> Vendue</label>
+      <button class="del-listing" data-del="${p.id}">🗑 Retirer l'annonce</button>
     </div>
   </article>`;
 }
@@ -677,6 +681,14 @@ document.addEventListener('click',e=>{
   const rm=e.target.closest('[data-photorm]');
   if(rm){const p=byId(+rm.dataset.photorm);if(!Array.isArray(p.photos))p.photos=imgsOf(p).slice();
     if(p.photos.length>1){p.photos.splice(+rm.dataset.i,1);saveLocal();render();}return;}
+  const del=e.target.closest('[data-del]');
+  if(del){const id=+del.dataset.del;const p=byId(id);
+    if(confirm(`Retirer définitivement l'annonce « ${p?p.name:''} » ?`)){
+      const i=stock.findIndex(x=>x.id===id);
+      if(i>-1) stock.splice(i,1);
+      cart=cart.filter(c=>c.id!==id);saveCart();
+      saveLocal();render();toast('Annonce retirée');
+    }return;}
 });
 function exportStock(){
   const hdr=`/* VÉLOCE v2 — STOCK exporté depuis le mode gestion.\n   Publier : remplacer sneakers/products.js par ce fichier. */\n`;
