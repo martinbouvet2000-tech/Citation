@@ -105,6 +105,18 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.92);backdro
 .tile-sub{color:var(--ink-2);font-size:.82rem;margin-top:1px}
 .tile-price{font-weight:600;font-size:.95rem;margin-top:5px}
 .tile-price .tbd{color:var(--ink-2);font-weight:500}
+/* prix barré rouge (promo) */
+.old{color:var(--danger);text-decoration:line-through;font-weight:500;margin-right:6px;font-size:.85em}
+.now{color:var(--danger)}
+.tag.promo{background:var(--danger);color:#fff}
+/* sélecteur de taille (fiche) */
+.pdp-sizes{margin:2px 0 18px}
+.pdp-sizes-t{font-size:.82rem;color:var(--ink-2);margin-bottom:8px}
+.szrow{display:flex;flex-wrap:wrap;gap:8px}
+.szbtn{min-width:48px;height:46px;padding:0 12px;border:1.5px solid var(--line);border-radius:11px;background:var(--white);
+  font-weight:600;font-size:.92rem;transition:all .15s}
+.szbtn:hover{border-color:var(--ink-2)}
+.szbtn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .tag{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);backdrop-filter:blur(4px);
   border-radius:99px;padding:4px 11px;font-size:.7rem;font-weight:600;letter-spacing:.04em}
 .tile.sold .tile-img{opacity:.45}
@@ -382,8 +394,8 @@ try{
   }
 }catch(e){localStorage.removeItem(KEY);}
 
-let cart=[];                            // panier en mémoire + session
-try{cart=JSON.parse(sessionStorage.getItem('veloce2_cart')||'[]')}catch(e){}
+let cart=[];                            // panier : [{id,size}]
+try{cart=JSON.parse(sessionStorage.getItem('veloce2_cart')||'[]').map(c=>typeof c==='object'?c:{id:c,size:null});}catch(e){}
 const saveCart=()=>sessionStorage.setItem('veloce2_cart',JSON.stringify(cart));
 
 let filters={model:'',size:'',sort:''};
@@ -396,10 +408,20 @@ const mainUrl=p=>{const a=imgsOf(p);return a.length?resolveImg(a[0]):'';};
 const photoUrl=mainUrl;
 const priceTxt=p=>p.price?eur(p.price):'Sur demande';
 const byId=id=>stock.find(p=>p.id===id);
+/* tailles (compat ancien champ size) */
+const sizesOf=p=>(Array.isArray(p.sizes)?p.sizes:(p.size!=null&&p.size!==''?[p.size]:[]));
+const hasPromo=p=>p.oldPrice&&p.price&&p.oldPrice>p.price;
+const discountPct=p=>hasPromo(p)?Math.round((1-p.price/p.oldPrice)*100):0;
+/* prix en HTML : ancien prix barré rouge + prix actuel */
+const priceHTML=p=>{
+  if(!p.price) return '<span class="tbd">Sur demande</span>';
+  if(hasPromo(p)) return `<s class="old">${eur(p.oldPrice)}</s> <span class="now">${eur(p.price)}</span>`;
+  return eur(p.price);
+};
 
 /* ---- rendu grille ---- */
 function models(){return [...new Set(stock.map(p=>p.name))].sort();}
-function sizes(){return [...new Set(stock.map(p=>p.size).filter(Boolean))].sort((a,b)=>a-b);}
+function sizes(){return [...new Set(stock.flatMap(sizesOf))].sort((a,b)=>a-b);}
 
 function renderChips(){
   $('#modelChips').innerHTML =
@@ -414,23 +436,28 @@ function renderChips(){
 function list(){
   let l=stock.filter(p=>
     (!filters.model||p.name===filters.model)&&
-    (!filters.size||String(p.size)===String(filters.size)));
+    (!filters.size||sizesOf(p).map(String).includes(String(filters.size))));
   if(filters.sort==='price-asc') l=[...l].sort((a,b)=>(a.price||9999)-(b.price||9999));
   if(filters.sort==='price-desc') l=[...l].sort((a,b)=>(b.price||0)-(a.price||0));
   return l;
 }
 
 function tile(p){
-  const sub=[p.cw,p.size?`T. ${p.size}`:null].filter(Boolean).join(' · ');
+  const ss=sizesOf(p);
+  const slabel=ss.length?(ss.length>1?`T. ${ss.join(' / ')}`:`T. ${ss[0]}`):'';
+  const sub=[p.cw,slabel].filter(Boolean).join(' · ');
+  const tag=p.sold?'<span class="tag">Vendu</span>'
+    :hasPromo(p)?`<span class="tag promo">-${discountPct(p)}%</span>`
+    :(ss.length<=1?'<span class="tag">Pièce unique</span>':'<span class="tag">Plusieurs tailles</span>');
   return `<article class="tile ${p.sold?'sold':''}" data-id="${p.id}">
     <div class="tile-img">
-      <span class="tag">${p.sold?'Vendu':'Pièce unique'}</span>
+      ${tag}
       <img src="${photoUrl(p)}" alt="${p.name} ${p.cw||''}" loading="lazy" decoding="async">
     </div>
     <div class="tile-info">
       <div class="tile-name">${p.name}</div>
       <div class="tile-sub">${sub||'&nbsp;'}</div>
-      <div class="tile-price">${p.price?eur(p.price):'<span class="tbd">Sur demande</span>'}</div>
+      <div class="tile-price">${priceHTML(p)}</div>
     </div>
     <div class="edit-box" data-stop>
       <div class="edit-photos">
@@ -443,9 +470,10 @@ function tile(p){
       </div>
       <input data-f="name" list="modelList" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Modèle (taper ou choisir)">
       <input data-f="cw" list="colorList" value="${(p.cw||'').replace(/"/g,'&quot;')}" placeholder="Coloris">
+      <input data-f="sizes" value="${ss.join(', ')}" placeholder="Tailles : 42, 42.5, 44">
       <div class="edit-row">
-        <input data-f="size" type="number" inputmode="decimal" step="0.5" value="${p.size??''}" placeholder="Taille">
         <input data-f="price" type="number" inputmode="numeric" value="${p.price??''}" placeholder="Prix €">
+        <input data-f="oldPrice" type="number" inputmode="numeric" value="${p.oldPrice??''}" placeholder="Prix barré € (promo)">
       </div>
       <label class="edit-sold"><input type="checkbox" data-f="sold" ${p.sold?'checked':''}> Vendue</label>
     </div>
@@ -465,25 +493,29 @@ function render(){
 /* ---- fiche produit ---- */
 function openPdp(id){
   const p=byId(id); if(!p) return;
-  const inCart=cart.includes(id);
   const imgs=imgsOf(p).map(resolveImg);
+  const ss=sizesOf(p);
+  const multi=ss.length>1;
+  let chosen = ss.length===1 ? ss[0] : null;   // taille sélectionnée
   $('#pdpContent').innerHTML=`
     <div class="pdp-img">
       <img src="${imgs[0]||''}" alt="${p.name}" id="pdpImg">
       ${imgs.length>1?`<div class="pdp-thumbs">${imgs.map((s,i)=>`<button class="pthumb ${i===0?'on':''}" data-src="${s}"><img src="${s}" alt=""></button>`).join('')}</div>`:''}
     </div>
     <div class="pdp-body">
-      <div class="pdp-kicker">Pièce unique · Photo réelle</div>
+      <div class="pdp-kicker">${multi?'Photo réelle':'Pièce unique · Photo réelle'}</div>
       <h2>${p.name}</h2>
       <div class="pdp-cw">${p.cw||''}</div>
       <div class="pdp-facts">
-        <div class="fact"><small>Taille EU</small><b>${p.size??'À confirmer'}</b></div>
+        ${!multi?`<div class="fact"><small>Taille EU</small><b>${ss[0]??'À confirmer'}</b></div>`:''}
         <div class="fact"><small>État</small><b>Neuve / comme neuve</b></div>
       </div>
-      <div class="pdp-price ${p.price?'':'tbd'}">${priceTxt(p)}</div>
+      <div class="pdp-price ${p.price?'':'tbd'}">${priceHTML(p)}</div>
+      ${multi&&!p.sold?`<div class="pdp-sizes"><div class="pdp-sizes-t">Choisissez votre taille (EU)</div>
+        <div class="szrow">${ss.map(s=>`<button class="szbtn" data-sz="${s}">${s}</button>`).join('')}</div></div>`:''}
       ${p.sold
         ? `<div class="pdp-sold">Cette paire a été vendue.</div>`
-        : `<button class="btn btn-dark" id="pdpAdd">${inCart?'✓ Dans le panier':'Ajouter au panier'}</button>
+        : `<button class="btn btn-dark" id="pdpAdd">Ajouter au panier</button>
            <button class="btn btn-line" id="pdpOrder">Commander directement par email</button>`}
       <div class="pdp-trust">100% authentique · Réponse sous 24h · Paiement à l'expédition ou en main propre</div>
     </div>`;
@@ -493,35 +525,41 @@ function openPdp(id){
     $('#pdpImg').src=t.dataset.src;
     $$('#pdpContent .pthumb').forEach(x=>x.classList.remove('on'));t.classList.add('on');
   });
+  $$('#pdpContent .szbtn').forEach(b=>b.onclick=()=>{
+    chosen=parseFloat(b.dataset.sz);
+    $$('#pdpContent .szbtn').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  });
   const add=$('#pdpAdd');
   if(add)add.onclick=()=>{
-    if(!cart.includes(id)){cart.push(id);saveCart();}
+    if(multi&&chosen==null){toast('Sélectionnez une taille 👟');return;}
+    cart.push({id,size:chosen});saveCart();
     closeOv($('#pdpOverlay'));openCart();toast('Ajouté au panier');
   };
   const ord=$('#pdpOrder');
   if(ord)ord.onclick=()=>{
-    location.href=`mailto:${ORDER_EMAIL}?subject=${encodeURIComponent('Commande — '+p.name+(p.size?' T.'+p.size:''))}&body=${orderBody([id])}`;
+    if(multi&&chosen==null){toast('Sélectionnez une taille 👟');return;}
+    location.href=`mailto:${ORDER_EMAIL}?subject=${encodeURIComponent('Commande — '+p.name+(chosen!=null?' T.'+chosen:''))}&body=${orderBody([{id,size:chosen}])}`;
     toast('Votre messagerie s\'ouvre ✉️');
   };
 }
 
-/* ---- panier ---- */
-function cartItems(){return cart.map(byId).filter(Boolean).filter(p=>!p.sold);}
-function total(){return cartItems().reduce((s,p)=>s+(p.price||0),0);}
-function orderBody(ids){
-  const lines=ids.map(byId).filter(Boolean).map(p=>`• ${p.name}${p.cw?' ('+p.cw+')':''}${p.size?' — Taille '+p.size:''} — ${priceTxt(p)} — réf photo ${p.photo}`);
+/* ---- panier (entrées {id,size}) ---- */
+function cartEntries(){return cart.map(c=>({c,p:byId(c.id)})).filter(x=>x.p&&!x.p.sold);}
+function total(){return cartEntries().reduce((s,x)=>s+(x.p.price||0),0);}
+function orderBody(entries){
+  const lines=entries.map(c=>{const p=byId(c.id);if(!p)return'';return `• ${p.name}${p.cw?' ('+p.cw+')':''}${c.size!=null?' — Taille '+c.size:''} — ${p.price?eur(p.price):'Sur demande'} — réf ${(imgsOf(p)[0]||'').replace('img/','')}`;}).filter(Boolean);
   return encodeURIComponent(`Bonjour,\n\nJe souhaite commander :\n${lines.join('\n')}\n\nTotal indicatif : ${total()} €\n\nMon nom :\nMon adresse :\nMon téléphone :\n\nMerci !`).replace(/%0A/g,'%0D%0A');
 }
 function renderCartUI(){
-  const items=cartItems();
+  const items=cartEntries();
   $('#cartN').textContent=items.length;
-  $('#cartBody').innerHTML=items.length?items.map(p=>`
+  $('#cartBody').innerHTML=items.length?items.map((x,idx)=>{const p=x.p;return `
     <div class="citem">
       <img src="${photoUrl(p)}" alt="">
-      <div><div class="ci-n">${p.name}</div><div class="ci-s">${[p.cw,p.size?'T. '+p.size:null].filter(Boolean).join(' · ')}</div><div class="ci-p">${priceTxt(p)}</div></div>
-      <button class="rm" data-rm="${p.id}">Retirer</button>
-    </div>`).join('')
-    :'<div class="cart-empty">Votre panier est vide.<br>Chaque paire est unique — faites vite !</div>';
+      <div><div class="ci-n">${p.name}</div><div class="ci-s">${[p.cw,x.c.size!=null?'T. '+x.c.size:null].filter(Boolean).join(' · ')}</div><div class="ci-p">${priceHTML(p)}</div></div>
+      <button class="rm" data-rm="${idx}">Retirer</button>
+    </div>`;}).join('')
+    :'<div class="cart-empty">Votre panier est vide.<br>Trouvez votre paire !</div>';
   $('#cartFoot').innerHTML=items.length?`
     <div class="ctotal"><span>Total indicatif</span><span>${total()} €</span></div>
     <p class="cnote">Commande par email · réponse sous 24h · paiement à l'expédition</p>
@@ -562,7 +600,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('click',e=>{
   if(e.target.closest('[data-stop]'))return;                 // champs d'édition
   const rm=e.target.closest('[data-rm]');
-  if(rm){cart=cart.filter(x=>x!==+rm.dataset.rm);saveCart();renderCartUI();return;}
+  if(rm){cart.splice(+rm.dataset.rm,1);saveCart();renderCartUI();return;}
   const ch=e.target.closest('.chip[data-model]');
   if(ch){filters.model=ch.dataset.model;render();return;}
   const t=e.target.closest('.tile');
@@ -614,8 +652,9 @@ document.addEventListener('input',e=>{
   const tile=e.target.closest('.tile');const p=byId(+tile.dataset.id);if(!p)return;
   const k=f.dataset.f;
   if(k==='sold')p.sold=f.checked;
-  else if(k==='size')p.size=f.value?parseFloat(f.value):null;
+  else if(k==='sizes'){p.sizes=(f.value.match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.')));delete p.size;}
   else if(k==='price')p.price=f.value?Math.round(+f.value):null;
+  else if(k==='oldPrice')p.oldPrice=f.value?Math.round(+f.value):null;
   else p[k]=f.value.trim();
   saveLocal();
 });
