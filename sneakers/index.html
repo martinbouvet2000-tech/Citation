@@ -106,8 +106,11 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.92);backdro
 .tile-price{font-weight:600;font-size:.95rem;margin-top:5px}
 .tile-price .tbd{color:var(--ink-2);font-weight:500}
 /* prix barré rouge (promo) */
-.old{color:var(--danger);text-decoration:line-through;font-weight:500;margin-right:6px;font-size:.85em}
+.old{color:var(--ink-2);text-decoration:line-through;font-weight:500;margin-right:6px;font-size:.85em}
 .now{color:var(--danger)}
+.pct{display:inline-block;background:#fdecea;color:var(--danger);font-size:.72em;font-weight:700;
+  padding:2px 7px;border-radius:7px;margin-left:6px;vertical-align:middle;letter-spacing:.01em}
+.pdp-price .pct{font-size:.5em;padding:3px 9px}
 .tag.promo{background:var(--danger);color:#fff}
 /* sélecteur de taille (fiche) */
 .pdp-sizes{margin:2px 0 18px}
@@ -415,7 +418,7 @@ const discountPct=p=>hasPromo(p)?Math.round((1-p.price/p.oldPrice)*100):0;
 /* prix en HTML : ancien prix barré rouge + prix actuel */
 const priceHTML=p=>{
   if(!p.price) return '<span class="tbd">Sur demande</span>';
-  if(hasPromo(p)) return `<s class="old">${eur(p.oldPrice)}</s> <span class="now">${eur(p.price)}</span>`;
+  if(hasPromo(p)) return `<s class="old">${eur(p.oldPrice)}</s> <span class="now">${eur(p.price)}</span> <span class="pct">-${discountPct(p)}%</span>`;
   return eur(p.price);
 };
 
@@ -447,7 +450,6 @@ function tile(p){
   const slabel=ss.length?(ss.length>1?`T. ${ss.join(' / ')}`:`T. ${ss[0]}`):'';
   const sub=[p.cw,slabel].filter(Boolean).join(' · ');
   const tag=p.sold?'<span class="tag">Vendu</span>'
-    :hasPromo(p)?`<span class="tag promo">-${discountPct(p)}%</span>`
     :(ss.length<=1?'<span class="tag">Pièce unique</span>':'<span class="tag">Plusieurs tailles</span>');
   return `<article class="tile ${p.sold?'sold':''}" data-id="${p.id}">
     <div class="tile-img">
