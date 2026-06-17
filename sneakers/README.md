@@ -27,4 +27,10 @@ Catalogue filtrable (modèle, taille, tri prix) → fiche (photo zoomable, taill
 ```js
 { id:1, photo:'pair-01.jpg', name:'Nike Shox TL', cw:'Blanc', size:42.5, price:55, sold:false }
 ```
-`size`/`price` à `null` → « À confirmer » / « Sur demande ». `sold:true` → paire grisée, non commandable.
+`sizes` (tableau) / `price` à `null` → « À confirmer » / « Sur demande ». `sold:true` → paire grisée, non commandable.
+
+## Multi-tailles & promotions
+
+Dans le mode gestion, chaque paire propose :
+- **Tailles** : saisir une ou plusieurs tailles séparées par des virgules (ex. `42, 42.5, 44`).
+- **Prix barré € (promo)** : renseigner l'ancien prix → il s'affiche **barré en rouge** + badge `-X%`.
