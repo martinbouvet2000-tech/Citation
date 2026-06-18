@@ -1,4 +1,4 @@
-/* VÉLOCE v2 — STOCK. Modèle: sizes[] (multi-tailles), oldPrice (prix barré rouge). */
+/* VÉLOCE v2 — STOCK. sizes[] (multi-tailles), oldPrice (prix barré rouge). */
 const STOCK = [
  {
   "id": 1,
@@ -48,9 +48,11 @@ const STOCK = [
    "pair-04.jpg"
   ],
   "name": "Nike Air Max 1",
-  "cw": "Jaune / Bleu",
-  "sizes": [],
-  "price": null,
+  "cw": "Jaune / Bleu / Blanc",
+  "sizes": [
+   44.5
+  ],
+  "price": 60,
   "oldPrice": null,
   "sold": false
  },
@@ -87,10 +89,12 @@ const STOCK = [
   "photos": [
    "pair-07.jpg"
   ],
-  "name": "Jordan Tatum 2",
-  "cw": "Jaune / Turquoise / Corail",
-  "sizes": [],
-  "price": null,
+  "name": "Air Jordan Tatum 2 'Lemonade'",
+  "cw": "Rose / Bleu / Jaune",
+  "sizes": [
+   44.5
+  ],
+  "price": 35,
   "oldPrice": null,
   "sold": false
  },
@@ -99,10 +103,12 @@ const STOCK = [
   "photos": [
    "pair-08.jpg"
   ],
-  "name": "Nike Air Force 1",
-  "cw": "Gris / Blanc",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Air Force 1 '07 LV 8",
+  "cw": "Blanc / Gris",
+  "sizes": [
+   48.5
+  ],
+  "price": 50,
   "oldPrice": null,
   "sold": false
  },
@@ -111,10 +117,12 @@ const STOCK = [
   "photos": [
    "pair-09.jpg"
   ],
-  "name": "Nike Shox TL",
-  "cw": "Blanc / Gris / Vert",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Air Max DN8",
+  "cw": "Blanc / Noir / Vert",
+  "sizes": [
+   47.5
+  ],
+  "price": 50,
   "oldPrice": null,
   "sold": false
  },
@@ -123,10 +131,12 @@ const STOCK = [
   "photos": [
    "pair-10.jpg"
   ],
-  "name": "Nike Shox R4",
-  "cw": "Argent / Noir / Bleu",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Shox R4 GS",
+  "cw": "Bleu / Gris / Noir",
+  "sizes": [
+   40
+  ],
+  "price": 55,
   "oldPrice": null,
   "sold": false
  },
@@ -135,10 +145,12 @@ const STOCK = [
   "photos": [
    "pair-11.jpg"
   ],
-  "name": "Nike Air Max 95",
-  "cw": "Blanc / Bleu / Marine",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Wmns Air Sunder Max 'Panda'",
+  "cw": "Noir / Blanc",
+  "sizes": [
+   41
+  ],
+  "price": 50,
   "oldPrice": null,
   "sold": false
  },
@@ -148,9 +160,11 @@ const STOCK = [
    "pair-12.jpg"
   ],
   "name": "Nike Air Max Dn",
-  "cw": "Blanc / Violet / Bordeaux",
-  "sizes": [],
-  "price": null,
+  "cw": "Blanc / Rouge",
+  "sizes": [
+   42.5
+  ],
+  "price": 50,
   "oldPrice": null,
   "sold": false
  },
@@ -161,7 +175,9 @@ const STOCK = [
   ],
   "name": "Nike Shox TL",
   "cw": "Orange / Rouge",
-  "sizes": [],
+  "sizes": [
+   43
+  ],
   "price": null,
   "oldPrice": null,
   "sold": false
@@ -171,10 +187,12 @@ const STOCK = [
   "photos": [
    "pair-14.jpg"
   ],
-  "name": "Nike Shox R4",
-  "cw": "Gris anthracite",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Shox TL",
+  "cw": "Gris / Noir",
+  "sizes": [
+   40
+  ],
+  "price": 55,
   "oldPrice": null,
   "sold": false
  },
@@ -183,10 +201,12 @@ const STOCK = [
   "photos": [
    "pair-15.jpg"
   ],
-  "name": "Nike Shox R4",
-  "cw": "Beige / Marron (Khaki)",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Shox TL",
+  "cw": "Marron / Noir",
+  "sizes": [
+   43
+  ],
+  "price": 50,
   "oldPrice": null,
   "sold": false
  },
@@ -195,10 +215,12 @@ const STOCK = [
   "photos": [
    "pair-16.jpg"
   ],
-  "name": "Nike Air Max 95",
-  "cw": "Bleu ciel / Blanc / Marine",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Wmns Air Sunder Max 'Panda'",
+  "cw": "Noir / Blanc",
+  "sizes": [
+   40
+  ],
+  "price": 50,
   "oldPrice": null,
   "sold": false
  },
@@ -291,10 +313,10 @@ const STOCK = [
   "photos": [
    "pair-24.jpg"
   ],
-  "name": "Jordan Tatum 2",
-  "cw": "Blanc / Rouge",
+  "name": "Nike Air Force 1 Low",
+  "cw": "Blanc",
   "sizes": [],
-  "price": null,
+  "price": 30,
   "oldPrice": null,
   "sold": false
  },
@@ -304,9 +326,11 @@ const STOCK = [
    "pair-25.jpg"
   ],
   "name": "Nike Shox TL",
-  "cw": "Argent / Gris",
-  "sizes": [],
-  "price": null,
+  "cw": "Beige / Blanc",
+  "sizes": [
+   42.5
+  ],
+  "price": 50,
   "oldPrice": null,
   "sold": false
  },
@@ -315,10 +339,12 @@ const STOCK = [
   "photos": [
    "pair-26.jpg"
   ],
-  "name": "Nike P-6000",
-  "cw": "Blanc / Argent / Rouge",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Initiator",
+  "cw": "Blanc / Rose / Rouge",
+  "sizes": [
+   43
+  ],
+  "price": 30,
   "oldPrice": null,
   "sold": false
  },
@@ -375,10 +401,12 @@ const STOCK = [
   "photos": [
    "pair-31.jpg"
   ],
-  "name": "Nike Air Max Plus TN",
-  "cw": "Blanc / Violet / Orange",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Air Max Dn",
+  "cw": "Blanc / Violet",
+  "sizes": [
+   47.5
+  ],
+  "price": 70,
   "oldPrice": null,
   "sold": false
  },
@@ -461,9 +489,11 @@ const STOCK = [
    "pair-38.jpg"
   ],
   "name": "Nike Shox TL",
-  "cw": "Noir / Orange / Jaune (Tiger)",
-  "sizes": [],
-  "price": null,
+  "cw": "Rouge / Jaune",
+  "sizes": [
+   42.5
+  ],
+  "price": 65,
   "oldPrice": null,
   "sold": false
  },
@@ -688,10 +718,12 @@ const STOCK = [
   "photos": [
    "pair-57.jpg"
   ],
-  "name": "Nike Shox TL",
-  "cw": "Blanc / Gris / Vert",
-  "sizes": [],
-  "price": null,
+  "name": "Nike Air Max Dn8",
+  "cw": "Blanc / Gris",
+  "sizes": [
+   47.5
+  ],
+  "price": 50,
   "oldPrice": null,
   "sold": false
  },
@@ -724,10 +756,12 @@ const STOCK = [
   "photos": [
    "pair-60.jpg"
   ],
-  "name": "Nike Boot montante",
+  "name": "Nike Air Force 1 Low",
   "cw": "Blanc",
-  "sizes": [],
-  "price": null,
+  "sizes": [
+   44
+  ],
+  "price": 30,
   "oldPrice": null,
   "sold": false
  },
