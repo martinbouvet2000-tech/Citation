@@ -258,6 +258,8 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 .manage-bar b{padding:0 5px}
 .manage-bar button{background:rgba(255,255,255,.14);border-radius:99px;padding:7px 13px;font-weight:600;font-size:.82rem}
 .manage-bar button:hover{background:rgba(255,255,255,.25)}
+#syncStatus{font-size:.76rem;padding:0 4px;white-space:nowrap}
+.sync-ok{color:#bdf0cf}.sync-wait{color:#ffe08a}.sync-err{color:#ff9b8a}
 
 .backdrop{position:fixed;inset:0;z-index:105;background:rgba(20,20,20,.3);opacity:0;pointer-events:none;transition:opacity .25s}
 .backdrop.show{opacity:1;pointer-events:auto}
@@ -379,37 +381,57 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 <!-- Barre gestion -->
 <div class="manage-bar" id="manageBar">
   <b>GESTION</b>
-  <button id="mExport">⬇ Exporter</button>
-  <button id="mReset">↺ Annuler modifs</button>
+  <span id="syncStatus" class="sync-ok">✓ Synchronisé</span>
+  <button id="mAdd">＋ Paire</button>
+  <button id="mBackup">⬇ Sauvegarde</button>
   <button id="mQuit">Quitter</button>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="products.js"></script>
 <script>
 /* =====================================================================
    VÉLOCE v2 — moteur minimal et fiable
    ===================================================================== */
 const ORDER_EMAIL='martinbouvet2000@gmail.com';
-const PASS='veloce2026';
-const KEY='veloce2_stock_v2';           // clé versionnée : l'ancien localStorage ne pollue plus
+const PASS='veloce2026';                  // repli hors-ligne (le cloud utilise le même code de gestion)
+const KEY='veloce2_stock_v2';             // ancien cache local (repli hors-ligne)
+const CACHE='veloce3_cloud_cache';        // miroir du dernier chargement cloud (affichage instantané)
 ['veloce_catalog','veloce_cart','veloce_favs','veloce_compare','veloce_admin'].forEach(k=>localStorage.removeItem(k)); // désinfecte v1
+
+/* ---- Supabase (base cloud : le stock vit ici, plus d'export à publier) ---- */
+const SB_URL='https://hlzmmdffdlzgntxycghw.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhsem1tZGZmZGx6Z250eHljZ2h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4MDk4MzIsImV4cCI6MjA5NzM4NTgzMn0.Jr0C6Ms-tG3X3axb9rZ1SznYTMTyK2HFx_Le6wqYRo0';
+const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:false}}):null;
 
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 const eur=v=>v+' €';
 
-/* ---- données : publié + éventuelles modifs locales ---- */
+/* mapping ligne DB <-> objet appli */
+const fromRow=r=>({id:r.id,name:r.name||'',cw:r.cw||'',
+  sizes:Array.isArray(r.sizes)?r.sizes:[],
+  price:r.price!=null?+r.price:null,oldPrice:r.old_price!=null?+r.old_price:null,
+  sold:!!r.sold,draft:!!r.draft,
+  photos:Array.isArray(r.photos)?r.photos:[],sort:r.sort??0});
+
+/* ---- données : repli embarqué instantané, puis rafraîchi depuis le cloud ---- */
+new URLSearchParams(location.search).has('reset')&&(localStorage.removeItem(KEY),localStorage.removeItem(CACHE));
 let stock = STOCK.map(p=>({...p}));
 let localEdits=false;
-new URLSearchParams(location.search).has('reset') && localStorage.removeItem(KEY);
-try{
-  const saved=JSON.parse(localStorage.getItem(KEY));
-  if(Array.isArray(saved) && saved.length && saved.every(p=>p.id&&p.photo)){
-    stock=saved; localEdits=true;
-  }
-}catch(e){localStorage.removeItem(KEY);}
+try{const c=JSON.parse(localStorage.getItem(CACHE));if(Array.isArray(c)&&c.length)stock=c;}catch(e){}
+const cacheCloud=()=>{try{localStorage.setItem(CACHE,JSON.stringify(stock.filter(p=>!p.draft)));}catch(e){}};
+
+async function pullPublic(){
+  if(!sb)return;
+  try{
+    const {data,error}=await sb.from('produits').select('*').eq('draft',false).order('sort',{ascending:true});
+    if(error)throw error;
+    if(Array.isArray(data)&&data.length){stock=data.map(fromRow);cacheCloud();render();}
+  }catch(e){console.warn('[VÉLOCE] cloud indisponible — repli sur le catalogue embarqué.',e&&e.message);}
+}
 
 let cart=[];                            // panier : [{id,size}]
 try{cart=JSON.parse(sessionStorage.getItem('veloce2_cart')||'[]').map(c=>typeof c==='object'?c:{id:c,size:null});}catch(e){}
@@ -418,6 +440,7 @@ const saveCart=()=>sessionStorage.setItem('veloce2_cart',JSON.stringify(cart));
 let filters={model:'',size:'',sort:''};
 let adminView='catalog';   // 'catalog' | 'drafts' (visible uniquement en mode gestion)
 let editing=false;
+let adminSecret = sb ? (sessionStorage.getItem('veloce_admin_secret')||null) : null;  // code de gestion validé
 
 /* ---- helpers ---- */
 const resolveImg=s=>(/^(data:|https?:)/.test(s)?s:'img/'+s);
@@ -436,10 +459,14 @@ const priceHTML=p=>{
   if(hasPromo(p)) return `<s class="old">${eur(p.oldPrice)}</s> <span class="now">${eur(p.price)}</span> <span class="pct">-${discountPct(p)}%</span>`;
   return eur(p.price);
 };
+/* objet appli -> payload jsonb pour le cloud */
+const toPayload=p=>({id:p.id,name:p.name||'',cw:p.cw||'',sizes:sizesOf(p),
+  price:p.price??null,oldPrice:p.oldPrice??null,sold:!!p.sold,draft:!!p.draft,
+  photos:imgsOf(p),sort:p.sort??0});
 
 /* ---- rendu grille ---- */
-function models(){return [...new Set(stock.map(p=>p.name))].sort();}
-function sizes(){return [...new Set(stock.flatMap(sizesOf))].sort((a,b)=>a-b);}
+function models(){return [...new Set(stock.filter(p=>editing||!p.draft).map(p=>p.name))].sort();}
+function sizes(){return [...new Set(stock.filter(p=>editing||!p.draft).flatMap(sizesOf))].sort((a,b)=>a-b);}
 
 function renderChips(){
   $('#modelChips').innerHTML =
@@ -653,8 +680,24 @@ let tt;function toast(m){$('#toast').textContent=m;$('#toast').classList.add('sh
 function saveLocal(){
   localEdits=true;
   try{localStorage.setItem(KEY,JSON.stringify(stock));}
-  catch(e){toast('Stockage plein — pensez à Exporter puis publier');}
+  catch(e){toast('Stockage plein — pensez à Sauvegarder');}
 }
+/* ---- synchronisation cloud (enregistrement automatique) ---- */
+function setSync(s){const e=$('#syncStatus');if(!e)return;
+  e.className = s==='saving'?'sync-wait':(s==='err'?'sync-err':'sync-ok');
+  e.textContent = s==='saving'?'⏳ Enregistrement…':(s==='err'?'⚠ Non synchronisé':'✓ Synchronisé');}
+const _pend={};
+function persist(p){
+  if(!(sb&&adminSecret)){saveLocal();return;}
+  cacheCloud();
+  clearTimeout(_pend[p.id]);setSync('saving');
+  _pend[p.id]=setTimeout(async()=>{
+    try{const {error}=await sb.rpc('admin_upsert',{p_secret:adminSecret,p_row:toPayload(p)});
+      setSync(error?'err':'ok');if(error)console.warn('[VÉLOCE] upsert',error);}
+    catch(e){setSync('err');console.warn('[VÉLOCE] upsert',e);}
+  },550);
+}
+function mark(p){ if(sb&&adminSecret) persist(p); else saveLocal(); }
 /* redimensionne une image (téléphone) en data URL légère */
 function resizeImage(file){return new Promise(res=>{
   const r=new FileReader();
@@ -668,15 +711,48 @@ function resizeImage(file){return new Promise(res=>{
   };img.src=r.result;};
   r.readAsDataURL(file);
 });}
-function enterManage(){
+async function enterManage(){
+  if(!sb)return enterManageLocal();                      // pas de cloud chargé -> ancien mode local
+  const code = adminSecret || prompt('Code de gestion :');
+  if(code===null||code==='')return;
+  toast('Connexion…');
+  try{
+    const {data,error}=await sb.rpc('admin_list_all',{p_secret:code});
+    if(error)throw error;
+    adminSecret=code;sessionStorage.setItem('veloce_admin_secret',code);
+    stock=(data||[]).map(fromRow);
+    editing=true;document.body.classList.add('editing');
+    $('#manageBar').classList.add('show');setSync('ok');
+    render();toast('Mode gestion · enregistrement cloud automatique ✓');
+  }catch(e){
+    adminSecret=null;sessionStorage.removeItem('veloce_admin_secret');
+    toast('Code incorrect');
+  }
+}
+function enterManageLocal(){
   const c=prompt('Code de gestion :');
   if(c===null)return;
   if(c!==PASS){toast('Code incorrect');return;}
   editing=true;document.body.classList.add('editing');
   $('#manageBar').classList.add('show');
-  render();toast('Mode gestion — remplissez taille & prix, puis Exporter');
+  const ss=$('#syncStatus');if(ss){ss.className='sync-wait';ss.textContent='💾 Mode local';}
+  render();toast('Mode gestion (hors-ligne) — pensez à Sauvegarder');
 }
-function quitManage(){editing=false;document.body.classList.remove('editing');$('#manageBar').classList.remove('show');render();}
+function quitManage(){
+  editing=false;document.body.classList.remove('editing');$('#manageBar').classList.remove('show');
+  adminView='catalog';
+  if(sb&&adminSecret)pullPublic(); else render();
+}
+async function addPair(){
+  if(!(sb&&adminSecret)){toast('Connexion cloud requise');return;}
+  toast('Création…');
+  try{
+    const {data,error}=await sb.rpc('admin_new',{p_secret:adminSecret});
+    if(error)throw error;
+    stock.unshift(fromRow(data));adminView='drafts';render();setSync('ok');
+    toast('Nouvelle paire en brouillon 👻 — ajoutez photo, taille, prix');
+  }catch(e){setSync('err');toast('Erreur de création');}
+}
 $('#manageLink').addEventListener('click',enterManage);
 document.addEventListener('input',e=>{
   if(!editing)return;
@@ -688,7 +764,7 @@ document.addEventListener('input',e=>{
   else if(k==='price')p.price=f.value?Math.round(+f.value):null;
   else if(k==='oldPrice')p.oldPrice=f.value?Math.round(+f.value):null;
   else p[k]=f.value.trim();
-  saveLocal();
+  mark(p);
 });
 /* ---- gestion des photos (remplacer / ajouter / principale / supprimer) ---- */
 document.addEventListener('change',async e=>{
@@ -697,42 +773,45 @@ document.addEventListener('change',async e=>{
   if(!Array.isArray(p.photos)) p.photos=imgsOf(p).slice();
   toast('Traitement des photos…');
   for(const file of add.files){ p.photos.push(await resizeImage(file)); }
-  saveLocal();render();toast('Photo(s) ajoutée(s) ✓');
+  mark(p);render();toast('Photo(s) ajoutée(s) ✓');
 });
 document.addEventListener('click',e=>{
   if(!editing)return;
   const mk=e.target.closest('[data-main]');
   if(mk){const p=byId(+mk.dataset.main);if(!Array.isArray(p.photos))p.photos=imgsOf(p).slice();
-    const i=+mk.dataset.i;p.photos.unshift(p.photos.splice(i,1)[0]);saveLocal();render();return;}
+    const i=+mk.dataset.i;p.photos.unshift(p.photos.splice(i,1)[0]);mark(p);render();return;}
   const rm=e.target.closest('[data-photorm]');
   if(rm){const p=byId(+rm.dataset.photorm);if(!Array.isArray(p.photos))p.photos=imgsOf(p).slice();
-    if(p.photos.length>1){p.photos.splice(+rm.dataset.i,1);saveLocal();render();}return;}
+    if(p.photos.length>1){p.photos.splice(+rm.dataset.i,1);mark(p);render();}return;}
   const del=e.target.closest('[data-del]');
   if(del){const id=+del.dataset.del;const p=byId(id);
     if(confirm(`Retirer définitivement l'annonce « ${p?p.name:''} » ?`)){
       const i=stock.findIndex(x=>x.id===id);
       if(i>-1) stock.splice(i,1);
       cart=cart.filter(c=>c.id!==id);saveCart();
-      saveLocal();render();toast('Annonce retirée');
+      if(sb&&adminSecret){setSync('saving');
+        sb.rpc('admin_delete',{p_secret:adminSecret,p_id:id}).then(({error})=>setSync(error?'err':'ok')).catch(()=>setSync('err'));
+      }else saveLocal();
+      render();toast('Annonce retirée');
     }return;}
   const dr=e.target.closest('[data-draft]');
   if(dr){const p=byId(+dr.dataset.draft);if(!p)return;
     p.draft=!p.draft; if(p.draft) cart=cart.filter(c=>c.id!==p.id),saveCart();
-    saveLocal();render();toast(p.draft?'Passée en brouillon 👻':'Publiée dans le catalogue ✓');return;}
+    mark(p);render();toast(p.draft?'Passée en brouillon 👻':'Publiée dans le catalogue ✓');return;}
   const av=e.target.closest('[data-view]');
   if(av){adminView=av.dataset.view;render();return;}
 });
 function exportStock(){
-  const hdr=`/* VÉLOCE v2 — STOCK exporté depuis le mode gestion.\n   Publier : remplacer sneakers/products.js par ce fichier. */\n`;
+  const hdr=`/* VÉLOCE — sauvegarde du stock (${new Date().toISOString().slice(0,10)}).\n   Le stock vit dans le cloud ; ceci n'est qu'une copie de secours. */\n`;
   const txt=hdr+'const STOCK = '+JSON.stringify(stock,null,1)+';\n';
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([txt],{type:'text/javascript'}));
   a.download='products.js';document.body.appendChild(a);a.click();a.remove();
-  toast('products.js exporté — envoyez-le pour publication ⬇');
+  toast('Sauvegarde téléchargée ⬇');
 }
-$('#mExport').addEventListener('click',exportStock);
+$('#mAdd').addEventListener('click',addPair);
+$('#mBackup').addEventListener('click',exportStock);
 $('#lbExport').addEventListener('click',exportStock);
-$('#mReset').addEventListener('click',()=>{if(confirm('Annuler toutes les modifications locales ?')){localStorage.removeItem(KEY);location.reload();}});
 $('#lbDiscard').addEventListener('click',()=>{if(confirm('Annuler toutes les modifications locales ?')){localStorage.removeItem(KEY);location.reload();}});
 $('#mQuit').addEventListener('click',quitManage);
 
@@ -746,6 +825,7 @@ const COLS=['Blanc','Noir','Gris','Bleu','Rouge','Orange','Jaune','Vert','Rose',
 $('#modelList').innerHTML=MODELS.map(m=>`<option value="${m}">`).join('');
 $('#colorList').innerHTML=COLS.map(m=>`<option value="${m}">`).join('');
 render();
+pullPublic();   // rafraîchit le catalogue depuis le cloud (sinon : repli embarqué)
 </script>
 </body>
 </html>
