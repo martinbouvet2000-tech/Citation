@@ -139,6 +139,16 @@ body.editing .edit-box{display:flex}
 .del-listing{margin-top:8px;padding:9px;border:1px solid #f0c5c0;background:#fdecea;color:var(--danger);
   border-radius:9px;font-weight:600;font-size:.85rem;width:100%}
 .del-listing:hover{background:var(--danger);color:#fff;border-color:var(--danger)}
+.draft-btn{margin-top:8px;padding:9px;border:1px solid #c9c6ec;background:#eeecfb;color:#4b3fa6;
+  border-radius:9px;font-weight:600;font-size:.85rem;width:100%}
+.draft-btn:hover{background:#4b3fa6;color:#fff;border-color:#4b3fa6}
+.tag.draft{background:#4b3fa6;color:#fff}
+.admin-views{display:none;gap:8px;margin:10px 0 2px}
+.admin-views.show{display:flex}
+.av{padding:8px 15px;border:1px solid var(--line);border-radius:99px;background:var(--white);
+  font-weight:600;font-size:.86rem;color:var(--ink-2);transition:.15s}
+.av:hover{border-color:var(--ink-2)}
+.av.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .ep-add{width:58px;height:66px;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;
   font-size:.74rem;color:var(--ink-2);cursor:pointer;text-align:center}
 .ep-add:hover{border-color:var(--ink-2);color:var(--ink)}
@@ -314,6 +324,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 
   <!-- Grille -->
   <div class="wrap">
+    <div class="admin-views" id="adminViews"></div>
     <p class="count"><b id="count">0</b> paires affichées</p>
     <div class="grid" id="grid"></div>
   </div>
@@ -405,6 +416,7 @@ try{cart=JSON.parse(sessionStorage.getItem('veloce2_cart')||'[]').map(c=>typeof 
 const saveCart=()=>sessionStorage.setItem('veloce2_cart',JSON.stringify(cart));
 
 let filters={model:'',size:'',sort:''};
+let adminView='catalog';   // 'catalog' | 'drafts' (visible uniquement en mode gestion)
 let editing=false;
 
 /* ---- helpers ---- */
@@ -440,9 +452,12 @@ function renderChips(){
 }
 
 function list(){
-  let l=stock.filter(p=>
-    (!filters.model||p.name===filters.model)&&
-    (!filters.size||sizesOf(p).map(String).includes(String(filters.size))));
+  let l=stock.filter(p=>{
+    if(editing){ if(adminView==='drafts'? !p.draft : !!p.draft) return false; }  // gestion : onglet courant
+    else if(p.draft) return false;                                                // public : brouillons cachés
+    return (!filters.model||p.name===filters.model)&&
+      (!filters.size||sizesOf(p).map(String).includes(String(filters.size)));
+  });
   if(filters.sort==='price-asc') l=[...l].sort((a,b)=>(a.price||9999)-(b.price||9999));
   if(filters.sort==='price-desc') l=[...l].sort((a,b)=>(b.price||0)-(a.price||0));
   return l;
@@ -452,7 +467,8 @@ function tile(p){
   const ss=sizesOf(p);
   const slabel=ss.length?(ss.length>1?`T. ${ss.join(' / ')}`:`T. ${ss[0]}`):'';
   const sub=[p.cw,slabel].filter(Boolean).join(' · ');
-  const tag=p.sold?'<span class="tag">Vendu</span>'
+  const tag=p.draft?'<span class="tag draft">👻 Brouillon</span>'
+    :p.sold?'<span class="tag">Vendu</span>'
     :(ss.length<=1?'<span class="tag">Pièce unique</span>':'<span class="tag">Plusieurs tailles</span>');
   return `<article class="tile ${p.sold?'sold':''}" data-id="${p.id}">
     <div class="tile-img">
@@ -481,17 +497,27 @@ function tile(p){
         <input data-f="oldPrice" type="number" inputmode="numeric" value="${p.oldPrice??''}" placeholder="Prix barré € (promo)">
       </div>
       <label class="edit-sold"><input type="checkbox" data-f="sold" ${p.sold?'checked':''}> Vendue</label>
+      <button class="draft-btn" data-draft="${p.id}">${p.draft?'✓ Publier dans le catalogue':'👻 Mettre en brouillon'}</button>
       <button class="del-listing" data-del="${p.id}">🗑 Retirer l'annonce</button>
     </div>
   </article>`;
 }
 
+function renderAdminViews(){
+  const el=$('#adminViews'); if(!el) return;
+  if(!editing){el.classList.remove('show');el.innerHTML='';return;}
+  const nCat=stock.filter(p=>!p.draft).length, nDraft=stock.filter(p=>p.draft).length;
+  el.classList.add('show');
+  el.innerHTML=`<button class="av ${adminView==='catalog'?'on':''}" data-view="catalog">Catalogue (${nCat})</button>
+    <button class="av ${adminView==='drafts'?'on':''}" data-view="drafts">👻 Brouillons (${nDraft})</button>`;
+}
 function render(){
   const l=list();
   $('#count').textContent=l.length;
-  $('#mCount').textContent=stock.filter(p=>!p.sold).length;
-  $('#grid').innerHTML=l.length?l.map(tile).join(''):'<div class="empty">Aucune paire ne correspond.</div>';
+  $('#mCount').textContent=stock.filter(p=>!p.draft&&!p.sold).length;
+  $('#grid').innerHTML=l.length?l.map(tile).join(''):`<div class="empty">${editing&&adminView==='drafts'?'Aucun brouillon. Mets une fiche en brouillon avec le bouton 👻.':'Aucune paire ne correspond.'}</div>`;
   renderChips();
+  renderAdminViews();
   renderCartUI();
   $('#localBanner').classList.toggle('show',localEdits&&!editing);
 }
@@ -689,6 +715,12 @@ document.addEventListener('click',e=>{
       cart=cart.filter(c=>c.id!==id);saveCart();
       saveLocal();render();toast('Annonce retirée');
     }return;}
+  const dr=e.target.closest('[data-draft]');
+  if(dr){const p=byId(+dr.dataset.draft);if(!p)return;
+    p.draft=!p.draft; if(p.draft) cart=cart.filter(c=>c.id!==p.id),saveCart();
+    saveLocal();render();toast(p.draft?'Passée en brouillon 👻':'Publiée dans le catalogue ✓');return;}
+  const av=e.target.closest('[data-view]');
+  if(av){adminView=av.dataset.view;render();return;}
 });
 function exportStock(){
   const hdr=`/* VÉLOCE v2 — STOCK exporté depuis le mode gestion.\n   Publier : remplacer sneakers/products.js par ce fichier. */\n`;
