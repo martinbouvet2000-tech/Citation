@@ -38,3 +38,7 @@ Dans le mode gestion, chaque paire propose :
 ## Retirer une annonce
 
 Mode gestion → sous chaque paire, bouton **« 🗑 Retirer l'annonce »** (avec confirmation) : la fiche est supprimée du catalogue. Penser à **Exporter** pour publier la suppression.
+
+## Brouillons (fiches fantômes)
+
+Mode gestion → bouton **« 👻 Mettre en brouillon »** sous une paire : elle quitte le catalogue public et passe dans l'onglet **« 👻 Brouillons »** (visible uniquement en mode gestion). Quand les infos sont prêtes, **« ✓ Publier dans le catalogue »** la remet en ligne. Pratique pour préparer une annonce en attendant les données du fournisseur.
