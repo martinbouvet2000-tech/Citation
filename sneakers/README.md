@@ -22,7 +22,7 @@ Fini l'export `products.js` + republication à chaque modif. Le catalogue est ma
 
 ## Pour le client
 
-Catalogue filtrable (modèle, taille, tri prix) → fiche (photo zoomable, taille, prix, promo) → panier → **commande par email** pré-remplie (réponse 24h, paiement à l'expédition ou en main propre). Pages légales (mentions, CGV, confidentialité, retours) incluses.
+Catalogue filtrable (modèle, taille, tri prix) → fiche (photo zoomable, taille, prix, promo) → panier → **commande par email** (pré-remplie) **ou par Instagram** (récap copié + DM ouvert). Réponse 24h, paiement à l'expédition ou en main propre. Pages légales (mentions, CGV, confidentialité, retours) incluses.
 
 ## Pour l'admin — gérer le stock (depuis le téléphone)
 
