@@ -77,14 +77,58 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.92);backdro
 .local-banner.show{display:block}
 .local-banner button{font-weight:700;text-decoration:underline;margin:0 6px}
 
-/* ---------- Hero ---------- */
-.hero{padding:64px 0 40px;text-align:center}
-.hero h1{font-family:var(--serif);font-size:clamp(2.1rem,6vw,3.6rem);font-weight:600;letter-spacing:-.01em}
-.hero h1 em{font-style:italic;color:var(--ink-2)}
-.hero p{color:var(--ink-2);max-width:480px;margin:16px auto 0;font-size:1.02rem}
-.hero .meta{display:flex;gap:26px;justify-content:center;margin-top:26px;flex-wrap:wrap;
-  font-size:.82rem;color:var(--ink-2);text-transform:uppercase;letter-spacing:.12em}
-.hero .meta b{color:var(--ink)}
+/* ---------- Bandeau défilant ---------- */
+.marquee{overflow:hidden;background:var(--ink);color:var(--bg)}
+.marquee-track{display:flex;width:max-content;white-space:nowrap;animation:marq 32s linear infinite;will-change:transform}
+.marquee-track span{padding:8px 0;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- Hero éditorial ---------- */
+.hero{padding:52px 0 26px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(110% 80% at 88% -10%,rgba(20,20,20,.06),transparent 55%)}
+.hero-inner{display:grid;grid-template-columns:1.04fr .96fr;gap:48px;align-items:center;position:relative}
+.hero-kicker{display:inline-block;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-2);font-weight:600}
+.hero-text h1{font-family:var(--serif);font-size:clamp(2.4rem,5.2vw,4.3rem);font-weight:600;
+  letter-spacing:-.018em;line-height:1.02;margin:14px 0 0}
+.hero-text h1 em{font-style:italic;color:var(--ink-2)}
+.hero-text p{color:var(--ink-2);max-width:430px;margin:18px 0 0;font-size:1.04rem}
+.hero-cta{display:flex;gap:11px;margin:28px 0 0;flex-wrap:wrap}
+.btn-hero{display:inline-flex;align-items:center;padding:14px 26px;border-radius:99px;background:var(--ink);
+  color:var(--bg);font-weight:600;font-size:.94rem;transition:transform .15s,opacity .15s}
+.btn-hero:hover{transform:translateY(-2px);opacity:.92}
+.btn-hero.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.meta{display:flex;gap:24px;flex-wrap:wrap;font-size:.8rem;color:var(--ink-2);
+  text-transform:uppercase;letter-spacing:.1em}
+.meta b{color:var(--ink);font-size:1.05em}
+.hero .meta{margin-top:30px}
+.hero-media{position:relative}
+.hero-card{position:relative;margin:0 0 0 auto;width:86%;border-radius:20px;overflow:hidden;
+  border:1px solid var(--line);aspect-ratio:4/5;box-shadow:0 36px 70px -30px rgba(20,20,20,.5)}
+.hero-card img{width:100%;height:100%;object-fit:cover}
+.hero-badge{position:absolute;top:14px;left:14px;z-index:2;background:var(--bg);color:var(--ink);
+  border-radius:99px;padding:7px 14px;font-size:.74rem;font-weight:700;
+  box-shadow:0 6px 16px -6px rgba(0,0,0,.35)}
+.hero-dots{position:absolute;left:-6px;bottom:-6px;width:96px;height:96px;z-index:-1;
+  background-image:radial-gradient(var(--line) 1.6px,transparent 1.6px);background-size:14px 14px}
+
+/* ---------- Sections / Coups de cœur ---------- */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin:0 0 18px}
+.sec-head h2{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.15rem);font-weight:600;letter-spacing:-.01em}
+.sec-link{color:var(--ink-2);font-weight:600;font-size:.9rem;white-space:nowrap}
+.sec-link:hover{color:var(--ink)}
+.featured{padding:20px 0 6px}
+.feat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.feat-row .tile-img{aspect-ratio:1/1}
+
+/* ---------- Apparitions ---------- */
+body.anim .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.3,1)}
+body.anim .reveal.in{opacity:1;transform:none}
+
+/* ---------- Cartes (relief au survol) ---------- */
+.tile-img{box-shadow:0 1px 2px rgba(0,0,0,.04);transition:box-shadow .35s,transform .35s}
+.tile:hover .tile-img{box-shadow:0 24px 46px -26px rgba(20,20,20,.5);transform:translateY(-3px)}
 
 /* ---------- Filtres ---------- */
 .toolbar{position:sticky;top:60px;z-index:40;background:rgba(250,249,246,.95);backdrop-filter:blur(10px);
@@ -279,6 +323,17 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 :focus-visible{outline:2.5px solid var(--ink);outline-offset:2px;border-radius:5px}
 
 @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr);gap:20px 14px}}
+@media(max-width:760px){
+  .hero{padding:30px 0 18px}
+  .hero-inner{grid-template-columns:1fr;gap:22px}
+  .hero-media{order:-1;max-width:340px;margin:0 auto}
+  .hero-card{width:100%;transform:none}
+  .hero-dots{display:none}
+  .hero-text{text-align:center}
+  .hero-text p{margin-left:auto;margin-right:auto}
+  .hero-cta,.hero .meta{justify-content:center}
+  .feat-row{grid-template-columns:1fr 1fr;gap:13px}
+}
 @media(max-width:640px){
   .grid{grid-template-columns:repeat(2,1fr);gap:18px 12px}
   .info-grid{grid-template-columns:1fr;gap:24px;padding:38px 0}
@@ -313,15 +368,48 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 </header>
 
 <main id="top">
-  <!-- Hero -->
-  <section class="hero wrap">
-    <h1>Des paires authentiques,<br><em>en photo réelle.</em></h1>
-    <p>Chaque paire est une pièce unique, photographiée telle que vous la recevrez. Nike & Jordan, neuves ou comme neuves.</p>
-    <div class="meta">
-      <span><b id="mCount">59</b> paires</span>
-      <span><b>100%</b> authentiques</span>
-      <span>Réponse <b>24h</b></span>
+  <!-- Bandeau défilant -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>NIKE&nbsp;·&nbsp;JORDAN&nbsp;·&nbsp;AIR MAX DN&nbsp;·&nbsp;SHOX&nbsp;·&nbsp;AIR FORCE 1&nbsp;·&nbsp;DUNK&nbsp;·&nbsp;AIR MAX PLUS TN&nbsp;·&nbsp;VOMERO&nbsp;·&nbsp;P-6000&nbsp;·&nbsp;PIÈCES UNIQUES&nbsp;·&nbsp;PHOTO RÉELLE&nbsp;·&nbsp;</span>
+      <span>NIKE&nbsp;·&nbsp;JORDAN&nbsp;·&nbsp;AIR MAX DN&nbsp;·&nbsp;SHOX&nbsp;·&nbsp;AIR FORCE 1&nbsp;·&nbsp;DUNK&nbsp;·&nbsp;AIR MAX PLUS TN&nbsp;·&nbsp;VOMERO&nbsp;·&nbsp;P-6000&nbsp;·&nbsp;PIÈCES UNIQUES&nbsp;·&nbsp;PHOTO RÉELLE&nbsp;·&nbsp;</span>
     </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-text reveal">
+        <span class="hero-kicker">Nike &amp; Jordan · Revente authentique</span>
+        <h1>Des paires <em>authentiques</em>, en photo réelle.</h1>
+        <p>Chaque paire est une pièce unique, photographiée telle que vous la recevrez. Neuves ou comme neuves, sélectionnées une à une.</p>
+        <div class="hero-cta">
+          <a href="#stock" class="btn-hero">Voir le catalogue</a>
+          <a href="#featured" class="btn-hero ghost">Les coups de cœur</a>
+        </div>
+        <div class="meta">
+          <span><b id="mCount">59</b> paires</span>
+          <span><b>100%</b> authentiques</span>
+          <span>Réponse <b>24h</b></span>
+        </div>
+      </div>
+      <div class="hero-media reveal">
+        <span class="hero-dots"></span>
+        <figure class="hero-card">
+          <span class="hero-badge">★ Coup de cœur</span>
+          <img id="heroImg" src="img/pair-07.jpg" alt="Paire en vedette" decoding="async">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coups de cœur -->
+  <section class="featured wrap reveal" id="featured">
+    <div class="sec-head">
+      <h2>Les coups de cœur</h2>
+      <a href="#stock" class="sec-link">Tout le catalogue →</a>
+    </div>
+    <div class="feat-row" id="featuredRow"></div>
   </section>
 
   <!-- Filtres -->
@@ -558,6 +646,32 @@ function renderAdminViews(){
   el.innerHTML=`<button class="av ${adminView==='catalog'?'on':''}" data-view="catalog">Catalogue (${nCat})</button>
     <button class="av ${adminView==='drafts'?'on':''}" data-view="drafts">👻 Brouillons (${nDraft})</button>`;
 }
+/* ---- coups de cœur (façade) ---- */
+function featTile(p){
+  return `<article class="tile" data-id="${p.id}">
+    <div class="tile-img"><span class="tag">★ Coup de cœur</span>
+      <img src="${photoUrl(p)}" alt="${p.name} ${p.cw||''}" loading="lazy" decoding="async"></div>
+    <div class="tile-info">
+      <div class="tile-name">${p.name}</div>
+      <div class="tile-sub">${p.cw||'&nbsp;'}</div>
+      <div class="tile-price">${priceHTML(p)}</div>
+    </div>
+  </article>`;
+}
+function renderFeatured(){
+  const sec=$('#featured'), fr=$('#featuredRow'); if(!sec||!fr) return;
+  const top=stock.filter(p=>!p.draft&&!p.sold)
+    .sort((a,b)=>(a.sort??9999)-(b.sort??9999)||a.id-b.id).slice(0,3);
+  if(editing||top.length<3){sec.style.display='none';fr.innerHTML='';return;}
+  sec.style.display='';
+  fr.innerHTML=top.map(featTile).join('');
+  const hi=$('#heroImg'); if(hi) hi.src=mainUrl(top[0]);
+}
+/* ---- apparitions au scroll ---- */
+const _io=window.IntersectionObserver?new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');_io.unobserve(e.target);}
+}),{threshold:.1,rootMargin:'0px 0px -7% 0px'}):null;
+function armReveals(){ if(_io) $$('.reveal:not(.in)').forEach(el=>_io.observe(el)); }
 function render(){
   const l=list();
   $('#count').textContent=l.length;
@@ -565,8 +679,10 @@ function render(){
   $('#grid').innerHTML=l.length?l.map(tile).join(''):`<div class="empty">${editing&&adminView==='drafts'?'Aucun brouillon. Mets une fiche en brouillon avec le bouton 👻.':'Aucune paire ne correspond.'}</div>`;
   renderChips();
   renderAdminViews();
+  renderFeatured();
   renderCartUI();
   $('#localBanner').classList.toggle('show',localEdits&&!editing);
+  armReveals();
 }
 
 /* ---- fiche produit ---- */
@@ -866,6 +982,7 @@ const COLS=['Blanc','Noir','Gris','Bleu','Rouge','Orange','Jaune','Vert','Rose',
  'Blanc / Noir','Blanc / Bleu','Blanc / Gris','Noir / Orange','Blanc / Rouge','Blanc / Vert'];
 $('#modelList').innerHTML=MODELS.map(m=>`<option value="${m}">`).join('');
 $('#colorList').innerHTML=COLS.map(m=>`<option value="${m}">`).join('');
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches) document.body.classList.add('anim');
 render();
 pullPublic();   // rafraîchit le catalogue depuis le cloud (sinon : repli embarqué)
 </script>
