@@ -220,6 +220,9 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 .btn-dark{background:var(--ink);color:var(--bg)}
 .btn-dark:hover{opacity:.88}
 .btn-line{border:1.5px solid var(--ink);margin-top:10px}
+.btn-insta{margin-top:10px;color:#fff;background:linear-gradient(95deg,#f58529,#dd2a7b,#8134af,#515bd4)}
+.btn-insta:hover{opacity:.92}
+.btn-insta svg{margin-right:2px}
 .pdp-trust{margin-top:16px;font-size:.82rem;color:var(--ink-2);text-align:center}
 .pdp-sold{background:var(--bg-2);border-radius:13px;padding:15px;text-align:center;font-weight:600;color:var(--ink-2)}
 
@@ -345,7 +348,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
   <section class="info-band" id="infos">
     <div class="wrap info-grid">
       <div><h3>Authenticité garantie</h3><p>Chaque paire est vérifiée et photographiée réellement. Ce que vous voyez est exactement ce que vous recevez.</p></div>
-      <div><h3>Commande simple</h3><p>Ajoutez vos paires au panier et envoyez votre commande par email. Réponse sous 24h, paiement à l'expédition ou en main propre.</p></div>
+      <div><h3>Commande simple</h3><p>Ajoutez vos paires au panier et commandez <b>par email ou Instagram</b>. Réponse sous 24h, paiement à l'expédition ou en main propre.</p></div>
       <div><h3>Pièces uniques</h3><p>Une seule paire par modèle, dans sa taille. Premier arrivé, premier servi — si elle vous plaît, ne tardez pas.</p></div>
     </div>
   </section>
@@ -355,6 +358,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
   <div class="wrap foot">
     <span>© 2026 VÉLOCE — Sneakers authentiques</span>
     <div class="links">
+      <a href="https://instagram.com/martin._.bvt" target="_blank" rel="noopener">📷 Instagram</a>
       <a data-info="mentions">Mentions légales</a>
       <a data-info="cgv">CGV</a>
       <a data-info="confid">Confidentialité</a>
@@ -406,6 +410,9 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
    VÉLOCE v2 — moteur minimal et fiable
    ===================================================================== */
 const ORDER_EMAIL='martinbouvet2000@gmail.com';
+const INSTA_HANDLE='martin._.bvt';
+const INSTA_URL='https://instagram.com/martin._.bvt';
+const IG_ICON='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-3px"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>';
 const PASS='veloce2026';                  // repli hors-ligne (le cloud utilise le même code de gestion)
 const KEY='veloce2_stock_v2';             // ancien cache local (repli hors-ligne)
 const CACHE='veloce3_cloud_cache';        // miroir du dernier chargement cloud (affichage instantané)
@@ -588,7 +595,8 @@ function openPdp(id){
       ${p.sold
         ? `<div class="pdp-sold">Cette paire a été vendue.</div>`
         : `<button class="btn btn-dark" id="pdpAdd">Ajouter au panier</button>
-           <button class="btn btn-line" id="pdpOrder">Commander directement par email</button>`}
+           <button class="btn btn-insta" id="pdpInsta">${IG_ICON} Commander via Instagram</button>
+           <button class="btn btn-line" id="pdpOrder">Commander par email</button>`}
       <div class="pdp-trust">100% authentique · Réponse sous 24h · Paiement à l'expédition ou en main propre</div>
     </div>`;
   openOv('#pdpOverlay');
@@ -613,6 +621,11 @@ function openPdp(id){
     location.href=`mailto:${ORDER_EMAIL}?subject=${encodeURIComponent('Commande — '+p.name+(chosen!=null?' T.'+chosen:''))}&body=${orderBody([{id,size:chosen}])}`;
     toast('Votre messagerie s\'ouvre ✉️');
   };
+  const ig=$('#pdpInsta');
+  if(ig)ig.onclick=()=>{
+    if(multi&&chosen==null){toast('Sélectionnez une taille 👟');return;}
+    orderInsta([{id,size:chosen}]);
+  };
 }
 
 /* ---- panier (entrées {id,size}) ---- */
@@ -621,6 +634,13 @@ function total(){return cartEntries().reduce((s,x)=>s+(x.p.price||0),0);}
 function orderBody(entries){
   const lines=entries.map(c=>{const p=byId(c.id);if(!p)return'';return `• ${p.name}${p.cw?' ('+p.cw+')':''}${c.size!=null?' — Taille '+c.size:''} — ${p.price?eur(p.price):'Sur demande'} — réf ${(imgsOf(p)[0]||'').replace('img/','')}`;}).filter(Boolean);
   return encodeURIComponent(`Bonjour,\n\nJe souhaite commander :\n${lines.join('\n')}\n\nTotal indicatif : ${total()} €\n\nMon nom :\nMon adresse :\nMon téléphone :\n\nMerci !`).replace(/%0A/g,'%0D%0A');
+}
+/* commande via Instagram : copie le récap puis ouvre la messagerie Insta */
+function orderInsta(entries){
+  const txt=decodeURIComponent(orderBody(entries)).replace(/\r/g,'');
+  try{ if(navigator.clipboard) navigator.clipboard.writeText(txt); }catch(e){}
+  window.open(INSTA_URL,'_blank','noopener');
+  toast('Récap copié 📋 — collez-le dans le DM Insta');
 }
 function renderCartUI(){
   const items=cartEntries();
@@ -634,8 +654,9 @@ function renderCartUI(){
     :'<div class="cart-empty">Votre panier est vide.<br>Trouvez votre paire !</div>';
   $('#cartFoot').innerHTML=items.length?`
     <div class="ctotal"><span>Total indicatif</span><span>${total()} €</span></div>
-    <p class="cnote">Commande par email · réponse sous 24h · paiement à l'expédition</p>
+    <p class="cnote">Par email ou Instagram · réponse sous 24h · paiement à l'expédition</p>
     <button class="btn btn-dark" id="orderBtn">Commander par email</button>
+    <button class="btn btn-insta" id="instaBtn">${IG_ICON} Commander via Instagram</button>
     <button class="btn btn-line" id="copyBtn">Copier le récapitulatif</button>`:'';
   const ob=$('#orderBtn');
   if(ob)ob.onclick=()=>{location.href=`mailto:${ORDER_EMAIL}?subject=${encodeURIComponent('Commande VÉLOCE — '+items.length+' paire(s)')}&body=${orderBody(cart)}`;toast('Votre messagerie s\'ouvre ✉️');};
@@ -645,6 +666,8 @@ function renderCartUI(){
     (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject())
       .then(()=>toast('Récapitulatif copié 📋')).catch(()=>toast('Copie indisponible'));
   };
+  const ig=$('#instaBtn');
+  if(ig)ig.onclick=()=>orderInsta(cart);
 }
 function openCart(){renderCartUI();$('#cart').classList.add('open');$('#backdrop').classList.add('show');document.body.classList.add('lock');}
 function closeCart(){$('#cart').classList.remove('open');$('#backdrop').classList.remove('show');document.body.classList.remove('lock');}
