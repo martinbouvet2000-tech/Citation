@@ -8,19 +8,33 @@
 <link rel="canonical" href="https://veloce-ochre.vercel.app/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VÉLOCE">
-<meta property="og:title" content="VÉLOCE — Sneakers authentiques · Pièces uniques">
+<meta property="og:title" content="VÉLOCE — Sneakers Nike & Jordan authentiques · Pièces uniques">
 <meta property="og:description" content="Nike & Jordan en photo réelle. 1 photo = 1 paire = 1 pièce unique. Premier arrivé, premier servi.">
 <meta property="og:image" content="https://veloce-ochre.vercel.app/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sneakers Nike & Jordan authentiques — VÉLOCE">
 <meta property="og:url" content="https://veloce-ochre.vercel.app/">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="VÉLOCE — Sneakers authentiques · Pièces uniques">
+<meta name="twitter:title" content="VÉLOCE — Sneakers Nike & Jordan authentiques · Pièces uniques">
 <meta name="twitter:description" content="Nike & Jordan en photo réelle. Pièces uniques — premier arrivé, premier servi.">
 <meta name="twitter:image" content="https://veloce-ochre.vercel.app/img/og.jpg">
+<meta name="twitter:image:alt" content="Sneakers Nike & Jordan authentiques — VÉLOCE">
 <meta name="theme-color" content="#faf9f6">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23111'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%23faf9f6' font-family='Georgia'>V</text></svg>">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="apple-mobile-web-app-title" content="VÉLOCE">
+<meta name="format-detection" content="telephone=no">
+<link rel="preload" as="image" href="img/pair-07.jpg" fetchpriority="high">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":["Store","Organization"],"@id":"https://veloce-ochre.vercel.app/#store","name":"VÉLOCE","description":"Revente de sneakers Nike & Jordan authentiques, pièces uniques en photo réelle.","url":"https://veloce-ochre.vercel.app/","image":"https://veloce-ochre.vercel.app/img/og.jpg","email":"martinbouvet2000@gmail.com","sameAs":["https://instagram.com/martin._.bvt"],"areaServed":"FR","currenciesAccepted":"EUR","priceRange":"€€"},
+{"@type":"WebSite","@id":"https://veloce-ochre.vercel.app/#website","url":"https://veloce-ochre.vercel.app/","name":"VÉLOCE","inLanguage":"fr-FR","publisher":{"@id":"https://veloce-ochre.vercel.app/#store"}}
+]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -32,7 +46,7 @@
   --bg:#faf9f6;          /* crème galerie */
   --bg-2:#f1efe9;
   --ink:#141414;
-  --ink-2:#6f6b63;
+  --ink-2:#5c574e;       /* gris secondaire — contraste AA sur crème */
   --line:#e6e2d9;
   --white:#fff;
   --accent:#141414;      /* CTA noir — le produit est la couleur */
@@ -79,7 +93,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.92);backdro
 
 /* ---------- Bandeau défilant ---------- */
 .marquee{overflow:hidden;background:var(--ink);color:var(--bg)}
-.marquee-track{display:flex;width:max-content;white-space:nowrap;animation:marq 32s linear infinite;will-change:transform}
+.marquee-track{display:flex;width:max-content;white-space:nowrap;animation:marq 32s linear infinite}
 .marquee-track span{padding:8px 0;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
 @keyframes marq{to{transform:translateX(-50%)}}
 
@@ -131,7 +145,7 @@ body.anim .reveal.in{opacity:1;transform:none}
 .tile:hover .tile-img{box-shadow:0 24px 46px -26px rgba(20,20,20,.5);transform:translateY(-3px)}
 
 /* ---------- Filtres ---------- */
-.toolbar{position:sticky;top:60px;z-index:40;background:rgba(250,249,246,.95);backdrop-filter:blur(10px);
+.toolbar{position:sticky;top:60px;z-index:40;background:var(--bg);
   padding:14px 0;border-bottom:1px solid var(--line)}
 .toolbar-inner{display:flex;align-items:center;gap:12px}
 .chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;padding-bottom:2px}
@@ -322,6 +336,41 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 .backdrop.show{opacity:1;pointer-events:auto}
 :focus-visible{outline:2.5px solid var(--ink);outline-offset:2px;border-radius:5px}
 
+/* ---------- Accessibilité / utilitaires ---------- */
+.skip-link{position:absolute;left:8px;top:-60px;z-index:200;background:var(--ink);color:var(--bg);
+  padding:10px 16px;border-radius:0 0 10px 10px;font-weight:600;font-size:.9rem;transition:top .2s}
+.skip-link:focus{top:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ---------- Entête catalogue ---------- */
+.cat-head{padding:30px 0 2px}
+
+/* ---------- Bandeau confiance (icônes) ---------- */
+.info-grid .ic{display:block;width:28px;height:28px;color:var(--ink);margin-bottom:12px}
+
+/* ---------- PDP : confiance + partage ---------- */
+.pdp-trust{list-style:none;margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line);
+  display:flex;flex-direction:column;gap:8px;font-size:.86rem;color:var(--ink-2);text-align:left}
+.pdp-trust li{display:flex;gap:8px;align-items:center}
+.pdp-share{margin:14px auto 0;display:block;color:var(--ink-2);font-weight:600;font-size:.86rem;
+  text-decoration:underline;text-underline-offset:3px}
+.pdp-share:hover{color:var(--ink)}
+
+/* ---------- Footer enrichi ---------- */
+.foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px;padding:4px 0 32px}
+.foot-brand .flogo{font-family:var(--serif);font-size:1.6rem;font-weight:600}
+.foot-brand p{color:var(--ink-2);font-size:.9rem;max-width:320px;margin:12px 0 0;line-height:1.6}
+.foot-col h5{font-family:var(--serif);font-weight:600;font-size:1rem;margin:0 0 13px}
+.foot-col a{display:block;color:var(--ink-2);font-size:.9rem;margin-bottom:9px;cursor:pointer;text-decoration:none}
+.foot-col a:hover{color:var(--ink)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+  border-top:1px solid var(--line);padding-top:22px;font-size:.82rem;color:var(--ink-2)}
+.foot-bottom .links{display:flex;gap:16px;flex-wrap:wrap}
+.foot-bottom a{cursor:pointer;text-decoration:none}.foot-bottom a:hover{color:var(--ink)}
+.backtop{border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-weight:600;color:var(--ink)}
+.backtop:hover{background:var(--bg-2)}
+@media(max-width:640px){.foot-top{grid-template-columns:1fr;gap:24px}}
+
 @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr);gap:20px 14px}}
 @media(max-width:760px){
   .hero{padding:30px 0 18px}
@@ -345,6 +394,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 </head>
 <body>
 
+<a href="#stock" class="skip-link">Aller au catalogue</a>
 <datalist id="modelList"></datalist>
 <datalist id="colorList"></datalist>
 
@@ -360,8 +410,8 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
       <a class="nav-link hide-m" href="#stock">Catalogue</a>
       <a class="nav-link hide-m" href="#infos">Infos</a>
       <button class="cart-btn" id="cartBtn" aria-label="Ouvrir le panier">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 7h12l1.2 13H4.8z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
-        Panier <span class="cart-n" id="cartN">0</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 7h12l1.2 13H4.8z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+        Panier <span class="cart-n" id="cartN" aria-live="polite">0</span>
       </button>
     </nav>
   </div>
@@ -412,6 +462,11 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
     <div class="feat-row" id="featuredRow"></div>
   </section>
 
+  <!-- Entête catalogue -->
+  <div class="wrap cat-head reveal">
+    <div class="sec-head"><h2>Le catalogue</h2><span class="sec-link">Pièces uniques · premier arrivé, premier servi</span></div>
+  </div>
+
   <!-- Filtres -->
   <div class="toolbar" id="stock">
     <div class="wrap toolbar-inner">
@@ -434,24 +489,52 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 
   <!-- Infos -->
   <section class="info-band" id="infos">
-    <div class="wrap info-grid">
-      <div><h3>Authenticité garantie</h3><p>Chaque paire est vérifiée et photographiée réellement. Ce que vous voyez est exactement ce que vous recevez.</p></div>
-      <div><h3>Commande simple</h3><p>Ajoutez vos paires au panier et commandez <b>par email ou Instagram</b>. Réponse sous 24h, paiement à l'expédition ou en main propre.</p></div>
-      <div><h3>Pièces uniques</h3><p>Une seule paire par modèle, dans sa taille. Premier arrivé, premier servi — si elle vous plaît, ne tardez pas.</p></div>
+    <div class="wrap info-grid reveal">
+      <h2 class="sr-only">Pourquoi VÉLOCE</h2>
+      <div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Authenticité garantie</h3><p>Chaque paire est vérifiée et photographiée réellement. Ce que vous voyez est exactement ce que vous recevez.</p>
+      </div>
+      <div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+        <h3>Commande simple</h3><p>Ajoutez vos paires au panier et commandez <b>par email ou Instagram</b>. Réponse sous 24h, paiement à l'expédition ou en main propre.</p>
+      </div>
+      <div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3l2.6 5.6L20.5 9.4l-4.3 4 1 6.1L12 16.8 6.8 19.5l1-6.1-4.3-4 5.9-.8z"/></svg>
+        <h3>Pièces uniques</h3><p>Une seule paire par modèle, dans sa taille. Premier arrivé, premier servi — si elle vous plaît, ne tardez pas.</p>
+      </div>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="wrap foot">
-    <span>© 2026 VÉLOCE — Sneakers authentiques</span>
-    <div class="links">
-      <a href="https://instagram.com/martin._.bvt" target="_blank" rel="noopener">📷 Instagram</a>
-      <a data-info="mentions">Mentions légales</a>
-      <a data-info="cgv">CGV</a>
-      <a data-info="confid">Confidentialité</a>
-      <a data-info="retours">Retours</a>
-      <a id="manageLink">Gérer</a>
+<footer class="reveal">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="flogo">VÉLOCE<span style="color:var(--ink-2)">.</span></span>
+        <p>Sneakers Nike &amp; Jordan authentiques, en photo réelle. Chaque paire est une pièce unique, sélectionnée et vérifiée à la main.</p>
+        <a href="https://instagram.com/martin._.bvt" target="_blank" rel="noopener" class="btn-hero ghost" style="margin-top:16px;padding:11px 20px">Suivre sur Instagram</a>
+      </div>
+      <nav class="foot-col" aria-label="Boutique">
+        <h5>Boutique</h5>
+        <a href="#stock">Catalogue</a>
+        <a href="#featured">Coups de cœur</a>
+        <a href="#top">Accueil</a>
+      </nav>
+      <nav class="foot-col" aria-label="Aide et infos">
+        <h5>Aide &amp; infos</h5>
+        <a data-info="retours" role="button" tabindex="0">Livraison &amp; retours</a>
+        <a data-info="cgv" role="button" tabindex="0">CGV</a>
+        <a data-info="confid" role="button" tabindex="0">Confidentialité</a>
+        <a data-info="mentions" role="button" tabindex="0">Mentions légales</a>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> VÉLOCE — Revendeur indépendant, non affilié aux marques citées.</span>
+      <div class="links">
+        <button class="backtop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Haut de page</button>
+        <a id="manageLink" role="button" tabindex="0">Gérer</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -470,7 +553,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 </div>
 
 <!-- Zoom -->
-<div class="zoom" id="zoom"><button data-zclose aria-label="Fermer">✕</button><img id="zoomImg" alt=""></div>
+<div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-label="Photo agrandie"><button data-zclose aria-label="Fermer">✕</button><img id="zoomImg" alt=""></div>
 
 <!-- Panier -->
 <div class="backdrop" id="backdrop"></div>
@@ -489,7 +572,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
   <button id="mQuit">Quitter</button>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="products.js"></script>
@@ -500,7 +583,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 30px;background:var(--bg)
 const ORDER_EMAIL='martinbouvet2000@gmail.com';
 const INSTA_HANDLE='martin._.bvt';
 const INSTA_URL='https://instagram.com/martin._.bvt';
-const IG_ICON='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-3px"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>';
+const IG_ICON='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-3px"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>';
 const PASS='veloce2026';                  // repli hors-ligne (le cloud utilise le même code de gestion)
 const KEY='veloce2_stock_v2';             // ancien cache local (repli hors-ligne)
 const CACHE='veloce3_cloud_cache';        // miroir du dernier chargement cloud (affichage instantané)
@@ -514,6 +597,9 @@ const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createC
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 const eur=v=>v+' €';
+/* échappement HTML (sécurité : noms/coloris injectés via innerHTML) */
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const altOf=p=>esc([p.name,p.cw].filter(Boolean).join(' '));
 
 /* mapping ligne DB <-> objet appli */
 const fromRow=r=>({id:r.id,name:r.name||'',cw:r.cw||'',
@@ -534,7 +620,10 @@ async function pullPublic(){
   try{
     const {data,error}=await sb.from('produits').select('*').eq('draft',false).order('sort',{ascending:true});
     if(error)throw error;
-    if(Array.isArray(data)&&data.length){stock=data.map(fromRow);cacheCloud();render();}
+    if(Array.isArray(data)&&data.length){stock=data.map(fromRow);
+      if(filters.model&&!models().includes(filters.model))filters.model='';
+      if(filters.size&&!sizes().map(String).includes(String(filters.size)))filters.size='';
+      cacheCloud();render();}
   }catch(e){console.warn('[VÉLOCE] cloud indisponible — repli sur le catalogue embarqué.',e&&e.message);}
 }
 
@@ -571,12 +660,12 @@ const toPayload=p=>({id:p.id,name:p.name||'',cw:p.cw||'',sizes:sizesOf(p),
 
 /* ---- rendu grille ---- */
 function models(){return [...new Set(stock.filter(p=>editing||!p.draft).map(p=>p.name))].sort();}
-function sizes(){return [...new Set(stock.filter(p=>editing||!p.draft).flatMap(sizesOf))].sort((a,b)=>a-b);}
+function sizes(){return [...new Set(stock.filter(p=>editing||!p.draft).flatMap(sizesOf))].sort((a,b)=>parseFloat(a)-parseFloat(b));}
 
 function renderChips(){
   $('#modelChips').innerHTML =
     `<button class="chip ${!filters.model?'on':''}" data-model="">Tout</button>`+
-    models().map(m=>`<button class="chip ${filters.model===m?'on':''}" data-model="${m}">${m.replace('Nike ','')}</button>`).join('');
+    models().map(m=>`<button class="chip ${filters.model===m?'on':''}" data-model="${esc(m)}">${esc(m.replace('Nike ',''))}</button>`).join('');
   const s=$('#sizeSel');
   s.innerHTML='<option value="">Taille</option>'+sizes().map(x=>`<option ${String(filters.size)===String(x)?'selected':''}>${x}</option>`).join('');
   s.parentElement.style.display='';
@@ -596,40 +685,42 @@ function list(){
   return l;
 }
 
-function tile(p){
+function tile(p,i){
   const ss=sizesOf(p);
   const slabel=ss.length?(ss.length>1?`T. ${ss.join(' / ')}`:`T. ${ss[0]}`):'';
   const sub=[p.cw,slabel].filter(Boolean).join(' · ');
   const tag=p.draft?'<span class="tag draft">👻 Brouillon</span>'
     :p.sold?'<span class="tag">Vendu</span>'
     :(ss.length<=1?'<span class="tag">Pièce unique</span>':'<span class="tag">Plusieurs tailles</span>');
-  return `<article class="tile ${p.sold?'sold':''}" data-id="${p.id}">
+  const eager=i<4;
+  const aria=`${esc(p.name)}${p.cw?', '+esc(p.cw):''}${p.price?', '+p.price+' euros':''}`;
+  return `<article class="tile ${p.sold?'sold':''}" data-id="${p.id}" ${editing?'':`role="button" tabindex="0" aria-label="${aria}"`}>
     <div class="tile-img">
       ${tag}
       ${editing?`<span class="tag rank">Rang ${p.sort??'?'}</span>`:''}
-      <img src="${photoUrl(p)}" alt="${p.name} ${p.cw||''}" loading="lazy" decoding="async">
+      <img src="${photoUrl(p)}" alt="${altOf(p)}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">
     </div>
     <div class="tile-info">
-      <div class="tile-name">${p.name}</div>
-      <div class="tile-sub">${sub||'&nbsp;'}</div>
+      <div class="tile-name">${esc(p.name)}</div>
+      <div class="tile-sub">${esc(sub)||'&nbsp;'}</div>
       <div class="tile-price">${priceHTML(p)}</div>
     </div>
     <div class="edit-box" data-stop>
-      <input class="rank-input" data-f="sort" type="number" inputmode="numeric" value="${p.sort??''}" placeholder="Rang d'affichage · 1 = en tête">
+      <input class="rank-input" data-f="sort" type="number" inputmode="numeric" value="${p.sort??''}" aria-label="Rang d'affichage" placeholder="Rang d'affichage · 1 = en tête">
       <div class="edit-photos">
         ${imgsOf(p).map((src,i)=>`<div class="ephoto ${i===0?'main':''}">
           <img src="${resolveImg(src)}" alt="">
-          ${i!==0?`<button class="ep-star" data-main="${p.id}" data-i="${i}" title="Photo principale">★</button>`:'<span class="ep-badge">Principale</span>'}
-          ${imgsOf(p).length>1?`<button class="ep-rm" data-photorm="${p.id}" data-i="${i}" title="Supprimer">✕</button>`:''}
+          ${i!==0?`<button class="ep-star" data-main="${p.id}" data-i="${i}" aria-label="Définir comme photo principale" title="Photo principale">★</button>`:'<span class="ep-badge">Principale</span>'}
+          ${imgsOf(p).length>1?`<button class="ep-rm" data-photorm="${p.id}" data-i="${i}" aria-label="Supprimer cette photo" title="Supprimer">✕</button>`:''}
         </div>`).join('')}
         <label class="ep-add">+ Photo<input type="file" accept="image/*" multiple data-photoadd="${p.id}" hidden></label>
       </div>
-      <input data-f="name" list="modelList" value="${(p.name||'').replace(/"/g,'&quot;')}" placeholder="Modèle (taper ou choisir)">
-      <input data-f="cw" list="colorList" value="${(p.cw||'').replace(/"/g,'&quot;')}" placeholder="Coloris">
-      <input data-f="sizes" value="${ss.join(', ')}" placeholder="Tailles : 42, 42.5, 44">
+      <input data-f="name" list="modelList" value="${esc(p.name)}" aria-label="Modèle" placeholder="Modèle (taper ou choisir)">
+      <input data-f="cw" list="colorList" value="${esc(p.cw)}" aria-label="Coloris" placeholder="Coloris">
+      <input data-f="sizes" value="${esc(ss.join(', '))}" aria-label="Tailles" placeholder="Tailles : 42, 42.5, 44">
       <div class="edit-row">
-        <input data-f="price" type="number" inputmode="numeric" value="${p.price??''}" placeholder="Prix €">
-        <input data-f="oldPrice" type="number" inputmode="numeric" value="${p.oldPrice??''}" placeholder="Prix barré € (promo)">
+        <input data-f="price" type="number" inputmode="numeric" value="${p.price??''}" aria-label="Prix en euros" placeholder="Prix €">
+        <input data-f="oldPrice" type="number" inputmode="numeric" value="${p.oldPrice??''}" aria-label="Ancien prix barré" placeholder="Prix barré € (promo)">
       </div>
       <label class="edit-sold"><input type="checkbox" data-f="sold" ${p.sold?'checked':''}> Vendue</label>
       <button class="draft-btn" data-draft="${p.id}">${p.draft?'✓ Publier dans le catalogue':'👻 Mettre en brouillon'}</button>
@@ -648,12 +739,13 @@ function renderAdminViews(){
 }
 /* ---- coups de cœur (façade) ---- */
 function featTile(p){
-  return `<article class="tile" data-id="${p.id}">
+  const aria=`${esc(p.name)}${p.cw?', '+esc(p.cw):''}${p.price?', '+p.price+' euros':''}`;
+  return `<article class="tile" data-id="${p.id}" role="button" tabindex="0" aria-label="${aria}">
     <div class="tile-img"><span class="tag">★ Coup de cœur</span>
-      <img src="${photoUrl(p)}" alt="${p.name} ${p.cw||''}" loading="lazy" decoding="async"></div>
+      <img src="${photoUrl(p)}" alt="${altOf(p)}" decoding="async"></div>
     <div class="tile-info">
-      <div class="tile-name">${p.name}</div>
-      <div class="tile-sub">${p.cw||'&nbsp;'}</div>
+      <div class="tile-name">${esc(p.name)}</div>
+      <div class="tile-sub">${esc(p.cw)||'&nbsp;'}</div>
       <div class="tile-price">${priceHTML(p)}</div>
     </div>
   </article>`;
@@ -662,16 +754,36 @@ function renderFeatured(){
   const sec=$('#featured'), fr=$('#featuredRow'); if(!sec||!fr) return;
   const top=stock.filter(p=>!p.draft&&!p.sold)
     .sort((a,b)=>(a.sort??9999)-(b.sort??9999)||a.id-b.id).slice(0,3);
+  const hi=$('#heroImg');
   if(editing||top.length<3){sec.style.display='none';fr.innerHTML='';return;}
   sec.style.display='';
   fr.innerHTML=top.map(featTile).join('');
-  const hi=$('#heroImg'); if(hi) hi.src=mainUrl(top[0]);
+  if(hi){const u=mainUrl(top[0]); if(u){hi.src=u; hi.alt=altOf(top[0]);}}
 }
 /* ---- apparitions au scroll ---- */
 const _io=window.IntersectionObserver?new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('in');_io.unobserve(e.target);}
 }),{threshold:.1,rootMargin:'0px 0px -7% 0px'}):null;
-function armReveals(){ if(_io) $$('.reveal:not(.in)').forEach(el=>_io.observe(el)); }
+function armReveals(){ if(!_io){$$('.reveal').forEach(el=>el.classList.add('in'));return;} $$('.reveal:not(.in)').forEach(el=>_io.observe(el)); }
+/* ---- données structurées (SEO) : catalogue en JSON-LD ---- */
+const ABS='https://veloce-ochre.vercel.app/';
+function absImg(p){const m=mainUrl(p);return /^https?:/.test(m)?m:(/^data:/.test(m)?ABS+'img/og.jpg':ABS+m);}
+function buildJsonLd(){
+  try{
+    const items=stock.filter(p=>!p.draft).sort((a,b)=>(a.sort??9999)-(b.sort??9999)||a.id-b.id).slice(0,60);
+    const data={"@context":"https://schema.org","@type":"ItemList","name":"Catalogue VÉLOCE","numberOfItems":items.length,
+      itemListElement:items.map((p,i)=>({"@type":"ListItem","position":i+1,item:{
+        "@type":"Product","name":p.name,"image":absImg(p),"category":"Sneakers",
+        "brand":{"@type":"Brand","name":/jordan/i.test(p.name)?'Jordan':'Nike'},
+        "itemCondition":"https://schema.org/UsedCondition",
+        "offers":{"@type":"Offer","priceCurrency":"EUR",...(p.price?{price:p.price}:{}),
+          "availability":p.sold?"https://schema.org/SoldOut":"https://schema.org/InStock","seller":{"@id":ABS+"#store"}}
+      }}))};
+    let el=document.getElementById('ld-items');
+    if(!el){el=document.createElement('script');el.type='application/ld+json';el.id='ld-items';document.head.appendChild(el);}
+    el.textContent=JSON.stringify(data);
+  }catch(e){}
+}
 function render(){
   const l=list();
   $('#count').textContent=l.length;
@@ -683,6 +795,7 @@ function render(){
   renderCartUI();
   $('#localBanner').classList.toggle('show',localEdits&&!editing);
   armReveals();
+  if(!editing) buildJsonLd();
 }
 
 /* ---- fiche produit ---- */
@@ -694,13 +807,13 @@ function openPdp(id){
   let chosen = ss.length===1 ? ss[0] : null;   // taille sélectionnée
   $('#pdpContent').innerHTML=`
     <div class="pdp-img">
-      <img src="${imgs[0]||''}" alt="${p.name}" id="pdpImg">
+      <img src="${imgs[0]||''}" alt="${altOf(p)}" id="pdpImg">
       ${imgs.length>1?`<div class="pdp-thumbs">${imgs.map((s,i)=>`<button class="pthumb ${i===0?'on':''}" data-src="${s}"><img src="${s}" alt=""></button>`).join('')}</div>`:''}
     </div>
     <div class="pdp-body">
       <div class="pdp-kicker">${multi?'Photo réelle':'Pièce unique · Photo réelle'}</div>
-      <h2>${p.name}</h2>
-      <div class="pdp-cw">${p.cw||''}</div>
+      <h2>${esc(p.name)}</h2>
+      <div class="pdp-cw">${esc(p.cw)}</div>
       <div class="pdp-facts">
         ${!multi?`<div class="fact"><small>Taille EU</small><b>${ss[0]??'À confirmer'}</b></div>`:''}
         <div class="fact"><small>État</small><b>Neuve / comme neuve</b></div>
@@ -713,10 +826,15 @@ function openPdp(id){
         : `<button class="btn btn-dark" id="pdpAdd">Ajouter au panier</button>
            <button class="btn btn-insta" id="pdpInsta">${IG_ICON} Commander via Instagram</button>
            <button class="btn btn-line" id="pdpOrder">Commander par email</button>`}
-      <div class="pdp-trust">100% authentique · Réponse sous 24h · Paiement à l'expédition ou en main propre</div>
+      <ul class="pdp-trust">
+        <li>✓ 100% authentique</li>
+        <li>⚡ Réponse sous 24h</li>
+        <li>🔒 Paiement à l'expédition ou en main propre</li>
+      </ul>
+      <button class="pdp-share" id="pdpShare">↗ Partager cette paire</button>
     </div>`;
   openOv('#pdpOverlay');
-  $('#pdpImg').onclick=()=>{$('#zoomImg').src=$('#pdpImg').src;$('#zoom').classList.add('open');};
+  $('#pdpImg').onclick=()=>{const z=$('#zoom');$('#zoomImg').src=$('#pdpImg').src;$('#zoomImg').alt=altOf(p);z.classList.add('open');const b=z.querySelector('button');if(b)b.focus();};
   $$('#pdpContent .pthumb').forEach(t=>t.onclick=()=>{
     $('#pdpImg').src=t.dataset.src;
     $$('#pdpContent .pthumb').forEach(x=>x.classList.remove('on'));t.classList.add('on');
@@ -742,6 +860,14 @@ function openPdp(id){
     if(multi&&chosen==null){toast('Sélectionnez une taille 👟');return;}
     orderInsta([{id,size:chosen}]);
   };
+  const sh=$('#pdpShare');
+  if(sh)sh.onclick=()=>shareProduct(p);
+}
+function shareProduct(p){
+  const url=location.origin+location.pathname;
+  const data={title:'VÉLOCE — '+p.name,text:`${p.name}${p.cw?' ('+p.cw+')':''}${p.price?' — '+eur(p.price):''} · VÉLOCE`,url};
+  if(navigator.share){navigator.share(data).catch(()=>{});}
+  else{try{navigator.clipboard&&navigator.clipboard.writeText(url);}catch(e){}toast('Lien copié 📋');}
 }
 
 /* ---- panier (entrées {id,size}) ---- */
@@ -759,13 +885,17 @@ function orderInsta(entries){
   toast('Récap copié 📋 — collez-le dans le DM Insta');
 }
 function renderCartUI(){
-  const items=cartEntries();
+  // purge les paires vendues / retirées / passées en brouillon
+  const before=cart.length;
+  cart=cart.filter(c=>{const p=byId(c.id);return p&&!p.sold&&!p.draft;});
+  if(cart.length!==before)saveCart();
+  const items=cart.map(c=>({c,p:byId(c.id)}));
   $('#cartN').textContent=items.length;
   $('#cartBody').innerHTML=items.length?items.map((x,idx)=>{const p=x.p;return `
     <div class="citem">
-      <img src="${photoUrl(p)}" alt="">
-      <div><div class="ci-n">${p.name}</div><div class="ci-s">${[p.cw,x.c.size!=null?'T. '+x.c.size:null].filter(Boolean).join(' · ')}</div><div class="ci-p">${priceHTML(p)}</div></div>
-      <button class="rm" data-rm="${idx}">Retirer</button>
+      <img src="${photoUrl(p)}" alt="${altOf(p)}">
+      <div><div class="ci-n">${esc(p.name)}</div><div class="ci-s">${esc([p.cw,x.c.size!=null?'T. '+x.c.size:null].filter(Boolean).join(' · '))}</div><div class="ci-p">${priceHTML(p)}</div></div>
+      <button class="rm" data-rm="${idx}" aria-label="Retirer du panier">Retirer</button>
     </div>`;}).join('')
     :'<div class="cart-empty">Votre panier est vide.<br>Trouvez votre paire !</div>';
   $('#cartFoot').innerHTML=items.length?`
@@ -785,15 +915,26 @@ function renderCartUI(){
   const ig=$('#instaBtn');
   if(ig)ig.onclick=()=>orderInsta(cart);
 }
-function openCart(){renderCartUI();$('#cart').classList.add('open');$('#backdrop').classList.add('show');document.body.classList.add('lock');}
-function closeCart(){$('#cart').classList.remove('open');$('#backdrop').classList.remove('show');document.body.classList.remove('lock');}
+/* ---- gestion du focus / inertie de l'arrière-plan (accessibilité) ---- */
+let _lastFocus=null;
+function anyModalOpen(){return $$('.overlay.open').length>0 || $('#cart').classList.contains('open');}
+function setInert(on){['header','main','footer'].forEach(s=>{const el=document.querySelector(s);if(el){on?el.setAttribute('inert',''):el.removeAttribute('inert');}});}
+function afterClose(){ if(!anyModalOpen()){document.body.classList.remove('lock');setInert(false);if(_lastFocus&&_lastFocus.focus)try{_lastFocus.focus();}catch(e){}} }
+function openCart(){if(!anyModalOpen())_lastFocus=document.activeElement;renderCartUI();$('#cart').classList.add('open');$('#backdrop').classList.add('show');document.body.classList.add('lock');setInert(true);const f=$('#cart').querySelector('[data-cart-close]');if(f)f.focus();}
+function closeCart(){$('#cart').classList.remove('open');$('#backdrop').classList.remove('show');afterClose();}
 
 /* ---- overlays ---- */
-function openOv(sel){$(sel).classList.add('open');document.body.classList.add('lock');}
-function closeOv(el){el.classList.remove('open');if(!$$('.overlay.open').length)document.body.classList.remove('lock');}
+function openOv(sel){if(!anyModalOpen())_lastFocus=document.activeElement;const o=$(sel);o.classList.add('open');document.body.classList.add('lock');setInert(true);const f=o.querySelector('[data-close],button,a[href],input,select');if(f)f.focus();}
+function closeOv(el){el.classList.remove('open');afterClose();}
 $$('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o||e.target.closest('[data-close]'))closeOv(o);}));
 $('#zoom').addEventListener('click',e=>{if(e.target.id==='zoom'||e.target.closest('[data-zclose]'))$('#zoom').classList.remove('open');});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#zoom').classList.remove('open');$$('.overlay.open').forEach(closeOv);closeCart();}});
+/* activation clavier (Entrée/Espace) des cartes et actions du pied de page */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter'&&e.key!==' ')return;
+  const el=e.target.closest('.tile[role="button"],[data-info],#manageLink');
+  if(el){e.preventDefault();el.click();}
+});
 
 /* ---- infos légales ---- */
 const INFOS={
@@ -853,7 +994,8 @@ function mark(p){ if(sb&&adminSecret) persist(p); else saveLocal(); }
 /* redimensionne une image (téléphone) en data URL légère */
 function resizeImage(file){return new Promise(res=>{
   const r=new FileReader();
-  r.onload=()=>{const img=new Image();img.onload=()=>{
+  r.onerror=()=>res(null);
+  r.onload=()=>{const img=new Image();img.onerror=()=>res(null);img.onload=()=>{
     const max=1000;let w=img.width,h=img.height;
     if(w>max){h=Math.round(h*max/w);w=max;}
     if(h>max){w=Math.round(w*max/h);h=max;}
@@ -909,7 +1051,7 @@ $('#manageLink').addEventListener('click',enterManage);
 document.addEventListener('input',e=>{
   if(!editing)return;
   const f=e.target.closest('[data-f]');if(!f)return;
-  const tile=e.target.closest('.tile');const p=byId(+tile.dataset.id);if(!p)return;
+  const tile=e.target.closest('.tile');if(!tile)return;const p=byId(+tile.dataset.id);if(!p)return;
   const k=f.dataset.f;
   if(k==='sold')p.sold=f.checked;
   else if(k==='sizes'){p.sizes=(f.value.match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.')));delete p.size;}
@@ -930,8 +1072,8 @@ document.addEventListener('change',async e=>{
   const p=byId(+add.dataset.photoadd);if(!p)return;
   if(!Array.isArray(p.photos)) p.photos=imgsOf(p).slice();
   toast('Traitement des photos…');
-  for(const file of add.files){ p.photos.push(await resizeImage(file)); }
-  mark(p);render();toast('Photo(s) ajoutée(s) ✓');
+  let n=0;for(const file of add.files){ const d=await resizeImage(file); if(d){p.photos.push(d);n++;} }
+  mark(p);render();toast(n?'Photo(s) ajoutée(s) ✓':'Image illisible ✗');
 });
 document.addEventListener('click',e=>{
   if(!editing)return;
@@ -982,9 +1124,11 @@ const COLS=['Blanc','Noir','Gris','Bleu','Rouge','Orange','Jaune','Vert','Rose',
  'Blanc / Noir','Blanc / Bleu','Blanc / Gris','Noir / Orange','Blanc / Rouge','Blanc / Vert'];
 $('#modelList').innerHTML=MODELS.map(m=>`<option value="${m}">`).join('');
 $('#colorList').innerHTML=COLS.map(m=>`<option value="${m}">`).join('');
+{const _y=$('#year');if(_y)_y.textContent=new Date().getFullYear();}
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches) document.body.classList.add('anim');
 render();
 pullPublic();   // rafraîchit le catalogue depuis le cloud (sinon : repli embarqué)
+setTimeout(()=>$$('.reveal').forEach(el=>el.classList.add('in')),1600); // filet de sécurité : jamais de contenu invisible
 </script>
 </body>
 </html>

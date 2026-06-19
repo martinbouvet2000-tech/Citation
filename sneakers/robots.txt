@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://veloce-ochre.vercel.app/sitemap.xml
