@@ -2,7 +2,7 @@
 
 Boutique vitrine **photo-first** : chaque paire du stock = **1 photo réelle = 1 fiche**. DA claire et épurée (galerie), pensée pour la revente de pièces uniques Nike & Jordan.
 
-> 🔗 Lien public (à mettre en bio Insta) : **https://martinbouvet2000-tech.github.io/Citation/sneakers/**
+> 🔗 Lien public (bio Insta) : **https://veloce-ochre.vercel.app** — déployé sur Vercel depuis `main` (auto-déploiement à chaque push). Miroir GitHub Pages : https://martinbouvet2000-tech.github.io/Citation/sneakers/
 
 ## Nouveauté : le stock vit dans le cloud (Supabase)
 
@@ -52,8 +52,9 @@ Renseigner le **prix barré €** d'une fiche → il s'affiche **barré en rouge
 
 ## URL & partage
 
-- **Aujourd'hui** : GitHub Pages → `https://martinbouvet2000-tech.github.io/Citation/sneakers/` (déjà en ligne, mis à jour à chaque merge sur `main`). Aperçu de lien soigné (image `img/og.jpg`).
-- **Pour une URL plus courte** (type `veloce.vercel.app`) : importer le dépôt sur Vercel (le `vercel.json` à la racine sert déjà le dossier `sneakers/` à la racine du site — aucune config à faire).
+- **En ligne (Vercel)** : `https://veloce-ochre.vercel.app` — auto-déployé à chaque push sur `main`. Aperçu de lien soigné (`img/og.jpg`).
+- **Miroir GitHub Pages** : `https://martinbouvet2000-tech.github.io/Citation/sneakers/` (mis à jour aussi à chaque merge sur `main`).
+- **Domaine perso** (plus tard) : ajouter `veloce.store` / `veloce.fr` dans Vercel → Settings → Domains.
 
 ## Données (`products.js`, repli)
 
