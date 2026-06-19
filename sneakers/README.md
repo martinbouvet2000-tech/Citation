@@ -38,6 +38,14 @@ Dans le SQL de Supabase :
 update private.config set value = 'NOUVEAU_CODE' where key = 'admin_secret';
 ```
 
+## Classement des paires (rang d'affichage)
+
+En mode gestion, chaque fiche a un champ **Rang** (en haut) et un badge **« Rang N »** sur la photo :
+
+- **1 = en tête** (montrée en premier au client), puis 2, 3, … Plus le nombre est grand, plus la paire descend.
+- Mets tes plus belles paires en `1, 2, 3…` et les plus moyennes en numéros élevés → le client voit le meilleur d'abord, l'équilibre se fait en défilant.
+- Le rang s'enregistre dans le cloud comme le reste ; la grille se réordonne dès que tu sors du champ. Le tri par prix (en haut du catalogue) reste prioritaire si le client l'active.
+
 ## Promotions
 
 Renseigner le **prix barré €** d'une fiche → il s'affiche **barré en rouge** + badge `-X%` sur la vignette et la fiche.

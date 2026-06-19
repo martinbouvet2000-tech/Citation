@@ -137,6 +137,8 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,249,246,.92);backdro
 .edit-box{display:none;margin-top:8px;background:var(--white);border:1px solid var(--line);border-radius:10px;padding:10px;gap:7px;flex-direction:column}
 body.editing .edit-box{display:flex}
 .edit-box input{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:16px;width:100%}
+.rank-input{font-weight:700;border:1.5px solid var(--ink)!important;background:#fff;text-align:center}
+.tag.rank{left:auto;right:10px;background:var(--ink);color:var(--bg)}
 .edit-photos{display:flex;flex-wrap:wrap;gap:7px}
 .ephoto{position:relative;width:58px;height:66px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
 .ephoto.main{border-color:var(--ink)}
@@ -494,7 +496,8 @@ function list(){
       (!filters.size||sizesOf(p).map(String).includes(String(filters.size)));
   });
   if(filters.sort==='price-asc') l=[...l].sort((a,b)=>(a.price||9999)-(b.price||9999));
-  if(filters.sort==='price-desc') l=[...l].sort((a,b)=>(b.price||0)-(a.price||0));
+  else if(filters.sort==='price-desc') l=[...l].sort((a,b)=>(b.price||0)-(a.price||0));
+  else l=[...l].sort((a,b)=>(a.sort??9999)-(b.sort??9999)||a.id-b.id);   // ordre = rang admin
   return l;
 }
 
@@ -508,6 +511,7 @@ function tile(p){
   return `<article class="tile ${p.sold?'sold':''}" data-id="${p.id}">
     <div class="tile-img">
       ${tag}
+      ${editing?`<span class="tag rank">Rang ${p.sort??'?'}</span>`:''}
       <img src="${photoUrl(p)}" alt="${p.name} ${p.cw||''}" loading="lazy" decoding="async">
     </div>
     <div class="tile-info">
@@ -516,6 +520,7 @@ function tile(p){
       <div class="tile-price">${priceHTML(p)}</div>
     </div>
     <div class="edit-box" data-stop>
+      <input class="rank-input" data-f="sort" type="number" inputmode="numeric" value="${p.sort??''}" placeholder="Rang d'affichage · 1 = en tête">
       <div class="edit-photos">
         ${imgsOf(p).map((src,i)=>`<div class="ephoto ${i===0?'main':''}">
           <img src="${resolveImg(src)}" alt="">
@@ -771,8 +776,14 @@ document.addEventListener('input',e=>{
   else if(k==='sizes'){p.sizes=(f.value.match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.')));delete p.size;}
   else if(k==='price')p.price=f.value?Math.round(+f.value):null;
   else if(k==='oldPrice')p.oldPrice=f.value?Math.round(+f.value):null;
+  else if(k==='sort')p.sort=f.value!==''?Math.max(0,Math.round(+f.value)):0;
   else p[k]=f.value.trim();
   mark(p);
+});
+/* quand on valide un rang (sortie du champ), on réordonne la grille */
+document.addEventListener('change',e=>{
+  if(!editing)return;
+  if(e.target.closest('[data-f="sort"]')) render();
 });
 /* ---- gestion des photos (remplacer / ajouter / principale / supprimer) ---- */
 document.addEventListener('change',async e=>{

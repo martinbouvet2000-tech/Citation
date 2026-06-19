@@ -1,6 +1,6 @@
 /* VÉLOCE — catalogue de repli (fallback hors-ligne).
-   La source de vérité est la base cloud Supabase ; ce fichier n'est
-   qu'une copie de secours affichée si le cloud est injoignable. */
+   Source de vérité = base cloud Supabase. Copie de secours affichée si
+   le cloud est injoignable. 'sort' = rang d'affichage (1 = en tête). */
 const STOCK = [
  {
   "id": 2,
@@ -14,7 +14,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-02.jpg"
-  ]
+  ],
+  "sort": 1
  },
  {
   "id": 3,
@@ -28,7 +29,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-03.jpg"
-  ]
+  ],
+  "sort": 2
  },
  {
   "id": 5,
@@ -42,7 +44,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-05.jpg"
-  ]
+  ],
+  "sort": 3
  },
  {
   "id": 6,
@@ -56,7 +59,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-06.jpg"
-  ]
+  ],
+  "sort": 4
  },
  {
   "id": 7,
@@ -70,7 +74,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-07.jpg"
-  ]
+  ],
+  "sort": 5
  },
  {
   "id": 8,
@@ -84,7 +89,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-08.jpg"
-  ]
+  ],
+  "sort": 6
  },
  {
   "id": 9,
@@ -98,7 +104,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-09.jpg"
-  ]
+  ],
+  "sort": 7
  },
  {
   "id": 10,
@@ -112,7 +119,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-10.jpg"
-  ]
+  ],
+  "sort": 8
  },
  {
   "id": 11,
@@ -126,7 +134,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-11.jpg"
-  ]
+  ],
+  "sort": 9
  },
  {
   "id": 12,
@@ -140,21 +149,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-12.jpg"
-  ]
- },
- {
-  "id": 13,
-  "name": "Nike Shox TL",
-  "cw": "Orange / Rouge",
-  "sizes": [
-   43
   ],
-  "price": null,
-  "sold": false,
-  "draft": true,
-  "photos": [
-   "pair-13.jpg"
-  ]
+  "sort": 10
  },
  {
   "id": 14,
@@ -168,7 +164,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-14.jpg"
-  ]
+  ],
+  "sort": 11
  },
  {
   "id": 15,
@@ -182,7 +179,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-15.jpg"
-  ]
+  ],
+  "sort": 12
  },
  {
   "id": 16,
@@ -196,7 +194,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-16.jpg"
-  ]
+  ],
+  "sort": 13
  },
  {
   "id": 17,
@@ -210,7 +209,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-17.jpg"
-  ]
+  ],
+  "sort": 14
  },
  {
   "id": 18,
@@ -224,7 +224,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-18.jpg"
-  ]
+  ],
+  "sort": 15
  },
  {
   "id": 19,
@@ -238,7 +239,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-19.jpg"
-  ]
+  ],
+  "sort": 16
  },
  {
   "id": 20,
@@ -252,7 +254,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-20.jpg"
-  ]
+  ],
+  "sort": 17
  },
  {
   "id": 21,
@@ -266,7 +269,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-21.jpg"
-  ]
+  ],
+  "sort": 18
  },
  {
   "id": 22,
@@ -280,19 +284,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-22.jpg"
-  ]
- },
- {
-  "id": 23,
-  "name": "Nike Cortez",
-  "cw": "Jaune / Noir",
-  "sizes": [],
-  "price": null,
-  "sold": false,
-  "draft": true,
-  "photos": [
-   "pair-23.jpg"
-  ]
+  ],
+  "sort": 19
  },
  {
   "id": 24,
@@ -304,7 +297,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-24.jpg"
-  ]
+  ],
+  "sort": 20
  },
  {
   "id": 25,
@@ -318,7 +312,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-25.jpg"
-  ]
+  ],
+  "sort": 21
  },
  {
   "id": 26,
@@ -332,7 +327,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-26.jpg"
-  ]
+  ],
+  "sort": 22
  },
  {
   "id": 27,
@@ -346,7 +342,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-27.jpg"
-  ]
+  ],
+  "sort": 23
  },
  {
   "id": 28,
@@ -360,7 +357,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-28.jpg"
-  ]
+  ],
+  "sort": 24
  },
  {
   "id": 29,
@@ -374,21 +372,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-29.jpg"
-  ]
- },
- {
-  "id": 30,
-  "name": "Nike Boot montante",
-  "cw": "Noir",
-  "sizes": [
-   46
   ],
-  "price": null,
-  "sold": false,
-  "draft": true,
-  "photos": [
-   "pair-30.jpg"
-  ]
+  "sort": 25
  },
  {
   "id": 31,
@@ -402,7 +387,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-31.jpg"
-  ]
+  ],
+  "sort": 26
  },
  {
   "id": 32,
@@ -416,7 +402,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-32.jpg"
-  ]
+  ],
+  "sort": 27
  },
  {
   "id": 33,
@@ -430,33 +417,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-33.jpg"
-  ]
- },
- {
-  "id": 34,
-  "name": "Nike Shox TL",
-  "cw": "Blanc / Crème (Sail)",
-  "sizes": [],
-  "price": null,
-  "sold": false,
-  "draft": true,
-  "photos": [
-   "pair-34.jpg"
-  ]
- },
- {
-  "id": 35,
-  "name": "Nike Air Max 1",
-  "cw": "Blanc / Bleu",
-  "sizes": [
-   44.5
   ],
-  "price": null,
-  "sold": false,
-  "draft": true,
-  "photos": [
-   "pair-35.jpg"
-  ]
+  "sort": 28
  },
  {
   "id": 37,
@@ -470,7 +432,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-37.jpg"
-  ]
+  ],
+  "sort": 29
  },
  {
   "id": 38,
@@ -485,7 +448,8 @@ const STOCK = [
   "photos": [
    "pair-38-b.jpg",
    "pair-38.jpg"
-  ]
+  ],
+  "sort": 30
  },
  {
   "id": 39,
@@ -499,7 +463,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-39.jpg"
-  ]
+  ],
+  "sort": 31
  },
  {
   "id": 40,
@@ -513,7 +478,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-40.jpg"
-  ]
+  ],
+  "sort": 32
  },
  {
   "id": 41,
@@ -527,7 +493,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-41.jpg"
-  ]
+  ],
+  "sort": 33
  },
  {
   "id": 42,
@@ -541,7 +508,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-42.jpg"
-  ]
+  ],
+  "sort": 34
  },
  {
   "id": 43,
@@ -556,7 +524,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-43.jpg"
-  ]
+  ],
+  "sort": 35
  },
  {
   "id": 45,
@@ -570,7 +539,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-45.jpg"
-  ]
+  ],
+  "sort": 36
  },
  {
   "id": 46,
@@ -584,7 +554,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-46.jpg"
-  ]
+  ],
+  "sort": 37
  },
  {
   "id": 47,
@@ -598,7 +569,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-47.jpg"
-  ]
+  ],
+  "sort": 38
  },
  {
   "id": 48,
@@ -612,7 +584,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-48.jpg"
-  ]
+  ],
+  "sort": 39
  },
  {
   "id": 49,
@@ -626,7 +599,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-49.jpg"
-  ]
+  ],
+  "sort": 40
  },
  {
   "id": 50,
@@ -640,7 +614,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-50.jpg"
-  ]
+  ],
+  "sort": 41
  },
  {
   "id": 51,
@@ -654,7 +629,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-51.jpg"
-  ]
+  ],
+  "sort": 42
  },
  {
   "id": 52,
@@ -668,7 +644,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-52.jpg"
-  ]
+  ],
+  "sort": 43
  },
  {
   "id": 53,
@@ -682,7 +659,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-53.jpg"
-  ]
+  ],
+  "sort": 44
  },
  {
   "id": 54,
@@ -696,7 +674,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-54.jpg"
-  ]
+  ],
+  "sort": 45
  },
  {
   "id": 55,
@@ -710,7 +689,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-55.jpg"
-  ]
+  ],
+  "sort": 46
  },
  {
   "id": 56,
@@ -724,7 +704,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-56.jpg"
-  ]
+  ],
+  "sort": 47
  },
  {
   "id": 58,
@@ -738,7 +719,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-58.jpg"
-  ]
+  ],
+  "sort": 48
  },
  {
   "id": 59,
@@ -752,7 +734,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-59.jpg"
-  ]
+  ],
+  "sort": 49
  },
  {
   "id": 60,
@@ -766,7 +749,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-60.jpg"
-  ]
+  ],
+  "sort": 50
  },
  {
   "id": 61,
@@ -780,7 +764,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-61.jpg"
-  ]
+  ],
+  "sort": 51
  },
  {
   "id": 62,
@@ -794,7 +779,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-62.jpg"
-  ]
+  ],
+  "sort": 52
  },
  {
   "id": 63,
@@ -808,7 +794,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-63.jpg"
-  ]
+  ],
+  "sort": 53
  },
  {
   "id": 64,
@@ -822,7 +809,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-64.jpg"
-  ]
+  ],
+  "sort": 54
  },
  {
   "id": 65,
@@ -836,7 +824,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-65.jpg"
-  ]
+  ],
+  "sort": 55
  },
  {
   "id": 66,
@@ -851,7 +840,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-66.jpg"
-  ]
+  ],
+  "sort": 56
  },
  {
   "id": 67,
@@ -865,7 +855,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-67.jpg"
-  ]
+  ],
+  "sort": 57
  },
  {
   "id": 68,
@@ -879,7 +870,8 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-68.jpg"
-  ]
+  ],
+  "sort": 58
  },
  {
   "id": 69,
@@ -893,7 +885,79 @@ const STOCK = [
   "draft": false,
   "photos": [
    "pair-69.jpg"
-  ]
+  ],
+  "sort": 59
+ },
+ {
+  "id": 13,
+  "name": "Nike Shox TL",
+  "cw": "Orange / Rouge",
+  "sizes": [
+   43
+  ],
+  "price": null,
+  "sold": false,
+  "draft": true,
+  "photos": [
+   "pair-13.jpg"
+  ],
+  "sort": 1
+ },
+ {
+  "id": 23,
+  "name": "Nike Cortez",
+  "cw": "Jaune / Noir",
+  "sizes": [],
+  "price": null,
+  "sold": false,
+  "draft": true,
+  "photos": [
+   "pair-23.jpg"
+  ],
+  "sort": 2
+ },
+ {
+  "id": 30,
+  "name": "Nike Boot montante",
+  "cw": "Noir",
+  "sizes": [
+   46
+  ],
+  "price": null,
+  "sold": false,
+  "draft": true,
+  "photos": [
+   "pair-30.jpg"
+  ],
+  "sort": 3
+ },
+ {
+  "id": 34,
+  "name": "Nike Shox TL",
+  "cw": "Blanc / Crème (Sail)",
+  "sizes": [],
+  "price": null,
+  "sold": false,
+  "draft": true,
+  "photos": [
+   "pair-34.jpg"
+  ],
+  "sort": 4
+ },
+ {
+  "id": 35,
+  "name": "Nike Air Max 1",
+  "cw": "Blanc / Bleu",
+  "sizes": [
+   44.5
+  ],
+  "price": null,
+  "sold": false,
+  "draft": true,
+  "photos": [
+   "pair-35.jpg"
+  ],
+  "sort": 5
  },
  {
   "id": 70,
@@ -905,6 +969,7 @@ const STOCK = [
   "draft": true,
   "photos": [
    "pair-70.jpg"
-  ]
+  ],
+  "sort": 6
  }
 ];
