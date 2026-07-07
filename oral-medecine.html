@@ -918,8 +918,19 @@ try {
   if (FIREBASE_CONFIG.apiKey !== 'AIzaSyplaceholder') {
     firebase.initializeApp(FIREBASE_CONFIG);
     firebaseDB = firebase.database();
-    // Room code — tout le monde avec le meme code partage les donnees
-    const roomCode = new URLSearchParams(window.location.search).get('room') || 'default';
+    // Room code — jamais de room partagee par defaut : chaque appareil a sa
+    // propre room aleatoire et persistante. Utiliser ?room=CODE pour appairer
+    // volontairement deux appareils.
+    let roomCode = new URLSearchParams(window.location.search).get('room');
+    if (!roomCode) {
+      roomCode = localStorage.getItem('oralpass_room');
+      if (!roomCode) {
+        const buf = new Uint8Array(16);
+        (window.crypto || window.msCrypto).getRandomValues(buf);
+        roomCode = Array.from(buf, b => ('0' + b.toString(36)).slice(-2)).join('').slice(0, 24);
+        localStorage.setItem('oralpass_room', roomCode);
+      }
+    }
     firebaseRef = firebaseDB.ref('rooms/' + roomCode);
     SYNC_ENABLED = true;
     setTimeout(function(){ try { autoBackupToFirebase(); } catch(e){} }, 12000);
@@ -942,7 +953,6 @@ try {
         }
       });
     });
-    console.log('Firebase sync ON — room: ' + (new URLSearchParams(window.location.search).get('room') || 'default'));
   }
 } catch(e) { console.warn('Firebase init failed:', e); }
 // Helper pour push vers Firebase — stocke en JSON string pour eviter les problemes de cles invalides

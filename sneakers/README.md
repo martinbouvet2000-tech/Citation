@@ -26,7 +26,7 @@ Catalogue filtrable (modèle, taille, tri prix) → fiche (photo zoomable, taill
 
 ## Pour l'admin — gérer le stock (depuis le téléphone)
 
-1. Pied de page → **« Gérer »** → saisir le **code de gestion** (`veloce2026` par défaut).
+1. Pied de page → **« Gérer »** → saisir le **code de gestion**. Ce code a été **changé** et n'est plus stocké dans le dépôt (l'ancien code, publié dans l'historique public, ne fonctionne plus). Voir « Changer le code de gestion » ci-dessous pour le définir/le retrouver.
 2. Le mode gestion affiche **toutes** les fiches (catalogue + onglet **👻 Brouillons**). Chaque fiche a des champs : modèle, coloris, **tailles** (séparées par des virgules), **prix**, **prix barré € (promo)**, case **Vendue**.
 3. **Tout est enregistré automatiquement dans le cloud** (indicateur « ✓ Synchronisé »). Plus aucun export à faire.
 4. Boutons : **＋ Paire** (crée une nouvelle fiche en brouillon), **🗑 Retirer l'annonce**, **👻 Mettre en brouillon / ✓ Publier**, photos (ajouter / définir principale / supprimer), **⬇ Sauvegarde** (télécharge une copie `products.js` de secours — optionnel).
