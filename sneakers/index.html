@@ -584,7 +584,6 @@ const ORDER_EMAIL='martinbouvet2000@gmail.com';
 const INSTA_HANDLE='martin._.bvt';
 const INSTA_URL='https://instagram.com/martin._.bvt';
 const IG_ICON='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-3px"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>';
-const PASS='veloce2026';                  // repli hors-ligne (le cloud utilise le même code de gestion)
 const KEY='veloce2_stock_v2';             // ancien cache local (repli hors-ligne)
 const CACHE='veloce3_cloud_cache';        // miroir du dernier chargement cloud (affichage instantané)
 ['veloce_catalog','veloce_cart','veloce_favs','veloce_compare','veloce_admin'].forEach(k=>localStorage.removeItem(k)); // désinfecte v1
@@ -1006,7 +1005,7 @@ function resizeImage(file){return new Promise(res=>{
   r.readAsDataURL(file);
 });}
 async function enterManage(){
-  if(!sb)return enterManageLocal();                      // pas de cloud chargé -> ancien mode local
+  if(!sb){toast('Administration cloud indisponible');return;}   // plus de repli local gaté par un code committé
   const code = adminSecret || prompt('Code de gestion :');
   if(code===null||code==='')return;
   toast('Connexion…');
@@ -1022,15 +1021,6 @@ async function enterManage(){
     adminSecret=null;sessionStorage.removeItem('veloce_admin_secret');
     toast('Code incorrect');
   }
-}
-function enterManageLocal(){
-  const c=prompt('Code de gestion :');
-  if(c===null)return;
-  if(c!==PASS){toast('Code incorrect');return;}
-  editing=true;document.body.classList.add('editing');
-  $('#manageBar').classList.add('show');
-  const ss=$('#syncStatus');if(ss){ss.className='sync-wait';ss.textContent='💾 Mode local';}
-  render();toast('Mode gestion (hors-ligne) — pensez à Sauvegarder');
 }
 function quitManage(){
   editing=false;document.body.classList.remove('editing');$('#manageBar').classList.remove('show');
